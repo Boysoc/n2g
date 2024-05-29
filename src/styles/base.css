@@ -1,0 +1,433 @@
+body {
+  color: #000;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Classic Grotesque W01", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei",
+    "WenQuanYi Micro Hei", SimSun, sans-serif;
+  font-size: 16px;
+  position: relative;
+  background-color: #fff;
+}
+
+.progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  .progress-bar {
+    background-color: #cf4f28;
+    height: .1em;
+    width: 0;
+  }
+}
+
+.border-skin-line {
+  position: relative;
+  border: none;
+  height: 1px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200%;
+    border-top: 1px solid #777;
+    color: #cf4f28;
+    height: 200%;
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    pointer-events: none;
+    /* 防止点击触发 */
+    box-sizing: border-box;
+
+    @media screen and (min-device-pixel-ratio:3),
+    (-webkit-min-device-pixel-ratio:3) {
+      width: 300%;
+      height: 300%;
+      -webkit-transform: scale(0.33);
+      transform: scale(0.33);
+    }
+  }
+}
+
+.body_container {
+  padding: 0 57px;
+  max-width: 740px;
+  margin: 0 auto;
+}
+
+.content_container {
+  padding-right: 50px;
+  padding-top: 20px;
+}
+
+a,
+button.submit,
+#logo {
+  color: #cf4f28;
+  text-decoration: none;
+  -webkit-transition: all 0.1s ease-in;
+  -moz-transition: all 0.1s ease-in;
+  -o-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in;
+  outline: none !important;
+}
+
+a:hover,
+a:active {
+  color: #444;
+}
+
+a:focus {
+  outline: auto;
+}
+
+.clear {
+  clear: both;
+}
+
+.clearfix:after {
+  content: "​";
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+blockquote,
+.stressed {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 2.5em 0;
+  padding: 0 0 0 50px;
+  font-style: italic;
+  color: #555;
+  border-left: none;
+}
+
+blockquote:before,
+.stressed-quote:before {
+  content: "“";
+  display: block;
+  font-family: times;
+  font-style: normal;
+  font-size: 48px;
+  color: #444;
+  font-weight: bold;
+  line-height: 30px;
+  margin-left: -50px;
+  position: absolute;
+}
+
+strong,
+b,
+em {
+  padding: 1px 2px;
+  background-color: #f3b65a;
+  font-weight: normal;
+}
+
+pre {
+  margin: 2em 0;
+}
+
+
+header {
+  padding: 0;
+  margin-bottom: 2.5em;
+  position: relative;
+}
+
+.top-nav-wrap {
+  display: flex;
+  vertical-align: middle;
+  margin-top: 2em;
+  padding-bottom: 1.5em;
+}
+
+#layout {
+  flex: 1;
+  order: -1;
+  padding-top: 50px;
+}
+
+.content {
+  max-width: 880px;
+  padding: 0 57px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: block;
+  color: #cf4f28;
+  width: 170px;
+  img{
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 5px;
+  }
+  span{
+    text-transform: lowercase;
+    display: inline-block;
+    background: -webkit-linear-gradient(#ffa726,#e65000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    font-size: 33px;
+    font-weight: bold;
+  }
+}
+
+#nav-menu {
+  flex: 1;
+  text-align: right;
+  line-height: 2em;
+}
+
+#menu-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: inline-block;
+    padding: 0 .7em;
+    line-height: 43.5px;
+
+    svg {
+      width: 1.2em;
+      height: 1.2em;
+    }
+
+    .sr-only {
+      display: none;
+    }
+  }
+}
+
+/* card */
+.card-title {
+  h2,
+  h3,
+  h4 {
+    margin-top: 0;
+    margin-bottom: .2em;
+  }
+    
+  
+}
+
+.card-ul,
+.card-list-li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  h2,
+  h3 {
+    font-weight: normal;
+    font-size: 1.7em;
+  }
+
+  time {
+    font-size: .8em;
+  }
+}
+.card-list-li {
+  margin: 2em 0;
+  p {
+    line-height: 1.9;
+  }
+}
+
+/* post */
+.post-title {
+  font-weight: normal;
+  margin-bottom: .2em;
+  font-size: 1.7em;
+  color: #cf4f28;
+}
+
+.post-date {
+  font-size: .8em;
+}
+
+.post-content {
+  line-height: 1.9;
+  text-align: justify;
+  p{
+    margin-bottom:2em;
+  }
+  img {
+    max-width: 100%;
+  }
+  blockquote{
+    font-style: normal;
+    .talk{
+      margin-left: 1em;
+    }
+    .talk span {
+      text-indent: -2em;
+      display: inline-block;
+    }
+  }
+}
+
+/* pagination */
+.pagination-wrapper,
+.all-posts-btn-wrapper {
+  margin-top: 4em;
+  margin-bottom: 4em;
+}
+
+.prev-svg,
+.next-svg,
+.rss-icon {
+  height: 1.1em;
+  width: 1.5em;
+}
+
+.tag-list {
+  list-style-type: none;
+  margin: 2em 0;
+  padding: 0;
+
+  svg {
+    width: 1.5em;
+    height: 1.2em;
+  }
+}
+
+/* footer */
+
+footer {
+  margin-top: 3em;
+}
+
+.footer-wrapper {
+  padding: 2em 0 5em;
+}
+
+.copyright-wrapper {
+  font-size: .9em;
+}
+
+.astro-code {
+  padding: 1.2em;
+  font-size: .8em;
+  line-height: 1.6;
+  background-color: #311109 !important;
+  color: #f1d2d2 !important;
+
+  .copy-code {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    background: #673535;
+    color: #fff;
+    border: none;
+    padding: .3em 1em;
+    text-transform: uppercase;
+  }
+}
+
+/* search */
+.search-bar {
+  padding: 1em 1em 1em 0;
+}
+
+.search-bar-input {
+  padding: .2em .5em;
+  margin: 0 0 0 1em;
+  height: 2em;
+}
+
+.search-bar-result {
+  padding: 1em 0;
+}
+
+/* breadcrumb */
+
+.breadcrumb {
+  margin-top: 1.4em;
+  margin-bottom: 1.4em;
+
+  ul,
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+  }
+}
+
+.hamburger-menu {
+  display: none;
+}
+
+@media (max-width: 640px) {
+
+  .content {
+    padding: 0 1em;
+  }
+
+  .display-none {
+    display: none;
+  }
+  .nav-container{
+    
+  }
+  .top-nav-wrap{
+    display: block;
+    position: relative;
+    #menu-items{
+      position: absolute;
+      z-index: 999;
+      top: 8px;
+      background-color: #fff;
+      right: 0;
+      width: 8em;
+      padding: 1em 0 .7em;
+      margin-top: 2em;
+      border: 1px solid #ddd;
+      li{
+        display: block;
+        text-align: center;
+      }
+    }
+     
+  }
+  .hamburger-menu {
+    display: block;
+    position: absolute;
+    right: -5px;
+    top: 8px;
+    border: none;
+    background-color: #fff;
+    .menu-icon{
+      color: #cf4f28;
+    }
+    .is-active {
+      color: #fff;
+      background-color: #cf4f28;
+      border-radius: 3px;
+      .line {
+        display: none;
+      }
+
+      .close {
+        display: block;
+      }
+    }
+
+    .close {
+      display: none;
+    }
+  }
+}
