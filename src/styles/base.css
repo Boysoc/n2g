@@ -176,7 +176,7 @@ header {
     background: -webkit-linear-gradient(#ffa726,#e65000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-family: Futura, "Trebuchet MS", Arial;
+    font-family: Tahoma,Futura, "Trebuchet MS", Arial;
     font-size: 31px;
     font-weight: normal;
   }
