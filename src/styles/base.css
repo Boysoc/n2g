@@ -26,9 +26,9 @@ body {
 .border-skin-line {
   position: relative;
   border: none;
-  height: 1px;
+  height: 0;
 
-  &::before {
+  /* &::before {
     content: "";
     position: absolute;
     left: 0;
@@ -42,7 +42,6 @@ body {
     -webkit-transform: scale(0.5);
     transform: scale(0.5);
     pointer-events: none;
-    /* 防止点击触发 */
     box-sizing: border-box;
 
     @media screen and (min-device-pixel-ratio:3),
@@ -52,7 +51,7 @@ body {
       -webkit-transform: scale(0.33);
       transform: scale(0.33);
     }
-  }
+  } */
 }
 
 .body_container {
