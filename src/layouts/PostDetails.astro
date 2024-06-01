@@ -7,12 +7,15 @@ import Datetime from "@components/Datetime";
 import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import { SITE } from "@config";
+import { slug } from "github-slugger";
 
 export interface Props {
   post: CollectionEntry<"blog">;
+  prev?: CollectionEntry<"blog">; // 添加前一篇文章的属性
+  next?: CollectionEntry<"blog">; // 添加后一篇文章的属性
 }
 
-const { post } = Astro.props;
+const { post,next,prev } = Astro.props;
 
 const {
   title,
@@ -47,25 +50,41 @@ const layoutProps = {
 
 <Layout {...layoutProps}>
   <Header />
-
-  <!-- <div class="progress-container fixed top-0 z-10 h-1 w-full bg-skin-fill">
-    <div class="progress-bar h-1 w-0 bg-skin-accent" id="myBar"></div>
-  </div> -->
-
   <main id="main-content" class="content">
-    <h1 transition:name={slugifyStr(title)} class="post-title">{title}</h1>
     <Datetime
       pubDatetime={pubDatetime}
       modDatetime={modDatetime}
       size="lg"
       className="post-date"
     />
+    <h1 transition:name={slugifyStr(post.slug)} class="post-title">{title}</h1>
     <article id="article" role="article" class="post-content">
       <Content />
     </article>
-    <!-- <ul class="tag-list">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} />)}
-    </ul> -->
+    {(prev || next) && (  // 这里添加条件来检查是否有上下篇
+      <div class="related-post">
+        <div class="prev-post">
+        {prev && (
+            <a href={`/posts/${prev.slug}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" class='prev-svg'>
+              <path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z" />
+            </svg>
+           上一篇：{prev.data.title}
+          </a>
+        )}
+        </div>
+        <div class="next-post">
+          {next && (
+            <a href={`/posts/${next.slug}`}>
+              下一篇：{next.data.title}
+              <svg xmlns="http://www.w3.org/2000/svg" class='next-svg'>
+                <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z" />
+              </svg>
+            </a>
+          )}
+        </div>
+      </div>
+    )}
   </main>
   <Footer />
 </Layout>

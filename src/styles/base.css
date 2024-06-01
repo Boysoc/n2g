@@ -156,7 +156,7 @@ header {
 
 .content {
   max-width: 880px;
-  padding: 0 57px;
+  padding: 0 75px;
   margin: 0 auto;
 }
 
@@ -213,11 +213,8 @@ header {
   h2,
   h3,
   h4 {
-    margin-top: 0;
-    margin-bottom: .2em;
+    margin:0
   }
-    
-  
 }
 
 .card-ul,
@@ -227,8 +224,10 @@ header {
   padding: 0;
   h2,
   h3 {
+    margin-top: .2em;
     font-weight: normal;
     font-size: 1.7em;
+    
   }
 
   time {
@@ -236,25 +235,45 @@ header {
   }
 }
 .card-list-li {
+  position: relative;
   margin: 2em 0;
   p {
+    margin: .5em 0;
     line-height: 1.9;
+    color: #888;
   }
 }
+/* datebox*/
 
+.date-box{
+  padding: 2px 0;
+  position: absolute;
+  margin-left: -65px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  .year{
+    color: #ffa387;
+    font-size: 1.2em;
+    font-weight: bolder;
+
+  }
+  .month-day{
+    font-size: .8em;
+    text-transform: uppercase;
+    color: #aaa;
+  }
+
+}
 /* post */
 .post-title {
   font-weight: normal;
-  margin-bottom: .2em;
+  margin-top: 0.2em;
   font-size: 1.7em;
   color: #cf4f28;
 }
 
-.post-date {
-  font-size: .8em;
-}
-
 .post-content {
+  position: relative;
   margin-top: 2em;
   line-height: 1.81;
   text-align: justify;
@@ -298,6 +317,17 @@ header {
   svg {
     width: 1.5em;
     height: 1.2em;
+  }
+}
+
+.related-post{
+  padding: 2em 0;
+  display: flex;
+  .prev-post,.next-post{
+    flex: 1;
+  }
+  .next-post{
+    text-align: right;
   }
 }
 
@@ -372,9 +402,11 @@ footer {
 }
 
 @media (max-width: 640px) {
-
+  .date-box{
+    margin-left: -55px;
+  }
   .content {
-    padding: 0 1em;
+    padding: 0 1em 0 60px;
   }
 
   .display-none {
@@ -387,17 +419,11 @@ footer {
     display: block;
     position: relative;
     #menu-items{
-      position: absolute;
-      z-index: 999;
-      top: 8px;
       background-color: #fff;
-      right: 0;
-      width: 8em;
+      text-align: right;
       padding: 1em 0 .7em;
-      margin-top: 2em;
-      border: 1px solid #ddd;
+      margin-top: 0;
       li{
-        display: block;
         text-align: center;
       }
     }
@@ -414,13 +440,9 @@ footer {
       color: #cf4f28;
     }
     .is-active {
-      color: #fff;
-      background-color: #cf4f28;
-      border-radius: 3px;
       .line {
         display: none;
       }
-
       .close {
         display: block;
       }
@@ -428,6 +450,19 @@ footer {
 
     .close {
       display: none;
+    }
+  }
+  .related-post{
+    padding: 1em 0;
+    display: block;
+    .prev-post,.next-post{
+      flex: none;
+      svg{
+        display: none;
+      }
+    }
+    .next-post{
+      text-align: left;
     }
   }
 }

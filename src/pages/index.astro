@@ -24,6 +24,7 @@ const recentPosts = sortedPosts;
               ({ data, slug }, index) =>
                 index < SITE.postPerPage && (
                   <Card
+                    slug={slug}
                     href={`/posts/${slug}/`}
                     frontmatter={data}
                     secHeading={false}

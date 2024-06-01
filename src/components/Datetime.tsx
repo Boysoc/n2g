@@ -5,7 +5,7 @@ interface DatetimesProps {
   modDatetime: string | Date | undefined | null;
 }
 
-interface Props extends DatetimesProps {
+interface Props extends DatimesProps {
   size?: "sm" | "lg";
   className?: string;
 }
@@ -17,7 +17,7 @@ export default function Datetime({
   className,
 }: Props) {
   return (
-    <div className={`flex items-center space-x-2 opacity-80 ${className}`}>
+    <div className={`date-box ${className}`}>
       <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
         <FormattedDatetime
           pubDatetime={pubDatetime}
@@ -33,23 +33,19 @@ const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
     modDatetime && modDatetime > pubDatetime ? modDatetime : pubDatetime
   );
 
-  const date = myDatetime.toLocaleDateString(LOCALE.langTag, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-
-  const time = myDatetime.toLocaleTimeString(LOCALE.langTag, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  // YYYY-MM-DD format
+  const date = myDatetime.toISOString().substring(0, 10);
+  const [year, month, day] = date.split("-");  // Split date into [YYYY, MM, DD]
+  // Mapping month numbers to abbreviations
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const monthIndex = parseInt(month) - 1; // Convert month from string to index (0-based)
+  const monthAbbreviation = monthNames[monthIndex]; // Get the abbreviation for the month
 
   return (
     <>
-      <time dateTime={myDatetime.toISOString()}>{date}</time>
-      {/* <span aria-hidden="true"> | </span> */}
-      {/* <span className="sr-only">&nbsp;at&nbsp;</span>
-      <span className="text-nowrap">{time}</span> */}
+      <div className="year">{year}</div>
+      <div className="month-day">{monthAbbreviation} {day}</div>
     </>
   );
 };

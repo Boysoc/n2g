@@ -4,20 +4,22 @@ import type { CollectionEntry } from "astro:content";
 
 export interface Props {
   href?: string;
+  slug?: string;
   frontmatter: CollectionEntry<"blog">["data"];
   secHeading?: boolean;
 }
 
-export default function Card({ href, frontmatter, secHeading = true }: Props) {
+export default function Card({ href, slug="none-slug", frontmatter, secHeading = true }: Props) {
   const { title, pubDatetime, modDatetime, description } = frontmatter;
 
   const headerProps = {
-    style: { viewTransitionName: slugifyStr(title) },
+    style: { viewTransitionName: slugifyStr(slug) },
     className: "text-xl font-medium decoration-dashed hover:underline",
   };
 
   return (
     <li className="card-list-li">
+      <Datetime pubDatetime={pubDatetime} modDatetime={modDatetime} />
       <a
         href={href}
         className="card-title"
@@ -28,10 +30,7 @@ export default function Card({ href, frontmatter, secHeading = true }: Props) {
           <h3 {...headerProps}>{title}</h3>
         )}
       </a>
-      <Datetime pubDatetime={pubDatetime} modDatetime={modDatetime} />
-      <div class="post-content">
-        <p>{description}</p>
-      </div>
+      <p>{description}</p>
     </li>
   );
 }
