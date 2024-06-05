@@ -185,6 +185,7 @@ header {
   flex: 1;
   text-align: right;
   line-height: 2em;
+  text-transform: uppercase;
 }
 
 #menu-items {
@@ -196,7 +197,13 @@ header {
     display: inline-block;
     padding: 0 .7em;
     line-height: 43.5px;
-
+    a{
+      color: #ccc;
+      font-size: 14px;
+      &:hover{
+        color: #000;
+      }
+    }
     svg {
       width: 1.2em;
       height: 1.2em;
