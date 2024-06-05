@@ -44,8 +44,7 @@ const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
 
   return (
     <>
-      <div className="year">{year}</div>
-      <div className="month-day">{monthAbbreviation} {day}</div>
+      {year} {monthAbbreviation} {day}
     </>
   );
 };

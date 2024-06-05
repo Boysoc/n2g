@@ -246,23 +246,9 @@ header {
 /* datebox*/
 
 .date-box{
-  padding: 2px 0;
-  position: absolute;
-  margin-left: -65px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  .year{
-    color: #ffa387;
-    font-size: 1.2em;
-    font-weight: bolder;
-
-  }
-  .month-day{
-    font-size: .8em;
-    text-transform: uppercase;
-    color: #aaa;
-  }
-
+  font-size: .8em;
+  color: #673535;
+  text-transform: uppercase;
 }
 /* post */
 .post-title {
@@ -402,11 +388,8 @@ footer {
 }
 
 @media (max-width: 640px) {
-  .date-box{
-    margin-left: -55px;
-  }
   .content {
-    padding: 0 1em 0 60px;
+    padding: 0 1em 0 1em;
   }
 
   .display-none {
