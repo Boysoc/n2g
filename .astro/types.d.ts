@@ -182,9 +182,9 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"2024-05-20.md": {
-	id: "2024-05-20.md";
-  slug: "about-reproduction";
+"2024-06-22.md": {
+	id: "2024-06-22.md";
+  slug: "property-purchase-diary";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

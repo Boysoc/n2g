@@ -5,8 +5,8 @@ interface DatetimesProps {
   modDatetime: string | Date | undefined | null;
 }
 
-interface Props extends DatimesProps {
-  size?: "sm" | "lg";
+interface Props extends DatetimesProps {
+  size?: "sm" | "base";
   className?: string;
 }
 
@@ -17,7 +17,7 @@ export default function Datetime({
   className,
 }: Props) {
   return (
-    <div className={`date-box ${className}`}>
+    <div className={`date-box ${className ?? ''}`}>
       <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
         <FormattedDatetime
           pubDatetime={pubDatetime}
@@ -44,7 +44,7 @@ const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
 
   return (
     <>
-      {year} {monthAbbreviation} {day}
+      {monthAbbreviation} {day}, {year} 
     </>
   );
 };

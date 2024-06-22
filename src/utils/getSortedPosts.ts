@@ -1,7 +1,13 @@
 import type { CollectionEntry } from "astro:content";
 import postFilter from "./postFilter";
 
+
 const getSortedPosts = (posts: CollectionEntry<"blog">[]) => {
+  posts.forEach(post => {
+    const html = post.body
+    post.data.description= html
+  });
+  
   return posts
     .filter(postFilter)
     .sort(
@@ -14,5 +20,6 @@ const getSortedPosts = (posts: CollectionEntry<"blog">[]) => {
         )
     );
 };
+
 
 export default getSortedPosts;

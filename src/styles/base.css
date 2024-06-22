@@ -217,6 +217,7 @@ header {
 
 /* card */
 .card-title {
+  color: #000;
   h2,
   h3,
   h4 {
@@ -233,7 +234,8 @@ header {
   h3 {
     margin-top: .2em;
     font-weight: normal;
-    font-size: 1.7em;
+    font-size: 1.75em;
+    margin-bottom: .3em;
   }
 
   time {
@@ -242,31 +244,28 @@ header {
 }
 .card-list-li {
   position: relative;
-  margin: 2em 0;
-  p {
-    margin: .5em 0;
-    line-height: 1.9;
-    color: #888;
-  }
+  margin: 2em 0 3em;
 }
 /* datebox*/
 
 .date-box{
-  font-size: .8em;
-  color: #673535;
+  font-size: 12px;
+  font-weight: 500;
+  color: #abb4be;
   text-transform: uppercase;
 }
 /* post */
 .post-title {
-  font-weight: normal;
   margin-top: 0.2em;
-  font-size: 1.7em;
-  color: #cf4f28;
+  margin-bottom: .3em;
+  font-weight: normal;
+  font-size: 1.75em;
+  color: #000;
 }
 
 .post-content {
   position: relative;
-  margin-top: 2em;
+  margin-top: 1.5em;
   line-height: 1.81;
   text-align: justify;
   p{
@@ -288,16 +287,38 @@ header {
 }
 
 /* pagination */
+.pagination-wrapper{
+  justify-content:none;
+}
+.pagination-wrapper a{
+  display: inline-block;
+  padding: 14px 15px;
+  margin: 3px;
+  color: #888;
+  border: 1px solid #eee;
+  font-size: 1em;
+  height: 1.2em;
+  line-height: 1.2;
+  &:hover{
+    border-color: #cf4f28;
+  }
+}
 .pagination-wrapper,
 .all-posts-btn-wrapper {
   margin-top: 4em;
   margin-bottom: 4em;
 }
-
+.active{
+  color: #cf4f28!important;
+  border-color: #cf4f28!important;
+}
+.disabled{
+  display: none;
+}
 .prev-svg,
 .next-svg,
 .rss-icon {
-  height: 1.1em;
+  height: 1em;
   width: 1.5em;
 }
 
