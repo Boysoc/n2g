@@ -11,8 +11,8 @@ import { slug } from "github-slugger";
 
 export interface Props {
   post: CollectionEntry<"blog">;
-  prev?: CollectionEntry<"blog">; // 添加前一篇文章的属性
-  next?: CollectionEntry<"blog">; // 添加后一篇文章的属性
+  prev?: CollectionEntry<"blog">| null; // 添加前一篇文章的属性
+  next?: CollectionEntry<"blog">| null; // 添加后一篇文章的属性
 }
 
 const { post,next,prev } = Astro.props;
