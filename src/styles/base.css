@@ -1,5 +1,5 @@
 body {
-  color: #000;
+  color: #333;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -220,7 +220,7 @@ header {
     font-weight: normal;
     margin-top: .2em;
     font-weight: normal;
-    font-size: 1.75em;
+    font-size: 1.6em;
     margin-bottom: .3em;
   }
 
@@ -247,7 +247,7 @@ header {
   h3 {
     margin-top: .2em;
     font-weight: normal;
-    font-size: 1.75em;
+    font-size: 1.6em;
     margin-bottom: .3em;
   }
 
@@ -272,7 +272,7 @@ header {
   margin-top: 0.2em;
   margin-bottom: .3em;
   font-weight: normal;
-  font-size: 1.75em;
+  font-size: 1.6em;
   color: #000;
 }
 
