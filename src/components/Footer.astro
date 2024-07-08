@@ -13,6 +13,17 @@ const { noMarginTop = false } = Astro.props;
   <div class="content">
     <div class="footer-wrapper">
       <div class="copyright-wrapper">
+        <span>{
+          LOGO_IMAGE.enable && (
+            <img
+              src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
+              alt={SITE.title}
+              width='30'
+              height='30'
+            />
+          )
+        }
+        </span>
         <span>{SITE.title} &#169; {currentYear} .</span>
         <a
         target="_blank"
@@ -31,18 +42,6 @@ const { noMarginTop = false } = Astro.props;
       </svg>
       </a>
       </div>
-    </div>
-    <div id="logo">
-      {
-        LOGO_IMAGE.enable && (
-          <img
-            src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
-            alt={SITE.title}
-            width={LOGO_IMAGE.width}
-            height={LOGO_IMAGE.height}
-          />
-        )
-      }
     </div>
   </div>
 </footer>
