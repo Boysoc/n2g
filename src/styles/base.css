@@ -163,14 +163,14 @@ header {
 .logo {
   display: block;
   color: #cf4f28;
-  width: 170px;
+  width: 100px;
   img{
     display: inline-block;
     vertical-align: top;
     margin-right: 5px;
   }
+  
   span{
-    text-transform: capitalize;
     display: inline-block;
     background: -webkit-linear-gradient(#ffa726,#e65000);
     -webkit-background-clip: text;
@@ -183,7 +183,26 @@ header {
       background: -webkit-linear-gradient(#e65000,#ffa726);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      display: inline-block;
+      position: relative;
+      &::before{
+        content:'';
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin-top: -5px;
+        -webkit-transition: all 0.1s ease-in-out;
+        -moz-transition: all 0.1s ease-in-out;
+        -o-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out;
+      }
     }
+    
+  }
+  &:hover span i::before{
+    border-bottom: 3px solid #ffa726;
+    border-image: linear-gradient(to right, #ffa726, #e65000) 1;
   }
 }
 
