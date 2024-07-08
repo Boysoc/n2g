@@ -8,6 +8,7 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import { SITE } from "@config";
 import { slug } from "github-slugger";
+import Comment from "@components/Comment.astro";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -86,21 +87,7 @@ const layoutProps = {
     )}
 
     <div class="comment">
-      <script src="https://giscus.app/client.js"
-        data-repo="pagecho/pagecho.github.io"
-        data-repo-id="R_kgDOL1JbLQ"
-        data-category="Ideas"
-        data-category-id="DIC_kwDOL1JbLc4CgTn7"
-        data-mapping="url"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="https://frynut.com/assets/comment.css"
-        data-lang="zh-CN"
-        crossorigin="anonymous"
-        async>
-      </script>
+      <Comment client:only="js" />
     </div>
   </main>
   <Footer />
