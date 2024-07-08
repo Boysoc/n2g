@@ -1,5 +1,5 @@
 ---
-
+import { LOGO_IMAGE, SITE } from "@config";
 const currentYear = new Date().getFullYear();
 
 export interface Props {
@@ -13,7 +13,7 @@ const { noMarginTop = false } = Astro.props;
   <div class="content">
     <div class="footer-wrapper">
       <div class="copyright-wrapper">
-        <span>Copyright &#169; {currentYear} .</span>
+        <span>{SITE.title} &#169; {currentYear} .</span>
         <a
         target="_blank"
         href="/rss.xml"
@@ -31,6 +31,18 @@ const { noMarginTop = false } = Astro.props;
       </svg>
       </a>
       </div>
+    </div>
+    <div id="logo">
+      {
+        LOGO_IMAGE.enable && (
+          <img
+            src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
+            alt={SITE.title}
+            width={LOGO_IMAGE.width}
+            height={LOGO_IMAGE.height}
+          />
+        )
+      }
     </div>
   </div>
 </footer>

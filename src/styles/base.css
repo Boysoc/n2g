@@ -66,8 +66,7 @@ body {
 }
 
 a,
-button.submit,
-#logo {
+button.submit {
   color: #cf4f28;
   text-decoration: none;
   -webkit-transition: all 0.1s ease-in;
@@ -158,6 +157,7 @@ header {
   max-width: 880px;
   padding: 0 75px;
   margin: 0 auto;
+  position: relative;
 }
 
 .logo {
@@ -181,6 +181,26 @@ header {
   }
 }
 
+#logo{
+  position: absolute;
+  z-index: -100;
+  top: -8px;
+  left : 53px;
+  width: 100px;
+  height: 100px;
+  &::before{
+    width: 100%!important;
+    height: 100%!important;
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.5);
+  }
+  img{
+    width: 100%!important;
+    height: 100%!important;
+  }
+}
 #nav-menu {
   flex: 1;
   text-align: right;
