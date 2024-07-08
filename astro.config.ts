@@ -10,7 +10,7 @@ import { SITE } from "./src/config";
 
 
 export default defineConfig({
-  site: 'https://pagecho.github.io',
+  site: 'https://frynut.com',
   // base: 'my-repo',
   integrations: [
     /*tailwind({
