@@ -358,6 +358,7 @@ header {
   display: flex;
   .prev-post,.next-post{
     flex: 1;
+    line-height: 2;
   }
   .next-post{
     text-align: right;
@@ -367,7 +368,7 @@ header {
 /* footer */
 
 footer {
-  margin-top: 3em;
+  margin-top: 2em;
 }
 
 .footer-wrapper {
