@@ -178,6 +178,12 @@ header {
     font-family: Futura, "Trebuchet MS", Arial;
     font-size: 31px;
     font-weight: normal;
+    i{
+      font-style: italic;
+      background: -webkit-linear-gradient(#e65000,#ffa726);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 }
 
