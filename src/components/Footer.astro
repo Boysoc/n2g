@@ -1,5 +1,4 @@
 ---
-import Hr from "./Hr.astro";
 
 const currentYear = new Date().getFullYear();
 
@@ -12,7 +11,6 @@ const { noMarginTop = false } = Astro.props;
 
 <footer class={`${noMarginTop ? "" : "mt-auto"}`}>
   <div class="content">
-    <Hr noPadding />
     <div class="footer-wrapper">
       <div class="copyright-wrapper">
         <span>Copyright &#169; {currentYear} .</span>
@@ -38,5 +36,6 @@ const { noMarginTop = false } = Astro.props;
 </footer>
 
 <script>
+  // eslint-disable-next-line
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
