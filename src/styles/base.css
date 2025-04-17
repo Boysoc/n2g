@@ -1,13 +1,13 @@
 body {
-  color: #333;
+  color: #222;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Classic Grotesque W01", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei",
     "WenQuanYi Micro Hei", SimSun, sans-serif;
-  font-size: 17px;
+  font-size: 18px;
   position: relative;
-  background-color: #fff;
+  background-color: #efefef;
 }
 
 .progress-container {
