@@ -5,9 +5,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: "Classic Grotesque W01", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei",
     "WenQuanYi Micro Hei", SimSun, sans-serif;
-  font-size: 18px;
+  font-size: 17px;
   position: relative;
-  background-color: #efefef;
+  background-color: #fefefe;
 }
 
 .progress-container {
