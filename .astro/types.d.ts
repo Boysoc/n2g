@@ -196,9 +196,37 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"2024-08-12.md": {
-	id: "2024-08-12.md";
-  slug: "new-home-dreams-amidst-falling-prices";
+"2024-09-08.md": {
+	id: "2024-09-08.md";
+  slug: "young-again";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"2024-11-30.md": {
+	id: "2024-11-30.md";
+  slug: "the-best-of-youth";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"2025-01-10.md": {
+	id: "2025-01-10.md";
+  slug: "bare-shell";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"2025-04-17.md": {
+	id: "2025-04-17.md";
+  slug: "internal-transfer";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"2025-05-08.md": {
+	id: "2025-05-08.md";
+  slug: "price-n-quality";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
