@@ -10,7 +10,7 @@ import { SITE } from "./src/config";
 
 
 export default defineConfig({
-  site: 'https://frynut.com',
+  site: 'https://github.n2g.cn',
   // base: 'my-repo',
   integrations: [
     /*tailwind({
