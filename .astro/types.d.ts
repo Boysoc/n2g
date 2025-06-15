@@ -175,72 +175,58 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
-"2024-05-13.md": {
-	id: "2024-05-13.md";
-  slug: "hello-world";
+"2012-11-28.md": {
+	id: "2012-11-28.md";
+  slug: "red";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"2024-06-26.md": {
-	id: "2024-06-26.md";
-  slug: "low-reward-majors";
+"2013-10-21.md": {
+	id: "2013-10-21.md";
+  slug: "jiaxiao";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"2024-07-21.md": {
-	id: "2024-07-21.md";
-  slug: "about-employment-demands";
+"2013-10-27.md": {
+	id: "2013-10-27.md";
+  slug: "solo-trip";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"2024-09-08.md": {
-	id: "2024-09-08.md";
-  slug: "young-again";
+"2016-08-02.md": {
+	id: "2016-08-02.md";
+  slug: "time-to-end-and-begin";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"2024-11-30.md": {
-	id: "2024-11-30.md";
-  slug: "the-best-of-youth";
+"2020-05-20.md": {
+	id: "2020-05-20.md";
+  slug: "2020-05-20";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"2025-01-10.md": {
-	id: "2025-01-10.md";
-  slug: "bare-shell";
+"2021-10-25.md": {
+	id: "2021-10-25.md";
+  slug: "investment-ten-years";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"2025-04-17.md": {
-	id: "2025-04-17.md";
-  slug: "internal-transfer";
-  body: string;
-  collection: "blog";
-  data: InferEntrySchema<"blog">
-} & { render(): Render[".md"] };
-"2025-05-08.md": {
-	id: "2025-05-08.md";
-  slug: "price-n-quality";
-  body: string;
-  collection: "blog";
-  data: InferEntrySchema<"blog">
-} & { render(): Render[".md"] };
-"2025-06-09.md": {
-	id: "2025-06-09.md";
-  slug: "2025-06-09";
-  body: string;
-  collection: "blog";
-  data: InferEntrySchema<"blog">
-} & { render(): Render[".md"] };
-"model-y-dream-car.md": {
-	id: "model-y-dream-car.md";
+"2025-06-02.md": {
+	id: "2025-06-02.md";
   slug: "model-y-dream-car";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"2025-06-15.md": {
+	id: "2025-06-15.md";
+  slug: "2025-06-15";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

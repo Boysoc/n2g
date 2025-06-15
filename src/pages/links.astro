@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const links = [
+  { name: '马里奥毛瑞尔', url: 'http://www.mariofans.com', desc: '泰国明星马里奥毛瑞尔的中文官方网站。曾演出《初恋这件小事》中的阿亮，《暹罗之恋》中的Tong。' },
+  { name: 'Banri', url: 'http://banri.me/', desc: '一位杰出的互联网捣鼓者。' },
+  { name: '晚餐', url: 'http://www.chelsea.org.cn/', desc: '又名教主。（切尔西的夏天）' },
+  { name: '面条', url: 'http://miantiao.me/', desc: '大神在人间！' },
+  { name: '山炮不二', url: 'http://xsinger.me/' },
+  { name: "Zimoo's Life", url: 'http://zimoo.tk', desc: '据说也是一个蜀国人。' },
+  { name: '不是虚幻', url: 'http://xuhuan.org' },
+  { name: '咚门', url: 'http://www.dearzd.com/' },
+  { name: "Huiris's Blog", url: 'http://huiris.com/' },
+  { name: '流氓同学', url: 'http://gov.com.im' },
+  { name: '设计笔记', url: 'https://biji.io/', desc: 'Tokin，一个到处学习与模仿的装逼人。' },
+  { name: '小剧客栈', url: 'http://bh-lay.com/' },
+  { name: "CHO`S BLOG", url: 'https://frynut.com/', desc: 'idol' },
+];
+---
+
+<Layout title="邻居">
+  <section class="max-w-4xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold text-center mb-8">邻居</h1>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {links.map(link => (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block border border-gray-300 dark:border-gray-600 rounded-2xl p-4 hover:shadow-xl hover:border-blue-500 transition-all bg-white dark:bg-gray-800"
+        >
+          <h2 class="text-xl font-semibold mb-1 text-blue-600">{link.name}</h2>
+          {link.desc && <p class="text-sm text-gray-600 dark:text-gray-300">{link.desc}</p>}
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

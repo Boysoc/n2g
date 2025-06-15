@@ -14,7 +14,7 @@ const { activeNav } = Astro.props;
     <div class="nav-container">
       <div class="top-nav-wrap">
         <a href="/" class="logo">
-          <span>N<i>2G</i></span>
+          <span><i>Xio</i></span>
         </a>
         <nav id="nav-menu">
           <button
@@ -51,6 +51,11 @@ const { activeNav } = Astro.props;
             <li>
               <a href="/about/" class={activeNav === "about" ? "active" : ""}>
                 关于
+              </a>
+            </li>
+            <li>
+              <a href="/links" class={activeNav === "links" ? "active" : ""}>
+                友链
               </a>
             </li>
             <li>

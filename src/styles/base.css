@@ -17,7 +17,7 @@ body {
   width: 100%;
 
   .progress-bar {
-    background-color: #cf4f28;
+    background-color: #00baff;
     height: .1em;
     width: 0;
   }
@@ -35,7 +35,7 @@ body {
     top: 0;
     width: 200%;
     border-top: 1px solid #777;
-    color: #cf4f28;
+    color: #00baff;
     height: 200%;
     -webkit-transform-origin: left top;
     transform-origin: left top;
@@ -67,7 +67,7 @@ body {
 
 a,
 button.submit {
-  color: #cf4f28;
+  color: #00baff;
   text-decoration: none;
   -webkit-transition: all 0.1s ease-in;
   -moz-transition: all 0.1s ease-in;
@@ -125,7 +125,7 @@ strong,
 b,
 em {
   padding: 1px 2px;
-  background-color: #f3b65a;
+  background-color: #b3e5fc;
   font-weight: normal;
 }
 
@@ -162,7 +162,7 @@ header {
 
 .logo {
   display: block;
-  color: #cf4f28;
+  color: #00baff;
   width: 100px;
   img{
     display: inline-block;
@@ -172,7 +172,7 @@ header {
   
   span{
     display: inline-block;
-    background: -webkit-linear-gradient(#ffa726,#e65000);
+    background: -webkit-linear-gradient(#00baff,##0077cc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-family: Futura, "Trebuchet MS", Arial;
@@ -180,7 +180,7 @@ header {
     font-weight: normal;
     i{
       font-style: italic;
-      background: -webkit-linear-gradient(#e65000,#ffa726);
+      background: -webkit-linear-gradient(#0077cc,#00baff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: inline-block;
@@ -201,8 +201,8 @@ header {
     
   }
   &:hover span i::before{
-    border-bottom: 3px solid #ffa726;
-    border-image: linear-gradient(to right, #ffa726, #e65000) 1;
+    border-bottom: 3px solid #00baff;
+    border-image: linear-gradient(to right, #00baff, #0077cc) 1;
   }
 }
 
@@ -252,7 +252,7 @@ header {
 }
 /* card */
 .card-title {
-  color: #cf4f28;
+  color: #00baff;
   h2,
   h3,
   h4 {
@@ -299,7 +299,7 @@ header {
   font-weight: normal;
   font-size: 1.6em;
   color: #000;
-  color: #cf4f28;
+  color: #00baff;
 }
 
 .post-content {
@@ -339,7 +339,7 @@ header {
   height: 1.2em;
   line-height: 1.2;
   &:hover{
-    border-color: #cf4f28;
+    border-color: #00baff;
   }
 }
 .pagination-wrapper,
@@ -348,8 +348,8 @@ header {
   margin-bottom: 4em;
 }
 .active{
-  color: #cf4f28!important;
-  border-color: #cf4f28!important;
+  color: #00baff!important;
+  border-color: #00baff!important;
 }
 .disabled{
   display: none;
@@ -407,8 +407,8 @@ footer {
   padding: 1.2em;
   font-size: .8em;
   line-height: 1.6;
-  background-color: #311109 !important;
-  color: #f1d2d2 !important;
+  background-color: #002b36 !important;
+  color: #cceeff !important;
 
   .copy-code {
     position: absolute;
@@ -495,7 +495,7 @@ footer {
     border: none;
     background-color: #fff;
     .menu-icon{
-      color: #cf4f28;
+      color: #00baff;
     }
     .is-active {
       .line {
