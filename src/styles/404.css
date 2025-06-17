@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Serif+SC&display=swap');
+
+body, html {
+  margin: 0; padding: 0; height: 100%;
+  font-family: 'Noto Serif SC', serif;
+  background: #fff url('/images/about.png') no-repeat right top;
+  background-size: auto 100%;
+  color: #333;
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.body404 {
+  width: 100%;
+  max-width: 480px;
+  padding: 0 20px;
+}
+
+.site-name404 i {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 96px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  display: block;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.title404 p {
+  font-size: 20px;
+  line-height: 1.5;
+  margin: 0 0 30px 0;
+  color: #555;
+  user-select: none;
+}
+
+.index404 {
+  display: inline-block;
+  padding: 14px 30px;
+  background-color: #eeea07;
+  color: #000;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+
+.index404:hover {
+  background-color: #c6be04;
+  color: #fff;
+}
+
+#footer404 {
+  margin-top: 40px;
+  font-size: 14px;
+  color: #999;
+  user-select: none;
+}
+
+/* 响应式 */
+@media screen and (max-width: 480px) {
+  .site-name404 i {
+    font-size: 72px;
+  }
+  .title404 p {
+    font-size: 18px;
+  }
+  .index404 {
+    padding: 12px 24px;
+  }
+}
