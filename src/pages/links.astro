@@ -1,38 +1,110 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { links } from "../links";
 
-const links = [
-  { name: '马里奥毛瑞尔', url: 'http://www.mariofans.com', desc: '泰国明星马里奥毛瑞尔的中文官方网站。曾演出《初恋这件小事》中的阿亮，《暹罗之恋》中的Tong。' },
-  { name: 'Banri', url: 'http://banri.me/', desc: '一位杰出的互联网捣鼓者。' },
-  { name: '晚餐', url: 'http://www.chelsea.org.cn/', desc: '又名教主。（切尔西的夏天）' },
-  { name: '面条', url: 'http://miantiao.me/', desc: '大神在人间！' },
-  { name: '山炮不二', url: 'http://xsinger.me/' },
-  { name: "Zimoo's Life", url: 'http://zimoo.tk', desc: '据说也是一个蜀国人。' },
-  { name: '不是虚幻', url: 'http://xuhuan.org' },
-  { name: '咚门', url: 'http://www.dearzd.com/' },
-  { name: "Huiris's Blog", url: 'http://huiris.com/' },
-  { name: '流氓同学', url: 'http://gov.com.im' },
-  { name: '设计笔记', url: 'https://biji.io/', desc: 'Tokin，一个到处学习与模仿的装逼人。' },
-  { name: '小剧客栈', url: 'http://bh-lay.com/' },
-  { name: "CHO`S BLOG", url: 'https://frynut.com/', desc: 'idol' },
-];
+// 自动生成 favicon 地址（用于 fallback）
+function getFaviconUrl(href: string): string {
+  try {
+    const url = new URL(href);
+    return `https://www.google.com/s2/favicons?sz=64&domain_url=${url.origin}`;
+  } catch {
+    return '/favicon.ico';
+  }
+}
 ---
 
-<Layout title="邻居">
-  <section class="max-w-4xl mx-auto px-4 py-10">
-    <h1 class="text-3xl font-bold text-center mb-8">邻居</h1>
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+<Layout>
+  <Header />
+
+  <main id="main-content" class="content">
+    <p style="text-align:center; margin-bottom:2rem;">海内存知己，天涯若比邻。</p>
+
+    <div class="links-grid">
       {links.map(link => (
-        <a
-          href={link.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="block border border-gray-300 dark:border-gray-600 rounded-2xl p-4 hover:shadow-xl hover:border-blue-500 transition-all bg-white dark:bg-gray-800"
-        >
-          <h2 class="text-xl font-semibold mb-1 text-blue-600">{link.name}</h2>
-          {link.desc && <p class="text-sm text-gray-600 dark:text-gray-300">{link.desc}</p>}
+        <a href={link.href} target="_blank" rel="noopener noreferrer" class="link-card">
+          <img
+            src={link.logo?.trim() ? link.logo : getFaviconUrl(link.href)}
+            alt={link.name}
+            class="link-logo"
+          />
+          <div class="link-info">
+            <h3 class={link.inactive ? 'inactive' : ''}>
+              {link.name}
+              {link.inactive && <span class="inactive-text">消失在互联网，期待回归</span>}
+            </h3>
+            <p>{link.description}</p>
+          </div>
         </a>
       ))}
     </div>
-  </section>
+  </main>
+
+  <Footer />
 </Layout>
+
+<style>
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-color, #1e1e1e);
+    border: 1px solid #333;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .link-card:hover {
+    transform: scale(1.02);
+    border-color: #00baff;
+  }
+
+  .link-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .link-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #000;
+  }
+
+  .link-info h3.inactive {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    text-decoration-color: #ff4d4f;
+    color: #999;
+  }
+
+  .inactive-text {
+    font-size: 0.75rem;
+    color: #999;
+    font-weight: 500;
+    font-style: normal;
+    margin-left: 0.4rem;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .link-info p {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+</style>
