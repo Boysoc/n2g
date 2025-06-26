@@ -87,7 +87,7 @@ export const links: Link[] = [
   {
     name: " Lianbo`s Blog",
     href: "https://godruoyi.com/",
-    logo: "https://images.godruoyi.com/gblog/assets/brand_logo.Z0NyS6D-_2cLiuT.webp"，
+    logo: "https://images.godruoyi.com/gblog/assets/brand_logo.Z0NyS6D-_2cLiuT.webp",
     description: "Enjoy the process of building something using any technology stack"
   }
 ];
