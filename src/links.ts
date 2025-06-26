@@ -22,8 +22,8 @@ export const links: Link[] = [
   },
   {
     name: "晚餐",
-    href: "https://frynut.com/",
-    logo: "src/assets/links/jiangxixi.svg",
+    href: "http://www.chelsea.org.cn/",
+    logo: "src/assets/links/jiangxixi.jpg",
     description: "有名教主。（切尔西的夏天）",
     inactive: true, // 👉 加上这个字段表示此人“停更”或“下线”
   },
@@ -67,5 +67,12 @@ export const links: Link[] = [
     "href": "https://liruifengv.com",
     "logo": "https://bucket.liruifengv.com/avatar.jpg",
     "description": "Web 开发者，Astro 项目成员，开源爱好者。"
+    },
+  {
+    "name": "CaptainOfPhB",
+    "url": "https://captainofphb.me",
+    "description": "船长の部落格，记录有趣的事，分享技术经验",
+    "avatar": "https://captainofphb.me/_astro/avatar.ke_icKou_Z23JjR9.webp"
   }
+  
 ];
