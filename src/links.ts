@@ -23,7 +23,7 @@ export const links: Link[] = [
   {
     name: "晚餐",
     href: "http://www.chelsea.org.cn/",
-    logo: "src/assets/links/jiangxixi.jpg",
+    logo: "images/links/jiangxixi.jpg",
     description: "有名教主。（切尔西的夏天）",
     inactive: true, // 👉 加上这个字段表示此人“停更”或“下线”
   },
@@ -73,6 +73,21 @@ export const links: Link[] = [
     "url": "https://captainofphb.me",
     "description": "船长の部落格，记录有趣的事，分享技术经验",
     "avatar": "https://captainofphb.me/_astro/avatar.ke_icKou_Z23JjR9.webp"
+    },
+  {
+    "name": "Sehnsucht",
+    "url": "	https://blog.sehnsucht.top",
+    "description": "transient"
+  },
+  {
+    "name": "雪糕博客",
+    "url": "https://blog.xuegaogg.com/",
+    "description": "什么都搞，不再专注网络了。"
+  },
+  {
+    "name": " Lianbo",
+    "url": https://godruoyi.com/",
+    "description": "Enjoy the process of building something using any technology stack",
+    "avatar": "https://images.godruoyi.com/gblog/assets/brand_logo.Z0NyS6D-_2cLiuT.webp"
   }
-  
 ];
