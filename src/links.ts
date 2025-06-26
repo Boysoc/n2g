@@ -71,7 +71,7 @@ export const links: Link[] = [
   {
     name: "CaptainOfPhB",
     href: "https://captainofphb.me",
-    logo: "https://captainofphb.me/_astro/avatar.ke_icKou_Z23JjR9.webp"，
+    logo: "https://captainofphb.me/_astro/avatar.ke_icKou_Z23JjR9.webp",
     description: "船长の部落格，记录有趣的事，分享技术经验。"
    },
   {
