@@ -1,1 +1,1 @@
-https://github.n2g.cn
+https://n2g.cn
