@@ -63,31 +63,31 @@ export const links: Link[] = [
     description: "有戏的博客"
   },
   {
-    "name": "liruifengv",
-    "href": "https://liruifengv.com",
-    "logo": "https://bucket.liruifengv.com/avatar.jpg",
-    "description": "Web 开发者，Astro 项目成员，开源爱好者。"
+    name: "liruifengv",
+    href: "https://liruifengv.com",
+    logo: "https://bucket.liruifengv.com/avatar.jpg",
+    description: "Web 开发者，Astro 项目成员，开源爱好者。"
     },
   {
-    "name": "CaptainOfPhB",
-    "url": "https://captainofphb.me",
-    "description": "船长の部落格，记录有趣的事，分享技术经验",
-    "avatar": "https://captainofphb.me/_astro/avatar.ke_icKou_Z23JjR9.webp"
-    },
+    name: "CaptainOfPhB",
+    href: "https://captainofphb.me",
+    logo: "https://captainofphb.me/_astro/avatar.ke_icKou_Z23JjR9.webp"，
+    description: "船长の部落格，记录有趣的事，分享技术经验。"
+   },
   {
-    "name": "Sehnsucht",
-    "url": "	https://blog.sehnsucht.top",
-    "description": "transient"
+    name: "Sehnsucht",
+    href: "https://blog.sehnsucht.top",
+    description: "transient"
   },
   {
-    "name": "雪糕博客",
-    "url": "https://blog.xuegaogg.com/",
-    "description": "什么都搞，不再专注网络了。"
+    name: "雪糕博客",
+    href: "https://blog.xuegaogg.com/",
+    description: "什么都搞，不再专注网络了。"
   },
   {
-    "name": " Lianbo",
-    "url": https://godruoyi.com/",
-    "description": "Enjoy the process of building something using any technology stack",
-    "avatar": "https://images.godruoyi.com/gblog/assets/brand_logo.Z0NyS6D-_2cLiuT.webp"
+    name: " Lianbo",
+    href: "https://godruoyi.com/",
+    logo: "https://images.godruoyi.com/gblog/assets/brand_logo.Z0NyS6D-_2cLiuT.webp"，
+    description: "Enjoy the process of building something using any technology stack"
   }
 ];
