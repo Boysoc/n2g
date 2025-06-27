@@ -28,11 +28,6 @@ export const links: Link[] = [
     inactive: true, // 👉 加上这个字段表示此人“停更”或“下线”
   },
   {
-    name: "小剧客栈",
-    href: "http://bh-lay.com/",
-    description: "有戏的博客"
-  },
-  {
     name: "面条",
     href: "http://miantiao.me/",
     description: "面条的自留地"
@@ -88,6 +83,6 @@ export const links: Link[] = [
     name: " Lianbo`s Blog",
     href: "https://godruoyi.com/",
     logo: "https://images.godruoyi.com/gblog/assets/brand_logo.Z0NyS6D-_2cLiuT.webp",
-    description: "Enjoy the process of building something using any technology stack"
+    description: "Enjoy the process of building something using any technology stack."
   }
 ];
