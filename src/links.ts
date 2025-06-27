@@ -23,7 +23,7 @@ export const links: Link[] = [
   {
     name: "晚餐",
     href: "http://www.chelsea.org.cn/",
-    logo: "images/links/jiangxixi.jpg",
+    logo: "/images/links/jiangxixi.jpg",
     description: "又名教主。（切尔西的夏天）",
     inactive: true, // 👉 加上这个字段表示此人“停更”或“下线”
   },
