@@ -83,6 +83,12 @@ export const links: Link[] = [
     name: " Lianbo`s Blog",
     href: "https://godruoyi.com/",
     logo: "https://images.godruoyi.com/gblog/assets/brand_logo.Z0NyS6D-_2cLiuT.webp",
-    description: "Enjoy the process of building something using any technology stack."
+    description: "Enjoy the process of building something using any technology stack." 
+  },
+  {
+    name: "王鑫的小屋",
+    href: "https://wonse.info/",
+    logo: "https://img.vone.xin/web/blog-icon.jpg",
+    description: "热爱学习，热爱互联网，渴望自由。"
   }
 ];
