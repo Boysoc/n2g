@@ -77,6 +77,7 @@ export const links: Link[] = [
   {
     name: "雪糕博客",
     href: "https://blog.xuegaogg.com/",
+    logo: "https://blog.xuegaogg.com/about/wx.webp",
     description: "什么都搞，不再专注网络了。"
   },
   {
@@ -101,6 +102,7 @@ export const links: Link[] = [
     name: "王鑫的小屋",
     href: "https://wonse.info/",
     logo: "https://img.vone.xin/web/blog-icon.jpg",
+    logo: "https://cdn.wonse.info/wonse/admin-logo.jpg",
     description: "热爱学习，热爱互联网，渴望自由。"
   }
 ];
