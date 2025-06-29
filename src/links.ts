@@ -85,6 +85,12 @@ export const links: Link[] = [
     logo: "https://images.godruoyi.com/gblog/assets/brand_logo.Z0NyS6D-_2cLiuT.webp",
     description: "Enjoy the process of building something using any technology stack." 
   },
+    {
+    name: "三十海河",
+    href: "https://ihaihe.cn/",
+    logo: "https://ihaihe.cn/wp-content/uploads/2025/03/touxiang.png",
+    description: "做不了伟人，至少要做个好人。" 
+  },
   {
     name: "王鑫的小屋",
     href: "https://wonse.info/",
