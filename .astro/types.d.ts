@@ -175,6 +175,13 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
+"2012-08-03.md": {
+	id: "2012-08-03.md";
+  slug: "2012-08-03";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "2012-11-28.md": {
 	id: "2012-11-28.md";
   slug: "red";
@@ -185,6 +192,13 @@ declare module 'astro:content' {
 "2013-10-21.md": {
 	id: "2013-10-21.md";
   slug: "jiaxiao";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"2013-10-26.md": {
+	id: "2013-10-26.md";
+  slug: "2013-10-26";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -234,6 +248,13 @@ declare module 'astro:content' {
 "2025-06-15.md": {
 	id: "2025-06-15.md";
   slug: "2025-06-15";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"shijidazhan.md": {
+	id: "shijidazhan.md";
+  slug: "shijidazhan";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
