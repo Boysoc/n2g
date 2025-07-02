@@ -42,7 +42,7 @@ export const links: Link[] = [
   {
     name: "咚门",
     href: "http://www.dearzd.com/",
-    logo: "https://photos.dearzd.com/albums/104/6630889644816498255.jpg",
+    logo: "https://avatar.bdstatic.com/it/u=3268207087,554627273&fm=3012&app=3012&autime=1751331911&size=b360,360",
     description: "喜欢栀子花的男生。"
   },
   {
@@ -75,11 +75,6 @@ export const links: Link[] = [
     logo: "https://captainofphb.me/_astro/avatar.ke_icKou_Z23JjR9.webp",
     description: "船长の部落格，记录有趣的事，分享技术经验。"
    },
-  {
-    name: "Sehnsucht",
-    href: "https://blog.sehnsucht.top",
-    description: "transient"
-  },
   {
     name: "雪糕博客",
     href: "https://blog.xuegaogg.com/",
