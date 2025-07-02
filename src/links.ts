@@ -40,7 +40,8 @@ export const links: Link[] = [
   {
     name: "咚门",
     href: "http://www.dearzd.com/",
-    description: "设计师生活"
+    logo: "https://photos.dearzd.com/albums/104/index.gif",
+    description: "喜欢栀子花的男生。"
   },
   {
     name: "Huiris's Blog",
@@ -102,7 +103,6 @@ export const links: Link[] = [
     name: "王鑫的小屋",
     href: "https://wonse.info/",
     logo: "https://img.vone.xin/web/blog-icon.jpg",
-    logo: "https://cdn.wonse.info/wonse/admin-logo.jpg",
     description: "热爱学习，热爱互联网，渴望自由。"
   }
 ];
