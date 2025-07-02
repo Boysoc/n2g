@@ -2,6 +2,7 @@
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
+import Component from '@components/Comment.astro';
 import { links } from "../links";
 
 // 自动生成 favicon 地址（用于 fallback）
@@ -40,7 +41,7 @@ function getFaviconUrl(href: string): string {
       ))}
     </div>
   </main>
-
+<Comment />
   <Footer />
 </Layout>
 
