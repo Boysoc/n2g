@@ -1,20 +1,69 @@
+---
+---
 <section class="footprints-section">
   <div class="map-container">
     <div id="amap-container"></div>
+    <div id="map-loading" class="map-loading">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <p>正在加载地图...</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- [!FIX 2] 使用 :global() 修复 InfoWindow 样式 -->
 <style>
-  /* --- 基础样式 (不用动) --- */
+  /* --- 基础样式 --- */
   .footprints-section { margin: 1.5rem 0; }
   .map-container { position: relative; }
-  #amap-container { width: 100%; height: 500px; border-radius: 8px; border: 1px solid #e9ecef; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
+  
+  #amap-container { 
+    width: 100%; 
+    height: 500px; 
+    border-radius: 8px; 
+    border: 1px solid #e9ecef; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    min-height: 500px;
+    display: block;
+    box-sizing: border-box;
+  }
 
-  /* 
-   * ✨✨✨ 关键改动在这里 ✨✨✨
-   * 我们现在为 "custom-info-window" 这个新盒子设计样式 
-   */
+  /* 加载状态 */
+  .map-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 500px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  
+  .loading-content {
+    text-align: center;
+    color: #6c757d;
+  }
+  
+  .loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e9ecef;
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* 自定义信息窗口样式 */
   :global(.custom-info-window) {
     position: relative; 
     width: 260px;
@@ -27,7 +76,6 @@
     animation: fadeIn .3s ease-out;
   }
 
-  /* --- 用CSS画出指向标记点的小箭头 --- */
   :global(.custom-info-window::after) {
     content: '';
     position: absolute;
@@ -41,7 +89,6 @@
     border-color: #fff transparent transparent transparent; 
   }
 
-  /* --- 小箭头的阴影，让它更立体 --- */
   :global(.custom-info-window::before) {
     content: '';
     position: absolute;
@@ -56,7 +103,6 @@
     border-color: rgba(0,0,0,0.08) transparent transparent transparent;
   }
 
-  /* --- 我们自己设计的关闭按钮 "×" --- */
   :global(.custom-info-window-close) {
     position: absolute;
     top: 8px;
@@ -78,34 +124,63 @@
     color: #333;
   }
 
-  /* --- 内部内容样式 (标题、文字等) --- */
   :global(.custom-info-window h3) { margin: 0 0 12px; font-size: 1.2rem; color: #333; display: flex; align-items: center; gap: 8px; }
   :global(.custom-info-window h3::before) { content: '📍'; font-size: 1.1rem; }
   :global(.custom-info-window p) { margin: 0 0 12px; font-size: .95rem; color: #555; line-height: 1.5; }
   :global(.custom-info-window a) { color: #007bff; text-decoration: none; font-weight: 500; }
   :global(.custom-info-window a:hover) { text-decoration: underline; }
 
-  /* --- 其他全局样式 (不用动) --- */
   :global(.amap-logo), :global(.amap-copyright) { display: none !important; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(0); } to { opacity: 1; transform: translateY(-10px); } }
   @media (max-width: 768px) { :global(.custom-info-window) { width: calc(100vw - 40px); } }
 </style>
 
-
-
 <script>
-// ===== 新增: 只有容器有了尺寸才允许初始化地图 =====
+// 严格的容器就绪检查
 function waitForContainerReady(containerId) {
   return new Promise((resolve) => {
-    const el = document.getElementById(containerId);
-    if (!el) { resolve(null); return; }
+    let attempts = 0;
+    const maxAttempts = 50;
+    
     function check() {
-      if (el.offsetWidth > 0 && el.offsetHeight > 0) {
-        resolve(el);
+      attempts++;
+      const el = document.getElementById(containerId);
+      
+      if (!el) {
+        if (attempts < maxAttempts) {
+          setTimeout(check, 50);
+        } else {
+          resolve(null);
+        }
+        return;
+      }
+      
+      const hasOffsetSize = el.offsetWidth > 0 && el.offsetHeight > 0;
+      const rect = el.getBoundingClientRect();
+      const hasBoundingSize = rect.width > 0 && rect.height > 0;
+      
+      if (hasOffsetSize && hasBoundingSize) {
+        setTimeout(() => {
+          if (el.offsetWidth > 0 && el.offsetHeight > 0) {
+            console.log(`容器就绪: ${el.offsetWidth}x${el.offsetHeight}`);
+            resolve(el);
+          } else {
+            if (attempts < maxAttempts) {
+              check();
+            } else {
+              resolve(el);
+            }
+          }
+        }, 50);
       } else {
-        requestAnimationFrame(check);
+        if (attempts < maxAttempts) {
+          setTimeout(check, 50);
+        } else {
+          resolve(el);
+        }
       }
     }
+    
     check();
   });
 }
@@ -119,82 +194,272 @@ class AboutFootprintsMap {
     this.infoWindow = null;
     this.AMap = null;
     this._destroyed = false;
+    this.markers = [];
+    this.polylines = [];
+    this.resizeObserver = null;
   }
+  
   destroy() {
+    this._destroyed = true;
+    
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+    }
+    
     if (this.map) {
-      this.map.destroy();
+      try {
+        this.markers.forEach(marker => {
+          if (marker) this.map.remove(marker);
+        });
+        this.polylines.forEach(polyline => {
+          if (polyline) this.map.remove(polyline);
+        });
+        
+        if (this.infoWindow) {
+          this.infoWindow.close();
+        }
+        
+        this.map.destroy();
+      } catch (e) {
+        console.warn('地图销毁时出错:', e);
+      }
+      
       this.map = null;
     }
+    
+    this.markers = [];
+    this.polylines = [];
     this.infoWindow = null;
     this.AMap = null;
-    const exist = document.getElementById('amap-container');
-    if (exist) exist.innerHTML = '';
-    this._destroyed = true;
+    
+    const container = document.getElementById('amap-container');
+    if (container) {
+      container.innerHTML = '';
+    }
+    
+    this.showLoading();
   }
+  
   async init() {
     this._destroyed = false;
-    // ===== 关键点：确保容器已经可见且有尺寸 =====
-    await waitForContainerReady('amap-container');
-
-    const mapContainer = document.getElementById('amap-container');
-    if (!mapContainer) return;
-
+    
     try {
-      if (this.securityJsCode) window._AMapSecurityConfig = { securityJsCode: this.securityJsCode };
+      console.log('开始地图初始化');
+      
+      // 等待容器就绪
+      const container = await waitForContainerReady('amap-container');
+      if (!container || this._destroyed) {
+        throw new Error('容器未找到或未就绪');
+      }
+      
+      // 设置安全配置
+      if (this.securityJsCode) {
+        window._AMapSecurityConfig = { securityJsCode: this.securityJsCode };
+      }
+      
+      // 加载API和数据
       this.AMap = await this.loadAPI();
-    } catch (error) {
-      console.error("CRITICAL_FAILURE: 高德地图核心JS加载失败", error);
-      this.showError("地图核心API加载失败，请检查网络和API Key。");
-      return;
-    }
-    if (this._destroyed) return;
-
-    this.map = new this.AMap.Map(mapContainer, {
-      zoom: 5,
-      center: [104.0668, 30.5728],
-      mapStyle: 'amap://styles/light',
-      viewMode: '2D'
-    });
-    this.map.resize();
-
-    await this.loadCities();
-    if (this._destroyed) return;
-    if (this.cities) {
+      if (this._destroyed) return;
+      
+      await this.loadCities();
+      if (this._destroyed || !this.cities) {
+        throw new Error('城市数据加载失败');
+      }
+      
+      // 创建地图
+      console.log('创建地图实例...');
+      this.map = new this.AMap.Map(container, {
+        zoom: 5,
+        center: [104.0668, 30.5728],
+        mapStyle: 'amap://styles/light',
+        viewMode: '2D',
+        resizeEnable: true
+      });
+      
+      // 等待地图就绪
+      await this.waitForMapReady();
+      if (this._destroyed) return;
+      
+      // 添加标记
+      console.log('添加地图标记...');
       this.addMarkers(this.cities.visitedPlaces, '#dc3545');
       this.addMarkers(this.cities.plannedPlaces, '#66b3ff');
       this.addMarkers(this.cities.desiredPlaces, '#28a745');
       this.plotPlannedRoutes();
+      
+      // 设置初始视图 - 简化版本
+      this.setInitialView();
+      
+      // 添加事件监听
+      this.addMapEventListeners();
+      
+      console.log('地图初始化完成');
+      
+    } catch (error) {
+      console.error('地图初始化失败:', error);
+      this.showError(`地图加载失败: ${error.message}<br><small>请尝试刷新页面</small>`);
+    } finally {
+      // 确保无论成功失败都隐藏加载状态
+      this.hideLoading();
     }
   }
+  
+  // 简化的地图就绪等待
+  waitForMapReady() {
+    return new Promise((resolve) => {
+      let attempts = 0;
+      const maxAttempts = 30;
+      
+      const checkReady = () => {
+        attempts++;
+        
+        try {
+          if (this.map && this.map.getContainer && this.map.getSize) {
+            const size = this.map.getSize();
+            if (size && size.width > 0 && size.height > 0) {
+              console.log(`地图就绪: ${size.width}x${size.height}`);
+              this.map.resize();
+              setTimeout(resolve, 100);
+              return;
+            }
+          }
+        } catch (e) {
+          console.warn('地图就绪检查出错:', e);
+        }
+        
+        if (attempts < maxAttempts) {
+          setTimeout(checkReady, 100);
+        } else {
+          console.warn('地图就绪检查超时，继续执行');
+          resolve();
+        }
+      };
+      
+      checkReady();
+    });
+  }
+  
+  // 简化的初始视图设置
+  setInitialView() {
+    if (!this.map || this.markers.length === 0) return;
+    
+    setTimeout(() => {
+      try {
+        // 收集有效标记位置
+        const validPositions = [];
+        this.markers.forEach(marker => {
+          if (marker && marker.getPosition) {
+            const pos = marker.getPosition();
+            if (pos && typeof pos.lng === 'number' && typeof pos.lat === 'number') {
+              validPositions.push(pos);
+            }
+          }
+        });
+        
+        if (validPositions.length === 0) {
+          console.warn('没有有效的标记位置，使用默认视图');
+          this.map.setZoomAndCenter(5, [104.0668, 30.5728]);
+          return;
+        }
+        
+        console.log(`找到 ${validPositions.length} 个有效标记位置`);
+        
+        // 计算中心点
+        const centerLng = validPositions.reduce((sum, pos) => sum + pos.lng, 0) / validPositions.length;
+        const centerLat = validPositions.reduce((sum, pos) => sum + pos.lat, 0) / validPositions.length;
+        
+        // 计算经纬度范围
+        const lngs = validPositions.map(pos => pos.lng);
+        const lats = validPositions.map(pos => pos.lat);
+        const lngRange = Math.max(...lngs) - Math.min(...lngs);
+        const latRange = Math.max(...lats) - Math.min(...lats);
+        const maxRange = Math.max(lngRange, latRange);
+        
+        // 根据范围计算合适的缩放级别
+        let zoom = 5;
+        if (maxRange < 2) zoom = 7;
+        else if (maxRange < 5) zoom = 6;
+        else if (maxRange < 15) zoom = 5;
+        else zoom = 4;
+        
+        console.log(`设置地图视图: center=(${centerLng.toFixed(4)}, ${centerLat.toFixed(4)}), zoom=${zoom}, range=${maxRange.toFixed(2)}`);
+        
+        // 直接设置中心点和缩放级别
+        this.map.setZoomAndCenter(zoom, [centerLng, centerLat]);
+        
+        // 验证设置是否成功
+        setTimeout(() => {
+          const currentCenter = this.map.getCenter();
+          const currentZoom = this.map.getZoom();
+          console.log(`视图设置验证: center=(${currentCenter.lng.toFixed(4)}, ${currentCenter.lat.toFixed(4)}), zoom=${currentZoom}`);
+        }, 500);
+        
+      } catch (error) {
+        console.error('设置初始视图失败:', error);
+        // 最后的备用方案
+        try {
+          this.map.setZoomAndCenter(5, [104.0668, 30.5728]);
+          console.log('使用默认视图设置');
+        } catch (e) {
+          console.error('默认视图设置也失败:', e);
+        }
+      }
+    }, 200);
+  }
+  
   async loadCities() {
     try {
       const response = await fetch('/data/cities.json');
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       this.cities = await response.json();
+      console.log(`城市数据加载成功: ${this.cities.visitedPlaces?.length || 0}个已访问, ${this.cities.plannedPlaces?.length || 0}个计划, ${this.cities.desiredPlaces?.length || 0}个想去`);
     } catch (error) {
-      console.error("ERROR: 城市数据加载失败。", error);
+      console.error("城市数据加载失败:", error);
       this.cities = null;
+      throw error;
     }
   }
+  
   addMarkers(placeList, color) {
+    if (!placeList || !Array.isArray(placeList)) return;
+    
+    let addedCount = 0;
     placeList.forEach(place => {
-      const marker = new this.AMap.Marker({
-        position: [place.lng, place.lat],
-        title: place.name,
-        content: `<div style="width: 14px; height: 14px; background: ${color}; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.4);"></div>`
-      });
-      marker.on('click', () => this.openInfoWindow(place));
-      this.map.add(marker);
+      if (place.lng && place.lat && typeof place.lng === 'number' && typeof place.lat === 'number') {
+        try {
+          const marker = new this.AMap.Marker({
+            position: [place.lng, place.lat],
+            title: place.name,
+            content: `<div style="width: 14px; height: 14px; background: ${color}; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.4);"></div>`
+          });
+          
+          marker.on('click', () => this.openInfoWindow(place));
+          this.map.add(marker);
+          this.markers.push(marker);
+          addedCount++;
+        } catch (e) {
+          console.warn(`添加标记失败: ${place.name}`, e);
+        }
+      } else {
+        console.warn(`无效的坐标数据: ${place.name}`, place);
+      }
     });
+    
+    console.log(`添加了 ${addedCount} 个标记，总计 ${this.markers.length} 个`);
   }
+  
   openInfoWindow(place) {
     if (this.infoWindow) this.infoWindow.close();
+    
     let photoHTML = '';
     if (place.photo) {
       const imageElement = `<div style="width: 100%; height: 146px; overflow: hidden; border-radius: 8px; border: 1px solid #e9ecef; margin-top: 8px; display: block;"><img src="${place.photo}" alt="${place.name}" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.parentElement.style.display='none'" /></div>`;
       photoHTML = place.article ? `<a href="${place.article}" target="_blank" style="text-decoration: none;">${imageElement}</a>` : imageElement;
     }
+    
     let articleHTML = (place.article && !place.photo) ? `<p><a href="${place.article}" target="_blank">阅读相关文章</a></p>` : '';
+    
     const contentString = `
       <div class="custom-info-window">
         <span class="custom-info-window-close">&times;</span>
@@ -203,13 +468,16 @@ class AboutFootprintsMap {
         ${photoHTML}
         ${articleHTML}
       </div>`;
+    
     this.infoWindow = new this.AMap.InfoWindow({
       isCustom: true,
       content: contentString,
       anchor: 'bottom-center',
       offset: new this.AMap.Pixel(0, -10)
     });
+    
     this.infoWindow.open(this.map, [place.lng, place.lat]);
+    
     setTimeout(() => {
       const closeBtn = document.querySelector('.custom-info-window-close');
       if (closeBtn) {
@@ -219,54 +487,149 @@ class AboutFootprintsMap {
       }
     }, 0);
   }
+  
   plotPlannedRoutes() {
+    if (!this.cities || !this.cities.plannedPlaces) return;
+    
     const plannedRoutes = this.cities.plannedPlaces.filter(place => place.path && place.path.length > 0);
     plannedRoutes.forEach(route => {
-      const path = route.path.map(point => [point.lng, point.lat]);
-      new this.AMap.Polyline({
-        path,
-        strokeColor: "#66b3ff",
-        strokeWeight: 4,
-        strokeOpacity: 0.7,
-        strokeStyle: "solid",
-        map: this.map
-      });
+      try {
+        const path = route.path.map(point => [point.lng, point.lat]);
+        const polyline = new this.AMap.Polyline({
+          path,
+          strokeColor: "#66b3ff",
+          strokeWeight: 4,
+          strokeOpacity: 0.7,
+          strokeStyle: "solid",
+          map: this.map
+        });
+        this.polylines.push(polyline);
+      } catch (e) {
+        console.warn('添加路线失败:', route.name, e);
+      }
     });
   }
+  
+  addMapEventListeners() {
+    if (!this.map) return;
+    
+    // 监听容器大小变化
+    if (window.ResizeObserver) {
+      const container = this.map.getContainer();
+      if (container) {
+        this.resizeObserver = new ResizeObserver(() => {
+          if (this.map && !this._destroyed) {
+            clearTimeout(this.resizeTimeout);
+            this.resizeTimeout = setTimeout(() => {
+              this.map.resize();
+            }, 200);
+          }
+        });
+        this.resizeObserver.observe(container);
+      }
+    }
+  }
+  
   async loadAPI() {
     return new Promise((resolve, reject) => {
-      if (window.AMap) return resolve(window.AMap);
+      if (window.AMap) {
+        console.log('高德地图API已存在');
+        return resolve(window.AMap);
+      }
+      
       const script = document.createElement('script');
       script.src = `https://webapi.amap.com/maps?v=2.0&key=${this.apiKey}&plugin=AMap.Polyline`;
-      script.onload = () => resolve(window.AMap);
-      script.onerror = reject;
+      script.async = true;
+      script.onload = () => {
+        if (window.AMap) {
+          console.log('高德地图API加载成功');
+          resolve(window.AMap);
+        } else {
+          reject(new Error('AMap API 加载失败'));
+        }
+      };
+      script.onerror = () => reject(new Error('网络错误，无法加载高德地图API'));
       document.head.appendChild(script);
     });
   }
+  
+  showLoading() {
+    const loading = document.getElementById('map-loading');
+    if (loading) {
+      loading.style.display = 'flex';
+    }
+  }
+  
+  hideLoading() {
+    const loading = document.getElementById('map-loading');
+    if (loading) {
+      loading.style.display = 'none';
+    }
+  }
+  
   showError(message) {
+    this.hideLoading();
     const container = document.getElementById('amap-container');
     if(container) {
-      container.innerHTML = `<div style="text-align: center; padding: 20px; color: #666;">${message}</div>`;
+      container.innerHTML = `
+        <div style="text-align: center; padding: 40px; color: #666; font-size: 14px; line-height: 1.6;">
+          <div style="font-size: 48px; margin-bottom: 16px;">🗺️</div>
+          ${message}
+        </div>`;
     }
   }
 }
-// ========= 全局唯一地图实例 =========
+
+// 全局地图实例管理
 let aboutMapInstance = null;
-document.addEventListener('astro:page-load', () => {
+
+// 初始化函数
+async function initMapInstance() {
   const mapContainer = document.getElementById('amap-container');
-  if (mapContainer) {
-    if (aboutMapInstance && typeof aboutMapInstance.destroy === 'function') {
-      aboutMapInstance.destroy();
-      aboutMapInstance = null;
-    }
-    aboutMapInstance = new AboutFootprintsMap();
-    aboutMapInstance.init();
-  }
-});
-document.addEventListener('astro:page-unload', () => {
-  if (aboutMapInstance && typeof aboutMapInstance.destroy === 'function') {
+  if (!mapContainer) return;
+  
+  // 清理旧实例
+  if (aboutMapInstance) {
     aboutMapInstance.destroy();
     aboutMapInstance = null;
+  }
+  
+  // 创建新实例
+  aboutMapInstance = new AboutFootprintsMap();
+  await aboutMapInstance.init();
+}
+
+// Astro页面生命周期事件
+document.addEventListener('astro:page-load', () => {
+  console.log('astro:page-load 事件触发');
+  setTimeout(initMapInstance, 100);
+});
+
+document.addEventListener('astro:before-preparation', () => {
+  console.log('astro:before-preparation 事件触发');
+  if (aboutMapInstance) {
+    aboutMapInstance.destroy();
+    aboutMapInstance = null;
+  }
+});
+
+// DOMContentLoaded 备用初始化
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded 事件触发');
+  if (!aboutMapInstance) {
+    setTimeout(initMapInstance, 200);
+  }
+});
+
+// 窗口大小改变处理
+let globalResizeTimeout;
+window.addEventListener('resize', () => {
+  if (aboutMapInstance && aboutMapInstance.map) {
+    clearTimeout(globalResizeTimeout);
+    globalResizeTimeout = setTimeout(() => {
+      console.log('窗口大小改变，调整地图');
+      aboutMapInstance.map.resize();
+    }, 300);
   }
 });
 </script>
