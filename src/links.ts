@@ -11,14 +11,14 @@ export const links: Link[] = [
   {
     name: "Cho",
     href: "https://frynut.com/",
-    logo: "https://frynut.com/assets/logo.svg.svg",
-    description: "一束光",
+    logo: "https://avatars.githubusercontent.com/u/1884557?v=4",
+    description: "Cho大神",
   },
   {
     name: "Zimoo`s",
     href: "https://zimoo.me/",
     logo: "https://cravatar.cn/avatar/1fa37bd1ff014dd0df4178b0cebcfc13?s=32&r=G&d=",
-    description: "一位蜀国人",
+    description: "也是一位蜀国人",
   },
   {
     name: "晚餐",
