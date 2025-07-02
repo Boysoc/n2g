@@ -30,32 +30,37 @@ export const links: Link[] = [
   {
     name: "面条",
     href: "http://miantiao.me/",
+    logo: "https://miantiao.me/logo.png",
     description: "面条的自留地"
   },
   {
     name: "山炮不二",
     href: "http://xsinger.me/",
+    logo: "https://sbsb.fun/img/me.png",
     description: "歌者与生活"
   },
   {
     name: "咚门",
     href: "http://www.dearzd.com/",
-    logo: "https://photos.dearzd.com/albums/104/index.gif",
+    logo: "https://photos.dearzd.com/albums/104/6630889644816498255.jpg",
     description: "喜欢栀子花的男生。"
   },
   {
     name: "Huiris's Blog",
     href: "http://huiris.com/",
+    logo: "https://pic.huiris.com/favicon.png",
     description: "Huiris 的数字空间"
   },
   {
     name: "设计笔记",
     href: "https://biji.io/",
+    logo: "https://www.biji.io/wp-content/uploads/favicon.png",
     description: "界面设计师分享"
   },
   {
     name: "小剧客栈",
     href: "http://bh-lay.com/",
+    logo: "https://static.bh-lay.com/build/single-page-vue/assets/aboutme_2-eb1beec4.jpg",
     description: "有戏的博客"
   },
   {
