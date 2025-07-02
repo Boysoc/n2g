@@ -109,4 +109,4 @@ Disallow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://github.n2g.cn/sitemap-index.xml
+Sitemap: https://n2g.cn/sitemap-index.xml
