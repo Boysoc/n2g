@@ -4,8 +4,13 @@ export interface Link {
   logo: string;
   darkLogo?: string;
   description?: string;
+  tooltip?: string;      // 鼠标悬浮提示内容
   feed?: string;  
+  github?: string;  
+  x?: string;  
+  instagram?: string;  
   inactive?: boolean; // 新增字段：是否不活跃
+  verified?: boolean; 
 }
 
 export const links: Link[] = [
@@ -14,6 +19,8 @@ export const links: Link[] = [
     href: "https://frynut.com/",
     logo: "https://avatars.githubusercontent.com/u/1884557?v=4",
     description: "Cho大神",
+    tooltip: "心中的技术白月光，定义了简洁的力量。如今每个404页面都保留着他的影子——既是对过往的致敬，也是对所有迷路者的温柔提醒：曾有人把代码写成诗。",
+    github: "https://github.com/pagecho",
     feed: "https://frynut.com/rss.xml"
   },
   {
@@ -21,13 +28,15 @@ export const links: Link[] = [
     href: "https://zimoo.me/",
     logo: "https://cravatar.cn/avatar/1fa37bd1ff014dd0df4178b0cebcfc13?s=32&r=G&d=",
     description: "也是一位蜀国人",
+    verified: true,
     feed: "https://blog.zimoo.me/feed/"
   },
   {
     name: "晚餐",
     href: "http://www.chelsea.org.cn/",
     logo: "/images/links/jiangxixi.jpg",
-    description: "又名教主。（切尔西的夏天）",
+    description: "教主，切尔西的夏天。",
+    tooltip: "晚餐，当年和我共建「中国罗马球迷联盟」的搭档，一个骨子里的罗马球迷（虽然后来也喜欢切尔西）。那些夏天的记忆都是滚烫的青春，如今生活各自忙碌，偶尔在球迷群里聊几句。而最纯粹的热忱，永远留在了川外校园里的夏天里 —— 他是我记忆里永远的朋友。",
     inactive: true, // 👉 加上这个字段表示此人“停更”或“下线”
   },
   {
@@ -68,7 +77,8 @@ export const links: Link[] = [
     name: "小剧客栈",
     href: "http://bh-lay.com/",
     logo: "https://static.bh-lay.com/build/single-page-vue/assets/aboutme_2-eb1beec4.jpg",
-    description: "有戏的博客"
+    description: "有戏的博客",
+    verified: true
   },
   {
     name: "liruifengv",
@@ -80,8 +90,8 @@ export const links: Link[] = [
   {
     name: "CaptainOfPhB",
     href: "https://captainofphb.me",
-    logo: "https://captainofphb.me/_astro/avatar.ke_icKou_Z23JjR9.webp",
-    description: "船长の部落格，记录有趣的事，分享技术经验。",
+    logo: "https://avatars.githubusercontent.com/u/30765485?v=4",
+    description: "记录有趣的事，分享技术经验。",
     feed: "https://captainofphb.me/rss.xml"
   },
   {
@@ -95,7 +105,8 @@ export const links: Link[] = [
     name: "Lianbo`s Blog",
     href: "https://godruoyi.com/",
     logo: "https://images.godruoyi.com/gblog/assets/brand_logo.Z0NyS6D-_2cLiuT.webp",
-    description: "Enjoy the process of building something using any technology stack.",
+    description: "用纸质书镇压效率 · 用Laravel怀念青春。",
+    github: "https://github.com/godruoyi",
     feed: "https://godruoyi.com/rss.xml"
   },
   {
@@ -123,7 +134,11 @@ export const links: Link[] = [
     name: "朱文龙 Mofei",
     href: "https://www.mofei.life/",
     logo: "https://avatars.githubusercontent.com/u/3351337?v=4",
-    description: "前端老法师(15年) → 数据炼丹师(5年) → AI 地图侠(当下)",
+    description: "赫尔辛基的键盘诗人。",
+    tooltip: "「前端老法师 → 数据炼丹师 → AI 地图侠」\n友情链接里唯一能同时解答 React 性能玄学 Python 数据风暴 AI 未来预言 的神奇存在。",
+    github: "https://github.com/zmofei",
+    instagram:"https://www.instagram.com/zhu_wenlong/",
+    verified: true,
     feed: "https://www.mofei.life/zh/rss"
   }
 ];

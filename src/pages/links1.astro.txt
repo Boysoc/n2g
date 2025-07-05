@@ -1,0 +1,112 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Component from '@components/Comment.astro';
+import { links } from "../links";
+
+// 自动生成 favicon 地址（用于 fallback）
+function getFaviconUrl(href: string): string {
+  try {
+    const url = new URL(href);
+    return `https://www.google.com/s2/favicons?sz=64&domain_url=${url.origin}`;
+  } catch {
+    return '/favicon.ico';
+  }
+}
+---
+
+<Layout>
+  <Header />
+
+  <main id="main-content" class="content">
+    <p style="text-align:center; margin-bottom:2rem;">海内存知己，天涯若比邻。</p>
+
+    <div class="links-grid">
+      {links.map(link => (
+        <a href={link.href} target="_blank" rel="noopener noreferrer" class="link-card">
+          <img
+            src={link.logo?.trim() ? link.logo : getFaviconUrl(link.href)}
+            alt={link.name}
+            class="link-logo"
+          />
+          <div class="link-info">
+            <h3 class={link.inactive ? 'inactive' : ''}>
+              {link.name}
+              {link.inactive && <span class="inactive-text">消失在互联网，期待回归</span>}
+            </h3>
+            <p>{link.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+<Component />
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-color, #1e1e1e);
+    border: 1px solid #333;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .link-card:hover {
+    transform: scale(1.02);
+    border-color: #00baff;
+  }
+
+  .link-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .link-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #000;
+  }
+
+  .link-info h3.inactive {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    text-decoration-color: #ff4d4f;
+    color: #999;
+  }
+
+  .inactive-text {
+    font-size: 0.75rem;
+    color: #999;
+    font-weight: 500;
+    font-style: normal;
+    margin-left: 0.4rem;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .link-info p {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+</style>
