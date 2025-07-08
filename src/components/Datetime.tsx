@@ -29,22 +29,29 @@ export default function Datetime({
 }
 
 const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
-  const myDatetime = new Date(
-    modDatetime && modDatetime > pubDatetime ? modDatetime : pubDatetime
-  );
+  const myDatetime =
+    new Date(
+      modDatetime && modDatetime > pubDatetime ? modDatetime : pubDatetime
+    );
+  // 补零函数
+  const pad = (n: number) => n.toString().padStart(2, "0");
 
-  // YYYY-MM-DD format
-  const date = myDatetime.toISOString().substring(0, 10);
-  const [year, month, day] = date.split("-");  // Split date into [YYYY, MM, DD]
-  // Mapping month numbers to abbreviations
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const monthIndex = parseInt(month) - 1; // Convert month from string to index (0-based)
-  const monthAbbreviation = monthNames[monthIndex]; // Get the abbreviation for the month
+  const year = myDatetime.getFullYear();
+  const month = myDatetime.getMonth(); // getMonth() 返回0-11
+  const day = pad(myDatetime.getDate());
+
+  const hour = pad(myDatetime.getHours());
+  const minute = pad(myDatetime.getMinutes());
+
+  // 月份英文缩写
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
 
   return (
     <>
-      {monthAbbreviation} {day}, {year} 
+      {monthNames[month]} {day}, {year} {hour}:{minute}
     </>
   );
 };
