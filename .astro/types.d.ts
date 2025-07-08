@@ -273,6 +273,69 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"typecho-2011-09-25.md": {
+	id: "typecho-2011-09-25.md";
+  slug: "naxiechunzhendewangshi";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"typecho-2012-11-07.md": {
+	id: "typecho-2012-11-07.md";
+  slug: "kanqiushiyizhongxinliboyitebieshimailezuqiucaipiaoderen";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"typecho-2012-11-09.md": {
+	id: "typecho-2012-11-09.md";
+  slug: "shiwangdebisaishangxindecaimin";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"typecho-2012-11-12.md": {
+	id: "typecho-2012-11-12.md";
+  slug: "yangguangxiadezhuimengren";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"typecho-2012-12-10.md": {
+	id: "typecho-2012-12-10.md";
+  slug: "suisuiyu";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"typecho-2013-11-19.md": {
+	id: "typecho-2013-11-19.md";
+  slug: "emengyibanquexiwangzhishigeemeng";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"typecho-2014-08-30.md": {
+	id: "typecho-2014-08-30.md";
+  slug: "shimian";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"typecho-2014-11-29.md": {
+	id: "typecho-2014-11-29.md";
+  slug: "aobuqiye";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"typecho-2019-11-08.md": {
+	id: "typecho-2019-11-08.md";
+  slug: "zucailumanmanbijibunengwang";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 };
 
 	};
