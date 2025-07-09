@@ -146,6 +146,7 @@ export const links: Link[] = [
     href: "https://aqzx.com/",
     logo: "http://www.aqzx.com/logo100.png",
     description: "一个因网恋而建并碎碎念了20多年的个人站。",
+    verified: true,
     feed: "https://aqzx.com/rss.asp"
   }
 ];
