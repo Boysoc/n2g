@@ -62,7 +62,7 @@ export const links: Link[] = [
   {
     name: "Huiris's Blog",
     href: "http://huiris.com/",
-    logo: "https://pic.huiris.com/favicon.png",
+    logo: "https://huiris.com/wp-content/uploads/old/favicon.png",
     description: "Huiris 的数字空间",
     feed: "https://huiris.com/feed/"
   },
@@ -114,6 +114,7 @@ export const links: Link[] = [
     href: "https://ilogs.cn",
     logo: "https://ilogs.cn/images/avatar.jpg",
     description: "记录生活中的平凡事",
+    verified: true,
     feed: "https://ilogs.cn/feed/"
   },
   {
@@ -135,7 +136,7 @@ export const links: Link[] = [
     href: "https://www.mofei.life/",
     logo: "https://avatars.githubusercontent.com/u/3351337?v=4",
     description: "赫尔辛基的键盘诗人。",
-    tooltip: "「前端老法师 → 数据炼丹师 → AI 地图侠」\n友情链接里唯一能同时解答 React 性能玄学 Python 数据风暴 AI 未来预言 的神奇存在。",
+    tooltip: "芬兰的程序员超级奶爸，写写博客，聊聊移居生活和带娃日常。有时也会唠两句技术",
     github: "https://github.com/zmofei",
     instagram:"https://www.instagram.com/zhu_wenlong/",
     verified: true,
