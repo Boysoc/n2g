@@ -474,7 +474,6 @@ footer {
   display: none;
 }
 
-/* 手机端响应式样式 - 修复导航换行问题 */
 @media (max-width: 640px) {
   body{
     font-size: 15px;
@@ -486,8 +485,10 @@ footer {
   .display-none {
     display: none;
   }
-  
-  .top-nav-wrap{
+  .nav-container{
+    
+  }
+ .top-nav-wrap{
     display: flex;
     flex-direction: column;
     position: relative;
@@ -513,21 +514,17 @@ footer {
     width: 100%;
   }
   
-  #menu-items{
-    background-color: #fff;
-    text-align: right;
-    padding: 1em 0 .7em;
-    margin: 0;
-    width: 100%;
-  }
-  
-  #menu-items li{
-    display: inline-block;
-    padding: 0 .5em;
-    line-height: 2em;
-    text-align: center;
-  }
+    #menu-items{
+      background-color: #fff;
+      text-align: right;
+      padding: 1em 0 .7em;
+      margin-top: 0;
+      li{
+        text-align: center;
+      }
+    }
      
+  }
   .hamburger-menu {
     display: block;
     position: absolute;
@@ -535,27 +532,37 @@ footer {
     top: 8px;
     border: none;
     background-color: #fff;
+    .menu-icon{
+      color: #555;
+    }
+    .is-active {
+      .line {
+        display: none;
+      }
+      .close {
+        display: block;
+      }
+    }
+
+    .close {
+      display: none;
+    }
   }
-  
   .related-post{
     padding: 1em 0;
     display: block;
-  }
-  
-  .related-post .prev-post,
-  .related-post .next-post{
-    flex: none;
-  }
-  
-  .related-post .prev-post svg,
-  .related-post .next-post svg{
-    display: none;
-  }
-  
-  .related-post .next-post{
-    text-align: left;
+    .prev-post,.next-post{
+      flex: none;
+      svg{
+        display: none;
+      }
+    }
+    .next-post{
+      text-align: left;
+    }
   }
 }
+
 
 h1, h2, h3, h4, h5, h6,
 .card-title h2,
