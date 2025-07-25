@@ -90,7 +90,7 @@ blockquote,
 }
 blockquote:before,
 .stressed-quote:before {
-  content: "“";
+  content: """;
   display: block;
   font-family: times;
   font-style: normal;
@@ -464,14 +464,23 @@ footer {
   }
   .nav-container{}
   .top-nav-wrap {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
+    flex-wrap: nowrap;
   }
   #menu-items {
     background-color: #fff;
     text-align: right;
     padding: 1em 0 .7em;
     margin-top: 0;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    z-index: 10;
+    border-top: 1px solid #eee;
   }
   #menu-items li {
     text-align: center;
@@ -479,16 +488,25 @@ footer {
     padding: 0.5em 0;
     line-height: 2em;
   }
+  .logo {
+    flex-shrink: 0;
+  }
   .logo span {
-    font-size: 32px;
+    font-size: 28px;
   }
   .hamburger-menu {
     display: block;
-    position: absolute;
-    right: -5px;
-    top: 8px;
+    position: relative;
+    right: 0;
+    top: 0;
     border: none;
-    background-color: #fff;
+    background-color: transparent;
+    padding: 8px;
+    flex-shrink: 0;
+  }
+  #nav-menu {
+    position: relative;
+    flex-shrink: 0;
   }
   .related-post{
     padding: 1em 0;
@@ -550,10 +568,6 @@ h1, h2, h3, h4, h5, h6,
   padding-left: 1em;
   padding-right: 1em;
 }
-
-
-
-
 
 :root {
   --card-bg: #fff;
@@ -796,6 +810,21 @@ h1, h2, h3, h4, h5, h6,
 @media (max-width: 900px) {
   .friend-apply-block { max-width: 100%; }
 }
+
+/* 针对更小屏幕的额外优化 */
+@media (max-width: 480px) {
+  .logo span {
+    font-size: 24px;
+  }
+  .content {
+    padding: 0 0.5em;
+  }
+  .top-nav-wrap {
+    margin-top: 1.5em;
+    padding-bottom: 1em;
+  }
+}
+
 @media (max-width: 600px) {
   .links-grid {
     grid-template-columns: 1fr;
@@ -814,4 +843,3 @@ h1, h2, h3, h4, h5, h6,
   .friend-apply-title {font-size: 1.10em;}
   .friend-apply-sub {font-size: 0.90em;}
 }
-
