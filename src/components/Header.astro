@@ -3,7 +3,7 @@ import { SITE } from "@config";
 import LinkButton from "./LinkButton.astro";
 
 export interface Props {
-  activeNav?: "posts" | "tags" | "about" | "search";
+  activeNav?: "posts" | "tags" | "about" | "search" | "archive";
 }
 
 const { activeNav } = Astro.props;
@@ -46,6 +46,11 @@ const { activeNav } = Astro.props;
             <li>
               <a href="/" class={activeNav !== "about" ? "active" : ""}>
                 日志
+              </a>
+            </li>
+            <li>
+              <a href="/archive/" class={activeNav === "archive" ? "active" : ""}>
+                归档
               </a>
             </li>
             <li>

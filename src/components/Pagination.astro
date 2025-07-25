@@ -22,34 +22,26 @@ for (let i = 1; i <= totalPages; i++) {
 
 {
   totalPages > 1 && (
-    <nav class="pagination-wrapper content" aria-label="Pagination">
-      <LinkButton
-        disabled={prev === "disabled"}
-        href={prevUrl}
-        className={`mr-4 select-none ${prev}`}
-        ariaLabel="Previous"
-      >
-         &lt;
-      </LinkButton>
-      
+    <nav class="home-pagination-wrapper" aria-label="文章分页">
       {pageNumbers.map((pageNum) => (
-        <LinkButton
+        <a
           href={pageNum === 1 ? '/posts/' : `/posts/${pageNum}/`}
-          className={`mx-1 select-none ${currentPage === pageNum ? 'active' : ''}`}
-          ariaLabel={`Page ${pageNum}`}
+          class={`home-pagination-link ${currentPage === pageNum ? 'active' : ''}`}
+          aria-label={`第 ${pageNum} 页`}
         >
           {pageNum}
-        </LinkButton>
+        </a>
       ))}
       
-      <LinkButton
-        disabled={next === "disabled"}
-        href={nextUrl}
-        className={`ml-4 select-none ${next}`}
-        ariaLabel="Next"
-      >
-        &gt;
-      </LinkButton>
+      {currentPage < totalPages && (
+        <a
+          href={nextUrl}
+          class="home-pagination-link home-pagination-next"
+          aria-label="下一页"
+        >
+          Next »
+        </a>
+      )}
     </nav>
   )
 }

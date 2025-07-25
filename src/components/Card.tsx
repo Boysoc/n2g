@@ -27,10 +27,26 @@ export default function Card({ href, slug="none-slug", frontmatter, secHeading =
     className: "text-xl font-medium decoration-dashed hover:underline",
   };
 
+  // 按行数截取内容（保留格式）
+  const getExcerptByLines = (content: string, maxLines: number = 25) => {
+    const lines = content.split('\n');
+    if (lines.length <= maxLines) {
+      return { excerpt: content, hasMore: false };
+    }
+    
+    const excerptLines = lines.slice(0, maxLines);
+    return { 
+      excerpt: excerptLines.join('\n'), 
+      hasMore: true 
+    };
+  };
+
+  const { excerpt, hasMore } = useMemo(() => getExcerptByLines(description), [description]);
+
   // 使用 useMemo 来缓存渲染结果，提高性能
   const renderedDescription = useMemo(() => {
     // 首先使用 MarkdownIt 将 Markdown 转换为 HTML
-    const htmlContent = md.render(description);
+    const htmlContent = md.render(excerpt);
     
     // 然后使用 sanitizeHtml 清理 HTML，防止 XSS 攻击
     return sanitizeHtml(htmlContent, {
@@ -40,7 +56,7 @@ export default function Card({ href, slug="none-slug", frontmatter, secHeading =
         img: ['src', 'alt', 'title']
       }
     });
-  }, [description]);
+  }, [excerpt]);
 
   return (
     <li className="card-list-li">
@@ -55,10 +71,14 @@ export default function Card({ href, slug="none-slug", frontmatter, secHeading =
           <h3 {...headerProps}>{title}</h3>
         )}
       </a>
-      <div 
-        className="post-content" 
-        dangerouslySetInnerHTML={{ __html: renderedDescription }} 
-      />
+      <div className="post-content">
+        <div dangerouslySetInnerHTML={{ __html: renderedDescription }} />
+        {hasMore && (
+          <a href={href} className="read-more-link">
+            阅读剩余部分 →
+          </a>
+        )}
+      </div>
     </li>
   );
 }
