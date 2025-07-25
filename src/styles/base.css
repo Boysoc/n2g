@@ -501,9 +501,14 @@ footer {
   
   .top-nav-wrap{
     display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .top-nav-wrap .nav-row-1 {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
     flex-wrap: nowrap;
   }
   
@@ -517,6 +522,7 @@ footer {
   
   #nav-menu {
     flex-shrink: 0;
+    width: 100%;
   }
   
   #menu-items{
@@ -524,6 +530,7 @@ footer {
     text-align: right;
     padding: 1em 0 .7em;
     margin: 0;
+    width: 100%;
   }
   
   #menu-items li{
