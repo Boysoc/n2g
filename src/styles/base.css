@@ -522,14 +522,16 @@ footer {
   #menu-items{
     background-color: #fff;
     text-align: right;
-    padding: 1em 0 .7em;
+    padding: 1em 0 1.5em;
     margin-top: 0;
+    margin-bottom: 1.5em;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     z-index: 10;
     border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
   }
   
   #menu-items li{
