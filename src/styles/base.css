@@ -522,7 +522,7 @@ footer {
   #menu-items{
     background-color: #fff;
     text-align: right;
-    padding: 1em 0;
+    padding: 1em 0 .7em;
     margin: 0;
   }
   
