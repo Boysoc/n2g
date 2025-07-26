@@ -33,13 +33,22 @@
       // 等待CSS加载完成
       setTimeout(() => {
         initWaline();
-      }, 500);
+      }, 800);
     } catch (error) {
       console.error('Waline加载失败:', error);
-      // 显示错误信息
-      const container = document.getElementById('waline-comment');
-      if (container) {
-        container.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">评论系统加载失败，请刷新页面重试</p>';
+      // 尝试备用CDN
+      try {
+        const { init } = await import('https://cdn.jsdelivr.net/npm/@waline/client@v3/dist/waline.js');
+        window.WalineInit = init;
+        setTimeout(() => {
+          initWaline();
+        }, 800);
+      } catch (fallbackError) {
+        console.error('备用CDN也失败:', fallbackError);
+        const container = document.getElementById('waline-comment');
+        if (container) {
+          container.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">评论系统加载失败，请检查网络连接后刷新页面</p>';
+        }
       }
     }
   }
@@ -63,16 +72,20 @@
     console.log('初始化Waline，当前主题:', currentTheme);
 
     try {
+      console.log('开始初始化Waline，服务器地址:', 'https://waline-comment-lovat-phi.vercel.app');
+      console.log('当前页面路径:', window.location.pathname);
+      
       // 初始化Waline
       const waline = window.WalineInit({
         el: '#waline-comment',
         serverURL: 'https://waline-comment-lovat-phi.vercel.app',
+        path: window.location.pathname,
         placeholder: '请留下你的足迹~',
         avatar: 'monsterid',
         meta: ['nick', 'mail', 'link'],
         requiredMeta: ['nick'],
         login: 'disable',
-        wordLimit: [10, 2000],
+        wordLimit: 0,
         pageSize: 10,
         lang: 'zh-CN',
         dark: currentTheme === 'dark',
@@ -80,8 +93,8 @@
           'https://unpkg.com/@waline/emojis@1.2.0/weibo'
         ],
         imageUploader: false,
-        texRenderer: false,
-        highlighter: false
+        copyright: false,
+        reaction: false
       });
 
       console.log('Waline初始化成功');
@@ -141,6 +154,7 @@
   :global(.wl-container) {
     font-family: inherit !important;
     color: var(--text-color) !important;
+    max-width: 100% !important;
   }
 
   :global(.wl-editor) {
@@ -152,12 +166,87 @@
     padding: 12px !important;
     font-size: 14px !important;
     line-height: 1.5 !important;
+    min-height: 80px !important;
+    resize: vertical !important;
   }
 
   :global(.wl-editor:focus) {
     border-color: var(--link-color) !important;
     outline: none !important;
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25) !important;
+  }
+
+  /* 修复字数统计显示 */
+  :global(.wl-count) {
+    color: var(--text-color) !important;
+    font-size: 12px !important;
+    margin: 8px 0 !important;
+    text-align: right !important;
+    opacity: 0.7 !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* 确保字数统计容器正确显示 */
+  :global(.wl-num) {
+    display: inline !important;
+    color: var(--text-color) !important;
+    opacity: 0.7 !important;
+    font-size: 12px !important;
+  }
+
+  /* 修复字数统计在不同浏览器的兼容性 */
+  :global(.wl-editor-wrapper) {
+    position: relative !important;
+  }
+
+  :global(.wl-editor-wrapper .wl-count) {
+    position: absolute !important;
+    bottom: -20px !important;
+    right: 0 !important;
+    font-size: 11px !important;
+    color: var(--text-color) !important;
+    opacity: 0.6 !important;
+  }
+
+  /* 修复输入框区域 */
+  :global(.wl-input) {
+    background-color: var(--bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 4px !important;
+    color: var(--text-color) !important;
+    padding: 6px 8px !important;
+    font-size: 13px !important;
+    font-family: inherit !important;
+  }
+
+  :global(.wl-input:focus) {
+    border-color: var(--link-color) !important;
+    outline: none !important;
+  }
+
+  /* 修复头像和用户信息区域 */
+  :global(.wl-header) {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    margin-bottom: 12px !important;
+  }
+
+  :global(.wl-avatar) {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 修复表单区域 */
+  :global(.wl-panel) {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin-bottom: 20px !important;
   }
 
   :global(.wl-btn) {
