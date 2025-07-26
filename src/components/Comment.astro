@@ -1,5 +1,6 @@
 ---
 ---
+
 <div class="giscus" id="giscus-container">
   <!-- Giscus will be loaded here dynamically -->
 </div>
@@ -24,7 +25,6 @@
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'bottom');
-    // 使用Giscus内置主题而不是自定义CSS
     script.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
     script.setAttribute('data-lang', 'zh-CN');
     script.setAttribute('crossorigin', 'anonymous');
@@ -32,8 +32,6 @@
     script.async = true;
 
     container.appendChild(script);
-    
-    console.log('Giscus已加载，主题:', theme);
   }
 
   function initGiscusTheme() {

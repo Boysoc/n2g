@@ -76,6 +76,8 @@ import '../styles/footprint.css';
     transform: translateY(-10px); 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     animation: fadeIn .3s ease-out;
+    border: none !important;
+    outline: none !important;
   }
 
   :global(.custom-info-window::after) {
@@ -120,6 +122,8 @@ import '../styles/footprint.css';
     cursor: pointer;
     border-radius: 50%;
     transition: background-color 0.2s, color 0.2s;
+    border: none !important;
+    outline: none !important;
   }
   :global(.custom-info-window-close:hover) {
     background-color: #f1f3f5;
@@ -132,7 +136,11 @@ import '../styles/footprint.css';
   :global(.custom-info-window a) { color: #007bff; text-decoration: none; font-weight: 500; }
   :global(.custom-info-window a:hover) { text-decoration: underline; }
 
+  /* 修复高德地图的边框问题 */
   :global(.amap-logo), :global(.amap-copyright) { display: none !important; }
+  :global(.amap-info-window) { border: none !important; outline: none !important; }
+  :global(.amap-container *) { outline: none !important; }
+  
   @keyframes fadeIn { from { opacity: 0; transform: translateY(0); } to { opacity: 1; transform: translateY(-10px); } }
   @media (max-width: 768px) { :global(.custom-info-window) { width: calc(100vw - 40px); } }
 </style>
@@ -173,7 +181,7 @@ function waitForContainerReady(containerId) {
               resolve(el);
             }
           }
-        }, 50);
+        }, 100);
       } else {
         if (attempts < maxAttempts) {
           setTimeout(check, 50);
@@ -255,6 +263,9 @@ class AboutFootprintsMap {
         throw new Error('容器未找到或未就绪');
       }
       
+      // 额外等待确保容器完全稳定
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
       // 设置安全配置
       if (this.securityJsCode) {
         window._AMapSecurityConfig = { securityJsCode: this.securityJsCode };
@@ -267,6 +278,13 @@ class AboutFootprintsMap {
       await this.loadCities();
       if (this._destroyed || !this.cities) {
         throw new Error('城市数据加载失败');
+      }
+      
+      // 再次确认容器状态
+      const finalContainer = document.getElementById('amap-container');
+      if (!finalContainer || finalContainer.offsetWidth === 0) {
+        console.warn('容器状态异常，等待重新稳定...');
+        await new Promise(resolve => setTimeout(resolve, 500));
       }
       
       // 创建地图
@@ -283,6 +301,14 @@ class AboutFootprintsMap {
       await this.waitForMapReady();
       if (this._destroyed) return;
       
+      // 强制调整地图大小
+      setTimeout(() => {
+        if (this.map && !this._destroyed) {
+          this.map.resize();
+          console.log('执行地图大小调整');
+        }
+      }, 100);
+      
       // 添加标记
       console.log('添加地图标记...');
       this.addMarkers(this.cities.visitedPlaces, '#dc3545');
@@ -290,8 +316,12 @@ class AboutFootprintsMap {
       this.addMarkers(this.cities.desiredPlaces, '#28a745');
       this.plotPlannedRoutes();
       
-      // 设置初始视图 - 简化版本
-      this.setInitialView();
+      // 设置初始视图 - 延迟更长时间
+      setTimeout(() => {
+        if (!this._destroyed) {
+          this.setInitialView();
+        }
+      }, 500);
       
       // 添加事件监听
       this.addMapEventListeners();
@@ -307,11 +337,11 @@ class AboutFootprintsMap {
     }
   }
   
-  // 简化的地图就绪等待
+  // 增强的地图就绪等待
   waitForMapReady() {
     return new Promise((resolve) => {
       let attempts = 0;
-      const maxAttempts = 30;
+      const maxAttempts = 50;
       
       const checkReady = () => {
         attempts++;
@@ -321,8 +351,14 @@ class AboutFootprintsMap {
             const size = this.map.getSize();
             if (size && size.width > 0 && size.height > 0) {
               console.log(`地图就绪: ${size.width}x${size.height}`);
+              // 多次调用resize确保地图正确渲染
               this.map.resize();
-              setTimeout(resolve, 100);
+              setTimeout(() => {
+                if (this.map && !this._destroyed) {
+                  this.map.resize();
+                }
+              }, 100);
+              setTimeout(resolve, 200);
               return;
             }
           }
@@ -342,72 +378,76 @@ class AboutFootprintsMap {
     });
   }
   
-  // 简化的初始视图设置
+  // 增强的初始视图设置
   setInitialView() {
     if (!this.map || this.markers.length === 0) return;
     
-    setTimeout(() => {
-      try {
-        // 收集有效标记位置
-        const validPositions = [];
-        this.markers.forEach(marker => {
-          if (marker && marker.getPosition) {
-            const pos = marker.getPosition();
-            if (pos && typeof pos.lng === 'number' && typeof pos.lat === 'number') {
-              validPositions.push(pos);
-            }
+    try {
+      // 再次强制调整地图大小
+      this.map.resize();
+      
+      // 收集有效标记位置
+      const validPositions = [];
+      this.markers.forEach(marker => {
+        if (marker && marker.getPosition) {
+          const pos = marker.getPosition();
+          if (pos && typeof pos.lng === 'number' && typeof pos.lat === 'number') {
+            validPositions.push(pos);
           }
-        });
-        
-        if (validPositions.length === 0) {
-          console.warn('没有有效的标记位置，使用默认视图');
-          this.map.setZoomAndCenter(5, [104.0668, 30.5728]);
-          return;
         }
-        
-        console.log(`找到 ${validPositions.length} 个有效标记位置`);
-        
-        // 计算中心点
-        const centerLng = validPositions.reduce((sum, pos) => sum + pos.lng, 0) / validPositions.length;
-        const centerLat = validPositions.reduce((sum, pos) => sum + pos.lat, 0) / validPositions.length;
-        
-        // 计算经纬度范围
-        const lngs = validPositions.map(pos => pos.lng);
-        const lats = validPositions.map(pos => pos.lat);
-        const lngRange = Math.max(...lngs) - Math.min(...lngs);
-        const latRange = Math.max(...lats) - Math.min(...lats);
-        const maxRange = Math.max(lngRange, latRange);
-        
-        // 根据范围计算合适的缩放级别
-        let zoom = 5;
-        if (maxRange < 2) zoom = 7;
-        else if (maxRange < 5) zoom = 6;
-        else if (maxRange < 15) zoom = 5;
-        else zoom = 4;
-        
-        console.log(`设置地图视图: center=(${centerLng.toFixed(4)}, ${centerLat.toFixed(4)}), zoom=${zoom}, range=${maxRange.toFixed(2)}`);
-        
-        // 直接设置中心点和缩放级别
-        this.map.setZoomAndCenter(zoom, [centerLng, centerLat]);
-        
-        // 验证设置是否成功
-        setTimeout(() => {
+      });
+      
+      if (validPositions.length === 0) {
+        console.warn('没有有效的标记位置，使用默认视图');
+        this.map.setZoomAndCenter(5, [104.0668, 30.5728]);
+        return;
+      }
+      
+      console.log(`找到 ${validPositions.length} 个有效标记位置`);
+      
+      // 计算中心点
+      const centerLng = validPositions.reduce((sum, pos) => sum + pos.lng, 0) / validPositions.length;
+      const centerLat = validPositions.reduce((sum, pos) => sum + pos.lat, 0) / validPositions.length;
+      
+      // 计算经纬度范围
+      const lngs = validPositions.map(pos => pos.lng);
+      const lats = validPositions.map(pos => pos.lat);
+      const lngRange = Math.max(...lngs) - Math.min(...lngs);
+      const latRange = Math.max(...lats) - Math.min(...lats);
+      const maxRange = Math.max(lngRange, latRange);
+      
+      // 根据范围计算合适的缩放级别
+      let zoom = 5;
+      if (maxRange < 2) zoom = 7;
+      else if (maxRange < 5) zoom = 6;
+      else if (maxRange < 15) zoom = 5;
+      else zoom = 4;
+      
+      console.log(`设置地图视图: center=(${centerLng.toFixed(4)}, ${centerLat.toFixed(4)}), zoom=${zoom}, range=${maxRange.toFixed(2)}`);
+      
+      // 设置中心点和缩放级别
+      this.map.setZoomAndCenter(zoom, [centerLng, centerLat]);
+      
+      // 延迟验证并再次调整
+      setTimeout(() => {
+        if (this.map && !this._destroyed) {
+          this.map.resize();
           const currentCenter = this.map.getCenter();
           const currentZoom = this.map.getZoom();
           console.log(`视图设置验证: center=(${currentCenter.lng.toFixed(4)}, ${currentCenter.lat.toFixed(4)}), zoom=${currentZoom}`);
-        }, 500);
-        
-      } catch (error) {
-        console.error('设置初始视图失败:', error);
-        // 最后的备用方案
-        try {
-          this.map.setZoomAndCenter(5, [104.0668, 30.5728]);
-          console.log('使用默认视图设置');
-        } catch (e) {
-          console.error('默认视图设置也失败:', e);
         }
+      }, 300);
+      
+    } catch (error) {
+      console.error('设置初始视图失败:', error);
+      // 最后的备用方案
+      try {
+        this.map.setZoomAndCenter(5, [104.0668, 30.5728]);
+        console.log('使用默认视图设置');
+      } catch (e) {
+        console.error('默认视图设置也失败:', e);
       }
-    }, 200);
+    }
   }
   
   async loadCities() {
@@ -596,6 +636,9 @@ async function initMapInstance() {
     aboutMapInstance = null;
   }
   
+  // 等待页面完全稳定
+  await new Promise(resolve => setTimeout(resolve, 200));
+  
   // 创建新实例
   aboutMapInstance = new AboutFootprintsMap();
   await aboutMapInstance.init();
@@ -604,7 +647,7 @@ async function initMapInstance() {
 // Astro页面生命周期事件
 document.addEventListener('astro:page-load', () => {
   console.log('astro:page-load 事件触发');
-  setTimeout(initMapInstance, 100);
+  setTimeout(initMapInstance, 300);
 });
 
 document.addEventListener('astro:before-preparation', () => {
@@ -619,7 +662,7 @@ document.addEventListener('astro:before-preparation', () => {
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOMContentLoaded 事件触发');
   if (!aboutMapInstance) {
-    setTimeout(initMapInstance, 200);
+    setTimeout(initMapInstance, 400);
   }
 });
 
@@ -631,7 +674,23 @@ window.addEventListener('resize', () => {
     globalResizeTimeout = setTimeout(() => {
       console.log('窗口大小改变，调整地图');
       aboutMapInstance.map.resize();
+      // 延迟再次调整确保正确
+      setTimeout(() => {
+        if (aboutMapInstance && aboutMapInstance.map) {
+          aboutMapInstance.map.resize();
+        }
+      }, 100);
     }, 300);
+  }
+});
+
+// 页面可见性变化时重新调整地图
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && aboutMapInstance && aboutMapInstance.map) {
+    setTimeout(() => {
+      console.log('页面重新可见，调整地图');
+      aboutMapInstance.map.resize();
+    }, 200);
   }
 });
 </script>
