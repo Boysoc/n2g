@@ -5,11 +5,18 @@ import type { CollectionEntry } from "astro:content";
 import sanitizeHtml from 'sanitize-html'
 import MarkdownIt from 'markdown-it'
 
-// 创建 MarkdownIt 实例
-const md = new MarkdownIt({
+// 创建 MarkdownIt 实例，启用代码高亮
+const md: MarkdownIt = new MarkdownIt({
   html: true,
   breaks: true,
-  linkify: true
+  linkify: true,
+  highlight: function (str: string, lang: string): string {
+    // 使用网站现有的代码块样式类
+    if (lang) {
+      return `<pre class="astro-code" data-language="${lang}"><code>${md.utils.escapeHtml(str)}</code></pre>`;
+    }
+    return `<pre class="astro-code"><code>${md.utils.escapeHtml(str)}</code></pre>`;
+  }
 });
 
 export interface Props {
@@ -50,10 +57,12 @@ export default function Card({ href, slug="none-slug", frontmatter, secHeading =
     
     // 然后使用 sanitizeHtml 清理 HTML，防止 XSS 攻击
     return sanitizeHtml(htmlContent, {
-      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'pre', 'code']),
       allowedAttributes: {
         ...sanitizeHtml.defaults.allowedAttributes,
-        img: ['src', 'alt', 'title']
+        img: ['src', 'alt', 'title'],
+        pre: ['class', 'data-language'],
+        code: ['class']
       }
     });
   }, [excerpt]);

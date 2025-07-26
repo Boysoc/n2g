@@ -217,6 +217,11 @@ class AboutFootprintsMap {
       this.resizeObserver = null;
     }
     
+    if (this.themeObserver) {
+      this.themeObserver.disconnect();
+      this.themeObserver = null;
+    }
+    
     if (this.map) {
       try {
         this.markers.forEach(marker => {
@@ -287,12 +292,16 @@ class AboutFootprintsMap {
         await new Promise(resolve => setTimeout(resolve, 500));
       }
       
+      // 获取当前主题
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const mapStyle = currentTheme === 'dark' ? 'amap://styles/dark' : 'amap://styles/light';
+      
       // 创建地图
       console.log('创建地图实例...');
       this.map = new this.AMap.Map(container, {
         zoom: 5,
         center: [104.0668, 30.5728],
-        mapStyle: 'amap://styles/light',
+        mapStyle: mapStyle,
         viewMode: '2D',
         resizeEnable: true
       });
@@ -570,6 +579,27 @@ class AboutFootprintsMap {
         this.resizeObserver.observe(container);
       }
     }
+    
+    // 监听主题变化
+    this.themeObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+          const newTheme = document.documentElement.getAttribute('data-theme') || 'light';
+          const mapStyle = newTheme === 'dark' ? 'amap://styles/dark' : 'amap://styles/light';
+          
+          if (this.map && !this._destroyed) {
+            console.log('主题切换，更新地图样式:', newTheme);
+            this.map.setMapStyle(mapStyle);
+          }
+        }
+      });
+    });
+    
+    // 开始观察主题变化
+    this.themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
   }
   
   async loadAPI() {

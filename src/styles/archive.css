@@ -1,4 +1,16 @@
 /* 归档页面样式 - 带竖线分割 */
+
+/* 页面标题样式 */
+.page-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--heading-color, #333);
+  margin: 1rem 0 2rem 0;
+  letter-spacing: 0.5em;
+  font-family: "Classic Grotesque W01", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
+}
+
 .archive-wrapper {
   max-width: 880px;
   margin: 0 auto;

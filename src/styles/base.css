@@ -443,20 +443,64 @@ footer {
 /* 代码高亮/代码块 */
 .astro-code {
   padding: 1.2em;
-  font-size: .8em;
+  font-size: .85em;
   line-height: 1.6;
-  background-color: #002b36 !important;
-  color: #cceeff !important;
+  background-color: #f5f5f5 !important;
+  color: #333 !important;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: "Fira Code", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
+
+/* 首页卡片中的代码块样式优化 */
+.post-content .astro-code {
+  background-color: #f5f5f5 !important;
+  color: #333 !important;
+  border: 1px solid #ddd;
+  font-size: 0.8em;
+  padding: 1em;
+  margin: 1em 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 .astro-code .copy-code {
   position: absolute;
   top: 1em;
   right: 1em;
-  background: #673535;
+  background: #666;
   color: #fff;
   border: none;
   padding: .3em 1em;
   text-transform: uppercase;
+  font-size: 0.7em;
+  border-radius: 3px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.astro-code:hover .copy-code {
+  opacity: 1;
+}
+
+/* 深色主题下的代码块 */
+[data-theme="dark"] .astro-code {
+  background-color: #1e1e1e !important;
+  color: #d4d4d4 !important;
+  border-color: #444 !important;
+}
+
+[data-theme="dark"] .post-content .astro-code {
+  background-color: #1e1e1e !important;
+  color: #d4d4d4 !important;
+  border-color: #444 !important;
+}
+
+[data-theme="dark"] .astro-code .copy-code {
+  background: #d4d4d4 !important;
+  color: #1e1e1e !important;
 }
 
 /* search */

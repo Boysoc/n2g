@@ -25,7 +25,7 @@
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'bottom');
-    script.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+    script.setAttribute('data-theme', theme === 'dark' ? 'dark_dimmed' : 'light');
     script.setAttribute('data-lang', 'zh-CN');
     script.setAttribute('crossorigin', 'anonymous');
     script.setAttribute('data-loading', 'lazy');
@@ -86,5 +86,18 @@
   /* 确保评论区域在主题切换时有平滑过渡 */
   .giscus iframe {
     transition: opacity 0.3s ease;
+  }
+  
+  /* 调整 Giscus 深色主题的背景色 */
+  [data-theme="dark"] .giscus {
+    background-color: var(--bg-color, #18191a);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  /* 为深色主题下的 Giscus iframe 添加更柔和的背景 */
+  [data-theme="dark"] .giscus iframe {
+    background-color: var(--card-bg, #242526) !important;
+    border-radius: 6px;
   }
 </style>
