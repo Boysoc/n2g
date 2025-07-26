@@ -88,6 +88,22 @@
         wordLimit: 0,
         pageSize: 10,
         lang: 'zh-CN',
+        locale: {
+          seconds: '刚刚',
+          minutes: '$0 分钟前',
+          hours: '$0 小时前',
+          days: '$0 天前',
+          now: '刚刚',
+          sofa: '来发评论吧~',
+          submit: '提交',
+          reply: '回复',
+          cancelReply: '取消回复',
+          comment: '评论',
+          refresh: '刷新',
+          more: '加载更多...',
+          preview: '预览',
+          emoji: '表情'
+        },
         dark: currentTheme === 'dark',
         emoji: [
           'https://unpkg.com/@waline/emojis@1.2.0/weibo'
@@ -98,6 +114,45 @@
       });
 
       console.log('Waline初始化成功');
+
+      // 自定义时间格式化
+      setTimeout(() => {
+        const timeElements = document.querySelectorAll('.wl-time');
+        timeElements.forEach(timeEl => {
+          const originalTime = timeEl.textContent;
+          if (originalTime) {
+            // 如果是相对时间，保持原样
+            if (originalTime.includes('前') || originalTime === '刚刚') {
+              return;
+            }
+            
+            // 如果是绝对时间，格式化为更漂亮的格式
+            try {
+              const date = new Date(timeEl.getAttribute('datetime') || timeEl.textContent);
+              const now = new Date();
+              const diffMs = now.getTime() - date.getTime();
+              const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+              
+              if (diffDays === 0) {
+                timeEl.textContent = '今天';
+              } else if (diffDays === 1) {
+                timeEl.textContent = '昨天';
+              } else if (diffDays === 2) {
+                timeEl.textContent = '前天';
+              } else if (diffDays < 7) {
+                timeEl.textContent = `${diffDays} 天前`;
+              } else {
+                // 超过一周显示具体日期
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                timeEl.textContent = `${month}月${day}日`;
+              }
+            } catch (e) {
+              // 如果解析失败，保持原样
+            }
+          }
+        });
+      }, 1000);
 
       // 监听主题变化
       const observer = new MutationObserver((mutations) => {
@@ -287,8 +342,31 @@
 
   :global(.wl-time) {
     color: var(--text-color) !important;
-    opacity: 0.7 !important;
+    opacity: 0.6 !important;
     font-size: 12px !important;
+    font-weight: 400 !important;
+    margin-left: 8px !important;
+    position: relative !important;
+  }
+
+  /* 美化时间显示 */
+  :global(.wl-time::before) {
+    content: "📅 " !important;
+    opacity: 0.5 !important;
+    margin-right: 2px !important;
+  }
+
+  /* 时间悬停效果 */
+  :global(.wl-time:hover) {
+    opacity: 0.9 !important;
+    transition: opacity 0.2s ease !important;
+  }
+
+  /* 相对时间样式 */
+  :global(.wl-time[title]) {
+    cursor: help !important;
+    border-bottom: 1px dotted var(--text-color) !important;
+    border-opacity: 0.3 !important;
   }
 
   :global(.wl-content) {
@@ -350,10 +428,140 @@
     #waline-comment {
       margin-top: 1.5rem;
       padding-top: 1.5rem;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    :global(.wl-container) {
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: 100% !important;
     }
 
     :global(.wl-editor) {
       font-size: 14px !important;
+      padding: 10px !important;
+      min-height: 60px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    :global(.wl-panel) {
+      padding: 12px !important;
+      margin: 0 0 15px 0 !important;
+      border-radius: 6px !important;
+    }
+
+    :global(.wl-header) {
+      flex-direction: column !important;
+      gap: 8px !important;
+    }
+
+    :global(.wl-header-item) {
+      width: 100% !important;
+      margin-bottom: 8px !important;
+    }
+
+    :global(.wl-input) {
+      width: 100% !important;
+      margin-bottom: 8px !important;
+      padding: 8px !important;
+      font-size: 14px !important;
+      box-sizing: border-box !important;
+    }
+
+    :global(.wl-btn) {
+      padding: 8px 16px !important;
+      font-size: 14px !important;
+      width: auto !important;
+      margin: 5px 5px 5px 0 !important;
+    }
+
+    :global(.wl-card) {
+      padding: 12px !important;
+      margin-bottom: 12px !important;
+      border-radius: 6px !important;
+    }
+
+    :global(.wl-avatar) {
+      width: 32px !important;
+      height: 32px !important;
+    }
+
+    :global(.wl-nick) {
+      font-size: 13px !important;
+    }
+
+    :global(.wl-time) {
+      font-size: 11px !important;
+      margin-left: 0 !important;
+      margin-top: 4px !important;
+      display: block !important;
+    }
+
+    :global(.wl-content) {
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+      word-break: break-word !important;
+    }
+
+    :global(.wl-meta) {
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+
+    :global(.wl-count) {
+      font-size: 11px !important;
+      text-align: left !important;
+      margin: 5px 0 !important;
+    }
+
+    /* 修复输入框布局 */
+    :global(.wl-info) {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      margin-bottom: 12px !important;
+    }
+
+    :global(.wl-info .wl-input) {
+      flex: none !important;
+      width: 100% !important;
+    }
+
+    /* 修复按钮区域 */
+    :global(.wl-actions) {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      justify-content: flex-start !important;
+    }
+
+    /* 修复表情和工具栏 */
+    :global(.wl-emoji) {
+      max-width: 100% !important;
+      overflow-x: auto !important;
+    }
+
+    :global(.wl-tabs) {
+      flex-wrap: wrap !important;
+    }
+  }
+
+  /* 超小屏幕优化 */
+  @media (max-width: 480px) {
+    #waline-comment {
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+
+    :global(.wl-editor) {
+      min-height: 50px !important;
+      font-size: 13px !important;
+      padding: 8px !important;
+    }
+
+    :global(.wl-panel) {
       padding: 10px !important;
     }
 
@@ -363,7 +571,11 @@
     }
 
     :global(.wl-card) {
-      padding: 0.8rem !important;
+      padding: 10px !important;
+    }
+
+    :global(.wl-content) {
+      font-size: 12px !important;
     }
   }
 </style>
