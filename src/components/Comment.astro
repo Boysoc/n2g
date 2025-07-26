@@ -1,103 +1,280 @@
 ---
 ---
 
-<div class="giscus" id="giscus-container">
-  <!-- Giscus will be loaded here dynamically -->
-</div>
+<div id="waline-comment"></div>
 
 <script>
-  function loadGiscus(theme = 'light') {
-    const container = document.getElementById('giscus-container');
-    if (!container) return;
+  // 加载Waline CSS
+  function loadWalineCSS() {
+    if (document.querySelector('link[href*="waline"]')) return;
+    
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/@waline/client@v3/dist/waline.css';
+    document.head.appendChild(link);
+  }
+
+  // 动态加载Waline
+  async function loadWaline() {
+    // 先加载CSS
+    loadWalineCSS();
+    
+    // 检查是否已经加载过
+    if (window.WalineInit) {
+      initWaline();
+      return;
+    }
+
+    try {
+      // 动态导入Waline
+      const { init } = await import('https://unpkg.com/@waline/client@v3/dist/waline.js');
+      window.WalineInit = init;
+      
+      // 等待CSS加载完成
+      setTimeout(() => {
+        initWaline();
+      }, 500);
+    } catch (error) {
+      console.error('Waline加载失败:', error);
+      // 显示错误信息
+      const container = document.getElementById('waline-comment');
+      if (container) {
+        container.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">评论系统加载失败，请刷新页面重试</p>';
+      }
+    }
+  }
+
+  function initWaline() {
+    const container = document.getElementById('waline-comment');
+    if (!container || !window.WalineInit) {
+      console.log('容器或Waline未准备好');
+      return;
+    }
 
     // 清空容器
     container.innerHTML = '';
-    
-    // 创建新的script元素
-    const script = document.createElement('script');
-    script.src = 'https://giscus.app/client.js';
-    script.setAttribute('data-repo', 'Boysoc/n2g');
-    script.setAttribute('data-repo-id', 'R_kgDOOz8mAA');
-    script.setAttribute('data-category', 'Ideas');
-    script.setAttribute('data-category-id', 'DIC_kwDOOz8mAM4CrNcP');
-    script.setAttribute('data-mapping', 'url');
-    script.setAttribute('data-strict', '0');
-    script.setAttribute('data-reactions-enabled', '1');
-    script.setAttribute('data-emit-metadata', '0');
-    script.setAttribute('data-input-position', 'bottom');
-    script.setAttribute('data-theme', theme === 'dark' ? 'dark_dimmed' : 'light');
-    script.setAttribute('data-lang', 'zh-CN');
-    script.setAttribute('crossorigin', 'anonymous');
-    script.setAttribute('data-loading', 'lazy');
-    script.async = true;
 
-    container.appendChild(script);
-  }
-
-  function initGiscusTheme() {
     // 获取当前主题
     const getCurrentTheme = () => {
       return document.documentElement.getAttribute('data-theme') || 'light';
     };
 
-    // 初始加载
-    const initialTheme = getCurrentTheme();
-    loadGiscus(initialTheme);
+    const currentTheme = getCurrentTheme();
+    console.log('初始化Waline，当前主题:', currentTheme);
 
-    // 监听主题变化
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-          const newTheme = getCurrentTheme();
-          console.log('主题已切换，正在重新加载评论组件，新主题:', newTheme);
-          // 延迟重新加载，确保主题切换动画完成
-          setTimeout(() => {
-            loadGiscus(newTheme);
-          }, 300);
-        }
+    try {
+      // 初始化Waline
+      const waline = window.WalineInit({
+        el: '#waline-comment',
+        serverURL: 'https://waline-comment-lovat-phi.vercel.app',
+        placeholder: '请留下你的足迹~',
+        avatar: 'monsterid',
+        meta: ['nick', 'mail', 'link'],
+        requiredMeta: ['nick'],
+        login: 'disable',
+        wordLimit: [10, 2000],
+        pageSize: 10,
+        lang: 'zh-CN',
+        dark: currentTheme === 'dark',
+        emoji: [
+          'https://unpkg.com/@waline/emojis@1.2.0/weibo'
+        ],
+        imageUploader: false,
+        texRenderer: false,
+        highlighter: false
       });
-    });
 
-    // 开始观察主题变化
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    });
+      console.log('Waline初始化成功');
+
+      // 监听主题变化
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+            const newTheme = getCurrentTheme();
+            console.log('主题切换到:', newTheme);
+            
+            // 重新初始化Waline以应用新主题
+            setTimeout(() => {
+              initWaline();
+            }, 100);
+          }
+        });
+      });
+
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme']
+      });
+
+      return waline;
+    } catch (error) {
+      console.error('Waline初始化失败:', error);
+      container.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">评论系统初始化失败</p>';
+    }
   }
 
-  // 初始化
+  // 页面加载完成后初始化
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initGiscusTheme);
+    document.addEventListener('DOMContentLoaded', loadWaline);
   } else {
-    initGiscusTheme();
+    loadWaline();
   }
 
-  // 在页面导航时重新初始化
-  document.addEventListener("astro:after-swap", () => {
-    setTimeout(initGiscusTheme, 100);
+  // Astro页面切换时重新初始化
+  document.addEventListener('astro:page-load', () => {
+    setTimeout(loadWaline, 100);
+  });
+
+  document.addEventListener('astro:after-swap', () => {
+    setTimeout(loadWaline, 100);
   });
 </script>
 
 <style>
-  .giscus {
+  #waline-comment {
     margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
   }
-  
-  /* 确保评论区域在主题切换时有平滑过渡 */
-  .giscus iframe {
-    transition: opacity 0.3s ease;
+
+  /* 基础样式适配 */
+  :global(.wl-container) {
+    font-family: inherit !important;
+    color: var(--text-color) !important;
   }
-  
-  /* 调整 Giscus 深色主题的背景色 */
-  [data-theme="dark"] .giscus {
-    background-color: var(--bg-color, #18191a);
-    border-radius: 8px;
-    padding: 1rem;
+
+  :global(.wl-editor) {
+    background-color: var(--bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    color: var(--text-color) !important;
+    font-family: inherit !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
   }
-  
-  /* 为深色主题下的 Giscus iframe 添加更柔和的背景 */
-  [data-theme="dark"] .giscus iframe {
-    background-color: var(--card-bg, #242526) !important;
-    border-radius: 6px;
+
+  :global(.wl-editor:focus) {
+    border-color: var(--link-color) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25) !important;
+  }
+
+  :global(.wl-btn) {
+    background-color: var(--text-color) !important;
+    color: var(--bg-color) !important;
+    border: none !important;
+    border-radius: 4px !important;
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+    transition: opacity 0.2s ease !important;
+    cursor: pointer !important;
+  }
+
+  :global(.wl-btn:hover) {
+    opacity: 0.8 !important;
+  }
+
+  :global(.wl-btn:disabled) {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+  }
+
+  :global(.wl-card) {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1px 3px var(--shadow-color) !important;
+    margin-bottom: 1rem !important;
+    padding: 1rem !important;
+  }
+
+  :global(.wl-nick) {
+    color: var(--heading-color) !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+  }
+
+  :global(.wl-time) {
+    color: var(--text-color) !important;
+    opacity: 0.7 !important;
+    font-size: 12px !important;
+  }
+
+  :global(.wl-content) {
+    color: var(--text-color) !important;
+    line-height: 1.6 !important;
+    margin-top: 0.5rem !important;
+    font-size: 14px !important;
+  }
+
+  :global(.wl-content p) {
+    margin: 0.5rem 0 !important;
+  }
+
+  :global(.wl-meta) {
+    border-top: 1px solid var(--border-color) !important;
+    padding-top: 0.5rem !important;
+    margin-top: 0.5rem !important;
+  }
+
+  :global(.wl-count) {
+    color: var(--text-color) !important;
+    font-size: 14px !important;
+    margin-bottom: 1rem !important;
+  }
+
+  :global(.wl-loading) {
+    text-align: center !important;
+    padding: 2rem !important;
+    color: var(--text-color) !important;
+    opacity: 0.7 !important;
+  }
+
+  :global(.wl-empty) {
+    text-align: center !important;
+    padding: 2rem !important;
+    color: var(--text-color) !important;
+    opacity: 0.7 !important;
+  }
+
+  /* 深色主题适配 */
+  [data-theme="dark"] :global(.wl-editor) {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-color) !important;
+  }
+
+  [data-theme="dark"] :global(.wl-card) {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  [data-theme="dark"] :global(.wl-btn) {
+    background-color: var(--text-color) !important;
+    color: var(--bg-color) !important;
+  }
+
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    #waline-comment {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+    }
+
+    :global(.wl-editor) {
+      font-size: 14px !important;
+      padding: 10px !important;
+    }
+
+    :global(.wl-btn) {
+      padding: 6px 12px !important;
+      font-size: 13px !important;
+    }
+
+    :global(.wl-card) {
+      padding: 0.8rem !important;
+    }
   }
 </style>
