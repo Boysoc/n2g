@@ -75,12 +75,35 @@ const { activeNav } = Astro.props;
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="scale-125 sm:scale-100"
-                  ><path
-                    d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"
-                  ></path>
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                  <path d="M21 21l-6 -6"></path>
                 </svg>
                 <span class="sr-only">Search</span>
               </LinkButton>
+            </li>
+            <li>
+              <button id="theme-toggle" class="theme-toggle focus-outline p-3 sm:p-1 flex" aria-label="切换主题" title="切换主题">
+                <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="scale-125 sm:scale-100" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+                  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
+                </svg>
+                <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="scale-125 sm:scale-100" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+                </svg>
+                <span class="sr-only">切换主题</span>
+              </button>
             </li>
           </ul>
         </nav>
@@ -112,8 +135,64 @@ const { activeNav } = Astro.props;
     });
   }
 
+  function initTheme() {
+    // 获取主题切换按钮和图标
+    const themeToggle = document.getElementById("theme-toggle");
+    const sunIcon = document.getElementById("sun-icon");
+    const moonIcon = document.getElementById("moon-icon");
+    
+    if (!themeToggle || !sunIcon || !moonIcon) return;
+
+    // 获取保存的主题或系统偏好
+    const getThemePreference = () => {
+      if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+        return localStorage.getItem("theme");
+      }
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    };
+
+    // 设置主题
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+      
+      if (theme === "dark") {
+        sunIcon.style.display = "none";
+        moonIcon.style.display = "block";
+      } else {
+        sunIcon.style.display = "block";
+        moonIcon.style.display = "none";
+      }
+    };
+
+    // 切换主题
+    const toggleTheme = () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+      setTheme(newTheme);
+    };
+
+    // 初始化主题
+    const initialTheme = getThemePreference();
+    setTheme(initialTheme);
+
+    // 添加点击事件
+    themeToggle.addEventListener("click", toggleTheme);
+
+    // 监听系统主题变化
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+      if (!localStorage.getItem("theme")) {
+        setTheme(e.matches ? "dark" : "light");
+      }
+    });
+  }
+
   toggleNav();
+  initTheme();
 
   // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", toggleNav);
+  document.addEventListener("astro:after-swap", () => {
+    toggleNav();
+    initTheme();
+  });
 </script>

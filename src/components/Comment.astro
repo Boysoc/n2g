@@ -1,21 +1,92 @@
 ---
 ---
-<div class="giscus">
-  <script
-    src="https://giscus.app/client.js"
-    data-repo="Boysoc/n2g"
-    data-repo-id="R_kgDOOz8mAA"
-    data-category="Ideas"
-    data-category-id="DIC_kwDOOz8mAM4CrNcP"
-    data-mapping="url"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="bottom"
-    data-theme="https://n2g.cn/assets/comment.css"
-    data-lang="zh-CN"
-    crossorigin="anonymous"
-    data-loading="lazy"
-    async
-  ></script>
+<div class="giscus" id="giscus-container">
+  <!-- Giscus will be loaded here dynamically -->
 </div>
+
+<script>
+  function loadGiscus(theme = 'light') {
+    const container = document.getElementById('giscus-container');
+    if (!container) return;
+
+    // 清空容器
+    container.innerHTML = '';
+    
+    // 创建新的script元素
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', 'Boysoc/n2g');
+    script.setAttribute('data-repo-id', 'R_kgDOOz8mAA');
+    script.setAttribute('data-category', 'Ideas');
+    script.setAttribute('data-category-id', 'DIC_kwDOOz8mAM4CrNcP');
+    script.setAttribute('data-mapping', 'url');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'bottom');
+    // 使用Giscus内置主题而不是自定义CSS
+    script.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+    script.setAttribute('data-lang', 'zh-CN');
+    script.setAttribute('crossorigin', 'anonymous');
+    script.setAttribute('data-loading', 'lazy');
+    script.async = true;
+
+    container.appendChild(script);
+    
+    console.log('Giscus已加载，主题:', theme);
+  }
+
+  function initGiscusTheme() {
+    // 获取当前主题
+    const getCurrentTheme = () => {
+      return document.documentElement.getAttribute('data-theme') || 'light';
+    };
+
+    // 初始加载
+    const initialTheme = getCurrentTheme();
+    loadGiscus(initialTheme);
+
+    // 监听主题变化
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+          const newTheme = getCurrentTheme();
+          console.log('主题已切换，正在重新加载评论组件，新主题:', newTheme);
+          // 延迟重新加载，确保主题切换动画完成
+          setTimeout(() => {
+            loadGiscus(newTheme);
+          }, 300);
+        }
+      });
+    });
+
+    // 开始观察主题变化
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+  }
+
+  // 初始化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGiscusTheme);
+  } else {
+    initGiscusTheme();
+  }
+
+  // 在页面导航时重新初始化
+  document.addEventListener("astro:after-swap", () => {
+    setTimeout(initGiscusTheme, 100);
+  });
+</script>
+
+<style>
+  .giscus {
+    margin-top: 2rem;
+  }
+  
+  /* 确保评论区域在主题切换时有平滑过渡 */
+  .giscus iframe {
+    transition: opacity 0.3s ease;
+  }
+</style>

@@ -4,10 +4,27 @@
   --link-color: #6e7173;
   --link-hover-color: #444;
   --bg-color: #fff;
+  --card-bg: #fff;
+  --border-color: #eee;
+  --code-bg: #f8f9fa;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 暗色主题 */
+[data-theme="dark"] {
+  --text-color: #e4e6ea;
+  --heading-color: #f0f2f5;
+  --link-color: #b0b3b8;
+  --link-hover-color: #e4e6ea;
+  --bg-color: #18191a;
+  --card-bg: #242526;
+  --border-color: #3a3b3c;
+  --code-bg: #2d2d2d;
+  --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
 body {
-  color: #444;
+  color: var(--text-color);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -15,7 +32,8 @@ body {
     "WenQuanYi Micro Hei", SimSun, sans-serif;
   font-size: 17px;
   position: relative;
-  background-color: #fefefe;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* 顶部进度条 */
@@ -222,6 +240,50 @@ header {
   display: none;
 }
 
+/* 主题切换按钮 */
+.theme-toggle {
+  background: none;
+  border: none;
+  color: #ccc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  font-size: 14px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.theme-toggle:hover {
+  color: #000;
+}
+
+.theme-toggle:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.theme-toggle.focus-outline:focus {
+  outline: 2px solid #007acc;
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .theme-toggle {
+  color: #ccc;
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  color: #fff;
+}
+
+/* 确保主题切换按钮在移动端也正常显示 */
+@media (max-width: 640px) {
+  .theme-toggle {
+    padding: 0.5em;
+  }
+}
+
 /* 主内容标题 */
 #main-content h1 {
   font-weight: normal;
@@ -232,8 +294,8 @@ header {
 
 /* card */
 .card-title {
-  background-color: #FFF;
-  color: #444;
+  background-color: var(--card-bg);
+  color: var(--text-color);
   font-family: "Classic Grotesque W01", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
   font-size: 17px;
   -webkit-font-smoothing: antialiased;
@@ -245,7 +307,7 @@ header {
   margin:0;
 }
 .card-title:hover {
-  color: #000;
+  color: var(--link-hover-color);
 }
 
 .card-ul,
@@ -322,14 +384,17 @@ header {
   display: inline-block;
   padding: 14px 15px;
   margin: 3px;
-  color: #888;
-  border: 1px solid #eee;
+  color: var(--link-color);
+  border: 1px solid var(--border-color);
   font-size: 1em;
   height: 1.2em;
   line-height: 1.2;
+  background-color: var(--card-bg);
+  transition: all 0.2s ease;
 }
 .pagination-wrapper a:hover{
-  border-color: #555;
+  border-color: var(--link-hover-color);
+  color: var(--link-hover-color);
 }
 .pagination-wrapper,
 .all-posts-btn-wrapper {
@@ -534,7 +599,7 @@ h1, h2, h3, h4, h5, h6,
 .card-list-li h2,
 .card-list-li h3,
 .post-title {
-  color: #666;
+  color: var(--heading-color);
   font-weight: bold;
 }
 #main-content h1,
