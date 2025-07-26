@@ -78,21 +78,32 @@
 @media (max-width: 640px) {
   .archive-wrapper {
     padding: 0 1em;
+    max-width: 100%;
   }
   
   .archive-year-section {
     flex-direction: column;
-    margin-bottom: 2em;
+    margin-bottom: 2.5em;
+    padding-bottom: 1.5em;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .archive-year-section:last-child {
+    border-bottom: none;
   }
   
   .archive-year-header {
     width: 100%;
     justify-content: flex-start;
-    margin-bottom: 1em;
+    margin-bottom: 1.2em;
+    padding-bottom: 0.8em;
+    border-bottom: 2px solid #f4645f;
   }
   
   .archive-year-text {
-    font-size: 1.5em;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #333;
   }
   
   .archive-divider {
@@ -106,11 +117,62 @@
   .archive-post {
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 1.5em;
+    padding: 1em;
+    background: #fafafa;
+    border-radius: 8px;
+    border-left: 3px solid #f4645f;
+  }
+  
+  .archive-post:last-child {
+    margin-bottom: 0;
   }
   
   .archive-post-date {
     width: auto;
     margin-right: 0;
-    margin-bottom: 0.2em;
+    margin-bottom: 0.5em;
+    font-size: 0.85em;
+    color: #888;
+    font-weight: 500;
+    background: #fff;
+    padding: 0.2em 0.6em;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .archive-post-title {
+    font-size: 1.05em;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .archive-post-title:hover {
+    color: #f4645f;
+  }
+}
+
+/* 平板设备优化 */
+@media (max-width: 768px) and (min-width: 641px) {
+  .archive-wrapper {
+    padding: 0 2em;
+  }
+  
+  .archive-year-header {
+    width: 100px;
+  }
+  
+  .archive-posts {
+    padding-left: 30px;
+  }
+  
+  .archive-post-date {
+    width: 50px;
+    font-size: 0.9em;
+  }
+  
+  .archive-post-title {
+    font-size: 0.95em;
   }
 }
