@@ -300,6 +300,8 @@ header {
 }
 .post-content img {
   max-width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 .post-content blockquote {
   font-style: normal;
@@ -691,6 +693,7 @@ h1, h2, h3, h4, h5, h6,
   border-radius: 50%;
   object-fit: cover;
   background: #f1f3f6;
+  flex-shrink: 0;
 }
 .link-info h3 {
   margin: 0;
