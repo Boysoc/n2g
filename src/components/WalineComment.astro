@@ -16,13 +16,13 @@
 
     init({
       el: '#waline-comment',
-      serverURL: 'https://your-waline-server.vercel.app', // 替换为你的Vercel部署地址
+      serverURL: 'https://waline-comment-lovat-phi.vercel.app',
       placeholder: '说点什么吧...',
       avatar: 'monsterid',
       meta: ['nick', 'mail', 'link'],
       requiredMeta: ['nick'],
       login: 'disable', // 禁用登录，支持匿名评论
-      wordLimit: [10, 2000],
+      wordLimit: 0, // 取消字数限制
       pageSize: 10,
       lang: 'zh-CN',
       locale: {
@@ -37,11 +37,32 @@
         preview: '预览',
         emoji: '表情',
         uploadImage: '上传图片',
-        seconds: '秒前',
-        minutes: '分钟前',
-        hours: '小时前',
-        days: '天前',
-        now: '刚刚'
+        // 修复时间显示问题
+        seconds: ' 秒前',
+        minutes: ' 分钟前', 
+        hours: ' 小时前',
+        days: ' 天前',
+        now: '刚刚',
+        // 添加更多时间相关的本地化
+        admin: '博主',
+        sticky: '置顶',
+        word: '字',
+        wordHint: '请输入评论内容',
+        anonymous: '匿名',
+        level0: '潜水',
+        level1: '冒泡',
+        level2: '吐槽',
+        level3: '活跃',
+        level4: '话痨',
+        level5: '传说',
+        // 修复相对时间显示
+        'seconds ago': ' 秒前',
+        'minutes ago': ' 分钟前',
+        'hours ago': ' 小时前', 
+        'days ago': ' 天前',
+        'weeks ago': ' 周前',
+        'months ago': ' 个月前',
+        'years ago': ' 年前'
       },
       // 暗色主题适配
       dark: 'auto',
@@ -73,16 +94,35 @@
       if (typeof init !== 'undefined') {
         init({
           el: '#waline-comment',
-          serverURL: 'https://your-waline-server.vercel.app', // 替换为你的Vercel部署地址
+          serverURL: 'https://waline-comment-lovat-phi.vercel.app',
           placeholder: '说点什么吧...',
           avatar: 'monsterid',
           meta: ['nick', 'mail', 'link'],
           requiredMeta: ['nick'],
           login: 'disable',
-          wordLimit: [10, 2000],
+          wordLimit: 0, // 取消字数限制
           pageSize: 10,
           lang: 'zh-CN',
-          dark: 'auto'
+          dark: 'auto',
+          locale: {
+            placeholder: '请留下你的足迹~',
+            sofa: '来发评论吧~',
+            submit: '提交',
+            reply: '回复',
+            cancelReply: '取消回复',
+            comment: '评论',
+            refresh: '刷新',
+            more: '加载更多...',
+            preview: '预览',
+            emoji: '表情',
+            uploadImage: '上传图片',
+            // 修复时间显示问题
+            seconds: ' 秒前',
+            minutes: ' 分钟前', 
+            hours: ' 小时前',
+            days: ' 天前',
+            now: '刚刚'
+          }
         });
       }
     }, 100);
