@@ -7,6 +7,27 @@
 <script>
   import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
 
+  // 自定义时间格式化函数
+  function formatTime(date) {
+    const now = new Date();
+    const diff = now - new Date(date);
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const weeks = Math.floor(days / 7);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
+
+    if (seconds < 60) return '刚刚';
+    if (minutes < 60) return `${minutes} 分钟前`;
+    if (hours < 24) return `${hours} 小时前`;
+    if (days < 7) return `${days} 天前`;
+    if (weeks < 4) return `${weeks} 周前`;
+    if (months < 12) return `${months} 个月前`;
+    return `${years} 年前`;
+  }
+
   // 等待页面加载完成
   document.addEventListener('DOMContentLoaded', function() {
     // 检查是否已经初始化过
@@ -37,13 +58,16 @@
         preview: '预览',
         emoji: '表情',
         uploadImage: '上传图片',
-        // 修复时间显示问题
-        seconds: ' 秒前',
-        minutes: ' 分钟前', 
-        hours: ' 小时前',
-        days: ' 天前',
+        // 正确的时间本地化键名
+        second: '秒前',
+        minute: '分钟前',
+        hour: '小时前',
+        day: '天前',
+        week: '周前',
+        month: '个月前',
+        year: '年前',
         now: '刚刚',
-        // 添加更多时间相关的本地化
+        // 其他本地化
         admin: '博主',
         sticky: '置顶',
         word: '字',
@@ -54,15 +78,7 @@
         level2: '吐槽',
         level3: '活跃',
         level4: '话痨',
-        level5: '传说',
-        // 修复相对时间显示
-        'seconds ago': ' 秒前',
-        'minutes ago': ' 分钟前',
-        'hours ago': ' 小时前', 
-        'days ago': ' 天前',
-        'weeks ago': ' 周前',
-        'months ago': ' 个月前',
-        'years ago': ' 年前'
+        level5: '传说'
       },
       // 暗色主题适配
       dark: 'auto',
@@ -77,8 +93,25 @@
       // 数学公式支持
       texRenderer: false,
       // 代码高亮
-      highlighter: false
+      highlighter: false,
+      // 自定义时间格式化
+      formatTime: formatTime
     });
+
+    // 修复已渲染的时间显示
+    setTimeout(() => {
+      const timeElements = document.querySelectorAll('.wl-time');
+      timeElements.forEach(el => {
+        const timeText = el.textContent;
+        if (timeText && timeText.includes('N')) {
+          // 尝试从data属性或其他方式获取原始时间
+          const timeAttr = el.getAttribute('datetime') || el.getAttribute('title');
+          if (timeAttr) {
+            el.textContent = formatTime(timeAttr);
+          }
+        }
+      });
+    }, 1000);
   });
 
   // Astro页面切换时重新初始化
@@ -116,11 +149,14 @@
             preview: '预览',
             emoji: '表情',
             uploadImage: '上传图片',
-            // 修复时间显示问题
-            seconds: ' 秒前',
-            minutes: ' 分钟前', 
-            hours: ' 小时前',
-            days: ' 天前',
+            // 正确的时间本地化键名
+            second: '秒前',
+            minute: '分钟前',
+            hour: '小时前',
+            day: '天前',
+            week: '周前',
+            month: '个月前',
+            year: '年前',
             now: '刚刚'
           }
         });
