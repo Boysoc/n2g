@@ -1,29 +1,63 @@
 ---
-import { SITE } from "@config";
-import Breadcrumbs from "@components/Breadcrumbs.astro";
-import Footer from "@components/Footer.astro";
+import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
-import Layout from "./Layout.astro";
-
-export interface Props {
-  frontmatter: {
-    title: string;
-    description?: string;
-  };
-}
+import Footer from "@components/Footer.astro";
+import Sidebar from "@components/Sidebar.astro";
+import Comment from "@components/Comment.astro";
 
 const { frontmatter } = Astro.props;
 ---
 
-<Layout title={`${frontmatter.title} | ${SITE.title}`} >
-  <Header activeNav="about" />
-  <main id="main-content" class="content">
-    <section id="about">
-      <h1 class="post-title">{frontmatter.title}</h1>
-      <div class="post-content">
-        <slot />
+<Layout title={frontmatter.title} description="关于页面">
+  <div class="side-click icon-arrow-down"></div>
+  <div class="move-block">
+    <Header activeNav="about" />
+    <div id="body">
+      <div class="container">
+        <div class="col-group">
+          <div class="col-8" id="main">
+            <div class="res-cons">
+              <article class="post single-page">
+                <header>
+                  <h1 class="post-title">{frontmatter.title}</h1>
+                </header>
+                <div class="page-content post-content">
+                  <slot />
+                </div>
+                <footer class="post-footer">
+                  <section class="author">
+                    <div class="author-ava">
+                      <img src="/assets/author-head.gif" alt="Xio" width="160" height="160" />
+                    </div>
+                    <p>一切从简 记录生活</p>
+                  </section>
+                </footer>
+              </article>
+              <Comment />
+            </div>
+          </div>
+          <Sidebar />
+        </div>
       </div>
-    </section>
-  </main>
-  <Footer />
+    </div>
+    <Footer />
+  </div>
 </Layout>
+
+<style>
+  /* 调整关于页面标题和内容的间距，与其他页面保持一致 */
+  .post-title {
+    margin-bottom: 20px !important;
+  }
+  
+  /* 移除page-content的默认padding-top，与文章页面保持一致 */
+  .page-content {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+  
+  /* 确保与其他页面的post-content样式一致 */
+  .post-content {
+    line-height: 1.8;
+  }
+</style>

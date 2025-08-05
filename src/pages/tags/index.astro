@@ -1,24 +1,47 @@
 ---
 import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import Layout from "@layouts/Layout.astro";
-import Main from "@layouts/Main.astro";
-import Tag from "@components/Tag.astro";
+import Sidebar from "@components/Sidebar.astro";
 import getUniqueTags from "@utils/getUniqueTags";
-import { SITE } from "@config";
 
 const posts = await getCollection("blog");
-
-let tags = getUniqueTags(posts);
+const tags = getUniqueTags(posts);
 ---
 
-<Layout title={`Tags | ${SITE.title}`}>
-  <Header activeNav="tags" />
-  <Main pageTitle="Tags" pageDesc="All the tags used in posts.">
-    <ul class="tag-list">
-      {tags.map(({ tag }) => <Tag {tag} size="lg" />)}
-    </ul>
-  </Main>
-  <Footer />
+<Layout title="标签" description="所有标签">
+  <div class="side-click icon-arrow-down"></div>
+  <div class="move-block">
+    <Header />
+    <div id="body">
+      <div class="container">
+        <div class="col-group">
+          <div class="col-8" id="main">
+            <div class="res-cons">
+              <article class="post single-page">
+                <header>
+                  <h1 class="post-title">标签</h1>
+                </header>
+                <div class="page-content post-content">
+                  <div class="tag-cloud">
+                    {tags.map((tag) => (
+                      <a 
+                        href={`/tags/${tag.tag}`} 
+                        style="font-size: 1.2em; margin: 0.5em; display: inline-block; padding: 0.3em 0.6em; background: #f5f5f5; border-radius: 3px; color: #666;"
+                      >
+                        {tag.tagName}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+          <Sidebar />
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
 </Layout>

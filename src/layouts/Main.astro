@@ -1,38 +1,37 @@
 ---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Sidebar from "@components/Sidebar.astro";
 
-interface StringTitleProp {
+export interface Props {
   pageTitle: string;
   pageDesc?: string;
+  activeNav?: "posts" | "archives" | "about" | "links";
 }
 
-interface ArrayTitleProp {
-  pageTitle: [string, string];
-  titleTransition: string;
-  pageDesc?: string;
-}
-
-export type Props = StringTitleProp | ArrayTitleProp;
-
-const { props } = Astro;
+const { pageTitle, pageDesc, activeNav } = Astro.props;
 ---
 
-<main id="main-content" class="content">
-  {
-    "titleTransition" in props ? (
-      <h1>
-        {props.pageTitle[0]}
-        <span transition:name={props.titleTransition}>
-          {props.pageTitle[1]}
-        </span>
-      </h1>
-    ) : (
-      <h1>{props.pageTitle}</h1>
-    )
-  }
-  <p>{props.pageDesc}</p>
-  <slot />
-</main>
+<Layout title={pageTitle} description={pageDesc}>
+  <div class="side-click icon-arrow-down"></div>
+  <div class="move-block">
+    <Header activeNav={activeNav} />
+    <div id="body">
+      <div class="container">
+        <div class="col-group">
+          <div class="col-8" id="main">
+            <div class="res-cons">
+              <slot />
+            </div>
+          </div>
+          <Sidebar />
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
+</Layout>
 
-<style>
 
-</style>
+</Layout>

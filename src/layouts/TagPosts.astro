@@ -1,12 +1,11 @@
 ---
 import { type CollectionEntry } from "astro:content";
 import Layout from "@layouts/Layout.astro";
-import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import Card from "@components/Card";
-import Pagination from "@components/Pagination.astro";
+import Sidebar from "@components/Sidebar.astro";
 import { SITE } from "@config";
+import { renderMarkdown } from "@utils/renderMarkdown";
 
 export interface Props {
   currentPage: number;
@@ -20,30 +19,73 @@ const { currentPage, totalPages, paginatedPosts, tag, tagName } = Astro.props;
 ---
 
 <Layout title={`Tag: ${tagName} | ${SITE.title}`}>
-  <Header activeNav="tags" />
-  <Main
-    pageTitle={[`Tag:`, `${tagName}`]}
-    titleTransition={tag}
-    pageDesc={`All the articles with the tag "${tagName}".`}
-  >
-    <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
-    <ul class="tag-list">
-      {
-        paginatedPosts.map(({ data, slug }) => (
-          <Card href={`/posts/${slug}/`} frontmatter={data} />
-        ))
-      }
-    </ul>
-  </Main>
-
-  <Pagination
-    {currentPage}
-    {totalPages}
-    prevUrl={`/tags/${tag}${
-      currentPage - 1 !== 1 ? "/" + (currentPage - 1) : ""
-    }/`}
-    nextUrl={`/tags/${tag}/${currentPage + 1}/`}
-  />
-
-  <Footer noMarginTop={totalPages > 1} />
+  <style>
+    /* 限制代码块宽度，防止溢出 */
+    .post-content pre {
+      max-width: 100%;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .post-content code {
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    
+    .post-content p {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+  </style>
+  <div class="side-click icon-arrow-down"></div>
+  <div class="move-block">
+    <Header />
+    <div id="body">
+      <div class="container">
+        <div class="col-group">
+          <div class="col-8" id="main">
+            <div class="res-cons">
+              <article class="post">
+                <header>
+                  <h1 class="post-title">标签: {tagName}</h1>
+                </header>
+                <div class="post-content">
+                  <p>包含标签 "{tagName}" 的所有文章。</p>
+                  
+                  <div class="tag-posts">
+                    {paginatedPosts && paginatedPosts.map((post) => (
+                      <article class="post">
+                        <date class="post-meta">
+                          {new Date(post.data.pubDatetime).toLocaleDateString('zh-CN', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                          })}
+                        </date>
+                        <header>
+                          <h2 class="post-title">
+                            <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+                          </h2>
+                        </header>
+                        <div class="post-content">
+                          <div set:html={post.data.description ? renderMarkdown(post.data.description) : ''} />
+                          <div class="more">
+                            <a href={`/posts/${post.slug}`}>阅读剩余部分 -</a>
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+          <Sidebar />
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
 </Layout>

@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+import CategoryPosts from "@layouts/CategoryPosts.astro";
+import getPostsByCategory from "@utils/getPostsByCategory";
+import getPagination from "@utils/getPagination";
+import getUniqueCategories from "@utils/getUniqueCategories";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  const categories = getUniqueCategories(posts);
+
+  return categories.map(({ category, categoryName }) => {
+    return {
+      params: { category },
+      props: { category, categoryName, posts },
+    };
+  });
+}
+
+const { category, categoryName, posts } = Astro.props;
+
+const postsByCategory = getPostsByCategory(posts, category);
+
+const pagination = getPagination({
+  posts: postsByCategory,
+  page: 1,
+  isIndex: true,
+});
+
+// 获取当前页的文章
+const startIndex = 0;
+const endIndex = 5; // 每页显示5篇文章
+const paginatedPosts = postsByCategory.slice(startIndex, endIndex);
+---
+
+<CategoryPosts 
+  currentPage={pagination.currentPage}
+  totalPages={pagination.totalPages}
+  paginatedPosts={paginatedPosts}
+  category={category}
+  categoryName={categoryName}
+/>

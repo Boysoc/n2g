@@ -1,0 +1,91 @@
+---
+import { type CollectionEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Sidebar from "@components/Sidebar.astro";
+import { SITE } from "@config";
+import { renderMarkdown } from "@utils/renderMarkdown";
+
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  paginatedPosts: CollectionEntry<"blog">[];
+  category: string;
+  categoryName: string;
+}
+
+const { currentPage, totalPages, paginatedPosts, category, categoryName } = Astro.props;
+---
+
+<Layout title={`分类: ${categoryName} | ${SITE.title}`}>
+  <style>
+    /* 限制代码块宽度，防止溢出 */
+    .post-content pre {
+      max-width: 100%;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .post-content code {
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    
+    .post-content p {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+  </style>
+  <div class="side-click icon-arrow-down"></div>
+  <div class="move-block">
+    <Header />
+    <div id="body">
+      <div class="container">
+        <div class="col-group">
+          <div class="col-8" id="main">
+            <div class="res-cons">
+              <article class="post">
+                <header>
+                  <h1 class="post-title">分类: {categoryName}</h1>
+                </header>
+                <div class="post-content">
+                  <p>包含分类 "{categoryName}" 的所有文章。</p>
+                  
+                  <div class="category-posts">
+                    {paginatedPosts.map((post) => (
+                      <article class="post">
+                        <date class="post-meta">
+                          {new Date(post.data.pubDatetime).toLocaleDateString('zh-CN', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                          })}
+                        </date>
+                        <header>
+                          <h2 class="post-title">
+                            <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+                          </h2>
+                        </header>
+                        <div class="post-content">
+                          <div set:html={post.data.description ? renderMarkdown(post.data.description) : ''} />
+                          <div class="more">
+                            <a href={`/posts/${post.slug}`}>阅读剩余部分 -</a>
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+          <Sidebar />
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
+</Layout>

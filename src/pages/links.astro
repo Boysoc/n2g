@@ -2,102 +2,314 @@
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import Component from '@components/Comment.astro';
+import Sidebar from "@components/Sidebar.astro";
+import Comment from "@components/Comment.astro";
 import { links } from "../links";
-import "../styles/links.css";
+---
 
-// 自动生成 favicon 地址（用于 fallback）
-function getFaviconUrl(href: string): string {
-  try {
-    const url = new URL(href);
-    return `https://www.google.com/s2/favicons?sz=64&domain_url=${url.origin}`;
-  } catch {
-    return '/favicon.ico';
+<Layout title="邻居 - 友情链接" description="友情链接页面">
+  <div class="side-click icon-arrow-down"></div>
+  <div class="move-block">
+    <Header activeNav="links" />
+    <div id="body">
+      <div class="container">
+        <div class="col-group">
+          <div class="col-8" id="main">
+            <div class="res-cons">
+              <article class="post">
+                <header>
+                  <h1 class="post-title">邻居</h1>
+                </header>
+                <div class="page-content post-content">
+                  <p>这里是一些有趣的网站和朋友们的博客。</p>
+                  
+                  <div class="links-vertical">
+                    <div class="links-column">
+                      {links.slice(0, Math.ceil(links.length / 2)).map((link) => (
+                        <div class="link-item">
+                          <span class="link-dot">•</span>
+                          {link.inactive ? (
+                            <del>
+                              <a href={link.href} target="_blank" rel="noopener noreferrer" class="link-name inactive" title={link.description}>
+                                {link.name}
+                              </a>
+                            </del>
+                          ) : (
+                            <a href={link.href} target="_blank" rel="noopener noreferrer" class="link-name" title={link.description}>
+                              {link.name}
+                              {link.verified && (
+                                <span class="verified-mark">
+                                  <svg aria-label="友链互通" viewBox="0 0 64 64" fill="none" role="presentation" aria-hidden="true" focusable="false" title="Friend of author.">
+                                    <title>友链互通</title>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M56.48 38.3C58.13 36.58 60 34.6 60 32c0-2.6-1.88-4.57-3.52-6.3-.95-.97-1.98-2.05-2.3-2.88-.33-.82-.35-2.17-.38-3.49-.02-2.43-.07-5.2-2-7.13-1.92-1.92-4.7-1.97-7.13-2h-.43c-1.17-.02-2.29-.04-3.07-.38-.87-.37-1.9-1.35-2.87-2.3C36.58 5.89 34.6 4 32 4c-2.6 0-4.57 1.88-6.3 3.53-.97.94-2.05 1.97-2.88 2.3-.82.32-2.17.34-3.49.37-2.43.03-5.2.08-7.13 2-1.92 1.93-1.97 4.7-2 7.13v.43c-.02 1.17-.04 2.29-.38 3.06-.37.88-1.35 1.9-2.3 2.88C5.89 27.43 4 29.4 4 32c0 2.6 1.88 4.58 3.53 6.3.94.98 1.97 2.05 2.3 2.88.32.82.34 2.17.37 3.49.03 2.43.08 5.2 2 7.13 1.93 1.93 4.7 1.98 7.13 2h.43c1.17.02 2.29.04 3.06.38.88.37 1.9 1.34 2.88 2.3C27.43 58.13 29.4 60 32 60c2.6 0 4.58-1.88 6.3-3.52.98-.95 2.05-1.98 2.88-2.3.82-.33 2.17-.35 3.49-.38 2.43-.02 5.2-.07 7.13-2 1.93-1.92 1.98-4.7 2-7.13v-.43c.02-1.17.04-2.29.38-3.07.37-.87 1.34-1.9 2.3-2.87zM33.1 45.15c-.66.47-1.55.47-2.22 0C27.57 42.8 18 35.76 18 28.9c0-6.85 6.5-10.25 13.26-4.45.43.37 1.05.37 1.48 0 6.76-5.8 13.27-2.4 13.26 4.45 0 6.56-9.57 13.9-12.89 16.24z" fill="#FFC017"></path>
+                                  </svg>
+                                </span>
+                              )}
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <div class="links-column">
+                      {links.slice(Math.ceil(links.length / 2)).map((link) => (
+                        <div class="link-item">
+                          <span class="link-dot">•</span>
+                          {link.inactive ? (
+                            <del>
+                              <a href={link.href} target="_blank" rel="noopener noreferrer" class="link-name inactive" title={link.description}>
+                                {link.name}
+                              </a>
+                            </del>
+                          ) : (
+                            <a href={link.href} target="_blank" rel="noopener noreferrer" class="link-name" title={link.description}>
+                              {link.name}
+                              {link.verified && (
+                                <span class="verified-mark">
+                                  <svg aria-label="友链互通" viewBox="0 0 64 64" fill="none" role="presentation" aria-hidden="true" focusable="false" title="Friend of author.">
+                                    <title>友链互通</title>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M56.48 38.3C58.13 36.58 60 34.6 60 32c0-2.6-1.88-4.57-3.52-6.3-.95-.97-1.98-2.05-2.3-2.88-.33-.82-.35-2.17-.38-3.49-.02-2.43-.07-5.2-2-7.13-1.92-1.92-4.7-1.97-7.13-2h-.43c-1.17-.02-2.29-.04-3.07-.38-.87-.37-1.9-1.35-2.87-2.3C36.58 5.89 34.6 4 32 4c-2.6 0-4.57 1.88-6.3 3.53-.97.94-2.05 1.97-2.88 2.3-.82.32-2.17.34-3.49.37-2.43.03-5.2.08-7.13 2-1.92 1.93-1.97 4.7-2 7.13v.43c-.02 1.17-.04 2.29-.38 3.06-.37.88-1.35 1.9-2.3 2.88C5.89 27.43 4 29.4 4 32c0 2.6 1.88 4.58 3.53 6.3.94.98 1.97 2.05 2.3 2.88.32.82.34 2.17.37 3.49.03 2.43.08 5.2 2 7.13 1.93 1.93 4.7 1.98 7.13 2h.43c1.17.02 2.29.04 3.06.38.88.37 1.9 1.34 2.88 2.3C27.43 58.13 29.4 60 32 60c2.6 0 4.58-1.88 6.3-3.52.98-.95 2.05-1.98 2.88-2.3.82-.33 2.17-.35 3.49-.38 2.43-.02 5.2-.07 7.13-2 1.93-1.92 1.98-4.7 2-7.13v-.43c.02-1.17.04-2.29.38-3.07.37-.87 1.34-1.9 2.3-2.87zM33.1 45.15c-.66.47-1.55.47-2.22 0C27.57 42.8 18 35.76 18 28.9c0-6.85 6.5-10.25 13.26-4.45.43.37 1.05.37 1.48 0 6.76-5.8 13.27-2.4 13.26 4.45 0 6.56-9.57 13.9-12.89 16.24z" fill="#FFC017"></path>
+                                  </svg>
+                                </span>
+                              )}
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  
+                  <hr />
+                  
+                  <h3>添加我的友链</h3>
+                  <p>你可以将我的友链添加到你的网站中：</p>
+                  <div class="friend-info-block">
+                    <button class="copy-btn" id="copyBtn">复制</button>
+                    <pre class="friend-info-code">
+<span class="json-brace">{'{'}</span>
+    <span class="json-quote">"</span><span class="json-key">name</span><span class="json-quote">"</span><span class="json-colon">:</span> <span class="json-quote">"</span><span class="json-string">Xio's</span><span class="json-quote">"</span><span class="json-comma">,</span>
+    <span class="json-quote">"</span><span class="json-key">href</span><span class="json-quote">"</span><span class="json-colon">:</span> <span class="json-quote">"</span><span class="json-string">https://n2g.cn</span><span class="json-quote">"</span><span class="json-comma">,</span>
+    <span class="json-quote">"</span><span class="json-key">logo</span><span class="json-quote">"</span><span class="json-colon">:</span> <span class="json-quote">"</span><span class="json-string">https://n2g.cn/logo.webp</span><span class="json-quote">"</span><span class="json-comma">,</span>
+    <span class="json-quote">"</span><span class="json-key">description</span><span class="json-quote">"</span><span class="json-colon">:</span> <span class="json-quote">"</span><span class="json-string">狮子座的数字游牧者，用代码和文字探索科技世界，记录灵感与思考。</span><span class="json-quote">"</span><span class="json-comma">,</span>
+    <span class="json-quote">"</span><span class="json-key">rss</span><span class="json-quote">"</span><span class="json-colon">:</span> <span class="json-quote">"</span><span class="json-string">https://n2g.cn/rss.xml</span><span class="json-quote">"</span>
+<span class="json-brace">{'}'}</span>
+                    </pre>
+                  </div>
+                  
+                  <h3>申请友链</h3>
+                  <p>如果你想和我交换友情链接，请确保：</p>
+                  <ul>
+                    <li>网站内容积极向上</li>
+                    <li>能够正常访问</li>
+                    <li>最好是技术、生活或其他有趣的内容</li>
+                  </ul>
+                  <p>可以通过邮件或者在文章下留言的方式联系我。</p>
+                </div>
+              </article>
+              <Comment />
+            </div>
+          </div>
+          <Sidebar />
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
+</Layout>
+
+<style>
+  .links-vertical {
+    box-sizing: border-box;
+    margin: 1.8em 0 1.8em -2.2em;
+    padding: 0 0 0 1.6em;
+    border-left: #4a4a4a 0.4em solid;
+    font-style: italic;
+    color: #888;
+    display: flex;
+    gap: 2em;
   }
-}
+  
+  .links-column {
+    flex: 1;
+  }
+  
+  .link-item {
+    margin-bottom: 0.3em;
+    line-height: 1.4;
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .link-dot {
+    color: #000;
+    font-weight: bold;
+    margin-right: 0.5em;
+    font-size: 1.4em;
+  }
+  
+  .link-name {
+    color: #6E7173;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    font-style: italic;
+    position: relative;
+  }
+  
+  .link-name:hover {
+    color: #444;
+    text-decoration: none !important;
+    border-bottom: none !important;
+  }
+  
+  .link-name.inactive {
+    opacity: 0.6;
+  }
+  
+  .verified-mark {
+    position: absolute;
+    top: -0.4em;
+    right: -1.2em;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    overflow: hidden;
+  }
+  
+  .verified-mark svg {
+    width: 14px !important;
+    height: 14px !important;
+    max-width: 14px !important;
+    max-height: 14px !important;
+    display: block !important;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+  }
+  
+  del .link-name {
+    text-decoration: line-through;
+  }
+  
+  /* 友链信息区块样式 */
+  .friend-info-block {
+    position: relative;
+    margin: 1.5em 0;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+  
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #666;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    z-index: 1;
+  }
+  
+  .copy-btn:hover {
+    background: #444;
+  }
+  
+  .friend-info-code {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 1em 1.5em;
+    margin: 0;
+    font-family: Menlo, Monaco, Consolas, "Lucida Console", "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.4;
+    overflow-x: auto;
+    white-space: pre;
+    color: #333;
+  }
+  
+  /* JSON 语法高亮 */
+  .json-brace {
+    color: #6f42c1;
+    font-weight: bold;
+  }
+  
+  .json-key {
+    color: #e36209;
+    font-weight: 500;
+  }
+  
+  .json-quote {
+    color: #22863a;
+  }
+  
+  .json-string {
+    color: #22863a;
+  }
+  
+  .json-colon {
+    color: #6f42c1;
+    font-weight: bold;
+  }
+  
+  .json-comma {
+    color: #6f42c1;
+  }
 
-// 为一键复制用原始JSON
-const friendJson = `{
+
+  /* 友情链接页面的Markdown链接颜色恢复为原始灰色 */
+  .post-content a, .page-content a {
+    color: #6E7173;
+  }
+  
+  .post-content a:hover, .page-content a:hover {
+    color: #444;
+  }
+
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .links-vertical {
+      margin: 1.8em 0;
+      padding-left: 1em;
+      flex-direction: column;
+      gap: 1em;
+    }
+    
+    .friend-info-block {
+      padding: 0.8em;
+    }
+    
+    .friend-info-code {
+      font-size: 12px;
+      padding: 0.8em;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function() {
+        const jsonData = `{
     "name": "Xio's",
     "href": "https://n2g.cn",
     "logo": "https://n2g.cn/logo.webp",
-    "description": "狮子座的数字游牧者，用代码和文字探索科技世界，记录灵感与思考。"
+    "description": "狮子座的数字游牧者，用代码和文字探索科技世界，记录灵感与思考。",
+    "rss": "https://n2g.cn/rss.xml"
 }`;
----
-<Layout>
-  <Header />
-
-  <main id="main-content" class="content">
-    <p style="text-align:center; margin-bottom:2rem;">海内存知己，天涯若比邻。</p>
-
-    <div class="links-grid">
-      {links.map(link => (
-        <a href={link.href} target="_blank" rel="noopener noreferrer" class="link-card">
-          <img
-            src={link.logo?.trim() ? link.logo : getFaviconUrl(link.href)}
-            alt={link.name}
-            class="link-logo"
-          />
-          <div class="link-info">
-            <h3 class={link.inactive ? 'inactive' : ''}>
-              {link.name}
-              {link.verified && (
-                <span class="cert-badge" title="已互加友情链接">
-                  <svg width="17" height="17" viewBox="0 0 20 20" fill="none">
-                    <circle cx="10" cy="10" r="10" fill="#59d187"/>
-                    <path d="M6 10l3 3 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              )}
-            </h3>
-            {link.inactive && (
-              <div class="inactive-text">消失在互联网，期待回归</div>
-            )}
-            <div class="desc-container">
-              <p class="truncated-desc">{link.description}</p>
-            </div>
-          </div>
-          {/* 支持 \n 多行，以 <br> 输出 */}
-          {link.tooltip && (
-            <span
-              class="glass-tooltip"
-              set:html={link.tooltip.replaceAll('\n', '<br/>')}
-            ></span>
-          )}
-        </a>
-      ))}
-    </div>
-    
-    <!-- 友链自助信息极简高雅专区（全局命名隔离） -->
-    <div class="friend-apply-block">
-      <div class="friend-apply-header">
-        <div class="friend-apply-title">添加我的友链</div>
-        <div class="friend-apply-sub">你可以将我的友链添加到你的网站中</div>
-      </div>
-      <div class="friend-apply-codeblock-wrapper">
-        <button class="friend-apply-copy-btn" type="button"
-          data-copy={friendJson}
-          onclick={`
-            navigator.clipboard.writeText(this.dataset.copy);
-            this.innerText='已复制!';
-            setTimeout(()=>{this.innerText='复制';},1400);
-          `}
-        >复制</button>
-        <pre class="friend-apply-codeblock" aria-label="友链JSON" tabindex="0">
-<span class="friend-apply-json-brace">{'{'}</span>
-  <span class="friend-apply-json-brace">"</span><span class="friend-apply-json-key">name</span><span class="friend-apply-json-colon">":</span> <span class="friend-apply-json-brace">"</span><span class="friend-apply-json-string">Xio's</span><span class="friend-apply-json-comma">",</span>
-  <span class="friend-apply-json-brace">"</span><span class="friend-apply-json-key">href</span><span class="friend-apply-json-colon">":</span> <span class="friend-apply-json-brace">"</span><span class="friend-apply-json-string">https://n2g.cn</span><span class="friend-apply-json-comma">",</span>
-  <span class="friend-apply-json-brace">"</span><span class="friend-apply-json-key">logo</span><span class="friend-apply-json-colon">":</span> <span class="friend-apply-json-brace">"</span> <span class="friend-apply-json-string">https://n2g.cn/logo.webp</span><span class="friend-apply-json-comma">",</span>
-  <span class="friend-apply-json-brace">"</span><span class="friend-apply-json-key">description</span><span class="friend-apply-json-colon">":</span> <span class="friend-apply-json-brace">"</span><span class="friend-apply-json-string">狮子座的数字游牧者，用代码和文字探索科技世界，记录灵感与思考。</span><span class="friend-apply-json-comma">"</span>
-<span class="friend-apply-json-brace">{'}'}</span>
-        </pre>
-      </div>
-    </div>
-    <!-- end -->
-
-    <Component />
-  </main>
-
-  <Footer />
+        navigator.clipboard.writeText(jsonData).then(() => {
+          this.innerText = '已复制!';
+          setTimeout(() => {
+            this.innerText = '复制';
+          }, 1400);
+        });
+      });
+    }
+  });
+</script>
 </Layout>
-

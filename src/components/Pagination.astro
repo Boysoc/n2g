@@ -1,47 +1,224 @@
 ---
-import LinkButton from "./LinkButton.astro";
-
 export interface Props {
   currentPage: number;
   totalPages: number;
-  prevUrl: string;
-  nextUrl: string;
+  prevUrl?: string;
+  nextUrl?: string;
+  firstUrl?: string;
+  lastUrl?: string;
 }
 
-const { currentPage, totalPages, prevUrl, nextUrl } = Astro.props;
+const { currentPage, totalPages, prevUrl, nextUrl, firstUrl, lastUrl } = Astro.props;
 
-const prev = currentPage > 1 ? "" : "disabled";
-const next = currentPage < totalPages ? "" : "disabled";
+const getPageNumbers = () => {
+  const pages: (number | string)[] = [];
+  
+  if (totalPages <= 7) {
+    // 如果总页数小于等于7，显示所有页码
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
+  } else {
+    // 复杂分页逻辑
+    if (currentPage <= 4) {
+      // 当前页在前面
+      for (let i = 1; i <= 5; i++) {
+        pages.push(i);
+      }
+      pages.push('...');
+      pages.push(totalPages);
+    } else if (currentPage >= totalPages - 3) {
+      // 当前页在后面
+      pages.push(1);
+      pages.push('...');
+      for (let i = totalPages - 4; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // 当前页在中间
+      pages.push(1);
+      pages.push('...');
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+        pages.push(i);
+      }
+      pages.push('...');
+      pages.push(totalPages);
+    }
+  }
+  
+  return pages;
+};
 
-// 生成页码数组
-const pageNumbers = [];
-for (let i = 1; i <= totalPages; i++) {
-  pageNumbers.push(i);
-}
+const pageNumbers = getPageNumbers();
 ---
 
-{
-  totalPages > 1 && (
-    <nav class="home-pagination-wrapper" aria-label="文章分页">
-      {pageNumbers.map((pageNum) => (
-        <a
-          href={pageNum === 1 ? '/posts/' : `/posts/${pageNum}/`}
-          class={`home-pagination-link ${currentPage === pageNum ? 'active' : ''}`}
-          aria-label={`第 ${pageNum} 页`}
-        >
-          {pageNum}
+{totalPages > 1 && (
+  <nav class="pagination" aria-label="分页导航">
+    <div class="pagination-info">
+      第 {currentPage} 页，共 {totalPages} 页
+    </div>
+    
+    <div class="pagination-controls">
+      {/* 上一页按钮 */}
+      {prevUrl ? (
+        <a href={prevUrl} class="pagination-btn prev" aria-label="上一页">
+          <span class="icon">‹</span>
+          <span class="text">上一页</span>
         </a>
-      ))}
-      
-      {currentPage < totalPages && (
-        <a
-          href={nextUrl}
-          class="home-pagination-link home-pagination-next"
-          aria-label="下一页"
-        >
-          Next »
-        </a>
+      ) : (
+        <span class="pagination-btn prev disabled">
+          <span class="icon">‹</span>
+          <span class="text">上一页</span>
+        </span>
       )}
-    </nav>
-  )
-}
+      
+      {/* 页码 */}
+      <div class="pagination-numbers">
+        {pageNumbers.map((page) => (
+          page === '...' ? (
+            <span class="pagination-ellipsis">...</span>
+          ) : page === currentPage ? (
+            <span class="pagination-number current" aria-current="page">
+              {page}
+            </span>
+          ) : (
+            <a 
+              href={page === 1 ? (firstUrl || '/') : `/${page === totalPages ? (lastUrl || `page/${page}`) : `page/${page}`}`}
+              class="pagination-number"
+              aria-label={`第 ${page} 页`}
+            >
+              {page}
+            </a>
+          )
+        ))}
+      </div>
+      
+      {/* 下一页按钮 */}
+      {nextUrl ? (
+        <a href={nextUrl} class="pagination-btn next" aria-label="下一页">
+          <span class="text">下一页</span>
+          <span class="icon">›</span>
+        </a>
+      ) : (
+        <span class="pagination-btn next disabled">
+          <span class="text">下一页</span>
+          <span class="icon">›</span>
+        </span>
+      )}
+    </div>
+  </nav>
+)}
+
+<style>
+  .pagination {
+    margin: 40px 0;
+    text-align: center;
+  }
+  
+  .pagination-info {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    background: #f5f5f5;
+    color: #666;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    border: 1px solid #ddd;
+  }
+  
+  .pagination-btn:hover:not(.disabled) {
+    background: #e0e0e0;
+    color: #333;
+  }
+  
+  .pagination-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .pagination-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #f5f5f5;
+    color: #666;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    border: 1px solid #ddd;
+  }
+  
+  .pagination-number:hover {
+    background: #e0e0e0;
+    color: #333;
+  }
+  
+  .pagination-number.current {
+    background: #303538;
+    color: #fff;
+    border-color: #303538;
+  }
+  
+  .pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: #999;
+    font-size: 14px;
+  }
+  
+  .icon {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  /* 响应式设计 */
+  @media (max-width: 480px) {
+    .pagination-controls {
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .pagination-btn .text {
+      display: none;
+    }
+    
+    .pagination-btn {
+      padding: 8px;
+      min-width: 36px;
+      justify-content: center;
+    }
+    
+    .pagination-numbers {
+      order: -1;
+    }
+  }
+</style>

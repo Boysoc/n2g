@@ -1,49 +1,68 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "@layouts/Layout.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import Card from "@components/Card";
-import HomePagination from "@components/HomePagination";
-import getSortedPosts from "@utils/getSortedPosts";
-import { SITE } from "@config";
+import Main from "@layouts/Main.astro";
+import Pagination from "@components/Pagination.astro";
+import getSortedPosts from "../utils/getSortedPosts";
+import { getPostExcerpt } from "../utils/getPostExcerpt";
+import getPagination from "../utils/getPagination";
+import { SITE } from "../config";
 
 const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
-const recentPosts = sortedPosts;
+
+const POSTS_PER_PAGE = 5;
+const currentPage = 1;
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+// 获取分页信息
+const pagination = getPagination({
+  posts: sortedPosts,
+  page: currentPage,
+  isIndex: true,
+  postsPerPage: POSTS_PER_PAGE,
+});
+
+// 为每篇文章生成摘要
+const postsWithExcerpts = pagination.paginatedPosts.map((post) => {
+  const { excerpt, hasMore } = getPostExcerpt(post.body, 20);
+  return {
+    ...post,
+    excerpt,
+    hasMore
+  };
+});
 ---
 
-<Layout>
-  <Header />
-  <main id="main-content" class="content">
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts">
-          <ul class="card-ul">
-            {recentPosts.map(
-              ({ data, slug }, index) =>
-                index < SITE.postPerPage && (
-                  <Card
-                    slug={slug}
-                    href={`/posts/${slug}/`}
-                    frontmatter={data}
-                    secHeading={false}
-                  />
-                )
-            )}
-          </ul>
-        </section>
-      )
-    }
-    <HomePagination 
-      totalPosts={recentPosts.length} 
-      postsPerPage={SITE.postPerPage}
-      client:load 
-    />
-  </main>
-
-  <Footer />
-</Layout>
-
-<style>
-</style>
+<Main pageTitle={SITE.title} pageDesc={SITE.desc} activeNav="posts">
+  {postsWithExcerpts.map((post) => (
+    <article class="post">
+      <date class="post-meta">
+        {formatDate(new Date(post.data.pubDatetime))}
+      </date>
+      <header>
+        <h2 class="post-title">
+          <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+        </h2>
+      </header>
+      <div class="post-content">
+        <div set:html={post.excerpt} />
+        {post.hasMore && (
+          <div class="more">
+            <a href={`/posts/${post.slug}`}>阅读剩余部分 -</a>
+          </div>
+        )}
+      </div>
+    </article>
+  ))}
+  
+  <Pagination {...pagination} />
+</Main>

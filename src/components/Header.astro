@@ -1,198 +1,134 @@
 ---
 import { SITE } from "@config";
-import LinkButton from "./LinkButton.astro";
+import Hr from "./Hr.astro";
 
 export interface Props {
-  activeNav?: "posts" | "tags" | "about" | "search" | "archive";
+  activeNav?: "posts" | "archives" | "about" | "links";
 }
 
 const { activeNav } = Astro.props;
 ---
 
-<header>
-  <div class="content">
-    <div class="nav-container">
-      <div class="top-nav-wrap">
-        <a href="/" class="logo">
-          <span><i>Xio's</i></span>
-        </a>
-        <nav id="nav-menu">
-          <button
-            class="hamburger-menu focus-outline"
-            aria-label="Open Menu"
-            aria-expanded="false"
-            aria-controls="menu-items"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="menu-icon"
-            >
-              <line x1="7" y1="12" x2="21" y2="12" class="line"></line>
-              <line x1="3" y1="6" x2="21" y2="6" class="line"></line>
-              <line x1="12" y1="18" x2="21" y2="18" class="line"></line>
-              <line x1="18" y1="6" x2="6" y2="18" class="close"></line>
-              <line x1="6" y1="6" x2="18" y2="18" class="close"></line>
-            </svg>
-          </button>
-          <ul id="menu-items" class="display-none sm:flex">
-            <li>
-              <a href="/" class={activeNav !== "about" ? "active" : ""}>
-                日志
-              </a>
-            </li>
-            <li>
-              <a href="/archive/" class={activeNav === "archive" ? "active" : ""}>
-                归档
-              </a>
-            </li>
-            <li>
-              <a href="/about/" class={activeNav === "about" ? "active" : ""}>
-                关于
-              </a>
-            </li>
-            <li>
-              <a href="/links" class={activeNav === "links" ? "active" : ""}>
-                友链
-              </a>
-            </li>
-            <li>
-              <LinkButton
-                href="/search/"
-                className={`focus-outline p-3 sm:p-1 ${
-                  activeNav === "search" ? "active" : ""
-                } flex`}
-                ariaLabel="search"
-                title="Search"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="scale-125 sm:scale-100"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                  <path d="M21 21l-6 -6"></path>
-                </svg>
-                <span class="sr-only">Search</span>
-              </LinkButton>
-            </li>
-            <li>
-              <button id="theme-toggle" class="theme-toggle focus-outline p-3 sm:p-1 flex" aria-label="切换主题" title="切换主题">
-                <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="scale-125 sm:scale-100" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
-                  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
-                </svg>
-                <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="scale-125 sm:scale-100" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
-                </svg>
-                <span class="sr-only">切换主题</span>
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
+<header id="header">
+  <div class="site-name">
+    <a id="logo" href="/">
+      Xio<span>'s</span>
+    </a>
+    <h1>Xio's</h1>
+    <p class="description">一切从简，记录生活。</p>
   </div>
+  
+  <nav id="nav-menu">
+    <a href="/" class={activeNav === "posts" ? "current" : ""}>首页</a>
+    <a href="/archives" class={activeNav === "archives" ? "current" : ""}>归档</a>
+    <a href="/about" class={activeNav === "about" ? "current" : ""}>关于</a>
+    <a href="/links" class={activeNav === "links" ? "current" : ""}>邻居</a>
+  </nav>
 </header>
 
 <style>
-
-</style>
-
-<script>
-  function toggleNav() {
-    // Toggle menu
-    const menuBtn = document.querySelector(".hamburger-menu");
-    const menuIcon = document.querySelector(".menu-icon");
-    const menuItems = document.querySelector("#menu-items");
-
-    menuBtn?.addEventListener("click", () => {
-      const menuExpanded = menuBtn.getAttribute("aria-expanded") === "true";
-      menuIcon?.classList.toggle("is-active");
-      menuBtn.setAttribute("aria-expanded", menuExpanded ? "false" : "true");
-      menuBtn.setAttribute(
-        "aria-label",
-        menuExpanded ? "Open Menu" : "Close Menu"
-      );
-      menuItems?.classList.toggle("display-none");
-    });
+  /* 确保导航居中和响应式设计 */
+  #header {
+    text-align: center;
+    padding: 64px 0 0;
   }
-
-  function initTheme() {
-    // 获取主题切换按钮和图标
-    const themeToggle = document.getElementById("theme-toggle");
-    const sunIcon = document.getElementById("sun-icon");
-    const moonIcon = document.getElementById("moon-icon");
+  
+  .site-name h1 {
+    padding: 0;
+    margin: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  
+  #logo {
+    font: bold 44px/1.22 "Times New Roman", Georgia, Times, sans-serif;
+    color: #555;
+    text-decoration: none;
+  }
+  
+  #logo span {
+    color: #777;
+  }
+  
+  #logo:hover {
+    color: #777;
+  }
+  
+  .description {
+    margin: 0;
+    color: #999;
+    font-size: 14px;
+  }
+  
+  #nav-menu {
+    padding: 0;
+    margin: 28px 0 10px;
+    text-align: center;
+  }
+  
+  #nav-menu a {
+    text-decoration: none;
+    padding: 7px 18px 6px;
+    color: #fff;
+    background-color: #999;
+    position: relative;
+    z-index: 4;
+    font-size: 14px;
+    line-height: 1.5;
+    display: inline-block;
+    margin: 0;
+  }
+  
+  #nav-menu a:first-child {
+    border: none;
+  }
+  
+  #nav-menu a.current {
+    background-color: #303538;
+  }
+  
+  #nav-menu a.current:after {
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 14px solid #303538;
+    bottom: -6px;
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 3;
+    height: 0;
+    text-align: center;
+    left: 50%;
+    margin-left: -14px;
+    width: 0;
+  }
+  
+  #nav-menu a:hover {
+    background-color: #303538;
+  }
+  
+  /* 响应式设计 */
+  @media print, screen and (max-width: 680px) {
+    #nav-menu a {
+      padding: 0 15px;
+      line-height: 27px;
+      height: 27px;
+      font-size: 13px;
+    }
     
-    if (!themeToggle || !sunIcon || !moonIcon) return;
-
-    // 获取保存的主题或系统偏好
-    const getThemePreference = () => {
-      if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-        return localStorage.getItem("theme");
-      }
-      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    };
-
-    // 设置主题
-    const setTheme = (theme) => {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("theme", theme);
-      
-      if (theme === "dark") {
-        sunIcon.style.display = "none";
-        moonIcon.style.display = "block";
-      } else {
-        sunIcon.style.display = "block";
-        moonIcon.style.display = "none";
-      }
-    };
-
-    // 切换主题
-    const toggleTheme = () => {
-      const currentTheme = document.documentElement.getAttribute("data-theme");
-      const newTheme = currentTheme === "dark" ? "light" : "dark";
-      setTheme(newTheme);
-    };
-
-    // 初始化主题
-    const initialTheme = getThemePreference();
-    setTheme(initialTheme);
-
-    // 添加点击事件
-    themeToggle.addEventListener("click", toggleTheme);
-
-    // 监听系统主题变化
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      if (!localStorage.getItem("theme")) {
-        setTheme(e.matches ? "dark" : "light");
-      }
-    });
+    #logo {
+      font-size: 36px;
+    }
   }
-
-  toggleNav();
-  initTheme();
-
-  // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", () => {
-    toggleNav();
-    initTheme();
-  });
-</script>
+  
+  @media print, screen and (max-width: 500px) {
+    #nav-menu a {
+      padding: 0 12px;
+      font-size: 12px;
+    }
+    
+    #logo {
+      font-size: 32px;
+    }
+  }
+</style>
