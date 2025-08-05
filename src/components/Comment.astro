@@ -75,6 +75,50 @@
       console.log('开始初始化Waline，服务器地址:', 'https://leanvercelwaline.n2g.cn/');
       console.log('当前页面路径:', window.location.pathname);
       
+      // 自定义时间格式化函数
+      const formatTime = (dateInput) => {
+        try {
+          let date;
+          
+          if (typeof dateInput === 'string') {
+            if (dateInput.includes('T') && dateInput.includes('Z')) {
+              date = new Date(dateInput);
+            } else if (dateInput.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/)) {
+              date = new Date(dateInput.replace(' ', 'T') + 'Z');
+            } else if (dateInput.match(/^\d{4}-\d{2}-\d{2}$/)) {
+              date = new Date(dateInput + 'T00:00:00Z');
+            } else {
+              date = new Date(dateInput);
+            }
+          } else if (typeof dateInput === 'number') {
+            date = new Date(dateInput);
+          } else if (dateInput instanceof Date) {
+            date = dateInput;
+          } else {
+            date = new Date();
+          }
+
+          if (isNaN(date.getTime())) {
+            console.warn('无效的日期:', dateInput);
+            return '时间未知';
+          }
+
+          // 格式化为 YYYY年MM月DD日 HH:mm:ss
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const day = String(date.getDate()).padStart(2, '0');
+          const hours = String(date.getHours()).padStart(2, '0');
+          const minutes = String(date.getMinutes()).padStart(2, '0');
+          const seconds = String(date.getSeconds()).padStart(2, '0');
+          
+          return `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds}`;
+          
+        } catch (error) {
+          console.error('时间格式化错误:', error, dateInput);
+          return '时间解析失败';
+        }
+      };
+
       // 初始化Waline
       const waline = window.WalineInit({
         el: '#waline-comment',
@@ -89,11 +133,6 @@
         pageSize: 10,
         lang: 'zh-CN',
         locale: {
-          seconds: '刚刚',
-          minutes: '$0 分钟前',
-          hours: '$0 小时前',
-          days: '$0 天前',
-          now: '刚刚',
           sofa: '来发评论吧~',
           submit: '提交',
           reply: '回复',
@@ -106,53 +145,229 @@
         },
         dark: currentTheme === 'dark',
         emoji: [
-          'https://unpkg.com/@waline/emojis@1.2.0/weibo'
+          'https://unpkg.com/@waline/emojis@1.2.0/qq'
         ],
         imageUploader: false,
         copyright: false,
-        reaction: false
+        reaction: false,
+        search: false,
+        // 使用自定义时间格式化函数
+        formatTime: formatTime
       });
 
       console.log('Waline初始化成功');
-
-      // 自定义时间格式化
+      
+      // 调试：检查Waline DOM结构
       setTimeout(() => {
+        console.log('=== Waline DOM 结构调试 ===');
+        const container = document.getElementById('waline-comment');
+        if (container) {
+          console.log('评论容器:', container);
+          console.log('容器内容:', container.innerHTML.substring(0, 500));
+          
+          // 检查各种可能的选择器
+          const selectors = ['.wl-head', '.wl-meta', '.wl-card', '.wl-item', '.wl-nick', '.wl-time'];
+          selectors.forEach(selector => {
+            const elements = container.querySelectorAll(selector);
+            console.log(`${selector}: ${elements.length} 个元素`);
+          });
+        }
+      }, 3000);
+
+      // 确保时间格式正确显示 - 持续监控
+      const formatAllTimes = () => {
         const timeElements = document.querySelectorAll('.wl-time');
         timeElements.forEach(timeEl => {
-          const originalTime = timeEl.textContent;
-          if (originalTime) {
-            // 如果是相对时间，保持原样
-            if (originalTime.includes('前') || originalTime === '刚刚') {
-              return;
-            }
-            
-            // 如果是绝对时间，格式化为更漂亮的格式
-            try {
-              const date = new Date(timeEl.getAttribute('datetime') || timeEl.textContent);
-              const now = new Date();
-              const diffMs = now.getTime() - date.getTime();
-              const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-              
-              if (diffDays === 0) {
-                timeEl.textContent = '今天';
-              } else if (diffDays === 1) {
-                timeEl.textContent = '昨天';
-              } else if (diffDays === 2) {
-                timeEl.textContent = '前天';
-              } else if (diffDays < 7) {
-                timeEl.textContent = `${diffDays} 天前`;
-              } else {
-                // 超过一周显示具体日期
-                const month = date.getMonth() + 1;
-                const day = date.getDate();
-                timeEl.textContent = `${month}月${day}日`;
-              }
-            } catch (e) {
-              // 如果解析失败，保持原样
-            }
+          const datetimeAttr = timeEl.getAttribute('datetime');
+          const currentText = timeEl.textContent;
+          
+          // 如果包含特殊符号或相对时间，重新格式化
+          if (datetimeAttr && (currentText.includes('$') || currentText.includes('前') || currentText === '刚刚')) {
+            const formattedTime = formatTime(datetimeAttr);
+            timeEl.textContent = formattedTime;
+          } else if (datetimeAttr && !currentText.includes('年')) {
+            // 如果没有年份显示，也重新格式化
+            const formattedTime = formatTime(datetimeAttr);
+            timeEl.textContent = formattedTime;
           }
         });
-      }, 1000);
+      };
+
+      // 初始格式化
+      setTimeout(formatAllTimes, 1000);
+      
+      // 定期检查并格式化新加载的评论
+      const timeFormatInterval = setInterval(formatAllTimes, 2000);
+      
+      // 获取IP地理位置信息
+      const getLocationInfo = async () => {
+        try {
+          const response = await fetch('https://ipapi.co/json/');
+          const data = await response.json();
+          return {
+            city: data.city || '',
+            region: data.region || '',
+            country: data.country_name || ''
+          };
+        } catch (error) {
+          console.log('获取地理位置失败:', error);
+          try {
+            // 备用API
+            const response = await fetch('https://ip-api.com/json/');
+            const data = await response.json();
+            return {
+              city: data.city || '',
+              region: data.regionName || '',
+              country: data.country || ''
+            };
+          } catch (fallbackError) {
+            console.log('备用API也失败:', fallbackError);
+            return null;
+          }
+        }
+      };
+
+      // 添加地理位置信息到评论
+      const addLocationToComments = async () => {
+        console.log('开始获取地理位置信息...');
+        
+        let locationInfo = null;
+        try {
+          // 使用免费的IP地理位置API
+          const response = await fetch('https://ipinfo.io/json');
+          const data = await response.json();
+          console.log('获取到的地理位置数据:', data);
+          
+          locationInfo = {
+            city: data.city || '',
+            region: data.region || '',
+            country: data.country || ''
+          };
+        } catch (error) {
+          console.log('ipinfo.io失败，尝试备用API:', error);
+          try {
+            const response = await fetch('https://api.ipify.org?format=json');
+            const ipData = await response.json();
+            console.log('获取到IP:', ipData.ip);
+            
+            // 简单显示IP信息
+            locationInfo = {
+              city: '',
+              region: ipData.ip ? `IP: ${ipData.ip}` : '',
+              country: ''
+            };
+          } catch (fallbackError) {
+            console.log('所有API都失败了:', fallbackError);
+            return;
+          }
+        }
+
+        if (!locationInfo) return;
+
+        const formatLocation = () => {
+          if (locationInfo.city && locationInfo.region) {
+            return `${locationInfo.region} ${locationInfo.city}`;
+          } else if (locationInfo.region) {
+            return locationInfo.region;
+          } else if (locationInfo.country) {
+            return locationInfo.country;
+          }
+          return '';
+        };
+
+        const locationText = formatLocation();
+        console.log('格式化后的地理位置:', locationText);
+        
+        if (!locationText) return;
+
+        // 定期检查并添加地理位置信息
+        let attempts = 0;
+        const maxAttempts = 10;
+        
+        const addLocationInterval = setInterval(() => {
+          attempts++;
+          console.log(`尝试添加地理位置信息 (${attempts}/${maxAttempts})`);
+          
+          // 尝试多种选择器
+          const selectors = [
+            '.wl-head',
+            '.wl-meta', 
+            '.wl-card .wl-nick',
+            '.wl-item .wl-nick'
+          ];
+          
+          let found = false;
+          
+          for (const selector of selectors) {
+            const elements = document.querySelectorAll(selector);
+            console.log(`选择器 ${selector} 找到 ${elements.length} 个元素`);
+            
+            elements.forEach((element, index) => {
+              // 检查是否已经添加过地理位置
+              if (element.querySelector('.wl-location-info') || 
+                  element.parentNode.querySelector('.wl-location-info')) {
+                return;
+              }
+
+              // 查找时间元素
+              let timeElement = element.querySelector('.wl-time');
+              if (!timeElement) {
+                timeElement = element.parentNode.querySelector('.wl-time');
+              }
+              
+              if (timeElement) {
+                console.log(`在第${index}个元素中找到时间元素，添加地理位置`);
+                
+                const locationSpan = document.createElement('span');
+                locationSpan.className = 'wl-location-info';
+                locationSpan.textContent = locationText;
+                locationSpan.title = '评论者地理位置';
+                
+                // 使用内联样式确保显示
+                locationSpan.style.cssText = `
+                  color: #666 !important;
+                  opacity: 0.8 !important;
+                  font-size: 11px !important;
+                  margin-left: 8px !important;
+                  padding: 2px 6px !important;
+                  background-color: #f0f0f0 !important;
+                  border-radius: 10px !important;
+                  display: inline-block !important;
+                  border: 1px solid #ddd !important;
+                `;
+                
+                // 插入到时间元素后面
+                if (timeElement.nextSibling) {
+                  timeElement.parentNode.insertBefore(locationSpan, timeElement.nextSibling);
+                } else {
+                  timeElement.parentNode.appendChild(locationSpan);
+                }
+                
+                found = true;
+              }
+            });
+          }
+          
+          if (found || attempts >= maxAttempts) {
+            console.log(found ? '成功添加地理位置信息' : '达到最大尝试次数，停止添加');
+            clearInterval(addLocationInterval);
+          }
+        }, 1000);
+      };
+
+      // 延迟执行地理位置添加
+      setTimeout(addLocationToComments, 2000);
+
+      // 监听评论区变化
+      const commentObserver = new MutationObserver(() => {
+        setTimeout(formatAllTimes, 500);
+        setTimeout(addLocationToComments, 1000);
+      });
+      
+      commentObserver.observe(container, {
+        childList: true,
+        subtree: true
+      });
 
       // 监听主题变化
       const observer = new MutationObserver((mutations) => {
@@ -314,6 +529,7 @@
     font-family: inherit !important;
     transition: opacity 0.2s ease !important;
     cursor: pointer !important;
+    display: inline-block !important;
   }
 
   :global(.wl-btn:hover) {
@@ -349,11 +565,64 @@
     position: relative !important;
   }
 
-  /* 美化时间显示 */
+  /* 去掉时间图标 */
   :global(.wl-time::before) {
-    content: "📅 " !important;
-    opacity: 0.5 !important;
-    margin-right: 2px !important;
+    display: none !important;
+  }
+
+  /* 自定义地理位置样式 */
+  :global(.wl-location-info) {
+    color: var(--text-color) !important;
+    opacity: 0.6 !important;
+    font-size: 11px !important;
+    margin-left: 8px !important;
+    padding: 2px 6px !important;
+    background-color: var(--border-color) !important;
+    border-radius: 10px !important;
+    display: inline-block !important;
+    transition: opacity 0.2s ease !important;
+  }
+
+  /* 地理位置悬停效果 */
+  :global(.wl-location-info:hover) {
+    opacity: 0.8 !important;
+  }
+
+  /* 深色主题下的地理位置样式 */
+  [data-theme="dark"] :global(.wl-location-info) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-color) !important;
+  }
+
+  /* 隐藏版权标记 */
+  :global(.wl-power) {
+    display: none !important;
+  }
+
+  /* 隐藏GIF搜索功能 */
+  :global(.wl-gif) {
+    display: none !important;
+  }
+
+  :global(.wl-gif-btn) {
+    display: none !important;
+  }
+
+  :global([title*="GIF"]) {
+    display: none !important;
+  }
+
+  /* 确保表情和按钮功能正常显示 */
+  :global(.wl-emoji-btn) {
+    display: inline-block !important;
+  }
+
+  :global(.wl-emoji) {
+    display: block !important;
+  }
+
+  :global(.wl-actions) {
+    display: flex !important;
   }
 
   /* 时间悬停效果 */
@@ -384,12 +653,6 @@
     border-top: 1px solid var(--border-color) !important;
     padding-top: 0.5rem !important;
     margin-top: 0.5rem !important;
-  }
-
-  :global(.wl-count) {
-    color: var(--text-color) !important;
-    font-size: 14px !important;
-    margin-bottom: 1rem !important;
   }
 
   :global(.wl-loading) {
@@ -497,6 +760,14 @@
       margin-left: 0 !important;
       margin-top: 4px !important;
       display: block !important;
+    }
+
+    :global(.wl-location-info) {
+      font-size: 10px !important;
+      margin-left: 0 !important;
+      margin-top: 2px !important;
+      display: inline-block !important;
+      padding: 1px 4px !important;
     }
 
     :global(.wl-content) {
