@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>页面未找到 - 重定向中</title>
+  <script>
+    // 处理URL末尾斜杠问题的脚本
+    (function() {
+      var path = window.location.pathname;
+      
+      // 如果路径以斜杠结尾，则重定向到不带斜杠的版本
+      if (path.length > 1 && path.endsWith('/')) {
+        window.location.replace(window.location.origin + path.slice(0, -1) + window.location.search);
+      } else {
+        // 如果是真正的404，显示404页面
+        document.addEventListener('DOMContentLoaded', function() {
+          document.getElementById('error-container').style.display = 'block';
+        });
+      }
+    })();
+  </script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      margin-bottom: 1.5rem;
+    }
+    .error-container {
+      display: none;
+    }
+    .home-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #0066cc;
+      text-decoration: none;
+      border: 1px solid #0066cc;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    .home-link:hover {
+      background-color: #0066cc;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="error-container" class="error-container">
+    <h1>404 - 页面未找到</h1>
+    <p>抱歉，您访问的页面不存在。</p>
+    <p>可能是链接已过期，或者您输入的地址有误。</p>
+    <a href="/" class="home-link">返回首页</a>
+  </div>
+</body>
+</html>
