@@ -9,8 +9,7 @@ import { SITE } from "./src/config";
 // https://astro.build/config
 export default defineConfig({
   site: 'https://n2g.cn',
-  trailingSlash: 'never',
-  output: 'static',
+  // base: 'my-repo',
   integrations: [
     tailwind({
       applyBaseStyles: false,
