@@ -280,6 +280,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"2025-08-12.md": {
+	id: "2025-08-12.md";
+  slug: "2025-08-12";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "markdown-reference.md": {
 	id: "markdown-reference.md";
   slug: "markdown-reference";
@@ -318,6 +325,13 @@ declare module 'astro:content' {
 "pjblog-2007-03-17.md": {
 	id: "pjblog-2007-03-17.md";
   slug: "pjblog-2007-03-17";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qzone-2011-06-21.md": {
+	id: "qzone-2011-06-21.md";
+  slug: "qzone-2011-06-21";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
