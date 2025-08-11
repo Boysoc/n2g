@@ -24,8 +24,8 @@
       window.Waline.init({
         el: '#waline-comments',
         serverURL: 'https://tencent.n2g.cn/',
-        // 手动添加末尾斜杠，确保与评论数据匹配
-        path: window.location.pathname + '/',
+        // 确保路径格式与数据库中的URL格式一致
+        path: window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/',
         lang: 'zh-CN',
         avatar: 'qq', // 启用QQ头像，当用户使用QQ邮箱时会自动获取QQ头像
         locale: {
