@@ -149,5 +149,21 @@ export const links: Link[] = [
     description: "一个因网恋而建并碎碎念了20多年的个人站。",
     verified: true,
     feed: "https://aqzx.com/rss.asp"
+  },
+  {
+    name: "十年之约",
+    href: "https://www.foreverblog.cn/",
+    logo: "",
+    description: "十年之约",
+    verified: true,
+    feed: "https://www.foreverblog.cn/feeds.html"
+  },
+  {
+    name: "博友圈",
+    href: "https://www.boyouquan.com/",
+    logo: "https://www.boyouquan.com/assets/images/sites/logo/logo-small.png",
+    description: "博客人的朋友圈，博客收录与文章 RSS 聚合网站。",
+    verified: true,
+    feed: "https://www.boyouquan.com/feed.xml?sort=latest"
   }
 ];
