@@ -151,6 +151,35 @@ export const links: Link[] = [
     feed: "https://aqzx.com/rss.asp"
   },
   {
+    name: "瓦匠个人小站",
+    href: "https://airy.ink",
+    logo: "https://airy.ink/logo.svg",
+    description: "大家都是倔强的人！",
+    feed: "https://airy.ink/feed"
+  },
+  {
+    name: "异数",
+    href: "https://www.yishu.pro/",
+    logo: "https://www.yishu.pro/img/logo.jpg",
+    description: "笔落惊风雨，诗成泣鬼神。",
+    feed: "https://www.yishu.pro/feed/"
+  },
+  {
+    name: "Acevs",
+    href: "https://acevs.com/",
+    logo: "https://upload.storeweb.cn/upload/site/logo/2301/7b942248da4170e7ff4c6fad75e873b1.png",
+    description: "探索者，blogger",
+    feed: "https://acevs.com/feed/"
+  },
+  {
+    name: "李的日志",
+    href: "https://lilog.cn",
+    logo: "https://lilog.cn/Image/avatar.webp",
+    description: "在阅读中沉淀，于随笔中抒怀",
+    verified: true,
+    feed: "https://lilog.cn/feed"
+  },
+  {
     name: "十年之约",
     href: "https://www.foreverblog.cn/",
     logo: "",
