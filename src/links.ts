@@ -180,6 +180,14 @@ export const links: Link[] = [
     feed: "https://lilog.cn/feed"
   },
   {
+    name: "旺东自留地",
+    href: "https://wang618.cn/",
+    logo: "https://wang618.cn/logo.gif",
+    description: "爱生活、爱摸鱼",
+    verified: true,
+    feed: "https://wang618.cn/rss.php"
+  },
+  {
     name: "十年之约",
     href: "https://www.foreverblog.cn/",
     logo: "",
