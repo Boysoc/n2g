@@ -155,6 +155,7 @@ export const links: Link[] = [
     href: "https://airy.ink",
     logo: "https://airy.ink/logo.svg",
     description: "大家都是倔强的人！",
+    verified: true,
     feed: "https://airy.ink/feed"
   },
   {
@@ -186,6 +187,32 @@ export const links: Link[] = [
     description: "爱生活、爱摸鱼",
     verified: true,
     feed: "https://wang618.cn/rss.php"
+  },
+  {
+    name: "西城往事",
+    href: "https://xifeng.net",
+    logo: "https://xifeng.net/images/avatar.webp",
+    description: "外贸 旅行 代码 人生",
+    feed: "https://xifeng.net/feed"
+  },
+  {
+    name: "Andy烧麦",
+    href: "https://4311346.com/",
+    logo: "https://avatar.199508.com/avatar/e77ca46fca9a659f61226ca650ff8dd7.jpg",
+    description: "记录时间，记录生活，记录想法",
+  },
+{
+    name: "Zeruns's Blog",
+    href: "https://blog.zeruns.com",
+    logo: "https://blog.zeruns.com/tx.jpg",
+    description: "爱折腾软件和硬件的技术宅",
+    feed: "https://blog.zeruns.com/feed/"
+  },
+{
+    name: "孤鬥",
+    href: "https://d-d.design/",
+    logo: "https://d-d.design/assets/favicon-lmKuKuwt.ico",
+    description: "做自己，不隨波逐流，不妥協",
   },
   {
     name: "十年之约",
