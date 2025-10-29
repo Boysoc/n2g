@@ -16,12 +16,12 @@ export interface Link {
 export const links: Link[] = [
   {
     name: "Cho",
-    href: "https://frynut.com/",
+    href: "https://chopstack.com/",
     logo: "https://avatars.githubusercontent.com/u/1884557?v=4",
-    description: "Cho大神",
+    description: "Cho大神，他另一个地址frynut.com",
     tooltip: "心中的技术白月光，定义了简洁的力量。如今每个404页面都保留着他的影子——既是对过往的致敬，也是对所有迷路者的温柔提醒：曾有人把代码写成诗。",
     github: "https://github.com/pagecho",
-    feed: "https://frynut.com/rss.xml"
+    feed: "https://chopstack.com/rss.xml"
   },
   {
     name: "Zimoo`s",
