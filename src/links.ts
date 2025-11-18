@@ -215,6 +215,14 @@ export const links: Link[] = [
     description: "做自己，不隨波逐流，不妥協",
   },
   {
+    name: "耳朵的主人",
+    href: "https://www.edzbe.com",
+    logo: "https://seccdn.libravatar.org/avatar/3a548785c751d63bf1a852b1307df0bd",
+    description: "耳朵电台，庆幸我们还有耳朵。",
+    verified: true,
+    feed: "https://www.edzbe.com/feed"
+  },
+  {
     name: "十年之约",
     href: "https://www.foreverblog.cn/",
     logo: "",
