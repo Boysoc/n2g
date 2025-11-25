@@ -1,99 +1,58 @@
 import React, { useMemo } from 'react';
-import { slugifyStr } from "../utils/slugify";
+import { slugifyStr } from "@utils/slugify";
 import Datetime from "./Datetime";
 import type { CollectionEntry } from "astro:content";
 import sanitizeHtml from 'sanitize-html'
-import MarkdownIt from 'markdown-it'
-import { highlightText, highlightSimpleText } from "@utils/highlightText";
-
-// 创建 MarkdownIt 实例
-const md = new MarkdownIt({
-  html: true,
-  breaks: true,
-  linkify: true,
-  typographer: true
-});
-
-// 添加对表格的支持
-md.enable(['table']);
 
 export interface Props {
   href?: string;
   slug?: string;
   frontmatter: CollectionEntry<"blog">["data"];
   secHeading?: boolean;
-  searchTerm?: string; // 新增搜索关键词属性
 }
 
-export default function Card({ href, slug="none-slug", frontmatter, secHeading = true, searchTerm }: Props) {
+export default function Card({ href, slug="none-slug", frontmatter, secHeading = true }: Props) {
   const { title, pubDatetime, modDatetime, description } = frontmatter;
-
 
   const headerProps = {
     style: { viewTransitionName: slugifyStr(slug) },
-    className: "card-title-link",
+    className: "text-xl font-medium decoration-dashed hover:underline",
   };
 
-  // 使用 useMemo 来缓存渲染结果，提高性能
+  // 使用 useMemo 来缓存处理结果，提高性能
+  // description 已经在 getSortedPosts.ts 中通过 remark 处理过了，这里只需要清理 HTML
   const renderedDescription = useMemo(() => {
-    if (!description) return '';
+    // 创建一个新的数组，包含默认标签和我们要添加的标签
+    const allowedTags = [...sanitizeHtml.defaults.allowedTags, 'img', 'details', 'summary'];
     
-    // 先使用 MarkdownIt 将 Markdown 转换为 HTML
-    let htmlContent = md.render(description);
-    
-    // 如果有搜索关键词，在HTML内容中进行高亮处理
-    if (searchTerm) {
-      htmlContent = highlightText(htmlContent, searchTerm);
-    }
-    
-    // 然后使用 sanitizeHtml 清理 HTML，防止 XSS 攻击
-    return sanitizeHtml(htmlContent, {
-      allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-        'img', 'mark', 'pre', 'code', 'blockquote', 'table', 'thead', 'tbody', 
-        'tr', 'td', 'th', 'del', 'ins', 'sub', 'sup', 'details', 'summary'
-      ]),
+    return sanitizeHtml(description, {
+      allowedTags: allowedTags,
       allowedAttributes: {
         ...sanitizeHtml.defaults.allowedAttributes,
-        img: ['src', 'alt', 'title', 'width', 'height'],
-        mark: ['style'],
-        pre: ['class'],
-        code: ['class'],
-        blockquote: ['class'],
-        table: ['class'],
-        thead: ['class'],
-        tbody: ['class'],
-        tr: ['class'],
-        td: ['class', 'colspan', 'rowspan'],
-        th: ['class', 'colspan', 'rowspan'],
-        details: ['open'],
-        summary: ['class']
+        img: ['src', 'alt', 'title'],
+        p: ['class'], // 允许 p 标签有 class 属性
+        details: ['open'] // 允许 details 标签有 open 属性
       }
     });
-  }, [description, searchTerm]);
-
-  // 高亮标题
-  const highlightedTitle = useMemo(() => {
-    return searchTerm ? highlightSimpleText(title, searchTerm) : title;
-  }, [title, searchTerm]);
+  }, [description]);
 
   return (
     <li className="card-list-li">
-      <div className="card-meta">
-        <Datetime pubDatetime={pubDatetime} modDatetime={modDatetime} />
-      </div>
-      <a href={href} className="card-title">
+      <Datetime pubDatetime={pubDatetime} modDatetime={modDatetime} />
+      <a
+        href={href}
+        className="card-title"
+      >
         {secHeading ? (
-          <h2 {...headerProps} dangerouslySetInnerHTML={{ __html: highlightedTitle }} />
+          <h2 {...headerProps}>{title}</h2>
         ) : (
-          <h3 {...headerProps} dangerouslySetInnerHTML={{ __html: highlightedTitle }} />
+          <h3 {...headerProps}>{title}</h3>
         )}
       </a>
-      {description && (
-        <div 
-          className="card-description" 
-          dangerouslySetInnerHTML={{ __html: renderedDescription }} 
-        />
-      )}
+      <div 
+        className="post-content" 
+        dangerouslySetInnerHTML={{ __html: renderedDescription }} 
+      />
     </li>
   );
 }

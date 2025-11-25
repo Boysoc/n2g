@@ -1,96 +1,30 @@
 ---
 import { getCollection } from "astro:content";
+import { SITE } from "@config";
 import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import Sidebar from "@components/Sidebar.astro";
-import SimpleSearch from "@components/SimpleSearch.astro";
-import { SITE } from "../config";
-import getSortedPosts from "../utils/getSortedPosts";
-import type { CollectionEntry } from "astro:content";
+import SearchBar from "@components/Search";
+import getSortedPosts from "@utils/getSortedPosts";
 
-// 获取所有博客文章
-const posts = await getCollection("blog");
+// Retrieve all published articles
+const posts = await getCollection("blog", ({ data }) => !data.draft);
 const sortedPosts = getSortedPosts(posts);
 
-// 为搜索准备数据
-const searchList = sortedPosts.map((post) => ({
-  title: post.data.title,
-  description: post.data.description || "",
-  data: post.data,
-  slug: post.slug,
+// List of items to search in
+const searchList = sortedPosts.map(({ data, slug }) => ({
+  title: data.title,
+  description: data.description,
+  data,
+  slug,
 }));
 ---
 
 <Layout title={`搜索 | ${SITE.title}`}>
-  <div class="side-click icon-arrow-down"></div>
-  <div class="move-block">
-    <Header />
-    <div id="body">
-      <div class="container">
-        <div class="col-group">
-          <div class="col-8" id="main">
-            <div class="res-cons">
-              <article class="post">
-                <header>
-                  <h1 class="post-title">搜索</h1>
-                </header>
-                <div class="post-content">
-                  <SimpleSearch searchList={searchList} />
-                </div>
-              </article>
-            </div>
-          </div>
-          <Sidebar />
-        </div>
-      </div>
-    </div>
-    <Footer />
-  </div>
-</Layout>
-
-<style>
-  .search-results {
-    margin-top: 2rem;
-  }
-  
-  .card-list-li {
-    list-style: none;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .card-meta {
-    font-size: 0.875rem;
-    color: #666;
-    margin-bottom: 0.5rem;
-  }
-  
-  .card-title {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .card-title h2,
-  .card-title h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.25rem;
-    line-height: 1.4;
-  }
-  
-  .card-title:hover h2,
-  .card-title:hover h3 {
-    color: #0066cc;
-  }
-  
-  .card-description {
-    color: #666;
-    line-height: 1.6;
-  }
-  
-  .card-description p {
-    margin: 0;
-  }
-</style>
+  <Header activeNav="search" />
+  <Main pageTitle="搜索" pageDesc="">
+    <SearchBar client:load searchList={searchList} />
+  </Main>
+  <Footer />
 </Layout>

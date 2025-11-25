@@ -1,0 +1,16 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 身体 -->
+  <circle cx="100" cy="100" r="50" fill="orange"/>
+  <!-- 左眼 -->
+  <circle cx="85" cy="90" r="10" fill="white"/>
+  <circle cx="85" cy="90" r="5" fill="black"/>
+  <!-- 右眼 -->
+  <circle cx="115" cy="90" r="10" fill="white"/>
+  <circle cx="115" cy="90" r="5" fill="black"/>
+  <!-- 嘴巴 -->
+  <polygon points="100,110 95,100 105,100" fill="white"/>
+  <!-- 左耳 -->
+  <polygon points="85,50 75,70 95,70" fill="orange"/>
+  <!-- 右耳 -->
+  <polygon points="115,50 105,70 125,70" fill="orange"/>
+</svg>

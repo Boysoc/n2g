@@ -1,9 +1,11 @@
-const getPageNumbers = (numberOfPosts: number, postsPerPage: number = 5) => {
-  const numberOfPages = Math.ceil(numberOfPosts / postsPerPage);
+import { SITE } from "@config";
 
-  const pageNumbers: number[] = [];
-  for (let i = 1; i <= numberOfPages; i++) {
-    pageNumbers.push(i);
+const getPageNumbers = (numberOfPosts: number) => {
+  const numberOfPages = numberOfPosts / Number(SITE.postPerPage);
+
+  let pageNumbers: number[] = [];
+  for (let i = 1; i <= Math.ceil(numberOfPages); i++) {
+    pageNumbers = [...pageNumbers, i];
   }
 
   return pageNumbers;

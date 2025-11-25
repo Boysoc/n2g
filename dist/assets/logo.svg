@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><circle cx="100" cy="100" r="50" fill="orange"/><circle cx="85" cy="90" r="10" fill="#fff"/><circle cx="85" cy="90" r="5"/><circle cx="115" cy="90" r="10" fill="#fff"/><circle cx="115" cy="90" r="5"/><path fill="#fff" d="m100 110-5-10h10z"/><path fill="orange" d="M85 50 75 70h20zm30 0-10 20h20z"/></svg>

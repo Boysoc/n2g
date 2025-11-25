@@ -27,17 +27,6 @@ const pagination = getPagination({
   page: 1,
   isIndex: true,
 });
-
-// 获取当前页的文章
-const startIndex = 0;
-const endIndex = 5; // 每页显示5篇文章
-const paginatedPosts = postsByTag.slice(startIndex, endIndex);
 ---
 
-<TagPosts 
-  currentPage={pagination.currentPage}
-  totalPages={pagination.totalPages}
-  paginatedPosts={paginatedPosts}
-  tag={tag}
-  tagName={tagName}
-/>
+<TagPosts {...pagination} {tag} {tagName} />

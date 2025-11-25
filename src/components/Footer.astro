@@ -1,9 +1,61 @@
 ---
-import { SITE } from "@config";
+import { LOGO_IMAGE, SITE } from "@config";
+const currentYear = new Date().getFullYear();
+
+export interface Props {
+  noMarginTop?: boolean;
+}
+
+const { noMarginTop = false } = Astro.props;
 ---
 
-<footer id="footer">
-  <div class="container">
-    &copy; {new Date().getFullYear()} <a rel="nofollow" href="/">{SITE.title}</a>.
+<footer class={`${noMarginTop ? "" : "mt-auto"}`}>
+  <div class="content">
+    <div class="footer-wrapper">
+      <div class="copyright-wrapper">
+        <span>{
+          LOGO_IMAGE.enable && (
+            <img
+              src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
+              alt={SITE.title}
+              width='30'
+              height='30'
+            />
+          )
+        }
+        </span>
+        <span>{SITE.title} &#169; {currentYear} .</span>
+        <span class="slogan">一切从简，记录生活。</span>
+        <a
+        target="_blank"
+        href="/rss.xml"
+        class="rss-link"
+        aria-label="rss feed"
+        title="RSS Feed"
+      >
+        <span class="sr-only">RSS Feed</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
+        ><path
+          d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
+        ></path><path
+          d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
+        ></path><circle cx="6" cy="18" r="2"></circle>
+      </svg>
+      </a>
+      </div>
+    </div>
   </div>
 </footer>
+
+<script>
+  // eslint-disable-next-line
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+
+<style>
+  .slogan {
+    font-style: italic;
+    opacity: 0.8;
+    margin-left: 0.5rem;
+  }
+</style>

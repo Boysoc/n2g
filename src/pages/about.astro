@@ -1,0 +1,28 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { SITE } from "@config";
+---
+
+<Layout>
+  <Header activeNav="about" />
+  <main id="main-content" class="content">
+      <h1 class="about-title">关于</h1>
+
+<br>
+      <p>文字一旦进入网络，就获得了独立生命。</p>
+      <p>它可能潜入陌生人的意识，可能化作AI模型的训练数据。</p>
+      <p>这种奇妙的"被阅读"命运，让最朴素的记录都蕴含着改变世界的潜能。</p>
+      <p>于是写作不再是私人笔记，而是参与文明对话的方式。</p>
+      <p>敢于表达，本身就是一种勇敢而酷炫的行为。</p>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .about-title {
+    color: #cf4f28;
+  }
+</style>

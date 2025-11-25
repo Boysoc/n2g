@@ -1,0 +1,187 @@
+---
+import { links } from "../links";
+
+const verifiedLinks = links.filter(link => link.verified);
+---
+
+{verifiedLinks.length > 0 && (
+  <div class="random-visit-container">
+    <button 
+      class="random-visit-btn"
+      type="button"
+      onclick={`
+        const items = document.querySelectorAll('.modern-card');
+        // 获取可用的链接地址
+        const validLinks = Array.from(items).filter(item => !item.classList.contains('inactive'));
+        if (validLinks.length === 0) return;
+        if (items.length === 0) return;
+        
+        // 禁用按钮，防止重复点击
+        this.disabled = true;
+        this.textContent = '选择中...';
+        
+        // 随机选择一个索引
+        const randomIndex = Math.floor(Math.random() * validLinks.length);
+        
+        // 跑马灯效果
+        let currentIndex = 0;
+        let round = 0; // 记录跑的圈数
+        const totalRounds = 3; // 总共跑的圈数
+        let speed = 50; // 初始速度，更快的开始
+        let cycles = 0; // 当前周期数
+        
+        // 创建动态效果
+        const runMarathon = () => {
+          // 移除所有高亮
+          validLinks.forEach(item => {
+            item.classList.remove('highlight', 'selected');
+            item.style.transform = '';
+          });
+          
+          // 添加当前高亮
+          const currentItem = validLinks[currentIndex];
+          currentItem.classList.add('highlight');
+          
+          // 添加动态效果
+          const avatar = currentItem.querySelector('.friend-avatar');
+          if (avatar) {
+            avatar.style.animation = 'pulse 0.5s';
+            setTimeout(() => {
+              avatar.style.animation = '';
+            }, 500);
+          }
+          
+          // 增加索引
+          currentIndex = (currentIndex + 1) % validLinks.length;
+          
+          // 如果完成一圈
+          if (currentIndex === 0) {
+            round++;
+            speed += 30 + round * 40; // 每一圈速度减慢更多
+          }
+          
+          // 如果跑完预设的圈数，进入最终选择阶段
+          if (round >= totalRounds) {
+            // 进入最后慢速选择
+            cycles++;
+            speed += 20; // 进一步减慢
+            
+            // 如果已经超过随机索引，停在随机位置
+            if (cycles > 5 || (currentIndex > randomIndex && speed > 200)) {
+              // 移除所有高亮
+              validLinks.forEach(item => {
+                item.classList.remove('highlight', 'selected');
+                item.style.transform = '';
+              });
+              
+              // 停在随机选择的项目上
+              validLinks[randomIndex].classList.add('highlight');
+              
+              // 添加选中效果和动画
+              setTimeout(() => {
+                items[randomIndex].classList.add('selected');
+                
+                // 获取链接并打开
+                const linkElement = validLinks[randomIndex];
+                if (linkElement && linkElement.href) {
+                  window.open(linkElement.href, '_blank');
+                }
+                
+                // 恢复按钮状态
+                setTimeout(() => {
+                  this.disabled = false;
+                  this.textContent = '随机访问';
+                  validLinks.forEach(item => {
+                    item.classList.remove('highlight', 'selected');
+                    item.style.transform = '';
+                  });
+                }, 2000);
+              }, 300);
+              
+              return; // 停止循环
+            }
+          }
+          
+          // 继续下一帧
+          setTimeout(runMarathon, speed);
+        };
+        
+        // 开始跑马灯
+        runMarathon();
+      `}
+    >
+      随机访问
+    </button>
+  </div>
+)}
+
+<style>
+  /* 随机访问按钮样式 */
+  .random-visit-container {
+    display: inline-block;
+    margin-left: 0.5em;
+  }
+  
+  .random-visit-btn {
+    background-color: #ffffff;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    border-radius: 4px;
+    padding: 0.4em 1em;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+  }
+  
+  .random-visit-btn::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 5px;
+    background: transparent;
+    border: 1px solid rgba(255, 165, 0, 0.2);
+    box-shadow: 0 0 3px rgba(255, 165, 0, 0.15),
+                0 0 5px rgba(255, 165, 0, 0.1);
+    z-index: -1;
+    animation: orangeGlow 3s infinite alternate;
+  }
+  
+  .random-visit-btn:hover {
+    background-color: #ffffff;
+    border-color: rgba(255, 165, 0, 0.5);
+    transform: translateY(-1px);
+  }
+  
+  .random-visit-btn:hover::before {
+    border-color: rgba(255, 165, 0, 0.3);
+    box-shadow: 0 0 5px rgba(255, 165, 0, 0.25),
+                0 0 8px rgba(255, 165, 0, 0.15);
+  }
+  
+  .random-visit-btn:active {
+    transform: translateY(0);
+  }
+  
+  @keyframes orangeGlow {
+    0% {
+      box-shadow: 0 0 2px rgba(255, 165, 0, 0.1),
+                  0 0 4px rgba(255, 165, 0, 0.05);
+    }
+    100% {
+      box-shadow: 0 0 3px rgba(255, 165, 0, 0.15),
+                  0 0 6px rgba(255, 165, 0, 0.1);
+    }
+  }
+  
+  /* 跑马灯动画效果 */
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+</style>

@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="zh" class="false"><head><meta charset="UTF-8"><style>:where(img){height:auto;}</style><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://n2g.cn/links/"><meta name="generator" content="Astro v4.2.1"><!-- General Meta Tags --><title>Xio's</title><meta name="title" content="Xio's"><meta name="description" content=""><meta name="author" content="Xio"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="Xio's"><meta property="og:description" content=""><meta property="og:url" content="https://n2g.cn/links/"><meta property="og:image" content="https://n2g.cn/frynut-logo.png"><!-- Article Published/Modified time --><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://n2g.cn/links/"><meta property="twitter:title" content="Xio's"><meta property="twitter:description" content=""><meta property="twitter:image" content="https://n2g.cn/frynut-logo.png"><!-- Google Font --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap" rel="stylesheet"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><!-- 
+    <script is:inline src="/toggle-theme.js"></script> --><link rel="stylesheet" href="/_astro/index.yOUqx45_.css">
+<style>.waline-container:where(.astro-ksttp56e){margin:2em 0;padding:1em 0;border-top:1px solid #ddd}
+</style>
+<link rel="stylesheet" href="/_astro/links.CQTZg-id.css"><script type="module" src="/_astro/hoisted.FddQO928.js"></script></head> <body>  <header> <div class="content"> <div class="nav-container"> <div class="top-nav-wrap"> <a href="/" class="logo"> <span>Xio's</span> </a> <nav id="nav-menu"> <button class="hamburger-menu focus-outline" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"> <line x1="7" y1="12" x2="21" y2="12" class="line"></line> <line x1="3" y1="6" x2="21" y2="6" class="line"></line> <line x1="12" y1="18" x2="21" y2="18" class="line"></line> <line x1="18" y1="6" x2="6" y2="18" class="close"></line> <line x1="6" y1="6" x2="18" y2="18" class="close"></line> </svg> </button> <ul id="menu-items" class="display-none sm:flex"> <li> <a href="/" class="">
+日志
+</a> </li> <li> <a href="/links/" class="active">
+邻居
+</a> </li> <li> <a href="/about/" class="">
+关于
+</a> </li> <li> <a href="/search/" class="group inline-block hover:text-skin-accent focus-outline p-3 sm:p-1  flex" aria-label="search" title="Search"> <svg xmlns="http://www.w3.org/2000/svg" class="scale-125 sm:scale-100"><path d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"></path> </svg> <span class="sr-only">Search</span> </a> </li> </ul> </nav> </div> </div> </div> </header>   <main id="main-content" class="content astro-au7rboj5"> <section id="recent-posts" class="astro-au7rboj5"> <h1 class="links-title astro-au7rboj5">邻居</h1> <p class="astro-au7rboj5"></p><div class="random-visit-container astro-jffxlwus"><button class="random-visit-btn astro-jffxlwus" type="button" onclick="
+        const items = document.querySelectorAll('.modern-card');
+        // 获取可用的链接地址
+        const validLinks = Array.from(items).filter(item => !item.classList.contains('inactive'));
+        if (validLinks.length === 0) return;
+        if (items.length === 0) return;
+        
+        // 禁用按钮，防止重复点击
+        this.disabled = true;
+        this.textContent = '选择中...';
+        
+        // 随机选择一个索引
+        const randomIndex = Math.floor(Math.random() * validLinks.length);
+        
+        // 跑马灯效果
+        let currentIndex = 0;
+        let round = 0; // 记录跑的圈数
+        const totalRounds = 3; // 总共跑的圈数
+        let speed = 50; // 初始速度，更快的开始
+        let cycles = 0; // 当前周期数
+        
+        // 创建动态效果
+        const runMarathon = () => {
+          // 移除所有高亮
+          validLinks.forEach(item => {
+            item.classList.remove('highlight', 'selected');
+            item.style.transform = '';
+          });
+          
+          // 添加当前高亮
+          const currentItem = validLinks[currentIndex];
+          currentItem.classList.add('highlight');
+          
+          // 添加动态效果
+          const avatar = currentItem.querySelector('.friend-avatar');
+          if (avatar) {
+            avatar.style.animation = 'pulse 0.5s';
+            setTimeout(() => {
+              avatar.style.animation = '';
+            }, 500);
+          }
+          
+          // 增加索引
+          currentIndex = (currentIndex + 1) % validLinks.length;
+          
+          // 如果完成一圈
+          if (currentIndex === 0) {
+            round++;
+            speed += 30 + round * 40; // 每一圈速度减慢更多
+          }
+          
+          // 如果跑完预设的圈数，进入最终选择阶段
+          if (round >= totalRounds) {
+            // 进入最后慢速选择
+            cycles++;
+            speed += 20; // 进一步减慢
+            
+            // 如果已经超过随机索引，停在随机位置
+            if (cycles > 5 || (currentIndex > randomIndex &amp;&amp; speed > 200)) {
+              // 移除所有高亮
+              validLinks.forEach(item => {
+                item.classList.remove('highlight', 'selected');
+                item.style.transform = '';
+              });
+              
+              // 停在随机选择的项目上
+              validLinks[randomIndex].classList.add('highlight');
+              
+              // 添加选中效果和动画
+              setTimeout(() => {
+                items[randomIndex].classList.add('selected');
+                
+                // 获取链接并打开
+                const linkElement = validLinks[randomIndex];
+                if (linkElement &amp;&amp; linkElement.href) {
+                  window.open(linkElement.href, '_blank');
+                }
+                
+                // 恢复按钮状态
+                setTimeout(() => {
+                  this.disabled = false;
+                  this.textContent = '随机访问';
+                  validLinks.forEach(item => {
+                    item.classList.remove('highlight', 'selected');
+                    item.style.transform = '';
+                  });
+                }, 2000);
+              }, 300);
+              
+              return; // 停止循环
+            }
+          }
+          
+          // 继续下一帧
+          setTimeout(runMarathon, speed);
+        };
+        
+        // 开始跑马灯
+        runMarathon();
+      ">
+随机访问
+</button></div>一个有趣的邻居。<p></p> <section class="friend-links astro-fhfa3koh"> <div class="verified-links astro-fhfa3koh"> <div class="card-container astro-fhfa3koh"> <div class="card-wrap astro-fhfa3koh"> <a href="https://zimoo.me/" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="https://cravatar.cn/avatar/1fa37bd1ff014dd0df4178b0cebcfc13?s=32&amp;r=G&amp;d=" alt="Zimoo`s的头像" class="astro-fhfa3koh" fetchpriority="high" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">Zimoo`s</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：也是一位蜀国人</div> </div> </div> </div> </a> </div><div class="card-wrap astro-fhfa3koh"> <a href="http://bh-lay.com/" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="https://avatars.githubusercontent.com/u/14826931?v=4" alt="小剧客栈的头像" class="astro-fhfa3koh" fetchpriority="high" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">小剧客栈</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：有戏的博客</div> </div> </div> </div> </a> </div><div class="card-wrap astro-fhfa3koh"> <a href="https://ilogs.cn" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="https://ilogs.cn/images/avatar.jpg" alt="全局变量的头像" loading="lazy" class="astro-fhfa3koh" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">全局变量</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：记录生活中的平凡事</div> </div> </div> </div> </a> </div><div class="card-wrap astro-fhfa3koh"> <a href="https://ihaihe.cn/" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="https://ihaihe.cn/wp-content/uploads/2025/03/touxiang.png" alt="三十海河的头像" loading="lazy" class="astro-fhfa3koh" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">三十海河</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：做不了伟人，至少要做个好人。</div> </div> </div> </div> </a> </div><div class="card-wrap astro-fhfa3koh"> <a href="https://www.mofei.life/" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="https://avatars.githubusercontent.com/u/3351337?v=4" alt="朱文龙 Mofei的头像" loading="lazy" class="astro-fhfa3koh" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">朱文龙 Mofei</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：赫尔辛基的键盘诗人。</div> </div> </div> </div> </a> </div><div class="card-wrap astro-fhfa3koh"> <a href="https://aqzx.com/" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="http://www.aqzx.com/logo100.png" alt="爱情在线的头像" loading="lazy" class="astro-fhfa3koh" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">爱情在线</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：一个因网恋而建并碎碎念了20多年的个人站。</div> </div> </div> </div> </a> </div><div class="card-wrap astro-fhfa3koh"> <a href="https://airy.ink" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="https://airy.ink/logo.svg" alt="瓦匠个人小站的头像" loading="lazy" class="astro-fhfa3koh" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">瓦匠个人小站</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：大家都是倔强的人！</div> </div> </div> </div> </a> </div><div class="card-wrap astro-fhfa3koh"> <a href="https://www.yishu.pro/" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="https://www.yishu.pro/img/logo.jpg" alt="异数的头像" loading="lazy" class="astro-fhfa3koh" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">异数</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：笔落惊风雨，诗成泣鬼神。</div> </div> </div> </div> </a> </div><div class="card-wrap astro-fhfa3koh"> <a href="https://lilog.cn" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="https://lilog.cn/Image/avatar.webp" alt="李的日志的头像" loading="lazy" class="astro-fhfa3koh" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">李的日志</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：在阅读中沉淀，于随笔中抒怀</div> </div> </div> </div> </a> </div><div class="card-wrap astro-fhfa3koh"> <a href="https://wang618.cn/" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="https://wang618.cn/logo.gif" alt="旺东自留地的头像" loading="lazy" class="astro-fhfa3koh" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">旺东自留地</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：爱生活、爱摸鱼</div> </div> </div> </div> </a> </div><div class="card-wrap astro-fhfa3koh"> <a href="https://www.edzbe.com" class="modern-card  astro-fhfa3koh" target="_blank" rel="noopener noreferrer"> <div class="modern-card-border astro-fhfa3koh"> <div class="friend-avatar astro-fhfa3koh"> <img src="https://seccdn.libravatar.org/avatar/3a548785c751d63bf1a852b1307df0bd" alt="耳朵的主人的头像" loading="lazy" class="astro-fhfa3koh" decoding="async"> <span class="verified-badge astro-fhfa3koh" title="友链互通"></span> </div> <div class="card-title astro-fhfa3koh">耳朵的主人</div> <div class="card-tooltip astro-fhfa3koh"> <div class="tooltip-content astro-fhfa3koh"> <div class="tooltip-desc astro-fhfa3koh">邻居介绍：耳朵电台，庆幸我们还有耳朵。</div> </div> </div> </div> </a> </div> </div> </div> <div class="unverified-links astro-fhfa3koh"> <h3 class="unverified-title-left astro-fhfa3koh">我经常去的站</h3> <div class="unverified-container astro-fhfa3koh"> <a href="https://chopstack.com/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：Cho大神，他另一个地址frynut.com" style="animation-delay: 0s"> <span class="friend-text-name astro-fhfa3koh">Cho</span> </a><a href="http://www.chelsea.org.cn/" class="friend-text-item inactive astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：教主，切尔西的夏天。" style="animation-delay: 0.05s"> <span class="friend-text-name astro-fhfa3koh">晚餐</span> </a><a href="http://miantiao.me/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：面条的自留地" style="animation-delay: 0.1s"> <span class="friend-text-name astro-fhfa3koh">面条</span> </a><a href="http://xsinger.me/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：歌者与生活" style="animation-delay: 0.15000000000000002s"> <span class="friend-text-name astro-fhfa3koh">山炮不二</span> </a><a href="http://www.dearzd.com/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：喜欢栀子花的男生。" style="animation-delay: 0.2s"> <span class="friend-text-name astro-fhfa3koh">咚门</span> </a><a href="http://huiris.com/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：Huiris 的数字空间" style="animation-delay: 0.25s"> <span class="friend-text-name astro-fhfa3koh">Huiris's Blog</span> </a><a href="https://biji.io/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：界面设计师分享" style="animation-delay: 0.30000000000000004s"> <span class="friend-text-name astro-fhfa3koh">设计笔记</span> </a><a href="https://liruifengv.com" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：Web 开发者，Astro 项目成员，开源爱好者。" style="animation-delay: 0.35000000000000003s"> <span class="friend-text-name astro-fhfa3koh">liruifengv</span> </a><a href="https://captainofphb.me" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：记录有趣的事，分享技术经验。" style="animation-delay: 0.4s"> <span class="friend-text-name astro-fhfa3koh">CaptainOfPhB</span> </a><a href="https://blog.xuegaogg.com/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：什么都搞，不再专注网络了。" style="animation-delay: 0.45s"> <span class="friend-text-name astro-fhfa3koh">雪糕博客</span> </a><a href="https://godruoyi.com/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：用纸质书镇压效率 · 用Laravel怀念青春。" style="animation-delay: 0.5s"> <span class="friend-text-name astro-fhfa3koh">Lianbo`s Blog</span> </a><a href="https://wonse.info/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：热爱学习，热爱互联网，渴望自由。" style="animation-delay: 0.55s"> <span class="friend-text-name astro-fhfa3koh">王鑫的小屋</span> </a><a href="https://acevs.com/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：探索者，blogger" style="animation-delay: 0.6000000000000001s"> <span class="friend-text-name astro-fhfa3koh">Acevs</span> </a><a href="https://xifeng.net" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：外贸 旅行 代码 人生" style="animation-delay: 0.65s"> <span class="friend-text-name astro-fhfa3koh">西城往事</span> </a><a href="https://4311346.com/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：记录时间，记录生活，记录想法" style="animation-delay: 0.7000000000000001s"> <span class="friend-text-name astro-fhfa3koh">Andy烧麦</span> </a><a href="https://blog.zeruns.com" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：爱折腾软件和硬件的技术宅" style="animation-delay: 0.75s"> <span class="friend-text-name astro-fhfa3koh">Zeruns's Blog</span> </a><a href="https://d-d.design/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：做自己，不隨波逐流，不妥協" style="animation-delay: 0.8s"> <span class="friend-text-name astro-fhfa3koh">孤鬥</span> </a><a href="https://www.foreverblog.cn/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：十年之约" style="animation-delay: 0.8500000000000001s"> <span class="friend-text-name astro-fhfa3koh">十年之约</span> </a><a href="https://www.boyouquan.com/" class="friend-text-item  astro-fhfa3koh" target="_blank" rel="noopener noreferrer" title="博主介绍：博客人的朋友圈，博客收录与文章 RSS 聚合网站。" style="animation-delay: 0.9s"> <span class="friend-text-name astro-fhfa3koh">博友圈</span> </a> </div> </div> <!-- 友链申请部分 --> <div class="friend-apply-section astro-fhfa3koh"> <div class="apply-card astro-fhfa3koh"> <div class="apply-header astro-fhfa3koh"> <div class="apply-avatar astro-fhfa3koh"> <img src="https://n2g.cn/logo.webp" alt="Xio's" loading="lazy" class="astro-fhfa3koh" decoding="async"> </div> <div class="apply-details astro-fhfa3koh"> <h4 class="apply-name astro-fhfa3koh">Xio's</h4> <p class="apply-desc astro-fhfa3koh">狮子座的数字游牧者，用代码和文字探索科技世界，记录灵感与思考。</p> <p class="apply-desc astro-fhfa3koh">Web:  https://n2g.cn</p> <p class="apply-desc astro-fhfa3koh">Logo:  https://n2g.cn/logo.webp</p> <p class="apply-desc astro-fhfa3koh">Rss:  https://n2g.cn/rss.xml</p> </div> </div> </div></div></section>  <div class="waline-container astro-ksttp56e"> <div id="waline-comments" class="astro-ksttp56e"></div> </div>  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">  </section> </main> <footer class="mt-auto astro-sz7xmlte"> <div class="content astro-sz7xmlte"> <div class="footer-wrapper astro-sz7xmlte"> <div class="copyright-wrapper astro-sz7xmlte"> <span class="astro-sz7xmlte"><img src="/assets/logo.svg.svg" alt="Xio's" width="30" height="30" class="astro-sz7xmlte" loading="lazy" decoding="async"> </span> <span class="astro-sz7xmlte">Xio's © 2025 .</span> <span class="slogan astro-sz7xmlte">一切从简，记录生活。</span> <a target="_blank" href="/rss.xml" class="rss-link astro-sz7xmlte" aria-label="rss feed" title="RSS Feed"> <span class="sr-only astro-sz7xmlte">RSS Feed</span> <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon astro-sz7xmlte"><path d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z" class="astro-sz7xmlte"></path><path d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z" class="astro-sz7xmlte"></path><circle cx="6" cy="18" r="2" class="astro-sz7xmlte"></circle> </svg> </a> </div> </div> </div> </footer>     </body></html>

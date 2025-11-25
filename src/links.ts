@@ -76,7 +76,7 @@ export const links: Link[] = [
   {
     name: "小剧客栈",
     href: "http://bh-lay.com/",
-    logo: "https://static.bh-lay.com/build/single-page-vue/assets/aboutme_2-eb1beec4.jpg",
+    logo: "https://avatars.githubusercontent.com/u/14826931?v=4",
     description: "有戏的博客",
     verified: true
   },
@@ -97,7 +97,7 @@ export const links: Link[] = [
   {
     name: "雪糕博客",
     href: "https://blog.xuegaogg.com/",
-    logo: "https://blog.xuegaogg.com/about/wx.webp",
+    logo: "https://avatars.githubusercontent.com/u/35700485?v=4",
     description: "什么都搞，不再专注网络了。",
     feed: "https://blog.xuegaogg.com/index.xml"
   },
@@ -122,6 +122,7 @@ export const links: Link[] = [
     href: "https://ihaihe.cn/",
     logo: "https://ihaihe.cn/wp-content/uploads/2025/03/touxiang.png",
     description: "做不了伟人，至少要做个好人。",
+    verified: true,
     feed: "https://ihaihe.cn/feed"
   },
   {
@@ -163,6 +164,7 @@ export const links: Link[] = [
     href: "https://www.yishu.pro/",
     logo: "https://www.yishu.pro/img/logo.jpg",
     description: "笔落惊风雨，诗成泣鬼神。",
+    verified: true,
     feed: "https://www.yishu.pro/feed/"
   },
   {
@@ -227,7 +229,6 @@ export const links: Link[] = [
     href: "https://www.foreverblog.cn/",
     logo: "",
     description: "十年之约",
-    verified: true,
     feed: "https://www.foreverblog.cn/feeds.html"
   },
   {
@@ -235,7 +236,6 @@ export const links: Link[] = [
     href: "https://www.boyouquan.com/",
     logo: "https://www.boyouquan.com/assets/images/sites/logo/logo-small.png",
     description: "博客人的朋友圈，博客收录与文章 RSS 聚合网站。",
-    verified: true,
     feed: "https://www.boyouquan.com/feed.xml?sort=latest"
   }
 ];

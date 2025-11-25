@@ -1,150 +1,42 @@
 ---
 import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import LinkButton from "@components/LinkButton.astro";
 ---
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <title>页面没找到 - {SITE.title}</title>
-  </head>
-  <body>
-    <div class="body404">
-      <div class="info404">
-        <header id="header404" class="clearfix">
-          <div class="site-name404">
-            <i>404</i>
-          </div>
-        </header>
-        <section>
-          <div class="title404">
-            <p>每一个平凡的日常<br />都是连续发生中的奇迹</p>
-          </div>
-          <a class="index404" rel="nofollow" href="/">返回首页</a>
-        </section>
-        <footer id="footer404">
-          <p style="text-align: center; font-size: 0.9rem; color: #888;">
-            谨以此页面，致敬心中的白月光 <a href="https://frynut.com/" target="_blank" rel="noopener noreferrer" style="color: #888; text-decoration: underline;">Cho</a>.
-          </p>
-          &copy; 2025 {SITE.title}
-        </footer>
-      </div>
+<Layout title={`404 Not Found | ${SITE.title}`}>
+  <Header />
+
+  <main id="main-content" class="content">
+    <div class="not-found-wrapper">
+      <h1 aria-label="404 Not Found">404</h1>
+      <span aria-hidden="true">¯\_(ツ)_/¯</span>
+      <p>Page Not Found</p>
+      <LinkButton
+        href="/"
+        className="my-6 text-lg underline decoration-dashed underline-offset-8"
+      >
+        Go back home
+      </LinkButton>
     </div>
-  </body>
-</html>
+  </main>
+
+  <Footer />
+</Layout>
 
 <style>
-  /* 禁止滚动条 */
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
+  #main-content {
+    @apply mx-auto flex max-w-3xl flex-1 items-center justify-center;
   }
-
-  /* 404 页面整体容器 */
-  .body404 {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background: #fff url('/images/about.png') no-repeat right top;
-    background-size: contain;
-    background-attachment: fixed;
-    background-position: right top;
-    min-width: 320px;
-    min-height: 240px;
-    text-shadow: 1px 1px 0 #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    overflow: hidden;
-    font-family: "Classic Grotesque W01", Arial, "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, sans-serif;
-    color: #333;
+  .not-found-wrapper {
+    @apply mb-14 flex flex-col items-center justify-center;
   }
-
-  /* 404 页面标题 */
-  .site-name404 {
-    margin: 0 auto;
-    width: 3em;
-    text-align: center;
-    letter-spacing: 2px;
-    font: 700 88px/1.2 "ff-tisa-web-pro", Cambria, "Times New Roman", Georgia, Times, sans-serif;
+  .not-found-wrapper h1 {
+    @apply text-9xl font-bold text-skin-accent;
   }
-
-  .site-name404 i {
-    font-style: normal;
-    font-weight: 700;
-    display: block;
-    font-size: 88px;
-    letter-spacing: 0em;
-    color: #222;
-  }
-
-  /* 404 页面文本内容 */
-  .title404 p {
-    font-size: 20px;
-    margin: 0.5em 0 .6em;
-  }
-
-  /* 404 页面返回首页按钮 */
-  .index404 {
-    margin-top: 13px;
-    display: inline-block;
-    padding: 14px 27px 14px 29px;
-    color: #fff;
-    white-space: nowrap;
-    border-radius: 50px;
-    text-align: center;
-    background: #444;
-    font-weight: 500;
-    font-size: 14px;
-    text-shadow: none;
-    text-decoration: none;
-  }
-
-  .index404:hover {
-    background-color: #000;
-    color: #fff;
-  }
-
-  /* 404 页脚 */
-  #footer404 {
-    margin-top: 30px;
-    text-align: center;
-    color: #999;
-    font-style: SimSun;
-    font-size: 10px;
-  }
-
-  #footer404 p {
-    font-size: 16px;
-    color: #333;
-    text-align: center;
-  }
-
-  /* 响应式设计 */
-  @media (max-width: 860px) {
-    .body404 {
-      background-size: 100% 100%;
-    }
-
-    .site-name404 {
-      font-size: 48px;
-    }
-
-    .site-name404 i {
-      font-size: 48px;
-    }
-
-    .title404 p {
-      font-size: 18px;
-    }
-
-    .index404 {
-      font-size: 12px;
-    }
+  .not-found-wrapper p {
+    @apply mt-4 text-2xl sm:text-3xl;
   }
 </style>

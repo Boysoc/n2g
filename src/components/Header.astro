@@ -1,134 +1,114 @@
 ---
 import { SITE } from "@config";
-import Hr from "./Hr.astro";
+import LinkButton from "./LinkButton.astro";
 
 export interface Props {
-  activeNav?: "posts" | "archives" | "about" | "links";
+  activeNav?: "posts" | "tags" | "links" | "search" | "about";
 }
 
 const { activeNav } = Astro.props;
 ---
 
-<header id="header">
-  <div class="site-name">
-    <a id="logo" href="/">
-      Xio<span>'s</span>
-    </a>
-    <h1>Xio's</h1>
-    <p class="description">一切从简，记录生活。</p>
+<header>
+  <div class="content">
+    <div class="nav-container">
+      <div class="top-nav-wrap">
+        <a href="/" class="logo">
+          <span>Xio's</span>
+        </a>
+        <nav id="nav-menu">
+          <button
+            class="hamburger-menu focus-outline"
+            aria-label="Open Menu"
+            aria-expanded="false"
+            aria-controls="menu-items"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="menu-icon"
+            >
+              <line x1="7" y1="12" x2="21" y2="12" class="line"></line>
+              <line x1="3" y1="6" x2="21" y2="6" class="line"></line>
+              <line x1="12" y1="18" x2="21" y2="18" class="line"></line>
+              <line x1="18" y1="6" x2="6" y2="18" class="close"></line>
+              <line x1="6" y1="6" x2="18" y2="18" class="close"></line>
+            </svg>
+          </button>
+          <ul id="menu-items" class="display-none sm:flex">
+            <li>
+              <a href="/" class={activeNav === "posts" ? "active" : ""}>
+                日志
+              </a>
+            </li>
+            <li>
+              <a href="/links/" class={activeNav === "links" ? "active" : ""}>
+                邻居
+              </a>
+            </li>
+            <li>
+              <a href="/about/" class={activeNav === "about" ? "active" : ""}>
+                关于
+              </a>
+            </li>
+            <li>
+              <LinkButton
+                href="/search/"
+                className={`focus-outline p-3 sm:p-1 ${
+                  activeNav === "search" ? "active" : ""
+                } flex`}
+                ariaLabel="search"
+                title="Search"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="scale-125 sm:scale-100"
+                  ><path
+                    d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"
+                  ></path>
+                </svg>
+                <span class="sr-only">Search</span>
+              </LinkButton>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
-  
-  <nav id="nav-menu">
-    <a href="/" class={activeNav === "posts" ? "current" : ""}>首页</a>
-    <a href="/archives" class={activeNav === "archives" ? "current" : ""}>归档</a>
-    <a href="/about" class={activeNav === "about" ? "current" : ""}>关于</a>
-    <a href="/links" class={activeNav === "links" ? "current" : ""}>邻居</a>
-  </nav>
 </header>
 
 <style>
-  /* 确保导航居中和响应式设计 */
-  #header {
-    text-align: center;
-    padding: 64px 0 0;
-  }
-  
-  .site-name h1 {
-    padding: 0;
-    margin: 0;
-    height: 0;
-    overflow: hidden;
-  }
-  
-  #logo {
-    font: bold 44px/1.22 "Times New Roman", Georgia, Times, sans-serif;
-    color: #555;
-    text-decoration: none;
-  }
-  
-  #logo span {
-    color: #777;
-  }
-  
-  #logo:hover {
-    color: #777;
-  }
-  
-  .description {
-    margin: 0;
-    color: #999;
-    font-size: 14px;
-  }
-  
-  #nav-menu {
-    padding: 0;
-    margin: 28px 0 10px;
-    text-align: center;
-  }
-  
-  #nav-menu a {
-    text-decoration: none;
-    padding: 7px 18px 6px;
-    color: #fff;
-    background-color: #999;
-    position: relative;
-    z-index: 4;
-    font-size: 14px;
-    line-height: 1.5;
-    display: inline-block;
-    margin: 0;
-  }
-  
-  #nav-menu a:first-child {
-    border: none;
-  }
-  
-  #nav-menu a.current {
-    background-color: #303538;
-  }
-  
-  #nav-menu a.current:after {
-    border-left: 14px solid transparent;
-    border-right: 14px solid transparent;
-    border-top: 14px solid #303538;
-    bottom: -6px;
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: 3;
-    height: 0;
-    text-align: center;
-    left: 50%;
-    margin-left: -14px;
-    width: 0;
-  }
-  
-  #nav-menu a:hover {
-    background-color: #303538;
-  }
-  
-  /* 响应式设计 */
-  @media print, screen and (max-width: 680px) {
-    #nav-menu a {
-      padding: 0 15px;
-      line-height: 27px;
-      height: 27px;
-      font-size: 13px;
-    }
-    
-    #logo {
-      font-size: 36px;
-    }
-  }
-  
-  @media print, screen and (max-width: 500px) {
-    #nav-menu a {
-      padding: 0 12px;
-      font-size: 12px;
-    }
-    
-    #logo {
-      font-size: 32px;
-    }
-  }
+
 </style>
+
+<script>
+  function toggleNav() {
+    // Toggle menu
+    const menuBtn = document.querySelector(".hamburger-menu");
+    const menuIcon = document.querySelector(".menu-icon");
+    const menuItems = document.querySelector("#menu-items");
+
+    menuBtn?.addEventListener("click", () => {
+      const menuExpanded = menuBtn.getAttribute("aria-expanded") === "true";
+      menuIcon?.classList.toggle("is-active");
+      menuBtn.setAttribute("aria-expanded", menuExpanded ? "false" : "true");
+      menuBtn.setAttribute(
+        "aria-label",
+        menuExpanded ? "Open Menu" : "Close Menu"
+      );
+      menuItems?.classList.toggle("display-none");
+    });
+  }
+
+  toggleNav();
+
+  // Runs on view transitions navigation
+  document.addEventListener("astro:after-swap", toggleNav);
+</script>
