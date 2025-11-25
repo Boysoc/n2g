@@ -9,106 +9,7 @@ const verifiedLinks = links.filter(link => link.verified);
     <button 
       class="random-visit-btn"
       type="button"
-      onclick={`
-        const items = document.querySelectorAll('.modern-card');
-        // 获取可用的链接地址
-        const validLinks = Array.from(items).filter(item => !item.classList.contains('inactive'));
-        if (validLinks.length === 0) return;
-        if (items.length === 0) return;
-        
-        // 禁用按钮，防止重复点击
-        this.disabled = true;
-        this.textContent = '选择中...';
-        
-        // 随机选择一个索引
-        const randomIndex = Math.floor(Math.random() * validLinks.length);
-        
-        // 跑马灯效果
-        let currentIndex = 0;
-        let round = 0; // 记录跑的圈数
-        const totalRounds = 3; // 总共跑的圈数
-        let speed = 50; // 初始速度，更快的开始
-        let cycles = 0; // 当前周期数
-        
-        // 创建动态效果
-        const runMarathon = () => {
-          // 移除所有高亮
-          validLinks.forEach(item => {
-            item.classList.remove('highlight', 'selected');
-            item.style.transform = '';
-          });
-          
-          // 添加当前高亮
-          const currentItem = validLinks[currentIndex];
-          currentItem.classList.add('highlight');
-          
-          // 添加动态效果
-          const avatar = currentItem.querySelector('.friend-avatar');
-          if (avatar) {
-            avatar.style.animation = 'pulse 0.5s';
-            setTimeout(() => {
-              avatar.style.animation = '';
-            }, 500);
-          }
-          
-          // 增加索引
-          currentIndex = (currentIndex + 1) % validLinks.length;
-          
-          // 如果完成一圈
-          if (currentIndex === 0) {
-            round++;
-            speed += 30 + round * 40; // 每一圈速度减慢更多
-          }
-          
-          // 如果跑完预设的圈数，进入最终选择阶段
-          if (round >= totalRounds) {
-            // 进入最后慢速选择
-            cycles++;
-            speed += 20; // 进一步减慢
-            
-            // 如果已经超过随机索引，停在随机位置
-            if (cycles > 5 || (currentIndex > randomIndex && speed > 200)) {
-              // 移除所有高亮
-              validLinks.forEach(item => {
-                item.classList.remove('highlight', 'selected');
-                item.style.transform = '';
-              });
-              
-              // 停在随机选择的项目上
-              validLinks[randomIndex].classList.add('highlight');
-              
-              // 添加选中效果和动画
-              setTimeout(() => {
-                items[randomIndex].classList.add('selected');
-                
-                // 获取链接并打开
-                const linkElement = validLinks[randomIndex];
-                if (linkElement && linkElement.href) {
-                  window.open(linkElement.href, '_blank');
-                }
-                
-                // 恢复按钮状态
-                setTimeout(() => {
-                  this.disabled = false;
-                  this.textContent = '随机访问';
-                  validLinks.forEach(item => {
-                    item.classList.remove('highlight', 'selected');
-                    item.style.transform = '';
-                  });
-                }, 2000);
-              }, 300);
-              
-              return; // 停止循环
-            }
-          }
-          
-          // 继续下一帧
-          setTimeout(runMarathon, speed);
-        };
-        
-        // 开始跑马灯
-        runMarathon();
-      `}
+      id="random-visit-button"
     >
       随机访问
     </button>
@@ -184,4 +85,123 @@ const verifiedLinks = links.filter(link => link.verified);
     50% { transform: scale(1.2); }
     100% { transform: scale(1); }
   }
+  
+  /* 高亮效果 */
+  :global(.modern-card.highlight) {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 165, 0, 0.5);
+    z-index: 10;
+    position: relative;
+  }
+  
+  :global(.modern-card.selected) {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.8), 0 0 30px rgba(255, 165, 0, 0.4);
+    z-index: 11;
+    position: relative;
+    animation: selected-pulse 1s infinite alternate;
+  }
+  
+  @keyframes selected-pulse {
+    0% { 
+      box-shadow: 0 0 20px rgba(255, 165, 0, 0.8), 0 0 30px rgba(255, 165, 0, 0.4);
+    }
+    100% { 
+      box-shadow: 0 0 25px rgba(255, 165, 0, 1), 0 0 35px rgba(255, 165, 0, 0.6);
+    }
+  }
 </style>
+
+<script>
+  // 简化的事件处理函数
+  function initRandomButton() {
+    const randomButton = document.getElementById('random-visit-button');
+    
+    if (randomButton && !randomButton.hasAttribute('data-initialized')) {
+      randomButton.setAttribute('data-initialized', 'true');
+      
+      randomButton.addEventListener('click', function(e) {
+        const items = document.querySelectorAll('.modern-card');
+        // 获取可用的链接地址
+        const validLinks = Array.from(items).filter(item => !item.classList.contains('inactive'));
+        if (validLinks.length === 0) return;
+        if (items.length === 0) return;
+        
+        // 禁用按钮，防止重复点击
+        this.disabled = true;
+        this.textContent = '选择中...';
+        
+        // 随机选择一个索引
+        const randomIndex = Math.floor(Math.random() * validLinks.length);
+        
+        // 跑马灯效果
+        let currentIndex = 0;
+        let round = 0; // 记录跑的圈数
+        const totalRounds = 2; // 减少圈数，加快速度
+        let speed = 30; // 初始速度，更快的开始
+        
+        // 创建动态效果
+        const runMarathon = () => {
+          // 移除所有高亮
+          validLinks.forEach(item => {
+            item.classList.remove('highlight', 'selected');
+          });
+          
+          // 添加当前高亮
+          validLinks[currentIndex].classList.add('highlight');
+          
+          // 增加索引
+          currentIndex = (currentIndex + 1) % validLinks.length;
+          
+          // 如果完成一圈
+          if (currentIndex === 0) {
+            round++;
+            speed += 40; // 每一圈速度减慢
+          }
+          
+          // 如果跑完预设的圈数，进入最终选择阶段
+          if (round >= totalRounds) {
+            // 停在随机选择的项目上
+            validLinks[randomIndex].classList.remove('highlight');
+            validLinks[randomIndex].classList.add('selected');
+            
+            // 直接打开链接
+            const linkElement = validLinks[randomIndex];
+            const href = linkElement.href;
+            
+            if (href) {
+              // 使用window.location在新标签页打开，这是最可靠的方式
+              window.open(href, '_blank', 'noopener,noreferrer');
+            }
+            
+            // 恢复按钮状态
+            setTimeout(() => {
+              this.disabled = false;
+              this.textContent = '随机访问';
+              validLinks.forEach(item => {
+                item.classList.remove('highlight', 'selected');
+              });
+            }, 2000);
+            
+            return; // 停止循环
+          }
+          
+          // 继续下一帧
+          setTimeout(runMarathon, speed);
+        };
+        
+        // 开始跑马灯
+        runMarathon();
+      });
+    }
+  }
+  
+  // 初始化
+  initRandomButton();
+  
+  // Astro页面切换后重新绑定事件
+  document.addEventListener('astro:after-swap', () => {
+    // 等待DOM更新完成
+    setTimeout(initRandomButton, 100);
+  });
+</script>
