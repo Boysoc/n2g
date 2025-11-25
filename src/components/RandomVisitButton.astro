@@ -24,12 +24,12 @@ const verifiedLinks = links.filter(link => link.verified);
   }
   
   .random-visit-btn {
-    background-color: #ffffff;
-    border: 1px solid rgba(255, 165, 0, 0.3);
+    background-color: #cf4f28;
+    border: 1px solid #cf4f28;
     border-radius: 4px;
     padding: 0.4em 1em;
     font-size: 0.9rem;
-    color: #333;
+    color: #ffffff;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -45,37 +45,38 @@ const verifiedLinks = links.filter(link => link.verified);
     bottom: -2px;
     border-radius: 5px;
     background: transparent;
-    border: 1px solid rgba(255, 165, 0, 0.2);
-    box-shadow: 0 0 3px rgba(255, 165, 0, 0.15),
-                0 0 5px rgba(255, 165, 0, 0.1);
+    border: 1px solid rgba(207, 79, 40, 0.3);
+    box-shadow: 0 0 3px rgba(207, 79, 40, 0.2),
+                0 0 5px rgba(207, 79, 40, 0.1);
     z-index: -1;
-    animation: orangeGlow 3s infinite alternate;
+    animation: redGlow 3s infinite alternate;
   }
   
   .random-visit-btn:hover {
-    background-color: #ffffff;
-    border-color: rgba(255, 165, 0, 0.5);
+    background-color: #b84220;
+    border-color: #b84220;
     transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(207, 79, 40, 0.3);
   }
   
   .random-visit-btn:hover::before {
-    border-color: rgba(255, 165, 0, 0.3);
-    box-shadow: 0 0 5px rgba(255, 165, 0, 0.25),
-                0 0 8px rgba(255, 165, 0, 0.15);
+    border-color: rgba(207, 79, 40, 0.5);
+    box-shadow: 0 0 5px rgba(207, 79, 40, 0.3),
+                0 0 8px rgba(207, 79, 40, 0.2);
   }
   
   .random-visit-btn:active {
     transform: translateY(0);
   }
   
-  @keyframes orangeGlow {
+  @keyframes redGlow {
     0% {
-      box-shadow: 0 0 2px rgba(255, 165, 0, 0.1),
-                  0 0 4px rgba(255, 165, 0, 0.05);
+      box-shadow: 0 0 2px rgba(207, 79, 40, 0.2),
+                  0 0 4px rgba(207, 79, 40, 0.1);
     }
     100% {
-      box-shadow: 0 0 3px rgba(255, 165, 0, 0.15),
-                  0 0 6px rgba(255, 165, 0, 0.1);
+      box-shadow: 0 0 4px rgba(207, 79, 40, 0.3),
+                  0 0 8px rgba(207, 79, 40, 0.2);
     }
   }
   
