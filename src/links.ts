@@ -11,6 +11,7 @@ export interface Link {
   instagram?: string;  
   inactive?: boolean; // 新增字段：是否不活跃
   verified?: boolean; 
+  organization?: boolean; // 新增字段：是否为博客组织
 }
 
 export const links: Link[] = [
@@ -225,17 +226,32 @@ export const links: Link[] = [
     feed: "https://www.edzbe.com/feed"
   },
   {
+    name: "蘇SU",
+    href: "https://suus.me",
+    logo: "https://cravatar.cn/avatar/84b712148a63b44dd97ede997bc3efa5",
+    description: "在数字的海洋中，寻找属于自己的星辰。",
+    verified: true,
+    feed: "https://suus.me/index.xml"
+  },
+  {
+    name: "ch3nyang的博客",
+    href: "https://ch3nyang.top/",
+    feed: "https://blog.ch3nyang.top/feed.xml"
+  },
+  {
     name: "十年之约",
     href: "https://www.foreverblog.cn/",
-    logo: "",
+    logo: "https://www.foreverblog.cn/favicon.ico",
     description: "十年之约",
-    feed: "https://www.foreverblog.cn/feeds.html"
+    feed: "https://www.foreverblog.cn/feeds.html",
+    organization: true
   },
   {
     name: "博友圈",
     href: "https://www.boyouquan.com/",
     logo: "https://www.boyouquan.com/assets/images/sites/logo/logo-small.png",
     description: "博客人的朋友圈，博客收录与文章 RSS 聚合网站。",
-    feed: "https://www.boyouquan.com/feed.xml?sort=latest"
+    feed: "https://www.boyouquan.com/feed.xml?sort=latest",
+    organization: true
   }
 ];

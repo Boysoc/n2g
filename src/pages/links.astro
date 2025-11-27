@@ -13,7 +13,7 @@ import { SITE } from "@config";
   <main id="main-content" class="content">
     <section id="recent-posts">
       <h1 class="links-title">邻居</h1>
-      <p><RandomVisitButton />一个有趣的邻居。</p>
+      <p><RandomVisitButton /><span class="gradient-text">一个有趣的邻居</span>。</p>
       <FriendLinks />
       <Component />
     </section>
@@ -24,5 +24,32 @@ import { SITE } from "@config";
 <style>
   .links-title {
     color: #cf4f28;
+  }
+  
+  .gradient-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #222 0%, #cf4f28 50%, #222 100%);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradientMove 8s linear infinite;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+  }
+
+  @keyframes gradientMove {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 </style>

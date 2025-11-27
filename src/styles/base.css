@@ -337,10 +337,10 @@ header {
   
   .drop-cap::first-letter {
     float: left;
-    font-size: 4em;
-    line-height: 0.8;
+    font-size: 2.2em;
+    line-height: 0.9;
     margin: 0.1em 0.1em 0 0;
-    font-weight: bold;
+    font-weight: 500;
   }
   blockquote{
     font-style: normal;
