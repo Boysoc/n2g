@@ -357,6 +357,20 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"qzone-2005-06-09.md": {
+	id: "qzone-2005-06-09.md";
+  slug: "qzone-2005-06-09";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"qzone-2005-12-18.md": {
+	id: "qzone-2005-12-18.md";
+  slug: "qzone-2005-12-18";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "qzone-2011-06-21.md": {
 	id: "qzone-2011-06-21.md";
   slug: "qzone-2011-06-21";

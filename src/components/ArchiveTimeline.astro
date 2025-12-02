@@ -1,0 +1,630 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { groupPostsByDate, getArchiveStats, getMonthName, type PostGroup } from "@utils/archiveHelper";
+
+export interface Props {
+  posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+
+// 按日期分组文章
+const postGroups = groupPostsByDate(posts);
+const stats = getArchiveStats(posts);
+
+// 生成背景粒子效果
+function generateParticles(count: number) {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    size: Math.random() * 3 + 1,
+    left: Math.random() * 100,
+    animationDelay: Math.random() * 20,
+    animationDuration: Math.random() * 20 + 10
+  }));
+}
+
+const particles = generateParticles(50);
+---
+
+<section class="archive-container">
+  <!-- 背景粒子效果 -->
+  <div class="particles-container">
+    {particles.map(particle => (
+      <div 
+        class="particle" 
+        style={`--size: ${particle.size}px; --left: ${particle.left}%; --delay: ${particle.animationDelay}s; --duration: ${particle.animationDuration}s;`}
+      ></div>
+    ))}
+  </div>
+
+  <!-- 简洁的统计信息 -->
+  <header class="archive-header">
+    <h1 class="archive-title">时光之旅</h1>
+    <div class="journey-stats">
+      <div class="stats-text">
+        <span class="highlight">{stats.totalPosts}</span> 篇文章
+        <span class="separator">·</span>
+        <span class="highlight">{stats.totalYears}</span> 年旅程
+      </div>
+    </div>
+  </header>
+
+  <!-- 可视化时间轴 -->
+  <div class="visual-timeline">
+    {postGroups.map((group, yearIndex) => (
+      <div class="year-section" data-year={group.year}>
+        <div class="year-label">
+          <span class="year-text">{group.year}</span>
+          <div class="year-line"></div>
+        </div>
+        
+        <div class="months-grid">
+          {group.months.map((monthGroup) => (
+            <div class="month-block">
+              <div class="month-dot" data-count={monthGroup.count}>
+                <div class="pulse"></div>
+              </div>
+              <div class="month-tooltip">
+                <div class="tooltip-month">{getMonthName(monthGroup.month)}</div>
+                <div class="tooltip-count">{monthGroup.count} 篇文章</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <!-- 文章预览 -->
+        <div class="posts-preview">
+          {group.months.slice(0, 3).map(monthGroup => (
+            monthGroup.posts.slice(0, 2).map(post => (
+              <a href={`/posts/${post.slug}/`} class="preview-item">
+                <div class="preview-date">
+                  {new Date(post.data.pubDatetime).toLocaleDateString("zh-CN", { 
+                    month: 'short',
+                    day: 'numeric'
+                  })}
+                </div>
+                <div class="preview-title">{post.data.title}</div>
+              </a>
+            ))
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+  
+  <!-- 简洁的年份导航 -->
+  <div class="years-navigation">
+    <div class="nav-title">时光穿梭</div>
+    <div class="nav-years">
+      {postGroups.map((group) => (
+        <a href={`#year-${group.year}`} class="nav-year" data-year={group.year}>
+          {group.year}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* 基础样式 */
+  .archive-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2em 1em;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  /* 粒子背景效果 */
+  .particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  .particle {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    background-color: rgba(207, 79, 40, 0.3);
+    border-radius: 50%;
+    left: var(--left);
+    animation: float var(--duration) ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.4;
+    }
+    90% {
+      opacity: 0.4;
+    }
+    50% {
+      transform: translateY(-100px) translateX(50px);
+    }
+  }
+  
+  /* 头部样式 */
+  .archive-header {
+    text-align: center;
+    margin-bottom: 4em;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .archive-title {
+    font-size: 3em;
+    font-weight: 700;
+    color: #cf4f28;
+    margin-bottom: 0.5em;
+    font-family: "Noto Serif SC", serif;
+    letter-spacing: 0.05em;
+  }
+  
+  .journey-stats {
+    margin-top: 1em;
+  }
+  
+  .stats-text {
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .highlight {
+    font-weight: 700;
+    color: #cf4f28;
+    font-size: 1.1em;
+  }
+  
+  .separator {
+    margin: 0 0.5em;
+    opacity: 0.6;
+  }
+  
+  /* 可视化时间轴 */
+  .visual-timeline {
+    margin-top: 2em;
+    margin-bottom: 4em;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .year-section {
+    margin-bottom: 5em;
+    position: relative;
+  }
+  
+  .year-section:last-child {
+    margin-bottom: 2em;
+  }
+  
+  .year-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5em;
+  }
+  
+  .year-text {
+    font-size: 2em;
+    font-weight: 700;
+    color: #cf4f28;
+    margin-right: 1.5em;
+    min-width: 5em;
+    text-align: right;
+  }
+  
+  .year-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(207, 79, 40, 0.6), transparent);
+  }
+  
+  /* 月份网格 */
+  .months-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0.5em;
+    margin-bottom: 2em;
+    position: relative;
+  }
+  
+  .month-block {
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .month-dot {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .month-dot::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: rgba(207, 79, 40, 0.3);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .month-dot[data-count="1"]::before {
+    background-color: rgba(207, 79, 40, 0.5);
+    width: 12px;
+    height: 12px;
+  }
+  
+  .month-dot[data-count="2"]::before {
+    background-color: rgba(207, 79, 40, 0.7);
+    width: 16px;
+    height: 16px;
+  }
+  
+  .month-dot[data-count="3"]::before {
+    background-color: #cf4f28;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .month-dot[data-count]:not([data-count="0"]):hover::before {
+    transform: scale(1.5);
+    background-color: #cf4f28;
+  }
+  
+  .pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(207, 79, 40, 0.2);
+    transform: scale(0);
+    animation: pulse-animation 2s infinite;
+  }
+  
+  .month-dot[data-count]:not([data-count="0"]) .pulse {
+    animation: pulse-animation 2s infinite;
+  }
+  
+  @keyframes pulse-animation {
+    0% {
+      transform: scale(0);
+      opacity: 0.5;
+    }
+    70% {
+      transform: scale(2);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+  
+  .month-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5em;
+    border-radius: 4px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+  }
+  
+  .month-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .month-block:hover .month-tooltip {
+    opacity: 1;
+  }
+  
+  .tooltip-month {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+  }
+  
+  .tooltip-count {
+    opacity: 0.8;
+  }
+  
+  /* 文章预览 */
+  .posts-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin-top: 1em;
+    padding: 1em;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .preview-item {
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+    padding: 1em;
+    background-color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .preview-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(207, 79, 40, 0.2);
+  }
+  
+  .preview-date {
+    font-size: 0.8em;
+    color: #cf4f28;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+  }
+  
+  .preview-title {
+    font-size: 0.95em;
+    line-height: 1.4;
+    color: #333;
+  }
+  
+  /* 年份导航 */
+  .years-navigation {
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 1em;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    max-width: 180px;
+  }
+  
+  .nav-title {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #cf4f28;
+    margin-bottom: 0.5em;
+    text-align: center;
+  }
+  
+  .nav-years {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5em;
+  }
+  
+  .nav-year {
+    padding: 0.3em 0.6em;
+    font-size: 0.85em;
+    color: #666;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  
+  .nav-year:hover {
+    background-color: rgba(207, 79, 40, 0.1);
+    color: #cf4f28;
+  }
+  
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .archive-container {
+      padding: 1em 0.5em;
+    }
+    
+    .archive-title {
+      font-size: 2.5em;
+    }
+    
+    .months-grid {
+      gap: 0.3em;
+    }
+    
+    .year-text {
+      font-size: 1.5em;
+      min-width: 4em;
+    }
+    
+    .preview-item {
+      min-width: 150px;
+    }
+    
+    .years-navigation {
+      bottom: 1em;
+      right: 1em;
+      padding: 0.8em;
+      max-width: 150px;
+    }
+    
+    .nav-year {
+      padding: 0.2em 0.4em;
+      font-size: 0.8em;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .archive-title {
+      font-size: 2em;
+    }
+    
+    .stats-text {
+      font-size: 1em;
+    }
+    
+    .month-dot::before {
+      width: 6px;
+      height: 6px;
+    }
+    
+    .month-dot[data-count="1"]::before {
+      width: 8px;
+      height: 8px;
+    }
+    
+    .month-dot[data-count="2"]::before {
+      width: 10px;
+      height: 10px;
+    }
+    
+    .month-dot[data-count="3"]::before {
+      width: 12px;
+      height: 12px;
+    }
+    
+    .preview-item {
+      min-width: 100%;
+      max-width: 100%;
+    }
+    
+    .years-navigation {
+      position: static;
+      margin-top: 2em;
+      max-width: 100%;
+    }
+    
+    .nav-years {
+      max-height: 60px;
+      overflow-y: auto;
+    }
+  }
+</style>
+
+<script>
+  // 初始化年份导航
+  function initYearNavigation() {
+    const navYears = document.querySelectorAll('.nav-year');
+    
+    navYears.forEach(navYear => {
+      navYear.addEventListener('click', (e) => {
+        e.preventDefault();
+        const year = navYear.getAttribute('data-year');
+        if (year) {
+          const yearSection = document.querySelector(`.year-section[data-year="${year}"]`);
+          if (yearSection) {
+            yearSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+  }
+  
+  // 初始化年份锚点
+  function initYearAnchors() {
+    const yearSections = document.querySelectorAll('.year-section');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const year = entry.target.getAttribute('data-year');
+          if (year) {
+            const navYear = document.querySelector(`.nav-year[data-year="${year}"]`);
+            if (navYear) {
+              // 高亮当前年份
+              document.querySelectorAll('.nav-year').forEach(nav => {
+                nav.style.color = '#666';
+              });
+              navYear.style.color = '#cf4f28';
+            }
+          }
+        }
+      });
+    }, {
+      threshold: 0.3
+    });
+    
+    yearSections.forEach(section => {
+      observer.observe(section);
+    });
+  }
+  
+  // 初始化月份点击事件
+  function initMonthClick() {
+    const monthDots = document.querySelectorAll('.month-dot[data-count]:not([data-count="0"])');
+    
+    monthDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const count = dot.getAttribute('data-count');
+        const tooltip = dot.nextElementSibling;
+        if (tooltip && count !== '0') {
+          // 创建临时的放大效果
+          const beforeElement = window.getComputedStyle(dot, '::before');
+          dot.style.transform = 'scale(1.5)';
+          setTimeout(() => {
+            dot.style.transform = '';
+          }, 300);
+        }
+      });
+    });
+  }
+  
+  // 初始化视差效果
+  function initParallaxEffect() {
+    const particles = document.querySelectorAll('.particle');
+    
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      particles.forEach((particle, index) => {
+        const speed = 0.5 + (index % 3) * 0.2;
+        particle.style.transform = `translateY(${scrollY * speed}px)`;
+      });
+    });
+  }
+  
+  // 初始化所有功能
+  function initArchiveFeatures() {
+    initYearNavigation();
+    initYearAnchors();
+    initMonthClick();
+    initParallaxEffect();
+  }
+  
+  // DOM加载完成后初始化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initArchiveFeatures);
+  } else {
+    initArchiveFeatures();
+  }
+  
+  // Astro页面切换后重新初始化
+  document.addEventListener('astro:after-swap', initArchiveFeatures);
+</script>
