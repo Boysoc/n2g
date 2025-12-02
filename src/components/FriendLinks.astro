@@ -51,7 +51,8 @@ const slogans = [
   "让思想在互联网中闪光"
 ];
 
-// 将slogan列表传递给客户端，而不是在服务端随机选择
+// 随机选择一个Slogan
+const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
 ---
 
 <section class="friend-links">
@@ -91,7 +92,7 @@ const slogans = [
   <!-- 卡片切换面板 -->
   <div class="card-switch-container">
     <div class="panel-header">
-      <h2 class="panel-title" id="random-slogan" data-slogans={slogans.join('|')}>链接世界的精彩角落</h2>
+      <h2 class="panel-title">{randomSlogan}</h2>
     </div>
     
     <div class="panel-tabs">
@@ -999,20 +1000,6 @@ const slogans = [
 </style>
 
     <script>
-  // 随机Slogan功能
-  function initRandomSlogan() {
-    const sloganElement = document.getElementById('random-slogan');
-    if (sloganElement) {
-      const slogansData = sloganElement.getAttribute('data-slogans');
-      if (slogansData) {
-        const slogans = slogansData.split('|');
-        // 使用当前时间作为随机种子，增强随机性
-        const randomIndex = Math.floor(Math.random() * slogans.length);
-        sloganElement.textContent = slogans[randomIndex];
-      }
-    }
-  }
-
   // 公共函数初始化卡片切换功能
   function initCardSwitcher() {
     const tabItems = document.querySelectorAll('.tab-item');
@@ -1194,25 +1181,19 @@ const slogans = [
   }
 
   // 初始化所有功能
-  function initializeAllFunctions() {
-    initRandomSlogan();
+  document.addEventListener('DOMContentLoaded', () => {
     initCardSwitcher();
     initCopyButtons();
     initRandomButton();
-  }
-
-  // 立即检查DOM是否已经加载完成
-  if (document.readyState === 'loading') {
-    // 如果DOM还在加载中，等待DOMContentLoaded事件
-    document.addEventListener('DOMContentLoaded', initializeAllFunctions);
-  } else {
-    // 如果DOM已经加载完成，立即初始化
-    initializeAllFunctions();
-  }
+  });
   
   // Astro页面切换后重新绑定事件
   document.addEventListener('astro:after-swap', () => {
     // 等待DOM更新完成
-    setTimeout(initializeAllFunctions, 100);
+    setTimeout(() => {
+      initCardSwitcher();
+      initCopyButtons();
+      initRandomButton();
+    }, 100);
   });
 </script>

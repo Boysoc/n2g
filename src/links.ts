@@ -234,6 +234,14 @@ export const links: Link[] = [
     feed: "https://suus.me/index.xml"
   },
   {
+    name: "宗宗酱",
+    href: "https://ygz.ink",
+    logo: "https://cn.cravatar.com/avatar/0ab91c325f11fad98bd7eaaada0b0912",
+    description: "用文字和图片记录生活。",
+    verified: true,
+    feed: "https://ygz.ink/feed"
+  },
+  {
     name: "ch3nyang的博客",
     href: "https://ch3nyang.top/",
     feed: "https://blog.ch3nyang.top/feed.xml"
