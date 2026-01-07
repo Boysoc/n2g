@@ -247,6 +247,14 @@ export const links: Link[] = [
     feed: "https://blog.ch3nyang.top/feed.xml"
   },
   {
+    name: "秋記Autumn",
+    href: "https://www.zhyok.cn",
+    logo: "https://www.zhyok.cn/usr/themes/master/images/logo.png",
+    description: "个人博客、网络日杂、生活记录",
+    verified: true,
+    feed: "https://www.zhyok.cn/index.php/feed/"
+  },
+  {
     name: "十年之约",
     href: "https://www.foreverblog.cn/",
     logo: "https://www.foreverblog.cn/favicon.ico",
