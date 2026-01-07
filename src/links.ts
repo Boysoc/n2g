@@ -263,6 +263,29 @@ export const links: Link[] = [
     organization: true
   },
   {
+    name: "笔墨迹",
+    href: "https://blogscn.fun/",
+    logo: "https://photo.xiangming.site/img/blogscn_icon.png",
+    description: "致敬还在写博客的我们",
+    feed: "https://blogscn.fun/feed/",
+    organization: true
+  },
+  {
+    name: "博客星球",
+    href: "https://www.blogplanet.cn/",
+    logo: "https://www.blogplanet.cn/img/bkxq.png",
+    description: "每一个博客都是一个独立星球！",
+    organization: true
+  },
+  {
+    name: "BlogsClub",
+    href: "https://www.blogsclub.org/",
+    logo: "https://www.blogsclub.org/images/blogsclub_logo.jpg",
+    description: "个人博客俱乐部！",
+    feed: "https://www.blogsclub.org/feed.xml?sort=time",
+    organization: true
+  },
+  {
     name: "博友圈",
     href: "https://www.boyouquan.com/",
     logo: "https://www.boyouquan.com/assets/images/sites/logo/logo-small.png",
