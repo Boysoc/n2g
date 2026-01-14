@@ -999,12 +999,13 @@ const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
   }
 </style>
 
-    <script>
+    <script is:inline data-astro-rerun>
   // 公共函数初始化卡片切换功能
   function initCardSwitcher() {
     const tabItems = document.querySelectorAll('.tab-item');
     const contentCards = document.querySelectorAll('.content-card');
     const contentContainer = document.querySelector('.card-content-container');
+    if (!contentContainer || tabItems.length === 0) return;
     
     // 默认隐藏所有内容卡片
     contentCards.forEach(card => {
@@ -1054,6 +1055,8 @@ const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
     
     // 为每个选项卡添加点击事件
     tabItems.forEach(tab => {
+      if (tab.getAttribute('data-card-switcher-initialized') === 'true') return;
+      tab.setAttribute('data-card-switcher-initialized', 'true');
       tab.addEventListener('click', () => {
         toggleCard(tab);
       });
@@ -1065,6 +1068,8 @@ const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
     const copyButtons = document.querySelectorAll('.copy-btn');
     
     copyButtons.forEach(button => {
+      if (button.getAttribute('data-copy-initialized') === 'true') return;
+      button.setAttribute('data-copy-initialized', 'true');
       button.addEventListener('click', async () => {
         const textToCopy = button.getAttribute('data-copy');
         
@@ -1181,19 +1186,19 @@ const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
   }
 
   // 初始化所有功能
-  document.addEventListener('DOMContentLoaded', () => {
+  function initAll() {
     initCardSwitcher();
     initCopyButtons();
     initRandomButton();
-  });
-  
-  // Astro页面切换后重新绑定事件
-  document.addEventListener('astro:after-swap', () => {
-    // 等待DOM更新完成
-    setTimeout(() => {
-      initCardSwitcher();
-      initCopyButtons();
-      initRandomButton();
-    }, 100);
-  });
+  }
+
+  function scheduleInitAll() {
+    setTimeout(initAll, 0);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scheduleInitAll, { once: true });
+  } else {
+    scheduleInitAll();
+  }
 </script>

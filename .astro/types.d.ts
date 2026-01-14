@@ -315,6 +315,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"2026-01-15.md": {
+	id: "2026-01-15.md";
+  slug: "fortune-telling";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "markdown-reference.md": {
 	id: "markdown-reference.md";
   slug: "markdown-reference";
