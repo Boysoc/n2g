@@ -180,280 +180,280 @@ declare module 'astro:content' {
   slug: "2011-01-29";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2012-08-03.md": {
 	id: "2012-08-03.md";
   slug: "2012-08-03";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2012-11-28.md": {
 	id: "2012-11-28.md";
   slug: "red";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2013-10-21.md": {
 	id: "2013-10-21.md";
   slug: "jiaxiao";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2013-10-26.md": {
 	id: "2013-10-26.md";
   slug: "2013-10-26";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2013-10-27.md": {
 	id: "2013-10-27.md";
   slug: "solo-trip";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2016-08-02.md": {
 	id: "2016-08-02.md";
   slug: "time-to-end-and-begin";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2020-05-20.md": {
 	id: "2020-05-20.md";
   slug: "2020-05-20";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2021-10-25.md": {
 	id: "2021-10-25.md";
   slug: "investment-ten-years";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-05-30.md": {
 	id: "2025-05-30.md";
   slug: "2025-05-30";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-06-02.md": {
 	id: "2025-06-02.md";
   slug: "model-y-dream-car";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-06-15.md": {
 	id: "2025-06-15.md";
   slug: "2025-06-15";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-06-18.md": {
 	id: "2025-06-18.md";
   slug: "2025-06-18";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-07-03.md": {
 	id: "2025-07-03.md";
   slug: "ziyouboke";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-07-08.md": {
 	id: "2025-07-08.md";
   slug: "typecho2astro";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-07-26.md": {
 	id: "2025-07-26.md";
   slug: "2025-07-26";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-08-11.md": {
 	id: "2025-08-11.md";
   slug: "2025-08-11";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-08-23.md": {
 	id: "2025-08-23.md";
   slug: "2025-08-23";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-11-02.md": {
 	id: "2025-11-02.md";
   slug: "youtongxiaole";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "2025-11-18.md": {
 	id: "2025-11-18.md";
   slug: "stars";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
-"2026-01-15.md": {
-	id: "2026-01-15.md";
+"2026-01-14.md": {
+	id: "2026-01-14.md";
   slug: "fortune-telling";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "markdown-reference.md": {
 	id: "markdown-reference.md";
   slug: "markdown-reference";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "pjblog-2006-07-23.md": {
 	id: "pjblog-2006-07-23.md";
   slug: "pjblog-2006-07-23";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "pjblog-2007-03-01.md": {
 	id: "pjblog-2007-03-01.md";
   slug: "pjblog-2007-03-01";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "pjblog-2007-03-04.md": {
 	id: "pjblog-2007-03-04.md";
   slug: "pjblog-2007-03-04";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "pjblog-2007-03-16.md": {
 	id: "pjblog-2007-03-16.md";
   slug: "pjblog-2007-03-16";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "pjblog-2007-03-17.md": {
 	id: "pjblog-2007-03-17.md";
   slug: "pjblog-2007-03-17";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "qzone-2005-06-09.md": {
 	id: "qzone-2005-06-09.md";
   slug: "qzone-2005-06-09";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "qzone-2005-12-18.md": {
 	id: "qzone-2005-12-18.md";
   slug: "qzone-2005-12-18";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "qzone-2011-06-21.md": {
 	id: "qzone-2011-06-21.md";
   slug: "qzone-2011-06-21";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "shijidazhan.md": {
 	id: "shijidazhan.md";
   slug: "shijidazhan";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "typecho-2011-09-25.md": {
 	id: "typecho-2011-09-25.md";
   slug: "naxiechunzhendewangshi";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "typecho-2012-11-07.md": {
 	id: "typecho-2012-11-07.md";
   slug: "kanqiushiyizhongxinliboyitebieshimailezuqiucaipiaoderen";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "typecho-2012-11-09.md": {
 	id: "typecho-2012-11-09.md";
   slug: "shiwangdebisaishangxindecaimin";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "typecho-2012-11-12.md": {
 	id: "typecho-2012-11-12.md";
   slug: "yangguangxiadezhuimengren";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "typecho-2012-12-10.md": {
 	id: "typecho-2012-12-10.md";
   slug: "suisuiyu";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "typecho-2013-11-19.md": {
 	id: "typecho-2013-11-19.md";
   slug: "emengyibanquexiwangzhishigeemeng";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "typecho-2014-08-30.md": {
 	id: "typecho-2014-08-30.md";
   slug: "shimian";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "typecho-2014-11-29.md": {
 	id: "typecho-2014-11-29.md";
   slug: "aobuqiye";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 "typecho-2019-11-08.md": {
 	id: "typecho-2019-11-08.md";
   slug: "zucailumanmanbijibunengwang";
   body: string;
   collection: "blog";
-  data: InferEntrySchema<"blog">
+  data: any
 } & { render(): Render[".md"] };
 };
 
@@ -465,5 +465,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	type ContentConfig = typeof import("../src/content/config");
+	type ContentConfig = never;
 }
