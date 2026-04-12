@@ -249,10 +249,18 @@ export const links: Link[] = [
   {
     name: "秋記Autumn",
     href: "https://www.zhyok.cn",
-    logo: "https://www.zhyok.cn/usr/themes/master/images/logo.png",
+    logo: "https://www.zhyok.cn/logo.png",
     description: "个人博客、网络日杂、生活记录",
-    verified: true,
+    verified:true,
     feed: "https://www.zhyok.cn/index.php/feed/"
+  },
+  {
+    name: "Frevia's",
+    href: "https://www.frevia.site/",
+    logo: "https://www.frevia.site/favicon.png",
+    description: "一个时间长河中的个人档案馆。",
+    verified: true,
+    feed: "https://www.frevia.site/rss.xml"
   },
   {
     name: "十年之约",
@@ -283,6 +291,13 @@ export const links: Link[] = [
     logo: "https://www.blogsclub.org/images/blogsclub_logo.jpg",
     description: "个人博客俱乐部！",
     feed: "https://www.blogsclub.org/feed.xml?sort=time",
+    organization: true
+  },
+  {
+    name: "拾趣博客导航",
+    href: "https://s7.fan/",
+    logo: "https://s7.fan/img/tubiao.png",
+    description: "捡拾文字里的小乐趣！",
     organization: true
   },
   {
