@@ -2,19 +2,177 @@
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import FriendLinks from "@components/FriendLinks.astro";
 import Component from '@components/Comment.astro';
-import RandomVisitButton from "@components/RandomVisitButton.astro";
-import { SITE } from "@config";
+import { links } from "../links";
+
+// 分类邻居
+const friends = links.filter(l => !l.organization && !l.inactive && l.verified); // 已认证邻居
+const unverified = links.filter(l => !l.organization && !l.inactive && !l.verified); // 未认证邻居
+const orgs = links.filter(l => l.organization);
+const inactives = links.filter(l => l.inactive && !l.organization); // 已失效邻居
 ---
 
 <Layout>
   <Header activeNav="links" />
   <main id="main-content" class="content">
-    <section id="recent-posts">
-      <h1 class="links-title">邻居</h1>
-      <p><RandomVisitButton /><span class="gradient-text">一个有趣的邻居</span>。</p>
-      <FriendLinks />
+    <section id="links-section">
+      <!-- 标题区 -->
+      <header class="links-header">
+        <h1 class="links-title">
+          <span class="title-icon">🏠</span>
+          邻居们
+        </h1>
+        <p class="links-subtitle">
+          互联网上的有趣灵魂，与他们为邻
+        </p>
+        <div class="header-actions">
+          <div class="search-wrap">
+            <span class="search-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
+              </svg>
+            </span>
+            <input type="text" id="link-search" placeholder="搜索邻居..." class="search-input" />
+          </div>
+          <button id="random-visit-btn" class="random-btn" title="随机访问一位邻居">
+            <span class="btn-icon">🎲</span>
+            <span class="btn-text">随机访问</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- 已认证邻居网格 -->
+      {friends.length > 0 && (
+        <div class="neighbors-grid" id="neighbors-grid">
+          {friends.map((link, index) => (
+            <div class="neighbor-card-wrapper" data-index={index}>
+              <a 
+                href={link.href} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class={`neighbor-card ${link.verified ? 'verified' : ''}`}
+                data-name={link.name.toLowerCase()}
+                data-description={link.description?.toLowerCase() || ''}
+                data-category="friends"
+                title={link.tooltip || link.description || link.name}
+              >
+                <div class="card-inner">
+                  <div class="avatar-wrap">
+                    <img src={link.logo} alt={link.name} class="avatar" loading="lazy" />
+                  </div>
+                  <div class="card-info">
+                    <h3 class="card-name">{link.name}</h3>
+                    <p class="card-desc">{link.description || '暂无简介'}</p>
+                  </div>
+                  <span class="card-arrow">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M7 17L17 7"/>
+                      <path d="M7 7h10v10"/>
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <!-- 更多链接按钮 -->
+      {(unverified.length > 0 || inactives.length > 0 || orgs.length > 0) && (
+        <div class="more-toggle-section">
+          <button id="more-toggle-btn" class="more-toggle-btn">
+            <span class="toggle-text">更多链接</span>
+            <span class="toggle-count">({unverified.length + inactives.length + orgs.length})</span>
+            <span class="toggle-arrow">▾</span>
+          </button>
+        </div>
+      )}
+
+      <!-- 折叠内容 -->
+      <div id="more-content" class="more-content" style="display: none;">
+        <!-- 博客组织 -->
+        {orgs.length > 0 && (
+          <div class="orgs-section">
+            <h3 class="section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              博客组织
+            </h3>
+            <div class="orgs-grid">
+              {orgs.map((link) => (
+                <a 
+                  href={link.href} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="org-card"
+                  data-name={link.name.toLowerCase()}
+                  data-description={link.description?.toLowerCase() || ''}
+                  data-category="orgs"
+                  title={link.description || link.name}
+                >
+                  <div class="org-card-inner">
+                    <img src={link.logo} alt={link.name} class="org-logo" loading="lazy" />
+                    <div class="org-info">
+                      <span class="org-name">{link.name}</span>
+                      {link.description && <span class="org-desc">{link.description}</span>}
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- 其他链接（简洁文字链接样式） -->
+        {(unverified.length > 0 || inactives.length > 0) && (
+          <div class="text-links-section">
+            <h3 class="section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+              其他链接
+            </h3>
+            <div class="text-links-list">
+              {/* 未认证的正常链接 */}
+              {unverified.map((link) => (
+                <a 
+                  href={link.href} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="text-link-item"
+                  data-name={link.name.toLowerCase()}
+                  data-description={link.description?.toLowerCase() || ''}
+                  title={link.tooltip || link.description || link.name}
+                >
+                  <span class="link-name">{link.name}</span>
+                </a>
+              ))}
+              {/* 已失效的链接 */}
+              {inactives.map((link) => (
+                <a 
+                  href={link.href} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="text-link-item inactive"
+                  data-name={link.name.toLowerCase()}
+                  data-description={link.description?.toLowerCase() || ''}
+                  title={`已失效 - ${link.tooltip || link.description || link.name}`}
+                >
+                  <span class="link-name">{link.name}</span>
+                  <span class="offline-badge">已失效</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- 评论区 -->
       <Component />
     </section>
   </main>
@@ -22,34 +180,690 @@ import { SITE } from "@config";
 </Layout>
 
 <style>
-  .links-title {
-    color: #cf4f28;
-  }
-  
-  .gradient-text {
-    font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    background: linear-gradient(90deg, #222 0%, #cf4f28 50%, #222 100%);
-    background-size: 200% 100%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: gradientMove 8s linear infinite;
-    display: inline-block;
-    position: relative;
-    vertical-align: middle;
+  .links-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-top: 2rem;
   }
 
-  @keyframes gradientMove {
-    0% {
-      background-position: 0% 50%;
+  .links-title {
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: #cf4f28;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .title-icon {
+    font-size: 1.8rem;
+  }
+
+  .links-subtitle {
+    color: #666;
+    font-size: 1rem;
+    margin: 0 0 1.2rem;
+  }
+
+  .header-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    color: #999;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-input {
+    width: 220px;
+    padding: 0.6rem 1rem 0.6rem 2.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s ease;
+    background: #fff;
+  }
+
+  .search-input:focus {
+    border-color: #cf4f28;
+    box-shadow: 0 0 0 3px rgba(207, 79, 40, 0.1);
+    width: 280px;
+  }
+
+  .random-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #cf4f28 0%, #e67e5a 100%);
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 10px rgba(207, 79, 40, 0.25);
+  }
+
+  .random-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(207, 79, 40, 0.35);
+  }
+
+  .btn-icon {
+    font-size: 1rem;
+  }
+
+  /* 随机访问特效 - 跑马灯 */
+  .random-btn.rolling {
+    animation: dice-roll 0.6s ease-in-out;
+  }
+
+  @keyframes dice-roll {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(15deg) scale(1.1); }
+    50% { transform: rotate(-15deg) scale(1.1); }
+    75% { transform: rotate(10deg) scale(1.05); }
+    100% { transform: rotate(0deg) scale(1); }
+  }
+
+  /* 跑马灯效果 - 背景变暖 */
+  .neighbor-card.highlight .card-inner {
+    background: linear-gradient(135deg, #fef3ee 0%, #fde8dc 100%) !important;
+    border-color: #cf4f28 !important;
+    box-shadow: 0 6px 20px rgba(207, 79, 40, 0.2) !important;
+  }
+
+  .neighbor-card.highlight .card-inner .card-name {
+    color: #cf4f28 !important;
+  }
+
+  .neighbor-card.highlight .card-inner .card-desc {
+    color: #b5735a !important;
+  }
+
+  /* 最终选中效果 */
+  .neighbor-card.selected .card-inner {
+    background: linear-gradient(135deg, #cf4f28 0%, #e67e5a 100%) !important;
+    border-color: #cf4f28 !important;
+    box-shadow: 0 8px 30px rgba(207, 79, 40, 0.35) !important;
+  }
+
+  .neighbor-card.selected .card-inner .card-name,
+  .neighbor-card.selected .card-inner .card-desc {
+    color: #fff !important;
+  }
+
+  .neighbor-card.selected .card-inner .avatar {
+    border-color: #fff !important;
+  }
+
+  .neighbor-card.selected .card-inner .card-arrow {
+    color: rgba(255,255,255,0.7) !important;
+  }
+
+  /* 邻居网格 */
+  .neighbors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .neighbor-card-wrapper {
+    display: flex;
+    min-width: 0;
+  }
+
+  .neighbor-card {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .neighbor-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .neighbor-card.hidden {
+    display: none;
+  }
+
+  .card-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.1rem 1.2rem;
+    background: #fff;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .neighbor-card:hover .card-inner {
+    box-shadow: 0 8px 20px rgba(207, 79, 40, 0.2);
+  }
+
+  .avatar-wrap {
+    flex-shrink: 0;
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+  }
+
+  .neighbor-card:hover .avatar {
+    box-shadow: 0 4px 12px rgba(207, 79, 40, 0.25);
+    transform: scale(1.05);
+  }
+
+  .card-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    gap: 0.3rem;
+  }
+
+  .card-name {
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.03em;
+    transition: color 0.2s ease;
+    line-height: 1.4;
+  }
+
+  .neighbor-card:hover .card-name {
+    color: #cf4f28;
+  }
+
+  .card-desc {
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 0.85rem;
+    color: #888;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+
+  /* 右侧箭头指示 */
+  .card-arrow {
+    flex-shrink: 0;
+    color: #ddd;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .neighbor-card:hover .card-arrow {
+    color: #cf4f28;
+    transform: translate(2px, -2px);
+  }
+
+  .neighbor-card-wrapper.hidden {
+    display: none;
+  }
+
+  /* 更多链接按钮 */
+  .more-toggle-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .more-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.5rem;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-radius: 24px;
+    font-size: 0.95rem;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .more-toggle-btn:hover {
+    border-color: #cf4f28;
+    color: #cf4f28;
+  }
+
+  .more-toggle-btn.active {
+    background: #fefefe;
+    border-color: #cf4f28;
+    color: #cf4f28;
+  }
+
+  .toggle-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .toggle-text,
+  .toggle-count {
+    transition: opacity 0.2s ease;
+  }
+
+  .more-toggle-btn.active .toggle-arrow {
+    transform: rotate(180deg);
+  }
+
+  .more-toggle-btn.active .toggle-text,
+  .more-toggle-btn.active .toggle-count {
+    display: none;
+  }
+
+  /* 折叠内容 */
+  .more-content {
+    margin-bottom: 2.5rem;
+  }
+
+  /* 通用标题样式 */
+  .section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-title.hidden {
+    display: none;
+  }
+
+  .section-title svg {
+    color: #cf4f28;
+  }
+
+  /* 博客组织区域 */
+  .orgs-section {
+    margin-bottom: 1.5rem;
+    padding: 1.2rem;
+    background: #fafafa;
+    border-radius: 12px;
+  }
+
+  .orgs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .org-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+
+  .org-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .org-card.hidden {
+    display: none;
+  }
+
+  .org-card-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+
+  .org-card:hover .org-card-inner {
+    border-color: #cf4f28;
+    box-shadow: 0 4px 12px rgba(207, 79, 40, 0.1);
+  }
+
+  .org-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .org-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .org-name {
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .org-desc {
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 0.75rem;
+    color: #999;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* 简洁文字链接样式 */
+  .text-links-section {
+    margin-top: 1rem;
+    padding: 1.2rem;
+    background: #fafafa;
+    border-radius: 12px;
+  }
+
+  .text-links-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .text-link-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .text-link-item:hover {
+    border-color: #cf4f28;
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(207, 79, 40, 0.12);
+  }
+
+  .text-link-item.hidden {
+    display: none;
+  }
+
+  .text-link-item .link-name {
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 0.9rem;
+    color: #333;
+    white-space: nowrap;
+  }
+
+  /* 失效链接样式 */
+  .text-link-item.inactive {
+    opacity: 0.45;
+    background: #f5f5f5;
+    border-color: #eee;
+  }
+
+  .text-link-item.inactive:hover {
+    opacity: 0.6;
+    transform: none;
+    border-color: #ddd;
+    box-shadow: none;
+  }
+
+  .text-link-item.inactive .link-name {
+    color: #999;
+    text-decoration: line-through;
+  }
+
+  .offline-badge {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    background: #e0e0e0;
+    color: #999;
+    border-radius: 10px;
+  }
+
+  /* 响应式 */
+  @media (max-width: 900px) {
+    .neighbors-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
-    50% {
-      background-position: 100% 50%;
+  }
+
+  @media (max-width: 640px) {
+    .links-title {
+      font-size: 1.8rem;
     }
-    100% {
-      background-position: 0% 50%;
+
+    .header-actions {
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .search-input {
+      width: 200px;
+    }
+
+    .search-input:focus {
+      width: 200px;
+    }
+
+    .neighbors-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .orgs-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
+
+<script>
+  function initLinksPage() {
+    // 更多链接展开/收起
+    const moreToggleBtn = document.getElementById('more-toggle-btn');
+    const moreContent = document.getElementById('more-content');
+
+    if (moreToggleBtn && moreContent) {
+      // 避免重复绑定
+      moreToggleBtn.replaceWith(moreToggleBtn.cloneNode(true));
+      const freshBtn = document.getElementById('more-toggle-btn')!;
+
+      freshBtn.addEventListener('click', () => {
+        const isHidden = moreContent.style.display === 'none';
+
+        if (isHidden) {
+          moreContent.style.display = 'block';
+          freshBtn.classList.add('active');
+        } else {
+          moreContent.style.display = 'none';
+          freshBtn.classList.remove('active');
+        }
+      });
+    }
+
+    // 搜索功能
+    const searchInput = document.getElementById('link-search') as HTMLInputElement | null;
+    const cards = document.querySelectorAll('.neighbor-card');
+    const textLinks = document.querySelectorAll('.text-link-item');
+    const orgCards = document.querySelectorAll('.org-card');
+
+    function filterCards() {
+      const query = searchInput?.value.toLowerCase() || '';
+
+      // 搜索时自动展开折叠内容
+      if (moreContent && moreToggleBtn) {
+        if (query && moreContent.style.display === 'none') {
+          moreContent.style.display = 'block';
+          moreToggleBtn.classList.add('active');
+        } else if (!query && moreToggleBtn.classList.contains('active')) {
+          moreContent.style.display = 'none';
+          moreToggleBtn.classList.remove('active');
+        }
+      }
+
+      // 处理邻居卡片
+      cards.forEach((card) => {
+        const el = card as HTMLElement;
+        const name = el.dataset.name || '';
+        const desc = el.dataset.description || '';
+        const show = !query || name.includes(query) || desc.includes(query);
+        el.classList.toggle('hidden', !show);
+      });
+
+      // 处理文字链接
+      textLinks.forEach((link) => {
+        const el = link as HTMLElement;
+        const name = el.dataset.name || '';
+        const desc = el.dataset.description || '';
+        const show = !query || name.includes(query) || desc.includes(query);
+        el.classList.toggle('hidden', !show);
+      });
+
+      // 处理博客组织卡片
+      orgCards.forEach((card) => {
+        const el = card as HTMLElement;
+        const name = el.dataset.name || '';
+        const desc = el.dataset.description || '';
+        const show = !query || name.includes(query) || desc.includes(query);
+        el.classList.toggle('hidden', !show);
+      });
+
+      // 隐藏没有可见子项的分组标题
+      if (query) {
+        document.querySelectorAll('.orgs-section, .text-links-section').forEach((section) => {
+          const visibleItems = section.querySelectorAll('.org-card:not(.hidden), .text-link-item:not(.hidden)');
+          if (visibleItems.length === 0) {
+            (section as HTMLElement).style.display = 'none';
+          } else {
+            (section as HTMLElement).style.display = '';
+            // 搜索时隐藏分组标题（如"博客组织""其他链接"）
+            const title = section.querySelector('.section-title') as HTMLElement;
+            if (title) title.style.display = 'none';
+          }
+        });
+      } else {
+        document.querySelectorAll('.orgs-section, .text-links-section').forEach((section) => {
+          (section as HTMLElement).style.display = '';
+          const title = section.querySelector('.section-title') as HTMLElement;
+          if (title) title.style.display = '';
+        });
+      }
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', filterCards);
+    }
+
+    // 随机访问功能
+    const randomBtn = document.getElementById('random-visit-btn');
+
+    if (randomBtn) {
+      randomBtn.addEventListener('click', async () => {
+        const verifiedCards = Array.from(cards);
+
+        if (verifiedCards.length === 0) return;
+
+        randomBtn.classList.add('rolling');
+
+        const highlightCount = 15;
+        let lastHighlighted: Element | null = null;
+
+        for (let i = 0; i < highlightCount; i++) {
+          const progress = i / highlightCount;
+          const delay = progress < 0.6
+            ? 40 + progress * 30
+            : 80 + Math.pow(progress - 0.6, 2) * 400;
+
+          await new Promise(resolve => setTimeout(resolve, delay));
+
+          if (lastHighlighted) {
+            lastHighlighted.classList.remove('highlight');
+          }
+
+          const cardIdx = i % verifiedCards.length;
+          const card = verifiedCards[cardIdx];
+          card.classList.add('highlight');
+          lastHighlighted = card;
+        }
+
+        const finalIndex = Math.floor(Math.random() * verifiedCards.length);
+        const finalCard = verifiedCards[finalIndex] as HTMLAnchorElement;
+
+        if (lastHighlighted) {
+          lastHighlighted.classList.remove('highlight');
+        }
+        finalCard.classList.add('selected');
+        finalCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        if (finalCard.href) {
+          window.open(finalCard.href, '_blank', 'noopener,noreferrer');
+        }
+
+        randomBtn.classList.remove('rolling');
+        setTimeout(() => {
+          finalCard.classList.remove('selected');
+        }, 300);
+      });
+    }
+  }
+
+  // 首次加载
+  initLinksPage();
+
+  // View Transitions 页面切换后重新初始化
+  document.addEventListener('astro:after-swap', initLinksPage);
+</script>

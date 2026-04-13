@@ -194,7 +194,7 @@ export const links: Link[] = [
   {
     name: "西城往事",
     href: "https://xifeng.net",
-    logo: "https://xifeng.net/images/avatar.webp",
+    logo: "https://xifeng.net/images/avatar.svg",
     description: "外贸 旅行 代码 人生",
     feed: "https://xifeng.net/feed"
   },
@@ -244,6 +244,7 @@ export const links: Link[] = [
   {
     name: "ch3nyang的博客",
     href: "https://ch3nyang.top/",
+    logo: "https://ch3nyang.top/favicon.ico",
     feed: "https://blog.ch3nyang.top/feed.xml"
   },
   {
@@ -255,7 +256,7 @@ export const links: Link[] = [
     feed: "https://www.zhyok.cn/index.php/feed/"
   },
   {
-    name: "Frevia's",
+    name: "Frevia's Blog!",
     href: "https://www.frevia.site/",
     logo: "https://www.frevia.site/favicon.png",
     description: "一个时间长河中的个人档案馆。",

@@ -34,15 +34,6 @@ const getSortedPosts = (posts: CollectionEntry<"blog">[]) => {
     // 应用自定义格式处理
     const finalHtml = processCustomFormatting(htmlContent);
     
-    // 调试信息：打印处理后的HTML内容
-    if (post.slug === '2025-06-18' || post.slug === '2025-08-23') {
-      console.log('=== 文章:', post.slug, ' ===');
-      console.log('=== 原始内容 ===');
-      console.log(post.body);
-      console.log('=== 处理后的HTML ===');
-      console.log(finalHtml);
-    }
-    
     post.data.description = finalHtml;
   });
   

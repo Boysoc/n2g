@@ -52,7 +52,7 @@ const particles = generateParticles(50);
   <!-- 可视化时间轴 -->
   <div class="visual-timeline">
     {postGroups.map((group, yearIndex) => (
-      <div class="year-section" data-year={group.year}>
+      <div class="year-section" id={`year-${group.year}`} data-year={group.year}>
         <div class="year-label">
           <span class="year-text">{group.year}</span>
           <div class="year-line"></div>
@@ -102,7 +102,7 @@ const particles = generateParticles(50);
         </a>
       ))}
     </div>
-  </div>
+  </nav>
 </section>
 
 <style>
@@ -136,6 +136,7 @@ const particles = generateParticles(50);
     left: var(--left);
     animation: float var(--duration) ease-in-out infinite;
     animation-delay: var(--delay);
+    pointer-events: none;
   }
   
   @keyframes float {
@@ -367,6 +368,7 @@ const particles = generateParticles(50);
     padding: 1em;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 8px;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
   }
   
@@ -583,16 +585,10 @@ const particles = generateParticles(50);
     
     monthDots.forEach(dot => {
       dot.addEventListener('click', () => {
-        const count = dot.getAttribute('data-count');
-        const tooltip = dot.nextElementSibling;
-        if (tooltip && count !== '0') {
-          // 创建临时的放大效果
-          const beforeElement = window.getComputedStyle(dot, '::before');
-          dot.style.transform = 'scale(1.5)';
-          setTimeout(() => {
-            dot.style.transform = '';
-          }, 300);
-        }
+        (dot as HTMLElement).style.transform = 'scale(1.5)';
+        setTimeout(() => {
+          (dot as HTMLElement).style.transform = '';
+        }, 300);
       });
     });
   }
@@ -601,12 +597,19 @@ const particles = generateParticles(50);
   function initParallaxEffect() {
     const particles = document.querySelectorAll('.particle');
     
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      particles.forEach((particle, index) => {
-        const speed = 0.5 + (index % 3) * 0.2;
-        particle.style.transform = `translateY(${scrollY * speed}px)`;
-      });
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          particles.forEach((particle, index) => {
+            const speed = 0.5 + (index % 3) * 0.2;
+            (particle as HTMLElement).style.transform = `translateY(${scrollY * speed}px)`;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
   }
   
