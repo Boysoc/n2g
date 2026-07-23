@@ -230,7 +230,6 @@ export const links: Link[] = [
     href: "https://suus.me",
     logo: "https://cravatar.cn/avatar/84b712148a63b44dd97ede997bc3efa5",
     description: "在数字的海洋中，寻找属于自己的星辰。",
-    verified: true,
     feed: "https://suus.me/index.xml"
   },
   {
@@ -262,14 +261,6 @@ export const links: Link[] = [
     description: "一个时间长河中的个人档案馆。",
     verified: true,
     feed: "https://www.frevia.site/rss.xml"
-  },
-  {
-    name: "Sunrise.博客",
-    href: "https://wowtang.top",
-    logo: "https://cravatar.cn/avatar/82c738b76eee19ab120b73dece8b0b7c?s=44&d=wavatar&r=g",
-    description: "心境自成天地，地狱可化作桃源，天堂也能沦为苦海。",
-    verified: true,
-    feed: "https://wowtang.top/feed.xml"
   },
   {
     name: "秋雨De blog",
@@ -315,6 +306,7 @@ export const links: Link[] = [
     href: "https://s7.fan/",
     logo: "https://s7.fan/img/tubiao.png",
     description: "捡拾文字里的小乐趣！",
+    inactive: true, // 👉 加上这个字段表示此人“停更”或“下线”
     organization: true
   },
   {
