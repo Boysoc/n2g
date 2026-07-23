@@ -264,6 +264,22 @@ export const links: Link[] = [
     feed: "https://www.frevia.site/rss.xml"
   },
   {
+    name: "Sunrise.博客",
+    href: "https://wowtang.top",
+    logo: "https://cravatar.cn/avatar/82c738b76eee19ab120b73dece8b0b7c?s=44&d=wavatar&r=g",
+    description: "心境自成天地，地狱可化作桃源，天堂也能沦为苦海。",
+    verified: true,
+    feed: "https://wowtang.top/feed.xml"
+  },
+  {
+    name: "秋雨De blog",
+    href: "https://www.fallrain.cn/",
+    logo: "https://wowtang.top/images/avatar.png",
+    description: "一个技术小白的个人博客",
+    verified: true,
+    feed: "https://www.fallrain.cn/?feed=rss2"
+  },
+  {
     name: "十年之约",
     href: "https://www.foreverblog.cn/",
     logo: "https://www.foreverblog.cn/favicon.ico",
