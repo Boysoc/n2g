@@ -329,6 +329,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"2026-07-23.md": {
+	id: "2026-07-23.md";
+  slug: "worldcup2026";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "markdown-reference.md": {
 	id: "markdown-reference.md";
   slug: "markdown-reference";

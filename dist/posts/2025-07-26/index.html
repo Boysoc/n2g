@@ -1,8 +1,8 @@
-<!DOCTYPE html><html lang="zh" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://n2g.cn/posts/2025-07-26/"><meta name="generator" content="Astro v4.2.1"><!-- General Meta Tags --><title>惊艳！CodeBuddy初体验 | Xio&#39;s</title><meta name="title" content="惊艳！CodeBuddy初体验 | Xio's"><meta name="description" content="<p>今天第一次体验了 AI 编程助手 CodeBuddy，效果让我震惊。</p>
-<p>我在将博客从 Typecho 迁移到 Astro，最头疼的是归档页面。<a href=&#34;http://www.n2g.cn/archive.html&#34;>原页面</a> 有独特的设计：年份在左侧垂直居中，中间竖线分割，右侧是时间和标题。</p>
+<!DOCTYPE html><html lang="zh-CN" class="scroll-smooth"><head><meta charset="UTF-8"><style>:where(img){height:auto}</style><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://n2g.cn/posts/2025-07-26/"><meta name="generator" content="Astro v4.2.1"><!-- General Meta Tags --><title>惊艳！CodeBuddy初体验 | Xio's</title><meta name="title" content="惊艳！CodeBuddy初体验 | Xio's"><meta name="description" content="<p>今天第一次体验了 AI 编程助手 CodeBuddy，效果让我震惊。</p>
+<p>我在将博客从 Typecho 迁移到 Astro，最头疼的是归档页面。<a href=&quot;http://www.n2g.cn/archive.html&quot;>原页面</a> 有独特的设计：年份在左侧垂直居中，中间竖线分割，右侧是时间和标题。</p>
 <p>按以往经验，这至少需要 2-3 小时：分析结构、写组件、调样式、做响应式、集成导航...</p>
 <p>我只对 CodeBuddy 说了一句话：</p>
-<p>&#34;根据我博客的风格，我想做一个归档的组件，可以参考 http://www.n2g.cn/archive.html 这个页面的归档。&#34;</p>
+<p>&quot;根据我博客的风格，我想做一个归档的组件，可以参考 http://www.n2g.cn/archive.html 这个页面的归档。&quot;</p>
 <p>然后它：</p>
 <ol>
 <li>分析了我的项目结构和现有风格</li>
@@ -10,7 +10,7 @@
 <li>一次性创建了完整的归档功能：组件、样式、页面</li>
 <li>精准处理每个细节调整</li>
 </ol>
-<pre><code class=&#34;language-javascript&#34;>// 数据分组逻辑
+<pre><code class=&quot;language-javascript&quot;>// 数据分组逻辑
 const postsByYear = posts.reduce((acc, post) => {
   const year = new Date(post.data.pubDatetime).getFullYear().toString();
   if (!acc[year]) acc[year] = [];
@@ -18,7 +18,7 @@ const postsByYear = posts.reduce((acc, post) => {
   return acc;
 }, {});
 </code></pre>
-<pre><code class=&#34;language-css&#34;>/* 关键样式 */
+<pre><code class=&quot;language-css&quot;>/* 关键样式 */
 .archive-year-section { display: flex; position: relative; }
 .archive-year-text { font-size: 17px; color: #444; }
 .archive-divider { width: 1px; background-color: #ddd; }
@@ -30,10 +30,10 @@ const postsByYear = posts.reduce((acc, post) => {
 <h2>这不是取代，是协作。</h2>
 <p><strong>PS: 这篇博文也是 CodeBuddy 帮忙写的，几分钟搞定。AI 时代真的来了。</strong></p>
 "><meta name="author" content="Xio"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="惊艳！CodeBuddy初体验 | Xio's"><meta property="og:description" content="<p>今天第一次体验了 AI 编程助手 CodeBuddy，效果让我震惊。</p>
-<p>我在将博客从 Typecho 迁移到 Astro，最头疼的是归档页面。<a href=&#34;http://www.n2g.cn/archive.html&#34;>原页面</a> 有独特的设计：年份在左侧垂直居中，中间竖线分割，右侧是时间和标题。</p>
+<p>我在将博客从 Typecho 迁移到 Astro，最头疼的是归档页面。<a href=&quot;http://www.n2g.cn/archive.html&quot;>原页面</a> 有独特的设计：年份在左侧垂直居中，中间竖线分割，右侧是时间和标题。</p>
 <p>按以往经验，这至少需要 2-3 小时：分析结构、写组件、调样式、做响应式、集成导航...</p>
 <p>我只对 CodeBuddy 说了一句话：</p>
-<p>&#34;根据我博客的风格，我想做一个归档的组件，可以参考 http://www.n2g.cn/archive.html 这个页面的归档。&#34;</p>
+<p>&quot;根据我博客的风格，我想做一个归档的组件，可以参考 http://www.n2g.cn/archive.html 这个页面的归档。&quot;</p>
 <p>然后它：</p>
 <ol>
 <li>分析了我的项目结构和现有风格</li>
@@ -41,7 +41,7 @@ const postsByYear = posts.reduce((acc, post) => {
 <li>一次性创建了完整的归档功能：组件、样式、页面</li>
 <li>精准处理每个细节调整</li>
 </ol>
-<pre><code class=&#34;language-javascript&#34;>// 数据分组逻辑
+<pre><code class=&quot;language-javascript&quot;>// 数据分组逻辑
 const postsByYear = posts.reduce((acc, post) => {
   const year = new Date(post.data.pubDatetime).getFullYear().toString();
   if (!acc[year]) acc[year] = [];
@@ -49,7 +49,7 @@ const postsByYear = posts.reduce((acc, post) => {
   return acc;
 }, {});
 </code></pre>
-<pre><code class=&#34;language-css&#34;>/* 关键样式 */
+<pre><code class=&quot;language-css&quot;>/* 关键样式 */
 .archive-year-section { display: flex; position: relative; }
 .archive-year-text { font-size: 17px; color: #444; }
 .archive-divider { width: 1px; background-color: #ddd; }
@@ -61,10 +61,10 @@ const postsByYear = posts.reduce((acc, post) => {
 <h2>这不是取代，是协作。</h2>
 <p><strong>PS: 这篇博文也是 CodeBuddy 帮忙写的，几分钟搞定。AI 时代真的来了。</strong></p>
 "><meta property="og:url" content="https://n2g.cn/posts/2025-07-26/"><meta property="og:image" content="https://n2g.cn/posts/%E6%83%8A%E8%89%B3codebuddy%E5%88%9D%E4%BD%93%E9%AA%8C.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2025-07-26T05:10:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://n2g.cn/posts/2025-07-26/"><meta property="twitter:title" content="惊艳！CodeBuddy初体验 | Xio's"><meta property="twitter:description" content="<p>今天第一次体验了 AI 编程助手 CodeBuddy，效果让我震惊。</p>
-<p>我在将博客从 Typecho 迁移到 Astro，最头疼的是归档页面。<a href=&#34;http://www.n2g.cn/archive.html&#34;>原页面</a> 有独特的设计：年份在左侧垂直居中，中间竖线分割，右侧是时间和标题。</p>
+<p>我在将博客从 Typecho 迁移到 Astro，最头疼的是归档页面。<a href=&quot;http://www.n2g.cn/archive.html&quot;>原页面</a> 有独特的设计：年份在左侧垂直居中，中间竖线分割，右侧是时间和标题。</p>
 <p>按以往经验，这至少需要 2-3 小时：分析结构、写组件、调样式、做响应式、集成导航...</p>
 <p>我只对 CodeBuddy 说了一句话：</p>
-<p>&#34;根据我博客的风格，我想做一个归档的组件，可以参考 http://www.n2g.cn/archive.html 这个页面的归档。&#34;</p>
+<p>&quot;根据我博客的风格，我想做一个归档的组件，可以参考 http://www.n2g.cn/archive.html 这个页面的归档。&quot;</p>
 <p>然后它：</p>
 <ol>
 <li>分析了我的项目结构和现有风格</li>
@@ -72,7 +72,7 @@ const postsByYear = posts.reduce((acc, post) => {
 <li>一次性创建了完整的归档功能：组件、样式、页面</li>
 <li>精准处理每个细节调整</li>
 </ol>
-<pre><code class=&#34;language-javascript&#34;>// 数据分组逻辑
+<pre><code class=&quot;language-javascript&quot;>// 数据分组逻辑
 const postsByYear = posts.reduce((acc, post) => {
   const year = new Date(post.data.pubDatetime).getFullYear().toString();
   if (!acc[year]) acc[year] = [];
@@ -80,7 +80,7 @@ const postsByYear = posts.reduce((acc, post) => {
   return acc;
 }, {});
 </code></pre>
-<pre><code class=&#34;language-css&#34;>/* 关键样式 */
+<pre><code class=&quot;language-css&quot;>/* 关键样式 */
 .archive-year-section { display: flex; position: relative; }
 .archive-year-text { font-size: 17px; color: #444; }
 .archive-divider { width: 1px; background-color: #ddd; }
@@ -91,12 +91,15 @@ const postsByYear = posts.reduce((acc, post) => {
 <p>AI 编程助手改变的不是技术本身，而是我们的工作方式。重复性工作交给 AI，我们专注创意和架构。</p>
 <h2>这不是取代，是协作。</h2>
 <p><strong>PS: 这篇博文也是 CodeBuddy 帮忙写的，几分钟搞定。AI 时代真的来了。</strong></p>
-"><meta property="twitter:image" content="https://n2g.cn/posts/%E6%83%8A%E8%89%B3codebuddy%E5%88%9D%E4%BD%93%E9%AA%8C.png"><!-- Google Font --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><!-- 
-    <script is:inline src="/toggle-theme.js"></script> --><style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0}}@keyframes astroFadeOut{to{opacity:0}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
-</style>
-<link rel="stylesheet" href="/_astro/index.skGcHkCz.css" />
-<style>.waline-container:where(.astro-ksttp56e){margin:2em 0;padding:1em 0;border-top:1px solid #ddd}
-</style><script type="module" src="/_astro/hoisted.JbHLA6Ne.js"></script><style>[data-astro-transition-scope="astro-fam6wyqg-1"] { view-transition-name: 2025-07-26; }@layer astro { ::view-transition-old(2025-07-26) { 
+"><meta property="twitter:image" content="https://n2g.cn/posts/%E6%83%8A%E8%89%B3codebuddy%E5%88%9D%E4%BD%93%E9%AA%8C.png"><!-- Reference typography --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Noto+Sans+SC:wght@400;500;600;700;800&amp;family=Noto+Serif+SC:wght@400;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"><!-- Self-hosted OPPO Sans 4.0 (primary body font). Falls back to Noto Sans SC /
+         Plus Jakarta Sans automatically if these woff2 subsets fail to load. --><link rel="stylesheet" href="/fonts/OPPO_Sans_4/result.css"><meta name="theme-color" content="#fbfcfb"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script>(function(){try{var e=localStorage.getItem("theme"),t=e==="light"||e==="dark"?e:window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t),document.documentElement.style.colorScheme=t}catch{document.documentElement.setAttribute("data-theme","light")}})();
+</script><script src="/toggle-theme.js"></script><link rel="stylesheet" href="/_astro/index.tAVty8tb.css">
+<style>.link-btn[data-astro-cid-5eunqzkt]{display:inline-block;text-decoration:none;color:var(--color-text-primary);transition:color var(--transition-fast)}a[data-astro-cid-5eunqzkt].link-btn:hover{color:var(--color-primary-500)}
+.tag-item[data-astro-cid-blwjyjpt]{display:inline-block;list-style:none}.tag-sm[data-astro-cid-blwjyjpt]{margin:.25rem 0}.tag-lg[data-astro-cid-blwjyjpt]{margin:.75rem .25rem}.tag-link[data-astro-cid-blwjyjpt]{position:relative;color:var(--color-text-primary);-webkit-text-decoration:underline dashed;text-decoration:underline dashed;text-underline-offset:4px;transition:color var(--transition-fast),transform var(--transition-fast);font-size:.875rem}.tag-lg[data-astro-cid-blwjyjpt] .tag-link[data-astro-cid-blwjyjpt]{font-size:1.125rem}.tag-link[data-astro-cid-blwjyjpt]:hover{color:var(--color-primary-500);transform:translateY(-1px)}.tag-icon[data-astro-cid-blwjyjpt]{width:1.2rem;height:1.2rem;margin-right:.2rem;vertical-align:middle;opacity:.7;fill:var(--color-text-primary);transition:fill var(--transition-fast)}.tag-link[data-astro-cid-blwjyjpt]:hover .tag-icon[data-astro-cid-blwjyjpt]{fill:var(--color-primary-500)}
+.pagination-wrapper{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:1.5rem 0}.page-btn{display:inline-flex;min-width:38px;height:38px;align-items:center;justify-content:center;-webkit-user-select:none;-moz-user-select:none;user-select:none;padding:.35rem .7rem;border:1px solid var(--color-border-default);border-radius:var(--radius-md);color:var(--color-text-secondary);background:var(--color-bg-surface);font-size:.9rem;transition:color var(--transition-fast),border-color var(--transition-fast),background-color var(--transition-fast),transform var(--transition-fast)}.page-btn:hover:not(.disabled){color:var(--color-primary-500);border-color:var(--color-border-primary);background:var(--color-bg-surface-elevated)}.page-btn.active{border-color:var(--color-action-bg);background:var(--color-action-bg);color:var(--color-action-text);font-weight:600}.page-btn.disabled{opacity:.4;cursor:not-allowed;pointer-events:none}.prev-btn{margin-right:.6rem}.next-btn{margin-left:.6rem}
+@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0}}@keyframes astroFadeOut{to{opacity:0}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+.waline-container[data-astro-cid-ksttp56e]{margin:2em 0;padding:1em 0;border-top:1px solid var(--color-border-subtle)}
+</style><script type="module" src="/_astro/hoisted.uILKiLqr.js"></script><style>[data-astro-transition-scope="astro-fam6wyqg-1"] { view-transition-name: 2025-07-26; }@layer astro { ::view-transition-old(2025-07-26) { 
 	animation-duration: 180ms;
 	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
 	animation-fill-mode: both;
@@ -132,17 +135,47 @@ const postsByYear = posts.reduce((acc, post) => {
 	animation-duration: 180ms;
 	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
 	animation-fill-mode: both;
-	animation-name: astroFadeIn; }</style></head> <body>  <header> <div class="content"> <div class="nav-container"> <div class="top-nav-wrap"> <a href="/" class="logo"> <span>Xio's</span> </a> <nav id="nav-menu"> <button class="hamburger-menu focus-outline" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"> <line x1="7" y1="12" x2="21" y2="12" class="line"></line> <line x1="3" y1="6" x2="21" y2="6" class="line"></line> <line x1="12" y1="18" x2="21" y2="18" class="line"></line> <line x1="18" y1="6" x2="6" y2="18" class="close"></line> <line x1="6" y1="6" x2="18" y2="18" class="close"></line> </svg> </button> <ul id="menu-items" class="display-none sm:flex"> <li> <a href="/" class="">
-日志
-</a> </li> <li> <a href="/links/" class="">
-邻居
-</a> </li> <li> <a href="/about/" class="">
-关于
-</a> </li> <li> <a href="/search/" class="group inline-block hover:text-skin-accent focus-outline p-3 sm:p-1  flex" aria-label="search" title="Search"> <svg xmlns="http://www.w3.org/2000/svg" class="scale-125 sm:scale-100"><path d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"></path> </svg> <span class="sr-only">Search</span> </a> </li> </ul> </nav> </div> </div> </div> </header>   <main id="main-content" class="content"> <div class="date-box post-date"><span class="italic text-sm">Jul<!-- --> <!-- -->26<!-- -->, <!-- -->2025</span></div> <h1 class="post-title" data-astro-transition-scope="astro-fam6wyqg-1">惊艳！CodeBuddy初体验</h1> <article id="article" role="article" class="post-content"> <div><p>今天第一次体验了 AI 编程助手 CodeBuddy，效果让我震惊。</p>
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope=astro-36ssibgs-2]{view-transition-name:CodeBuddy}@layer astro{::view-transition-old(CodeBuddy){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}::view-transition-new(CodeBuddy){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-old(CodeBuddy){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-new(CodeBuddy){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}}[data-astro-transition-fallback=old] [data-astro-transition-scope=astro-36ssibgs-2],[data-astro-transition-fallback=old][data-astro-transition-scope=astro-36ssibgs-2]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition-fallback=new] [data-astro-transition-scope=astro-36ssibgs-2],[data-astro-transition-fallback=new][data-astro-transition-scope=astro-36ssibgs-2]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=old] [data-astro-transition-scope=astro-36ssibgs-2],[data-astro-transition=back][data-astro-transition-fallback=old][data-astro-transition-scope=astro-36ssibgs-2]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=new] [data-astro-transition-scope=astro-36ssibgs-2],[data-astro-transition=back][data-astro-transition-fallback=new][data-astro-transition-scope=astro-36ssibgs-2]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}</style><style>[data-astro-transition-scope=astro-36ssibgs-3]{view-transition-name:Astro}@layer astro{::view-transition-old(Astro){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}::view-transition-new(Astro){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-old(Astro){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-new(Astro){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}}[data-astro-transition-fallback=old] [data-astro-transition-scope=astro-36ssibgs-3],[data-astro-transition-fallback=old][data-astro-transition-scope=astro-36ssibgs-3]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition-fallback=new] [data-astro-transition-scope=astro-36ssibgs-3],[data-astro-transition-fallback=new][data-astro-transition-scope=astro-36ssibgs-3]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=old] [data-astro-transition-scope=astro-36ssibgs-3],[data-astro-transition=back][data-astro-transition-fallback=old][data-astro-transition-scope=astro-36ssibgs-3]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=new] [data-astro-transition-scope=astro-36ssibgs-3],[data-astro-transition=back][data-astro-transition-fallback=new][data-astro-transition-scope=astro-36ssibgs-3]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}</style><style>[data-astro-transition-scope=astro-36ssibgs-4]{view-transition-name:Typecho}@layer astro{::view-transition-old(Typecho){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}::view-transition-new(Typecho){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-old(Typecho){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-new(Typecho){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}}[data-astro-transition-fallback=old] [data-astro-transition-scope=astro-36ssibgs-4],[data-astro-transition-fallback=old][data-astro-transition-scope=astro-36ssibgs-4]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition-fallback=new] [data-astro-transition-scope=astro-36ssibgs-4],[data-astro-transition-fallback=new][data-astro-transition-scope=astro-36ssibgs-4]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=old] [data-astro-transition-scope=astro-36ssibgs-4],[data-astro-transition=back][data-astro-transition-fallback=old][data-astro-transition-scope=astro-36ssibgs-4]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=new] [data-astro-transition-scope=astro-36ssibgs-4],[data-astro-transition=back][data-astro-transition-fallback=new][data-astro-transition-scope=astro-36ssibgs-4]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}</style><style>[data-astro-transition-scope="astro-36ssibgs-5"] { view-transition-name: ; }@layer astro { ::view-transition-old() { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new() { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old() { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new() { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope=astro-36ssibgs-6]{view-transition-name:AI}@layer astro{::view-transition-old(AI){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}::view-transition-new(AI){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-old(AI){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-new(AI){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}}[data-astro-transition-fallback=old] [data-astro-transition-scope=astro-36ssibgs-6],[data-astro-transition-fallback=old][data-astro-transition-scope=astro-36ssibgs-6]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition-fallback=new] [data-astro-transition-scope=astro-36ssibgs-6],[data-astro-transition-fallback=new][data-astro-transition-scope=astro-36ssibgs-6]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=old] [data-astro-transition-scope=astro-36ssibgs-6],[data-astro-transition=back][data-astro-transition-fallback=old][data-astro-transition-scope=astro-36ssibgs-6]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=new] [data-astro-transition-scope=astro-36ssibgs-6],[data-astro-transition=back][data-astro-transition-fallback=new][data-astro-transition-scope=astro-36ssibgs-6]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}</style></head> <body>  <header data-site-header=""> <div class="content top-nav-wrap"> <a href="/" class="logo" aria-label="Xio's 首页"> <span class="logo-text">Xio's</span> <span class="logo-slogan">一切从简，记录生活。</span> </a> <nav id="nav-menu" aria-label="主导航"> <ul id="menu-items"> <li> <a href="/" class=""> 首页 </a> </li><li> <a href="/archive/" class=""> 归档 </a> </li><li> <a href="/links/" class=""> 友链 </a> </li><li> <a href="/about/" class=""> 关于 </a> </li> </ul> <a class="theme-btn" href="/search/" aria-label="搜索" title="搜索"> <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.35-4.35"></path> </svg> </a> <button id="theme-btn" class="theme-btn" type="button" aria-label="切换明暗模式" aria-pressed="false" title="切换明暗模式"> <svg class="sun" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="5"></circle> <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path> </svg> <svg class="moon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> <button id="hamburger-menu" class="hamburger-menu" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="menu-items"> <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M3 6h18M3 12h18M3 18h18"></path> </svg> </button> </nav> </div> </header>  <main id="main-content" class="content"> <div class="date-box post-date"><time class="text-sm" datetime="2025-07-26T05:10:00.000Z">Jul 26, 2025</time></div> <h1 class="post-title" data-astro-transition-scope="astro-fam6wyqg-1">惊艳！CodeBuddy初体验</h1> <article id="article" role="article" class="post-content"> <p>今天第一次体验了 AI 编程助手 CodeBuddy，效果让我震惊。</p>
 <p>我在将博客从 Typecho 迁移到 Astro，最头疼的是归档页面。<a href="http://www.n2g.cn/archive.html">原页面</a> 有独特的设计：年份在左侧垂直居中，中间竖线分割，右侧是时间和标题。</p>
-<p>按以往经验，这至少需要 2-3 小时：分析结构、写组件、调样式、做响应式、集成导航...</p>
+<p>按以往经验，这至少需要 2-3 小时：分析结构、写组件、调样式、做响应式、集成导航…</p>
 <p>我只对 CodeBuddy 说了一句话：</p>
-<p>"根据我博客的风格，我想做一个归档的组件，可以参考 http://www.n2g.cn/archive.html 这个页面的归档。"</p>
+<p>“根据我博客的风格，我想做一个归档的组件，可以参考 <a href="http://www.n2g.cn/archive.html">http://www.n2g.cn/archive.html</a> 这个页面的归档。“</p>
 <p>然后它：</p>
 <ol>
 <li>分析了我的项目结构和现有风格</li>
@@ -150,136 +183,22 @@ const postsByYear = posts.reduce((acc, post) => {
 <li>一次性创建了完整的归档功能：组件、样式、页面</li>
 <li>精准处理每个细节调整</li>
 </ol>
-<pre><code class="language-javascript">// 数据分组逻辑
-const postsByYear = posts.reduce((acc, post) => {
-  const year = new Date(post.data.pubDatetime).getFullYear().toString();
-  if (!acc[year]) acc[year] = [];
-  acc[year].push(post);
-  return acc;
-}, {});
-</code></pre>
-<pre><code class="language-css">/* 关键样式 */
-.archive-year-section { display: flex; position: relative; }
-.archive-year-text { font-size: 17px; color: #444; }
-.archive-divider { width: 1px; background-color: #ddd; }
-</code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-comment)">// 数据分组逻辑</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">const</span><span style="color:var(--astro-code-token-constant)"> postsByYear</span><span style="color:var(--astro-code-token-keyword)"> =</span><span style="color:var(--astro-code-token-constant)"> posts</span><span style="color:var(--astro-code-token-function)">.reduce</span><span style="color:var(--astro-code-color-text)">((acc</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-color-text)"> post) </span><span style="color:var(--astro-code-token-keyword)">=&gt;</span><span style="color:var(--astro-code-color-text)"> {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  const</span><span style="color:var(--astro-code-token-constant)"> year</span><span style="color:var(--astro-code-token-keyword)"> =</span><span style="color:var(--astro-code-token-keyword)"> new</span><span style="color:var(--astro-code-token-function)"> Date</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-constant)">post</span><span style="color:var(--astro-code-color-text)">.</span><span style="color:var(--astro-code-token-constant)">data</span><span style="color:var(--astro-code-color-text)">.pubDatetime)</span><span style="color:var(--astro-code-token-function)">.getFullYear</span><span style="color:var(--astro-code-color-text)">()</span><span style="color:var(--astro-code-token-function)">.toString</span><span style="color:var(--astro-code-color-text)">();</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  if</span><span style="color:var(--astro-code-color-text)"> (</span><span style="color:var(--astro-code-token-keyword)">!</span><span style="color:var(--astro-code-color-text)">acc[year]) acc[year] </span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-color-text)"> [];</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">  acc[year]</span><span style="color:var(--astro-code-token-function)">.push</span><span style="color:var(--astro-code-color-text)">(post);</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  return</span><span style="color:var(--astro-code-color-text)"> acc;</span></span>
+<span class="line"><span style="color:var(--astro-code-color-text)">}</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-color-text)"> {});</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-comment)">/* 关键样式 */</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">.archive-year-section</span><span style="color:var(--astro-code-color-text)"> { </span><span style="color:var(--astro-code-token-constant)">display</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> flex</span><span style="color:var(--astro-code-color-text)">; </span><span style="color:var(--astro-code-token-constant)">position</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> relative</span><span style="color:var(--astro-code-color-text)">; }</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">.archive-year-text</span><span style="color:var(--astro-code-color-text)"> { </span><span style="color:var(--astro-code-token-constant)">font-size</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> 17</span><span style="color:var(--astro-code-token-keyword)">px</span><span style="color:var(--astro-code-color-text)">; </span><span style="color:var(--astro-code-token-constant)">color</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> #444</span><span style="color:var(--astro-code-color-text)">; }</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">.archive-divider</span><span style="color:var(--astro-code-color-text)"> { </span><span style="color:var(--astro-code-token-constant)">width</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> 1</span><span style="color:var(--astro-code-token-keyword)">px</span><span style="color:var(--astro-code-color-text)">; </span><span style="color:var(--astro-code-token-constant)">background-color</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> #ddd</span><span style="color:var(--astro-code-color-text)">; }</span></span></code></pre>
 <p>效率革命：原本数小时的工作，真的一分钟搞定。</p>
 <p>理解精准：不仅实现功能，还完美匹配现有代码风格。</p>
 <p>协作流畅：每次细节调整都能快速理解并精准修改。</p>
 <p>AI 编程助手改变的不是技术本身，而是我们的工作方式。重复性工作交给 AI，我们专注创意和架构。</p>
-<h2>这不是取代，是协作。</h2>
-<p><strong>PS: 这篇博文也是 CodeBuddy 帮忙写的，几分钟搞定。AI 时代真的来了。</strong></p>
-</div> </article> <div class="related-post"> <div class="prev-post"> <a href="/posts/typecho2astro"> <svg xmlns="http://www.w3.org/2000/svg" class="prev-svg"> <path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path> </svg>
-上一篇：从 Typecho 到 Astro：简单的博客搬运记录 </a> </div> <div class="next-post"> <a href="/posts/2025-08-11">
-下一篇：一封跨越23年的玛法信 <svg xmlns="http://www.w3.org/2000/svg" class="next-svg"> <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path> </svg> </a> </div> </div> <div class="comment"> <div class="waline-container astro-ksttp56e"> <div id="waline-comments" class="astro-ksttp56e"></div> </div>  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">  </div> </main> <footer class="mt-auto astro-sz7xmlte"> <div class="content astro-sz7xmlte"> <div class="footer-wrapper astro-sz7xmlte"> <div class="copyright-wrapper astro-sz7xmlte"> <span class="astro-sz7xmlte"><img src="/assets/logo.svg" alt="Xio's" width="30" height="30" class="astro-sz7xmlte"> </span> <span class="astro-sz7xmlte">Xio&#39;s &#169; 2026 .</span> <span class="slogan astro-sz7xmlte">一切从简，记录生活。</span> <a target="_blank" href="/rss.xml" class="rss-link astro-sz7xmlte" aria-label="rss feed" title="RSS FEED"> <span class="sr-only astro-sz7xmlte">RSS</span> <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon astro-sz7xmlte"><path d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z" class="astro-sz7xmlte"></path><path d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z" class="astro-sz7xmlte"></path><circle cx="6" cy="18" r="2" class="astro-sz7xmlte"></circle> </svg> </a> <!-- 隐藏的归档链接，可通过特定方式访问 --> <a href="/archive/" class="archive-link astro-sz7xmlte" aria-label="archive" title="时光档案"> <span class="sr-only astro-sz7xmlte">Archive</span> </a> </div> </div> </div> </footer>    </body></html>  <script>
-  /** Create a progress indicator
-   *  at the top */
-  function createProgressBar() {
-    // Create the main container div
-    const progressContainer = document.createElement("div");
-    progressContainer.className =
-      "progress-container fixed top-0 z-10 h-1 w-full bg-skin-fill";
-
-    // Create the progress bar div
-    const progressBar = document.createElement("div");
-    progressBar.className = "progress-bar h-1 w-0 bg-skin-accent";
-    progressBar.id = "myBar";
-
-    // Append the progress bar to the progress container
-    progressContainer.appendChild(progressBar);
-
-    // Append the progress container to the document body or any other desired parent element
-    document.body.appendChild(progressContainer);
-  }
-  createProgressBar();
-
-  /** Update the progress bar
-   *  when user scrolls */
-  function updateScrollProgress() {
-    const winScroll =
-      document.body.scrollTop || document.documentElement.scrollTop;
-    const height =
-      document.documentElement.scrollHeight -
-      document.documentElement.clientHeight;
-    
-    // 只有当页面内容足以产生滚动条时才更新进度
-    if (height > 0) {
-      const scrolled = (winScroll / height) * 100;
-      if (document) {
-        const myBar = document.getElementById("myBar");
-        if (myBar) {
-          myBar.style.width = scrolled + "%";
-        }
-      }
-    }
-  }
-  document.addEventListener("scroll", updateScrollProgress);
-
-  /** Attaches links to headings in the document,
-   *  allowing sharing of sections easily */
-  function addHeadingLinks() {
-    let headings = Array.from(document.querySelectorAll("h2, h3, h4, h5, h6"));
-    for (let heading of headings) {
-      heading.classList.add("group");
-      let link = document.createElement("a");
-      link.innerText = "#";
-      link.className = "heading-link hidden group-hover:inline-block ml-2";
-      link.href = "#" + heading.id;
-      link.ariaHidden = "true";
-      heading.appendChild(link);
-    }
-  }
-  addHeadingLinks();
-
-  /** Attaches copy buttons to code blocks in the document,
-   * allowing users to copy code easily. */
-  function attachCopyButtons() {
-    let copyButtonLabel = "Copy";
-    let codeBlocks = Array.from(document.querySelectorAll("pre"));
-
-    for (let codeBlock of codeBlocks) {
-      let wrapper = document.createElement("div");
-      wrapper.style.position = "relative";
-
-      let copyButton = document.createElement("button");
-      copyButton.className =
-        "copy-code absolute right-3 -top-3 rounded bg-skin-card px-2 py-1 text-xs leading-4 text-skin-base font-medium";
-      copyButton.innerHTML = copyButtonLabel;
-      codeBlock.setAttribute("tabindex", "0");
-      codeBlock.appendChild(copyButton);
-
-      // wrap codebock with relative parent element
-      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
-      wrapper.appendChild(codeBlock);
-
-      copyButton.addEventListener("click", async () => {
-        await copyCode(codeBlock, copyButton);
-      });
-    }
-
-    async function copyCode(block, button) {
-      let code = block.querySelector("code");
-      let text = code?.innerText;
-
-      await navigator.clipboard.writeText(text ?? "");
-
-      // visual feedback that task is completed
-      button.innerText = "Copied";
-
-      setTimeout(() => {
-        button.innerText = copyButtonLabel;
-      }, 700);
-    }
-  }
-  attachCopyButtons();
-
-  /** Scrolls the document to the top when
-   * the "Back to Top" button is clicked. */
-  function backToTop() {
-    document.querySelector("#back-to-top")?.addEventListener("click", () => {
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    });
-  }
-  backToTop();
-</script>
+<h2 id="这不是取代是协作">这不是取代，是协作。</h2>
+<p><strong>PS: 这篇博文也是 CodeBuddy 帮忙写的，几分钟搞定。AI 时代真的来了。</strong></p> </article> <div class="related-post"> <div class="prev-post">  <span class="date-box">← 上一篇</span> <h2 class="post-title" style="font-size:1.2em"> <a href="/posts/typecho2astro/">从 Typecho 到 Astro：简单的博客搬运记录</a> </h2>  </div> <div class="next-post">  <span class="date-box">下一篇 →</span> <h2 class="post-title" style="font-size:1.2em"> <a href="/posts/2025-08-11/">一封跨越23年的玛法信</a> </h2>  </div> </div> <ul class="tag-list"> <li class="tag-item tag-sm" data-astro-cid-blwjyjpt=""> <a href="/tags/CodeBuddy/" class="tag-link" data-astro-cid-blwjyjpt="" data-astro-transition-scope="astro-36ssibgs-2"> <svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-blwjyjpt=""> <path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-blwjyjpt=""></path> </svg> <span data-astro-cid-blwjyjpt="">CodeBuddy</span> </a> </li> <li class="tag-item tag-sm" data-astro-cid-blwjyjpt=""> <a href="/tags/Astro/" class="tag-link" data-astro-cid-blwjyjpt="" data-astro-transition-scope="astro-36ssibgs-3"> <svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-blwjyjpt=""> <path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-blwjyjpt=""></path> </svg> <span data-astro-cid-blwjyjpt="">Astro</span> </a> </li> <li class="tag-item tag-sm" data-astro-cid-blwjyjpt=""> <a href="/tags/Typecho/" class="tag-link" data-astro-cid-blwjyjpt="" data-astro-transition-scope="astro-36ssibgs-4"> <svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-blwjyjpt=""> <path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-blwjyjpt=""></path> </svg> <span data-astro-cid-blwjyjpt="">Typecho</span> </a> </li> <li class="tag-item tag-sm" data-astro-cid-blwjyjpt=""> <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" class="tag-link" data-astro-cid-blwjyjpt="" data-astro-transition-scope="astro-36ssibgs-5"> <svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-blwjyjpt=""> <path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-blwjyjpt=""></path> </svg> <span data-astro-cid-blwjyjpt="">前端开发</span> </a> </li> <li class="tag-item tag-sm" data-astro-cid-blwjyjpt=""> <a href="/tags/AI%E7%BC%96%E7%A8%8B/" class="tag-link" data-astro-cid-blwjyjpt="" data-astro-transition-scope="astro-36ssibgs-6"> <svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-blwjyjpt=""> <path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-blwjyjpt=""></path> </svg> <span data-astro-cid-blwjyjpt="">AI编程</span> </a> </li>  </ul> <div class="comment"> <div class="waline-container" data-astro-cid-ksttp56e=""> <div id="waline-comments" data-astro-cid-ksttp56e=""></div> </div>  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css"> <script>let walineInstance=null;function initWaline(){if(walineInstance){try{walineInstance.destroy()}catch(e){console.log("\u6E05\u7406\u65E7\u5B9E\u4F8B:",e.message)}walineInstance=null}const n=document.getElementById("waline-comments");if(!n){console.log("\u8BC4\u8BBA\u5BB9\u5668\u4E0D\u5B58\u5728\uFF0C\u7B49\u5F85DOM\u66F4\u65B0");return}if(typeof window.Waline>"u"){const e=document.createElement("script");e.src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js",e.onload=function(){createWalineInstance()},e.onerror=function(){console.error("Waline \u52A0\u8F7D\u5931\u8D25"),n.innerHTML='<p class="waline-status" data-state="error">\u8BC4\u8BBA\u7CFB\u7EDF\u52A0\u8F7D\u5931\u8D25\uFF0C\u8BF7\u5237\u65B0\u9875\u9762\u91CD\u8BD5</p>'},document.head.appendChild(e)}else createWalineInstance()}function createWalineInstance(){const n=document.getElementById("waline-comments");if(n){n.innerHTML="";try{walineInstance=window.Waline.init({el:"#waline-comments",serverURL:"https://tencent.n2g.cn/",path:window.location.pathname.endsWith("/")?window.location.pathname:window.location.pathname+"/",lang:"zh-CN",avatar:"qq",locale:{placeholder:"\u671F\u5F85\u4F60\u7684\u771F\u77E5\u707C\u89C1~",sofa:"\u5FEB\u6765\u505A\u7B2C\u4E00\u4E2A\u8BC4\u8BBA\u7684\u4EBA\u5427~",submit:"\u63D0\u4EA4",reply:"\u56DE\u590D",cancelReply:"\u53D6\u6D88\u56DE\u590D",comment:"\u8BC4\u8BBA",refresh:"\u5237\u65B0",more:"\u52A0\u8F7D\u66F4\u591A...",preview:"\u9884\u89C8",emoji:"\u8868\u60C5",uploadImage:"\u4E0A\u4F20\u56FE\u7247"},formatTime:function(e){const a=new Date(e),i=a.getFullYear(),t=String(a.getMonth()+1).padStart(2,"0"),o=String(a.getDate()).padStart(2,"0"),r=String(a.getHours()).padStart(2,"0"),s=String(a.getMinutes()).padStart(2,"0"),c=String(a.getSeconds()).padStart(2,"0");return`${i}\u5E74${t}\u6708${o}\u65E5 ${r}:${s}:${c}`},emoji:["https://unpkg.com/@waline/emojis@1.2.0/qq"],dark:'[data-theme="dark"]',meta:["nick","mail","link"],requiredMeta:["nick"],pageSize:10,wordLimit:[0,1e3],imageUploader:!1,highlight:!0,mathTagSupport:!1,commentSorting:"latest",search:!1,reaction:!1,copyright:!1,login:"disable"}),console.log("Waline \u8BC4\u8BBA\u7CFB\u7EDF\u521D\u59CB\u5316\u6210\u529F\uFF0C\u8DEF\u5F84:",window.location.pathname)}catch(e){console.error("Waline \u521D\u59CB\u5316\u5931\u8D25:",e),n.innerHTML='<p class="waline-status" data-state="error">\u8BC4\u8BBA\u7CFB\u7EDF\u521D\u59CB\u5316\u5931\u8D25</p>'}}}function handlePageNavigation(){console.log("\u68C0\u6D4B\u5230\u9875\u9762\u5BFC\u822A\uFF0C\u91CD\u65B0\u521D\u59CB\u5316\u8BC4\u8BBA\u7CFB\u7EDF"),setTimeout(()=>{initWaline()},300)}function setupSPAHandlers(){let n=window.location.href;setInterval(()=>{const t=window.location.href;t!==n&&(n=t,handlePageNavigation())},200);const a=history.pushState,i=history.replaceState;history.pushState=function(...t){a.apply(this,t),handlePageNavigation()},history.replaceState=function(...t){i.apply(this,t),handlePageNavigation()},window.addEventListener("popstate",handlePageNavigation),document.addEventListener("click",function(t){const o=t.target.closest("a");o&&o.href&&o.href.startsWith(window.location.origin)&&setTimeout(handlePageNavigation,500)},!0)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",function(){setTimeout(initWaline,100),setupSPAHandlers()}):(setTimeout(initWaline,100),setupSPAHandlers());
+</script> </div> </main> <footer class="mt-auto"> <div class="content"> <div class="footer-wrapper"> <div class="copyright-wrapper"> <span> <img src="/assets/logo.svg.svg" alt="Xio's" width="30" height="30" loading="lazy" decoding="async"> </span> <span>Xio's © 2026 .</span> <span class="slogan">一切从简，记录生活。</span> <a target="_blank" href="/rss.xml" class="rss-link" aria-label="RSS 订阅" title="RSS FEED">RSS</a> </div> </div> </div> </footer> <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
+</script>   </body></html>

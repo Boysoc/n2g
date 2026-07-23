@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "prebuild": "node -e \"try{require('fs').rmSync('_jampack',{recursive:true,force:true});require('fs').rmSync('.jampack',{recursive:true,force:true})}catch(e){}\"",
-    "build": "astro build",
+    "build": "astro build && jampack ./dist",
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",

@@ -1,55 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <defs>
-    <!-- 主渐变：翡翠绿从亮到深 -->
-    <linearGradient id="emerald" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6dd4a0"/>
-      <stop offset="50%" stop-color="#27AE60"/>
-      <stop offset="100%" stop-color="#1e9450"/>
-    </linearGradient>
-    <!-- 叶片亮边渐变 -->
-    <linearGradient id="leaf-light" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#aeeac7"/>
-      <stop offset="100%" stop-color="#40bf7a"/>
-    </linearGradient>
-    <!-- 深色模式适配 -->
-    <style>
-      @media (prefers-color-scheme: dark) {
-        .stem { stroke: #6dd4a0; }
-        .leaf-l { fill: url(#leaf-light); }
-        .leaf-r { fill: #40bf7a; }
-        .bud { fill: #6dd4a0; }
-      }
-    </style>
-  </defs>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  width="64"
+  height="64"
+  role="img"
+  aria-labelledby="favicon-title"
+  shape-rendering="geometricPrecision"
+>
+  <title id="favicon-title">Xio's</title>
 
-  <!-- 茎：略带弧度，从底部向上 -->
+  <!-- Cypress Ink (#123827) — folded-page tile, dark enough for either browser theme. -->
   <path
-    class="stem"
-    d="M16 28 C16 22 16 14 16 8"
+    d="M15 4h27l18 18v27c0 6.08-4.92 11-11 11H15C8.92 60 4 55.08 4 49V15C4 8.92 8.92 4 15 4Z"
+    fill="#123827"
+  />
+
+  <!-- Fern Fold (#2D7A52) — the page corner turns the tile into a writing symbol. -->
+  <path d="M42 4v11c0 3.87 3.13 7 7 7h11L42 4Z" fill="#2D7A52" />
+
+  <!-- Edge Dew (#B8E4C7) — a restrained hairline keeps the mark clear on dark tabs. -->
+  <path
+    d="M15 4.75h26.69l17.56 17.56V49c0 5.66-4.59 10.25-10.25 10.25H15C9.34 59.25 4.75 54.66 4.75 49V15C4.75 9.34 9.34 4.75 15 4.75Z"
     fill="none"
-    stroke="url(#emerald)"
-    stroke-width="2.8"
-    stroke-linecap="round"
+    stroke="#B8E4C7"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+    opacity="0.62"
   />
 
-  <!-- 左叶：不对称曲线，更具动感 -->
-  <path
-    class="leaf-l"
-    d="M16 15 C11 13 8 9 9 5 C14 6 16 10 16 15 Z"
-    fill="url(#leaf-light)"
-    stroke="#27AE60"
-    stroke-width="1"
-  />
+  <!-- Mist Leaf (#E8F4EC) — first paper ribbon. -->
+  <path d="M20 12 32 26 26 32 12 20Z" fill="#E8F4EC" />
+  <path d="m38 32 14 12-8 8-12-14Z" fill="#E8F4EC" />
 
-  <!-- 右叶：略大、更展开 -->
-  <path
-    class="leaf-r"
-    d="M16 13 C21 11 24 7 23 3 C18 4 16 8 16 13 Z"
-    fill="#40bf7a"
-    stroke="#27AE60"
-    stroke-width="1"
-  />
-
-  <!-- 芽苞：顶部小圆点 -->
-  <circle class="bud" cx="16" cy="7" r="2.2" fill="#27AE60"/>
+  <!-- New Growth (#70D49A) — second ribbon; the open centre is the fold. -->
+  <path d="m44 12 8 8-14 12-6-6Z" fill="#70D49A" />
+  <path d="m26 32 6 6-12 14-8-8Z" fill="#70D49A" />
 </svg>
