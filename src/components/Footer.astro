@@ -1,5 +1,6 @@
 ---
 import { LOGO_IMAGE, SITE } from "@config";
+
 const currentYear = new Date().getFullYear();
 
 export interface Props {
@@ -9,131 +10,40 @@ export interface Props {
 const { noMarginTop = false } = Astro.props;
 ---
 
-<footer class={`${noMarginTop ? "" : "mt-auto"}`}>
+<footer class={noMarginTop ? "" : "mt-auto"}>
   <div class="content">
     <div class="footer-wrapper">
       <div class="copyright-wrapper">
-        <span>{
+        {
           LOGO_IMAGE.enable && (
-            <img
-              src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
-              alt={SITE.title}
-              width='30'
-              height='30'
-            />
+            <span>
+              <img
+                src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
+                alt={SITE.title}
+                width="30"
+                height="30"
+              />
+            </span>
           )
         }
-        </span>
         <span>{SITE.title} &#169; {currentYear} .</span>
         <span class="slogan">一切从简，记录生活。</span>
         <a
-        target="_blank"
-        href="/rss.xml"
-        class="rss-link"
-        aria-label="rss feed"
-        title="RSS FEED"
-      >
-        <span class="sr-only">RSS</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
-        ><path
-          d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
-        ></path><path
-          d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
-        ></path><circle cx="6" cy="18" r="2"></circle>
-      </svg>
-      </a>
-      
-      <!-- 隐藏的归档链接，可通过特定方式访问 -->
-      <a
-        href="/archive/"
-        class="archive-link"
-        aria-label="archive"
-        title="时光档案"
-      >
-        <span class="sr-only">Archive</span>
-      </a>
+          target="_blank"
+          href="/rss.xml"
+          class="rss-link"
+          aria-label="RSS 订阅"
+          title="RSS FEED">RSS</a
+        >
       </div>
     </div>
   </div>
 </footer>
 
-<script>
-  // eslint-disable-next-line
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  
-  // 归档页面的隐藏访问功能
-  function initArchiveAccess() {
-    let clickCount = 0;
-    let lastClickTime = 0;
-    const clickThreshold = 5; // 连续点击次数
-    const timeThreshold = 3000; // 时间阈值(毫秒)
-    
-    // 在网站标题上连续点击5次，3秒内跳转到归档页面
-    const logoElement = document.querySelector('.logo');
-    if (logoElement) {
-      logoElement.addEventListener('click', () => {
-        const currentTime = Date.now();
-        
-        // 如果距离上次点击超过时间阈值，重置计数
-        if (currentTime - lastClickTime > timeThreshold) {
-          clickCount = 1;
-        } else {
-          clickCount++;
-        }
-        
-        lastClickTime = currentTime;
-        
-        // 达到阈值次数时跳转
-        if (clickCount >= clickThreshold) {
-          window.location.href = '/archive/';
-          clickCount = 0; // 重置计数
-        }
-      });
-    }
-    
-    // 键盘快捷键: Ctrl/Cmd + Shift + A 打开归档页面
-    document.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'a') {
-        e.preventDefault();
-        window.location.href = '/archive/';
-      }
-    });
-  }
-  
-  // 初始化隐藏访问功能
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initArchiveAccess);
-  } else {
-    initArchiveAccess();
-  }
-  
-  // Astro页面切换后重新初始化
-  document.addEventListener('astro:after-swap', initArchiveAccess);
+<script is:inline>
+  window.va =
+    window.va ||
+    function () {
+      (window.vaq = window.vaq || []).push(arguments);
+    };
 </script>
-
-<style>
-  .slogan {
-    font-style: italic;
-    opacity: 0.8;
-    margin-left: 0.5rem;
-  }
-  
-  .archive-link {
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
-  }
-  
-  /* 在页脚的copyright区域悬停时显示归档链接 */
-  .copyright-wrapper:hover .archive-link {
-    opacity: 0.3;
-    position: static;
-    pointer-events: auto;
-    margin-left: 0.5rem;
-    color: #cf4f28;
-  }
-  
-  .archive-link:hover {
-    opacity: 1 !important;
-  }
-</style>

@@ -77,11 +77,11 @@ export default function SearchBar({ searchList }: Props) {
     <>
       <label className="search-bar">
         <span className="search-bar-text">
-          <span className="">关键词</span>
+          <span>关键词</span>
         </span>
         <input
           className="search-bar-input"
-          placeholder="Search for anything..."
+          placeholder="搜索标题或摘要..."
           type="text"
           name="search"
           value={inputVal}
@@ -94,8 +94,12 @@ export default function SearchBar({ searchList }: Props) {
 
       {inputVal.length > 1 && (
         <div className="search-bar-result">
-          找到 {searchResults?.length}个结果关于 '{inputVal}'
+          找到 {searchResults?.length} 个与“{inputVal}”相关的结果
         </div>
+      )}
+
+      {inputVal.length > 1 && searchResults?.length === 0 && (
+        <div className="search-empty" role="status">没有找到匹配文章，试试更短的关键词。</div>
       )}
 
       <ul className="card-ul" >
@@ -104,6 +108,7 @@ export default function SearchBar({ searchList }: Props) {
             <Card
               href={`/posts/${item.slug}/`}
               frontmatter={item.data}
+              slug={item.slug}
               key={`${refIndex}-${item.slug}`}
             />
           ))}

@@ -6,13 +6,13 @@ export const SITE: Site = {
   desc: "",
   title: "Xio's",
   ogImage: "frynut-logo.png",
-  lightAndDarkMode: false,
+  lightAndDarkMode: true,
   postPerPage: 4,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
 };
 
 export const LOCALE = {
-  lang: "zh", // html lang code. Set this empty and default will be "en"
+  lang: "zh-CN", // html lang code. Set this empty and default will be "en"
   langTag: ["zh"], // BCP 47 Language Tags. Set this empty [] to use the environment default
 } as const;
 

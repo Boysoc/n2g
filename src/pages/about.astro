@@ -1,28 +1,825 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
+import Component from "@components/Comment.astro";
 import { SITE } from "@config";
+import { links } from "../links";
+import getUniqueTags from "@utils/getUniqueTags";
+import postFilter from "@utils/postFilter";
+
+const publishedPosts = (await getCollection("blog"))
+  .filter(postFilter)
+  .sort(
+    (a, b) =>
+      new Date(a.data.pubDatetime).getTime() -
+      new Date(b.data.pubDatetime).getTime(),
+  );
+
+if (publishedPosts.length === 0) {
+  throw new Error("About page requires at least one published article.");
+}
+const siteTags = getUniqueTags(publishedPosts);
+const activeLinks = links.filter((link) => !link.inactive);
+const articleYears = new Set(
+  publishedPosts.map((post) => new Date(post.data.pubDatetime).getFullYear()),
+);
+
+const intro = {
+  bio: [
+    "80后，狮子座，蜀国人。“io”取自姓氏的前几个字母，觉得够简单，便一直用作站名。早年用过“足球小子”“未来哥”“小铁匠”“星城之恋”“狮子座的维尼”这些网名混迹网络，始终对那些奇奇怪怪的东西抱有好奇。",
+    "现定居四川一座小城，做着普通的工作。什么都喜欢涉及一点，虽然常常只有三分钟热度。懂一些 HTML 和 CSS，这几年折腾到了 Astro，工具在变，把想法做成页面的兴趣一直没断。喜欢看电影，偏爱甜食和巧克力，也喜欢和朋友小酌几杯。K歌基本跑调，不影响自己开心。偶尔一个人说走就走地去旅行，总觉得自己还没那么老。",
+  ],
+};
+
+const stats = [
+  { count: publishedPosts.length, suffix: " 篇", label: "公开文章" },
+  { count: articleYears.size, suffix: " 个", label: "有文章的年份" },
+  { count: siteTags.length, suffix: " 个", label: "文章标签" },
+  { count: activeLinks.length, suffix: " 条", label: "当前有效链接" },
+];
 ---
 
-<Layout>
+<Layout
+  title={`关于 | ${SITE.title}`}
+  description={`关于 ${SITE.author}：一个 80 后蜀国人的生活、兴趣与个人博客。`}
+>
   <Header activeNav="about" />
   <main id="main-content" class="content">
-      <h1 class="about-title">关于</h1>
+    <!-- 右侧滚动生长藤蔓：随页面下滑向上生长，到底绽放 -->
+    <div class="about-vine" data-vine aria-hidden="true">
+      <svg
+        class="vine-svg"
+        viewBox="0 0 80 560"
+        preserveAspectRatio="xMidYMid meet"
+        fill="none"
+      >
+        <!-- 主茎：pathLength=1 便于用 dashoffset 控制生长进度 -->
+        <path
+          class="vine-stem"
+          pathLength="1"
+          d="M40,560 C30,470 52,400 40,320 C28,240 52,170 40,90 C36,60 40,40 40,20"
+        ></path>
 
-<br>
-      <p>文字一旦进入网络，就获得了独立生命。</p>
-      <p>它可能潜入陌生人的意识，可能化作AI模型的训练数据。</p>
-      <p>这种奇妙的"被阅读"命运，让最朴素的记录都蕴含着改变世界的潜能。</p>
-      <p>于是写作不再是私人笔记，而是参与文明对话的方式。</p>
-      <p>敢于表达，本身就是一种勇敢而酷炫的行为。</p>
+        <!-- 叶片：外层 g 定位，内层 .vine-leaf 负责生长缩放 -->
+        <g transform="translate(40,470) rotate(38)">
+          <g class="vine-leaf" data-leaf="0.10">
+            <path d="M0,0 C8,-4 16,-14 14,-28 C6,-19 -2,-10 0,0 Z"></path>
+          </g>
+        </g>
+        <g transform="translate(40,400) rotate(-38) scale(-1,1)">
+          <g class="vine-leaf" data-leaf="0.22">
+            <path d="M0,0 C8,-4 16,-14 14,-28 C6,-19 -2,-10 0,0 Z"></path>
+          </g>
+        </g>
+        <g transform="translate(40,330) rotate(40)">
+          <g class="vine-leaf" data-leaf="0.34">
+            <path d="M0,0 C8,-4 16,-14 14,-28 C6,-19 -2,-10 0,0 Z"></path>
+          </g>
+        </g>
+        <g transform="translate(40,258) rotate(-40) scale(-1,1)">
+          <g class="vine-leaf" data-leaf="0.46">
+            <path d="M0,0 C8,-4 16,-14 14,-28 C6,-19 -2,-10 0,0 Z"></path>
+          </g>
+        </g>
+        <g transform="translate(40,186) rotate(42)">
+          <g class="vine-leaf" data-leaf="0.58">
+            <path d="M0,0 C8,-4 16,-14 14,-28 C6,-19 -2,-10 0,0 Z"></path>
+          </g>
+        </g>
+        <g transform="translate(40,120) rotate(-42) scale(-1,1)">
+          <g class="vine-leaf" data-leaf="0.70">
+            <path d="M0,0 C8,-4 16,-14 14,-28 C6,-19 -2,-10 0,0 Z"></path>
+          </g>
+        </g>
 
+        <!-- 花朵：到底部时绽放（scale 由 --bloom 控制） -->
+        <g transform="translate(40,96)">
+          <g class="vine-flower" data-flower="0.80">
+            <circle class="flower-core" r="4.5"></circle>
+            <ellipse class="petal petal-amber" cx="0" cy="-11" rx="4.5" ry="9"
+            ></ellipse>
+            <ellipse
+              class="petal petal-amber"
+              cx="0"
+              cy="-11"
+              rx="4.5"
+              ry="9"
+              transform="rotate(72)"></ellipse>
+            <ellipse
+              class="petal petal-amber"
+              cx="0"
+              cy="-11"
+              rx="4.5"
+              ry="9"
+              transform="rotate(144)"></ellipse>
+            <ellipse
+              class="petal petal-amber"
+              cx="0"
+              cy="-11"
+              rx="4.5"
+              ry="9"
+              transform="rotate(216)"></ellipse>
+            <ellipse
+              class="petal petal-amber"
+              cx="0"
+              cy="-11"
+              rx="4.5"
+              ry="9"
+              transform="rotate(288)"></ellipse>
+          </g>
+        </g>
+        <g transform="translate(22,128)">
+          <g class="vine-flower" data-flower="0.86">
+            <circle class="flower-core" r="3.6"></circle>
+            <ellipse class="petal petal-rose" cx="0" cy="-9" rx="3.6" ry="7"
+            ></ellipse>
+            <ellipse
+              class="petal petal-rose"
+              cx="0"
+              cy="-9"
+              rx="3.6"
+              ry="7"
+              transform="rotate(72)"></ellipse>
+            <ellipse
+              class="petal petal-rose"
+              cx="0"
+              cy="-9"
+              rx="3.6"
+              ry="7"
+              transform="rotate(144)"></ellipse>
+            <ellipse
+              class="petal petal-rose"
+              cx="0"
+              cy="-9"
+              rx="3.6"
+              ry="7"
+              transform="rotate(216)"></ellipse>
+            <ellipse
+              class="petal petal-rose"
+              cx="0"
+              cy="-9"
+              rx="3.6"
+              ry="7"
+              transform="rotate(288)"></ellipse>
+          </g>
+        </g>
+        <g transform="translate(58,134)">
+          <g class="vine-flower" data-flower="0.90">
+            <circle class="flower-core" r="3.6"></circle>
+            <ellipse class="petal petal-amber" cx="0" cy="-9" rx="3.6" ry="7"
+            ></ellipse>
+            <ellipse
+              class="petal petal-amber"
+              cx="0"
+              cy="-9"
+              rx="3.6"
+              ry="7"
+              transform="rotate(72)"></ellipse>
+            <ellipse
+              class="petal petal-amber"
+              cx="0"
+              cy="-9"
+              rx="3.6"
+              ry="7"
+              transform="rotate(144)"></ellipse>
+            <ellipse
+              class="petal petal-amber"
+              cx="0"
+              cy="-9"
+              rx="3.6"
+              ry="7"
+              transform="rotate(216)"></ellipse>
+            <ellipse
+              class="petal petal-amber"
+              cx="0"
+              cy="-9"
+              rx="3.6"
+              ry="7"
+              transform="rotate(288)"></ellipse>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <!-- 自我介绍卡 -->
+    <section class="intro-card">
+      <img
+        class="intro-avatar"
+        src="/logo.webp"
+        alt="Xio"
+        width="84"
+        height="84"
+        loading="eager"
+        decoding="async"
+      />
+      <div class="intro-body">
+        <h1 class="intro-name">关于我</h1>
+        <div class="intro-bio">
+          {intro.bio.map((p) => <p>{p}</p>)}
+        </div>
+        <div class="intro-socials">
+          <a
+            class="social-link"
+            href="https://github.com/Boysoc"
+            target="_blank"
+            rel="me noopener noreferrer"
+            aria-label="在 GitHub 上关注我"
+          >
+            <svg
+              class="social-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path
+                d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0c-2.4-1.6-3.5-1.3-3.5-1.3a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"
+              ></path>
+            </svg>
+            <span>关注我</span>
+          </a>
+          <a class="social-link ghost" href="mailto:boysoc@qq.com">给我写信</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 关于这里、城市与朋友 -->
+    <section class="story-section">
+      <article class="story-block story-block-wide">
+        <h2 class="story-title">关于这里</h2>
+        <p>
+          这个博客始于2005年，从 ASP 到 PHP 辗转了好几套程序，如今已经换成了
+          Astro。托管在 GitHub Pages 上，评论系统用的是 Vercel +
+          Waline，全都是免费服务。按这个逻辑，只要这些公司不倒闭，这个网址就能一直访问下去。数据每隔一段时间就会整理一次，更新没什么规律，全凭思绪是否饱满，所以内容常常跳脱。最早那个域名已经不再属于我，旧数据也懒得再翻。现在的
+          <a href={SITE.website}>N2G.CN</a>，算是这段日子的延续。
+        </p>
+      </article>
+
+      <div class="story-grid">
+        <article class="story-block">
+          <h2 class="story-title">关于这座城</h2>
+          <p>
+            搬来这里之后，生活有过一段低落的时期。你问我有多喜欢这座城市，我说不上来——至今没有觉得它多美好，却又隐隐相信它总会给我一些意料之外的惊喜。毕竟这里是蜀地。
+          </p>
+        </article>
+
+        <article class="story-block">
+          <h2 class="story-title">关于朋友</h2>
+          <p>
+            同学们大多结了婚、生了孩子，单身的屈指可数。身边的朋友各有各的圈子，除了麻将桌上能过招的牌友，似乎找不到一个可以一起出发旅行的人了。圈子越来越窄，偶尔把自己藏在网络里，打打酱油，发发表情，算是在说：我还活着。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 真实文章标签 -->
+    <section class="tags-section">
+      <div class="section-head">
+        <h2 class="section-title">文章标签</h2>
+        <p class="section-sub">这些是我写过、想过，也曾认真关心过的事情</p>
+      </div>
+      <div class="tags-cloud">
+        {
+          siteTags.map(({ tag, tagName }) => (
+            <a class="tag-leaf" href={`/tags/${tag}/`}>
+              <span class="leaf-dot" aria-hidden="true" />
+              {tagName}
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 数据 -->
+    <section class="stats-section">
+      <div class="stats-grid">
+        {
+          stats.map((s) => (
+            <div class="stat-cell">
+              <div class="stat-num" data-count={s.count} data-suffix={s.suffix}>
+                {s.count}
+                {s.suffix}
+              </div>
+              <div class="stat-label">{s.label}</div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 评论 -->
+    <Component />
   </main>
   <Footer />
 </Layout>
 
 <style>
-  .about-title {
-    color: #cf4f28;
+  /* ── 右侧滚动生长藤蔓 ── */
+  .about-vine {
+    position: fixed;
+    top: 0;
+    right: 24px;
+    width: 110px;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .vine-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .vine-stem {
+    fill: none;
+    stroke: var(--color-primary-500);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1; /* 由 JS 随滚动进度改写 */
+    filter: drop-shadow(0 0 6px rgba(39, 174, 96, 0.18));
+  }
+
+  .vine-leaf {
+    transform: scale(var(--grow, 0));
+    transform-box: fill-box;
+    transform-origin: 0% 100%;
+    transition: transform 0.25s ease-out;
+  }
+
+  .vine-leaf path {
+    fill: var(--color-primary-300);
+    stroke: var(--color-primary-500);
+    stroke-width: 1.5;
+  }
+
+  .vine-flower {
+    transform: scale(var(--bloom, 0));
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .petal {
+    stroke: var(--color-primary-600);
+    stroke-width: 1;
+  }
+
+  .petal-amber {
+    fill: var(--color-accent-amber);
+  }
+
+  .petal-rose {
+    fill: var(--color-accent-rose);
+  }
+
+  .flower-core {
+    fill: var(--color-accent-amber-dark);
+  }
+
+  /* 窄屏放不下右栏，隐藏藤蔓，内容不受影响 */
+  @media (max-width: 1200px) {
+    .about-vine {
+      display: none;
+    }
+  }
+
+  /* ── 自我介绍卡 ── */
+  .intro-card {
+    display: flex;
+    gap: 1.8rem;
+    align-items: flex-start;
+    margin: 0 0 3rem;
+    padding: 2.2rem;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    opacity: 1;
+    transform: none;
+    animation: about-reveal 0.6s ease both;
+  }
+
+  .intro-avatar {
+    flex-shrink: 0;
+    width: 84px;
+    height: 84px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 4px var(--color-bg-page),
+      0 0 0 6px var(--color-primary-200);
+  }
+
+  .intro-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .intro-name {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--color-title);
+    margin: 0 0 0.2rem;
+  }
+
+  .intro-bio p {
+    color: var(--color-text-secondary);
+    line-height: 1.85;
+    margin: 0 0 0.9rem;
+  }
+
+  .intro-bio p:last-child {
+    margin-bottom: 0;
+  }
+
+  .intro-socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.95rem;
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-page);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-pill);
+    transition: all var(--transition-fast);
+  }
+
+  .social-icon {
+    width: 1.05rem;
+    height: 1.05rem;
+    stroke-width: 1.8;
+  }
+
+  .social-link:hover {
+    color: var(--color-primary-600);
+    border-color: var(--color-primary-500);
+    background: var(--color-primary-50);
+    transform: translateY(-2px);
+  }
+
+  .social-link.ghost {
+    color: var(--color-primary-500);
+    border-style: dashed;
+  }
+
+  /* ── 通用区块标题 ── */
+  .section-head {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--color-title);
+    margin: 0 0 0.4rem;
+  }
+
+  .section-sub {
+    color: var(--color-text-tertiary);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  /* ── 关于站点与生活 ── */
+  .story-section {
+    display: grid;
+    gap: 1rem;
+    margin: 0 0 3rem;
+  }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .story-block {
+    padding: 1.45rem 1.55rem;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    animation: about-reveal 0.6s ease both;
+  }
+
+  .story-title {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    color: var(--color-title);
+  }
+
+  .story-block p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    line-height: 1.9;
+  }
+
+  .story-block a {
+    color: var(--color-primary-600);
+    text-decoration: underline;
+    text-decoration-color: var(--color-primary-200);
+    text-underline-offset: 0.2em;
+    transition:
+      color var(--transition-fast),
+      text-decoration-color var(--transition-fast);
+  }
+
+  .story-block a:hover {
+    color: var(--color-primary-500);
+    text-decoration-color: currentColor;
+  }
+
+  /* ── 兴趣标签云 ── */
+  .tags-section {
+    margin: 0 0 3rem;
+  }
+
+  .tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem;
+  }
+
+  .tag-leaf {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1.1rem;
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-primary-200);
+    border-radius: 4px 16px 4px 16px; /* 叶片般的不对称圆角 */
+    cursor: pointer;
+    text-decoration: none;
+    transform-origin: center bottom;
+    transition:
+      transform 0.35s ease,
+      box-shadow 0.35s ease,
+      color 0.35s ease,
+      background 0.35s ease,
+      border-color 0.35s ease;
+  }
+
+  .tag-leaf:hover {
+    transform: rotate(-3deg) scale(1.06);
+    color: var(--color-primary-600);
+    background: var(--color-primary-50);
+    box-shadow: var(--shadow-md);
+  }
+
+  .tag-leaf:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  .leaf-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-primary-400);
+    transition: background 0.35s ease;
+  }
+
+  /* ── 数据 ── */
+  .stats-section {
+    margin: 0 0 2.5rem;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-cell {
+    padding: 1.4rem 0.6rem;
+    text-align: center;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    transition:
+      transform var(--transition-normal),
+      box-shadow var(--transition-normal);
+  }
+
+  .stat-cell:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .stat-num {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--color-primary-500);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-tertiary);
+  }
+
+  @keyframes about-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ── 暗色模式微调 ── */
+  :global([data-theme="dark"]) .tag-leaf:hover {
+    background: rgb(39 174, 96 / 12%);
+  }
+
+  /* ── 响应式 ── */
+  @media (max-width: 640px) {
+    .intro-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.1rem;
+      margin-top: 0;
+      padding: 1.6rem;
+    }
+
+    .story-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .story-block {
+      padding: 1.3rem;
+    }
+
+    .intro-socials {
+      justify-content: center;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro-card,
+    .story-block {
+      animation: none;
+    }
   }
 </style>
+
+<script>
+  let cleanupAboutPage: (() => void) | undefined;
+
+  function initAboutPage() {
+    cleanupAboutPage?.();
+
+    const introCard = document.querySelector<HTMLElement>(".intro-card");
+    if (!introCard) {
+      cleanupAboutPage = undefined;
+      return;
+    }
+
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const controller = new AbortController();
+    let statsObserver: IntersectionObserver | undefined;
+    let vineFrame = 0;
+
+    cleanupAboutPage = () => {
+      controller.abort();
+      statsObserver?.disconnect();
+      if (vineFrame) cancelAnimationFrame(vineFrame);
+    };
+
+    // 滚动生长藤蔓
+    const vine = document.querySelector<HTMLElement>("[data-vine]");
+    const stem = vine?.querySelector<SVGPathElement>(".vine-stem") ?? null;
+    const leaves = vine
+      ? Array.from(vine.querySelectorAll<HTMLElement>("[data-leaf]"))
+      : [];
+    const flowers = vine
+      ? Array.from(vine.querySelectorAll<HTMLElement>("[data-flower]"))
+      : [];
+
+    function updateVine() {
+      if (!stem) return;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+      stem.style.strokeDashoffset = String(1 - p);
+      for (const leaf of leaves) {
+        const at = parseFloat(leaf.dataset.leaf || "0");
+        const f = Math.min(Math.max((p - at) / 0.08, 0), 1);
+        leaf.style.setProperty("--grow", f.toFixed(3));
+      }
+      for (const flower of flowers) {
+        const at = parseFloat(flower.dataset.flower || "0");
+        const f = Math.min(Math.max((p - at) / 0.1, 0), 1);
+        flower.style.setProperty("--bloom", f.toFixed(3));
+      }
+    }
+
+    if (vine && stem) {
+      if (reduce) {
+        // 直接显示终态：已长成 + 绽放
+        stem.style.strokeDashoffset = "0";
+        leaves.forEach((l) => l.style.setProperty("--grow", "1"));
+        flowers.forEach((f) => f.style.setProperty("--bloom", "1"));
+      } else {
+        let ticking = false;
+        const onScroll = () => {
+          if (ticking) return;
+          ticking = true;
+          vineFrame = requestAnimationFrame(() => {
+            updateVine();
+            ticking = false;
+          });
+        };
+        window.addEventListener("scroll", onScroll, {
+          passive: true,
+          signal: controller.signal,
+        });
+        window.addEventListener("resize", onScroll, {
+          passive: true,
+          signal: controller.signal,
+        });
+        updateVine();
+      }
+    }
+
+    // 数字滚动只是增强：HTML 中已直接输出真实数字，脚本失效也不会显示为 0。
+    const countEls = document.querySelectorAll<HTMLElement>("[data-count]");
+    if (!reduce && "IntersectionObserver" in window) {
+      statsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((en) => {
+            if (!en.isIntersecting) return;
+            if (en.target instanceof HTMLElement) {
+              countUp(en.target);
+            }
+            statsObserver?.unobserve(en.target);
+          });
+        },
+        { threshold: 0.2 },
+      );
+      countEls.forEach((el) => statsObserver?.observe(el));
+    }
+  }
+
+  function countUp(el: HTMLElement) {
+    if (el.dataset.counted === "true") return;
+    el.dataset.counted = "true";
+
+    const target = parseFloat(el.dataset.count || "0");
+    const suffix = el.dataset.suffix || "";
+    const dur = 1200;
+    const start = performance.now();
+    const tick = (now: number) => {
+      if (!el.isConnected) return;
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(target * eased)) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  // 内容默认可见；页面切换事件只负责重新绑定当前文档的动画增强。
+  initAboutPage();
+  if (document.documentElement.dataset.aboutEventsBound !== "true") {
+    document.documentElement.dataset.aboutEventsBound = "true";
+    document.addEventListener("astro:after-swap", initAboutPage);
+    document.addEventListener("astro:page-load", initAboutPage);
+    document.addEventListener("astro:before-swap", () => cleanupAboutPage?.());
+  }
+</script>

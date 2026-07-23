@@ -1,76 +1,72 @@
-const primaryColorScheme = ""; // "light" | "dark"
+(() => {
+  const root = document.documentElement;
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
 
-// Get theme data from local storage
-const currentTheme = localStorage.getItem("theme");
+  const getStoredTheme = () => {
+    try {
+      const value = localStorage.getItem("theme");
+      return value === "light" || value === "dark" ? value : null;
+    } catch {
+      return null;
+    }
+  };
 
-function getPreferTheme() {
-  // return theme value in local storage if it is set
-  if (currentTheme) return currentTheme;
+  let theme =
+    root.dataset.theme ||
+    getStoredTheme() ||
+    (media.matches ? "dark" : "light");
 
-  // return primary color scheme if it is set
-  if (primaryColorScheme) return primaryColorScheme;
-
-  // return user device's prefer color scheme
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
-
-let themeValue = getPreferTheme();
-
-function setPreference() {
-  localStorage.setItem("theme", themeValue);
-  reflectPreference();
-}
-
-function reflectPreference() {
-  document.firstElementChild.setAttribute("data-theme", themeValue);
-
-  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
-
-  // Get a reference to the body element
-  const body = document.body;
-
-  // Check if the body element exists before using getComputedStyle
-  if (body) {
-    // Get the computed styles for the body element
-    const computedStyles = window.getComputedStyle(body);
-
-    // Get the background color property
-    const bgColor = computedStyles.backgroundColor;
-
-    // Set the background color in <meta theme-color ... />
-    document
-      .querySelector("meta[name='theme-color']")
-      ?.setAttribute("content", bgColor);
-  }
-}
-
-// set early so no page flashes / CSS is made aware
-reflectPreference();
-
-window.onload = () => {
-  function setThemeFeature() {
-    // set on load so screen readers can get the latest value on the button
-    reflectPreference();
-
-    // now this script can find and listen for clicks on the control
-    document.querySelector("#theme-btn")?.addEventListener("click", () => {
-      themeValue = themeValue === "light" ? "dark" : "light";
-      setPreference();
+  function syncControls() {
+    document.querySelectorAll("#theme-btn").forEach((button) => {
+      const next = theme === "dark" ? "浅色" : "深色";
+      button.setAttribute("aria-label", `切换到${next}模式`);
+      button.setAttribute("title", `切换到${next}模式`);
+      button.setAttribute("aria-pressed", String(theme === "dark"));
     });
   }
 
-  setThemeFeature();
+  function applyTheme(nextTheme, persist = false) {
+    theme = nextTheme;
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
 
-  // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", setThemeFeature);
-};
+    if (persist) {
+      try {
+        localStorage.setItem("theme", theme);
+      } catch {
+        // Storage can be unavailable in private browsing; the UI still works.
+      }
+    }
 
-// sync with system changes
-window
-  .matchMedia("(prefers-color-scheme: dark)")
-  .addEventListener("change", ({ matches: isDark }) => {
-    themeValue = isDark ? "dark" : "light";
-    setPreference();
+    const color = theme === "dark" ? "#15191f" : "#fbfcfb";
+    document
+      .querySelector("meta[name='theme-color']")
+      ?.setAttribute("content", color);
+    syncControls();
+    document.dispatchEvent(
+      new CustomEvent("themechange", { detail: { theme } }),
+    );
+  }
+
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest?.("#theme-btn");
+    if (!button) return;
+    applyTheme(theme === "dark" ? "light" : "dark", true);
   });
+
+  document.addEventListener("astro:page-load", syncControls);
+  document.addEventListener("astro:after-swap", () => applyTheme(theme));
+  window.addEventListener("storage", (event) => {
+    if (
+      event.key === "theme" &&
+      (event.newValue === "light" || event.newValue === "dark")
+    ) {
+      applyTheme(event.newValue);
+    }
+  });
+  media.addEventListener("change", ({ matches }) => {
+    if (!getStoredTheme()) applyTheme(matches ? "dark" : "light");
+  });
+
+  applyTheme(theme);
+})();

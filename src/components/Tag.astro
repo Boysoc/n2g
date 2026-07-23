@@ -7,32 +7,70 @@ export interface Props {
 const { tag, size = "sm" } = Astro.props;
 ---
 
-<li
-  class={`inline-block ${
-    size === "sm" ? "my-1 underline-offset-4" : "my-3 mx-1 underline-offset-8"
-  }`}
->
+<li class={`tag-item ${size === "sm" ? "tag-sm" : "tag-lg"}`}>
   <a
-    href={`/tags/${tag}/`}
+    href={`/tags/${encodeURIComponent(tag)}/`}
     transition:name={tag}
-    class={`${size === "sm" ? "text-sm" : "text-lg"} pr-2 group`}
+    class="tag-link"
   >
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class={`${size === "sm" ? " scale-75" : "scale-110"}`}
-      ><path
+      class="tag-icon"
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path
         d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z"
       ></path>
     </svg>
-    &nbsp;<span>{tag}</span>
+    <span>{tag}</span>
   </a>
 </li>
 
 <style>
-  a {
-    @apply relative underline decoration-dashed hover:-top-0.5 hover:text-skin-accent focus-visible:p-1;
+  .tag-item {
+    display: inline-block;
+    list-style: none;
   }
-  a svg {
-    @apply -mr-5 h-6 w-6 scale-95 text-skin-base opacity-80 group-hover:fill-skin-accent;
+
+  .tag-sm {
+    margin: 0.25rem 0;
+  }
+
+  .tag-lg {
+    margin: 0.75rem 0.25rem;
+  }
+
+  .tag-link {
+    position: relative;
+    color: var(--color-text-primary);
+    text-decoration: underline dashed;
+    text-underline-offset: 4px;
+    transition:
+      color var(--transition-fast),
+      transform var(--transition-fast);
+    font-size: 0.875rem;
+  }
+
+  .tag-lg .tag-link {
+    font-size: 1.125rem;
+  }
+
+  .tag-link:hover {
+    color: var(--color-primary-500);
+    transform: translateY(-1px);
+  }
+
+  .tag-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: 0.2rem;
+    vertical-align: middle;
+    opacity: 0.7;
+    fill: var(--color-text-primary);
+    transition: fill var(--transition-fast);
+  }
+  .tag-link:hover .tag-icon {
+    fill: var(--color-primary-500);
   }
 </style>

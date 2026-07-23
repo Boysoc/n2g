@@ -8,13 +8,13 @@
   .waline-container {
     margin: 2em 0;
     padding: 1em 0;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--color-border-subtle);
   }
 </style>
 
 <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
 
-<script>
+<script is:inline>
   // 全局 Waline 实例
   let walineInstance = null;
   
@@ -47,7 +47,7 @@
       };
       script.onerror = function() {
         console.error('Waline 加载失败');
-        commentsContainer.innerHTML = '<p style="text-align: center; color: #999;">评论系统加载失败，请刷新页面重试</p>';
+        commentsContainer.innerHTML = '<p class="waline-status" data-state="error">评论系统加载失败，请刷新页面重试</p>';
       };
       document.head.appendChild(script);
     } else {
@@ -98,7 +98,7 @@
         emoji: [
           'https://unpkg.com/@waline/emojis@1.2.0/qq'
         ], // 使用官方 QQ 表情包，不包含 GIF
-        dark: 'auto',
+        dark: '[data-theme="dark"]',
         meta: ['nick', 'mail', 'link'],
         requiredMeta: ['nick'],
         pageSize: 10,
@@ -116,7 +116,7 @@
       console.log('Waline 评论系统初始化成功，路径:', window.location.pathname);
     } catch (error) {
       console.error('Waline 初始化失败:', error);
-      commentsContainer.innerHTML = '<p style="text-align: center; color: #999;">评论系统初始化失败</p>';
+      commentsContainer.innerHTML = '<p class="waline-status" data-state="error">评论系统初始化失败</p>';
     }
   }
 

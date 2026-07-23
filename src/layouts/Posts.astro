@@ -17,10 +17,10 @@ export interface Props {
 const { currentPage, totalPages, paginatedPosts } = Astro.props;
 ---
 
-<Layout title={`Posts | ${SITE.title}`}>
-  <Header activeNav="posts" />
+<Layout title={`文章 | ${SITE.title}`}>
+  <Header activeNav="home" />
   <div>
-    <Main pageTitle="" pageDesc="" >
+    <Main pageTitle="文章" pageDesc="所有发布的文章">
       <ul class="card-ul">
         {
           paginatedPosts.map(({ data, slug }) => (

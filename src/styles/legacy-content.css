@@ -1,0 +1,17 @@
+/* Historical imported posts contain inline light-only table styles. Keep overrides local. */
+[data-theme="dark"]
+  .post-content
+  :where(table, thead, tbody, tfoot, tr, th, td)[style] {
+  border-color: var(--color-border-default) !important;
+  color: var(--color-text-secondary) !important;
+  background-color: var(--color-bg-surface) !important;
+  background-image: none !important;
+}
+
+[data-theme="dark"] .post-content :where(font, span, i)[style*="color"] {
+  color: inherit !important;
+}
+
+.post-content :where(table[width], img[width]) {
+  max-width: 100%;
+}

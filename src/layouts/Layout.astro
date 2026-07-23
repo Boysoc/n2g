@@ -1,6 +1,9 @@
 ---
 import { LOCALE, SITE } from "@config";
+import "@styles/theme.css";
 import "@styles/base.css";
+import "@styles/vendor.css";
+import "@styles/legacy-content.css";
 import { ViewTransitions } from "astro:transitions";
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
@@ -29,22 +32,18 @@ const {
 
 const socialImageURL = new URL(
   ogImage ?? SITE.ogImage ?? "og.png",
-  Astro.url.origin
+  Astro.url.origin,
 ).href;
 ---
 
 <!doctype html>
-<html
-  lang=`${LOCALE.lang ?? "en"}`
-  class={`${scrollSmooth && "scroll-smooth"}`}
->
+<html lang=`${LOCALE.lang ?? "en"}` class={scrollSmooth ? "scroll-smooth" : ""}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
-    
 
     <!-- General Meta Tags -->
     <title>{title}</title>
@@ -84,19 +83,19 @@ const socialImageURL = new URL(
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 
-    <!-- Google Font -->
+    <!-- Reference typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700;800&family=Noto+Serif+SC:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
-    <meta name="theme-color" content="" />
+    <!-- Self-hosted OPPO Sans 4.0 (primary body font). Falls back to Noto Sans SC /
+         Plus Jakarta Sans automatically if these woff2 subsets fail to load. -->
+    <link rel="stylesheet" href="/fonts/OPPO_Sans_4/result.css" />
+
+    <meta name="theme-color" content="#fbfcfb" />
 
     {
       // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,
@@ -111,8 +110,24 @@ const socialImageURL = new URL(
     }
 
     <ViewTransitions />
-<!-- 
-    <script is:inline src="/toggle-theme.js"></script> -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var t =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", t);
+          document.documentElement.style.colorScheme = t;
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+    <script is:inline src="/toggle-theme.js"></script>
   </head>
   <body>
     <slot />

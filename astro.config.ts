@@ -1,45 +1,39 @@
 import { defineConfig } from "astro/config";
-//import tailwind from "@astrojs/tailwind";
-import react from "@astrojs/react";
-import remarkToc from "remark-toc";
-import remarkCollapse from "remark-collapse";
 import sitemap from "@astrojs/sitemap";
-import { SITE } from "./src/config";
+import react from "@astrojs/react";
+import tailwind from "@astrojs/tailwind";
 import { remarkCustomFormatting } from "./src/utils/remark-custom-formatting";
+import { rehypeImageFigure } from "./src/utils/rehype-image-figure";
 
 // https://astro.build/config
-
-
 export default defineConfig({
-  site: 'https://n2g.cn',
-  // base: 'my-repo',
-  integrations: [
-    /*tailwind({
-      applyBaseStyles: false,
-    }),*/
-    react(),
-    sitemap(),
-  ],
+  site: "https://n2g.cn",
+  base: "/",
+  trailingSlash: "ignore",
+  integrations: [sitemap(), react(), tailwind({ applyBaseStyles: false })],
   markdown: {
-    remarkPlugins: [
-      remarkToc,
-      [
-        remarkCollapse,
-        {
-          test: "Table of contents",
-        },
-      ],
-      remarkCustomFormatting,
-    ],
+    remarkPlugins: [remarkCustomFormatting],
+    rehypePlugins: [rehypeImageFigure],
     shikiConfig: {
-      theme: "one-dark-pro",
+      theme: "css-variables",
       wrap: true,
     },
   },
   vite: {
+    ssr: {
+      noExternal: [
+        "mdast-util-to-string",
+        "unist-util-visit",
+        "github-slugger",
+      ],
+    },
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
     },
+    build: {
+      rollupOptions: {
+        external: ["@resvg/resvg-js"],
+      },
+    },
   },
-  scopedStyleStrategy: "where",
 });

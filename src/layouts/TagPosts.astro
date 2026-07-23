@@ -19,14 +19,13 @@ export interface Props {
 const { currentPage, totalPages, paginatedPosts, tag, tagName } = Astro.props;
 ---
 
-<Layout title={`Tag: ${tagName} | ${SITE.title}`}>
-  <Header activeNav="tags" />
+<Layout title={`标签：${tagName} | ${SITE.title}`}>
+  <Header />
   <Main
-    pageTitle={[`Tag:`, `${tagName}`]}
+    pageTitle={["标签：", `${tagName}`]}
     titleTransition={tag}
-    pageDesc={`All the articles with the tag "${tagName}".`}
+    pageDesc={`带有标签「${tagName}」的所有文章`}
   >
-    <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
     <ul class="tag-list">
       {
         paginatedPosts.map(({ data, slug }) => (

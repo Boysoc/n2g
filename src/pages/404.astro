@@ -13,12 +13,12 @@ import LinkButton from "@components/LinkButton.astro";
     <div class="not-found-wrapper">
       <h1 aria-label="404 Not Found">404</h1>
       <span aria-hidden="true">¯\_(ツ)_/¯</span>
-      <p>Page Not Found</p>
+      <p>这里没有你要找的页面</p>
       <LinkButton
         href="/"
         className="my-6 text-lg underline decoration-dashed underline-offset-8"
       >
-        Go back home
+        返回首页
       </LinkButton>
     </div>
   </main>
@@ -28,15 +28,34 @@ import LinkButton from "@components/LinkButton.astro";
 
 <style>
   #main-content {
-    @apply mx-auto flex max-w-3xl flex-1 items-center justify-center;
+    display: flex;
+    min-height: calc(100vh - 180px);
+    align-items: center;
+    justify-content: center;
   }
   .not-found-wrapper {
-    @apply mb-14 flex flex-col items-center justify-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
   }
   .not-found-wrapper h1 {
-    @apply text-9xl font-bold text-skin-accent;
+    margin: 0;
+    color: var(--color-primary-500);
+    font-family: var(--font-mono);
+    font-size: clamp(6rem, 20vw, 10rem);
+    letter-spacing: -0.08em;
+    line-height: 1;
+  }
+  .not-found-wrapper > span {
+    margin-top: 8px;
+    color: var(--color-text-tertiary);
+    font-family: var(--font-mono);
   }
   .not-found-wrapper p {
-    @apply mt-4 text-2xl sm:text-3xl;
+    margin: 20px 0;
+    color: var(--color-text-secondary);
+    font-size: 1.2rem;
   }
 </style>

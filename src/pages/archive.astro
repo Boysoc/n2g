@@ -5,14 +5,13 @@ import Footer from "@components/Footer.astro";
 import ArchiveTimeline from "@components/ArchiveTimeline.astro";
 import { getCollection } from "astro:content";
 import getSortedPosts from "@utils/getSortedPosts";
-import { SITE } from "@config";
 
 const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
 ---
 
 <Layout title="时光档案 - Xio's">
-  <Header activeNav="posts" />
+  <Header activeNav="archive" />
   <main id="main-content" class="content">
     <ArchiveTimeline posts={sortedPosts} />
   </main>

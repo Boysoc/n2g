@@ -13,9 +13,9 @@ const posts = await getCollection("blog");
 let tags = getUniqueTags(posts);
 ---
 
-<Layout title={`Tags | ${SITE.title}`}>
+<Layout title={`标签 | ${SITE.title}`}>
   <Header activeNav="tags" />
-  <Main pageTitle="Tags" pageDesc="All the tags used in posts.">
+  <Main pageTitle="标签" pageDesc="按主题浏览所有文章">
     <ul class="tag-list">
       {tags.map(({ tag }) => <Tag {tag} size="lg" />)}
     </ul>

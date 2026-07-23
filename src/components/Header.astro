@@ -1,114 +1,169 @@
 ---
 import { SITE } from "@config";
-import LinkButton from "./LinkButton.astro";
 
-export interface Props {
-  activeNav?: "posts" | "tags" | "links" | "search" | "about";
+interface Props {
+  activeNav?: string;
+  showHeader?: boolean;
 }
 
-const { activeNav } = Astro.props;
+const { activeNav = "" } = Astro.props;
+
+const navItems = [
+  { title: "首页", href: "/", key: "home" },
+  { title: "归档", href: "/archive/", key: "archive" },
+  { title: "友链", href: "/links/", key: "links" },
+  { title: "关于", href: "/about/", key: "about" },
+];
 ---
 
-<header>
-  <div class="content">
-    <div class="nav-container">
-      <div class="top-nav-wrap">
-        <a href="/" class="logo">
-          <span>Xio's</span>
-        </a>
-        <nav id="nav-menu">
-          <button
-            class="hamburger-menu focus-outline"
-            aria-label="Open Menu"
-            aria-expanded="false"
-            aria-controls="menu-items"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="menu-icon"
-            >
-              <line x1="7" y1="12" x2="21" y2="12" class="line"></line>
-              <line x1="3" y1="6" x2="21" y2="6" class="line"></line>
-              <line x1="12" y1="18" x2="21" y2="18" class="line"></line>
-              <line x1="18" y1="6" x2="6" y2="18" class="close"></line>
-              <line x1="6" y1="6" x2="18" y2="18" class="close"></line>
-            </svg>
-          </button>
-          <ul id="menu-items" class="display-none sm:flex">
+<header data-site-header>
+  <div class="top-nav-wrap content">
+    <a href="/" class="logo" aria-label={`${SITE.title} 首页`}>
+      <span class="logo-text">Xio's</span>
+      <span class="logo-slogan">一切从简，记录生活。</span>
+    </a>
+
+    <nav id="nav-menu" aria-label="主导航">
+      <ul id="menu-items">
+        {
+          navItems.map((item) => (
             <li>
-              <a href="/" class={activeNav === "posts" ? "active" : ""}>
-                日志
-              </a>
-            </li>
-            <li>
-              <a href="/links/" class={activeNav === "links" ? "active" : ""}>
-                邻居
-              </a>
-            </li>
-            <li>
-              <a href="/about/" class={activeNav === "about" ? "active" : ""}>
-                关于
-              </a>
-            </li>
-            <li>
-              <LinkButton
-                href="/search/"
-                className={`focus-outline p-3 sm:p-1 ${
-                  activeNav === "search" ? "active" : ""
-                } flex`}
-                ariaLabel="search"
-                title="Search"
+              <a
+                href={item.href}
+                class={activeNav === item.key ? "active" : ""}
+                aria-current={activeNav === item.key ? "page" : undefined}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="scale-125 sm:scale-100"
-                  ><path
-                    d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"
-                  ></path>
-                </svg>
-                <span class="sr-only">Search</span>
-              </LinkButton>
+                {item.title}
+              </a>
             </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
+          ))
+        }
+      </ul>
+
+      <a class="theme-btn" href="/search/" aria-label="搜索" title="搜索">
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </a>
+
+      <button
+        id="theme-btn"
+        class="theme-btn"
+        type="button"
+        aria-label="切换明暗模式"
+        aria-pressed="false"
+        title="切换明暗模式"
+      >
+        <svg
+          class="sun"
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="5"></circle>
+          <path
+            d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+          ></path>
+        </svg>
+        <svg
+          class="moon"
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+
+      <button
+        id="hamburger-menu"
+        class="hamburger-menu"
+        type="button"
+        aria-label="打开菜单"
+        aria-expanded="false"
+        aria-controls="menu-items"
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 6h18M3 12h18M3 18h18"></path>
+        </svg>
+      </button>
+    </nav>
   </div>
 </header>
 
-<style>
-
-</style>
-
 <script>
-  function toggleNav() {
-    // Toggle menu
-    const menuBtn = document.querySelector(".hamburger-menu");
-    const menuIcon = document.querySelector(".menu-icon");
-    const menuItems = document.querySelector("#menu-items");
+  function initHeader() {
+    const header = document.querySelector<HTMLElement>("[data-site-header]");
+    const hamburger =
+      header?.querySelector<HTMLButtonElement>("#hamburger-menu");
+    const menu = header?.querySelector<HTMLElement>("#menu-items");
+    if (!header || !hamburger || !menu) return;
 
-    menuBtn?.addEventListener("click", () => {
-      const menuExpanded = menuBtn.getAttribute("aria-expanded") === "true";
-      menuIcon?.classList.toggle("is-active");
-      menuBtn.setAttribute("aria-expanded", menuExpanded ? "false" : "true");
-      menuBtn.setAttribute(
-        "aria-label",
-        menuExpanded ? "Open Menu" : "Close Menu"
+    const previousController = (window as any).__n2gHeaderController as
+      | AbortController
+      | undefined;
+    previousController?.abort();
+    const controller = new AbortController();
+    (window as any).__n2gHeaderController = controller;
+    const options = { signal: controller.signal };
+
+    const setOpen = (open: boolean) => {
+      menu.classList.toggle("nav-open", open);
+      hamburger.setAttribute("aria-expanded", String(open));
+      hamburger.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
+    };
+
+    hamburger.addEventListener(
+      "click",
+      () => setOpen(hamburger.getAttribute("aria-expanded") !== "true"),
+      options,
+    );
+    menu
+      .querySelectorAll("a")
+      .forEach((link) =>
+        link.addEventListener("click", () => setOpen(false), options),
       );
-      menuItems?.classList.toggle("display-none");
-    });
+    document.addEventListener(
+      "click",
+      (event) => {
+        if (!header.contains(event.target as Node)) setOpen(false);
+      },
+      options,
+    );
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key === "Escape") setOpen(false);
+      },
+      options,
+    );
   }
 
-  toggleNav();
-
-  // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", toggleNav);
+  initHeader();
+  document.addEventListener("astro:page-load", initHeader);
 </script>

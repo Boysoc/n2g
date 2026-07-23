@@ -1,5 +1,3 @@
-import { LOCALE } from "@config";
-
 interface DatetimesProps {
   pubDatetime: string | Date;
   modDatetime: string | Date | undefined | null;
@@ -16,35 +14,35 @@ export default function Datetime({
   size = "sm",
   className,
 }: Props) {
+  const myDatetime = new Date(
+    modDatetime && modDatetime > pubDatetime ? modDatetime : pubDatetime,
+  );
+  const date = myDatetime.toISOString().substring(0, 10);
+  const [year, month, day] = date.split("-");
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const label = `${monthNames[Number(month) - 1]} ${day}, ${year}`;
+
   return (
-    <div className={`date-box ${className ?? ''}`}>
-      <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
-        <FormattedDatetime
-          pubDatetime={pubDatetime}
-          modDatetime={modDatetime}
-        />
-      </span>
+    <div className={`date-box ${className ?? ""}`}>
+      <time
+        className={size === "sm" ? "text-sm" : "text-base"}
+        dateTime={myDatetime.toISOString()}
+      >
+        {label}
+      </time>
     </div>
   );
 }
-
-const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
-  const myDatetime = new Date(
-    modDatetime && modDatetime > pubDatetime ? modDatetime : pubDatetime
-  );
-
-  // YYYY-MM-DD format
-  const date = myDatetime.toISOString().substring(0, 10);
-  const [year, month, day] = date.split("-");  // Split date into [YYYY, MM, DD]
-  // Mapping month numbers to abbreviations
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const monthIndex = parseInt(month) - 1; // Convert month from string to index (0-based)
-  const monthAbbreviation = monthNames[monthIndex]; // Get the abbreviation for the month
-
-  return (
-    <>
-      {monthAbbreviation} {day}, {year} 
-    </>
-  );
-};

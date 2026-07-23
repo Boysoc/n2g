@@ -1,0 +1,256 @@
+/* n2g.cn semantic design tokens */
+
+:root {
+  color-scheme: light;
+
+  /* ── Primary Scale (Emerald Green) ── */
+  --color-primary-50:  #f0faf4;
+  --color-primary-100: #d6f5e3;
+  --color-primary-200: #aeeac7;
+  --color-primary-300: #6dd4a0;
+  --color-primary-400: #40bf7a;
+  --color-primary-500: #27AE60;  /* ★ Anchor Color */
+  --color-primary-600: #1e9450;
+  --color-primary-700: #167a40;
+  --color-primary-800: #0e5c30;
+  --color-primary-900: #073d1f;
+
+  /* ── Light Mode: Backgrounds ── */
+  --color-bg-page:              #fbfcfb;
+  --color-bg-surface:           #f6f8f7;
+  --color-bg-surface-elevated:  #eef2f0;
+  --color-bg-surface-overlay:   #e3ede8;
+  --color-nav-bg:               rgb(251 252 251 / 84%);
+  --color-footer-bg:            #f9fbfa;
+
+  /* ── Light Mode: Typography ── */
+  --color-text-primary:     #111827;
+  --color-text-secondary:   #374151;
+  --color-text-tertiary:    #6b7280;
+  --color-text-quaternary:  #9ca3af;
+  --color-text-inverse:     #ffffff;
+  --color-text-on-primary:  #ffffff;
+  --color-text-link:        #167a40;
+  --color-text-link-hover:  #0e5c30;
+  --color-text-link-visited:#0e5c30;
+  --color-text-code:        #1e9450;
+  --color-title:            #167a40;
+
+  /* ── Light Mode: Borders ── */
+  --color-border-subtle:   #e8f0eb;
+  --color-border-default:  #d1ddd6;
+  --color-border-strong:   #9db8a6;
+  --color-border-primary:  #27AE60;
+  --color-divider:         #e8f0eb;
+  --color-divider-strong:  #c5d5cb;
+
+  /* ── Accent 1: Amber / Warning ── */
+  --color-accent-amber:        #F59E0B;
+  --color-accent-amber-light:  #FEF3C7;
+  --color-accent-amber-dark:   #D97706;
+
+  /* ── Accent 2: Indigo / Info ── */
+  --color-accent-indigo:       #6366F1;
+  --color-accent-indigo-light: #EEF2FF;
+  --color-accent-indigo-dark:  #4F46E5;
+
+  /* ── Accent 3: Rose / Error ── */
+  --color-accent-rose:         #EF4444;
+  --color-accent-rose-light:   #FEF2F2;
+  --color-accent-rose-dark:    #DC2626;
+
+  /* ── Semantic ── */
+  --color-success:        #27AE60;
+  --color-success-bg:     #f0faf4;
+  --color-success-text:   #167a40;
+  --color-success-border: #aeeac7;
+
+  --color-warning:        #F59E0B;
+  --color-warning-bg:     #FEF3C7;
+  --color-warning-text:   #92400E;
+  --color-warning-border: #FCD34D;
+
+  --color-error:          #EF4444;
+  --color-error-bg:       #FEF2F2;
+  --color-error-text:     #991B1B;
+  --color-error-border:   #FECACA;
+
+  --color-info:           #6366F1;
+  --color-info-bg:        #EEF2FF;
+  --color-info-text:      #3730A3;
+  --color-info-border:    #C7D2FE;
+
+  /* ── Code Block: Light Mode ── */
+  --color-code-bg:           #f8fbf9;
+  --color-code-border:       #c8d8cf;
+  --color-code-line-number:  #7f9488;
+  --color-code-highlight:    #edf6f1;
+  --color-code-inline-bg:    #eef8f2;
+  --color-code-inline-text:  #146c3a;
+  --color-code-inline-border:#9ed9b7;
+  --color-comment-code-bg:    #f0f5f2;
+  --color-comment-code-border:#b8ccc0;
+  --color-comment-code-text:  #27313a;
+
+  /* Shiki: bright, high-clarity light palette */
+  --astro-code-color-background: var(--color-code-bg);
+  --astro-code-color-text: #24292f;
+  --astro-code-token-constant: #0550ae;
+  --astro-code-token-string: #08783f;
+  --astro-code-token-comment: #57606a;
+  --astro-code-token-keyword: #cf222e;
+  --astro-code-token-parameter: #953800;
+  --astro-code-token-function: #8250df;
+  --astro-code-token-string-expression: #08783f;
+  --astro-code-token-punctuation: #57606a;
+  --astro-code-token-link: #0969da;
+
+  /* ── Shadows ── */
+  --shadow-sm:  0 1px 2px rgba(39, 174, 96, 0.06), 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:  0 4px 6px rgba(39, 174, 96, 0.08), 0 2px 8px rgba(0,0,0,0.10);
+  --shadow-lg:  0 10px 15px rgba(39, 174, 96, 0.10), 0 4px 16px rgba(0,0,0,0.12);
+  --shadow-xl:  0 20px 25px rgba(39, 174, 96, 0.12), 0 8px 24px rgba(0,0,0,0.14);
+  --shadow-card-inset: inset 0 1px 0 rgb(255 255 255 / 70%);
+  --shadow-focus: 0 0 0 3px rgb(39 174 96 / 20%);
+
+  /* ── Semantic actions ── */
+  --color-action-bg: #167a40;
+  --color-action-bg-hover: #0e5c30;
+  --color-action-text: #ffffff;
+  --color-focus-ring: #167a40;
+
+  /* ── Typography / shape / layout ── */
+  --font-sans: "OPPO Sans 4.0", "Plus Jakarta Sans", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --font-serif: "Fraunces", "Noto Serif SC", Georgia, serif;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+  --font-size-page-title: clamp(1.8rem, 5vw, 2.15rem);
+  --font-size-post-title: clamp(1.55rem, 4vw, 1.75rem);
+  --site-width: 880px;
+  --reading-width: 880px;
+  --nav-height: 64px;
+  --page-gutter: 48px;
+
+  /* ── Transitions ── */
+  --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ====================================
+   Dark Mode Overrides
+   Trigger: [data-theme="dark"] on <html>
+   ==================================== */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg-page:              #15191f;
+  --color-bg-surface:           #1c222b;
+  --color-bg-surface-elevated:  #242c37;
+  --color-bg-surface-overlay:   #2d3745;
+  --color-nav-bg:               rgb(21 25 31 / 88%);
+  --color-footer-bg:            #12161c;
+
+  --color-text-primary:     #e3e7ec;
+  --color-text-secondary:   #9aa6b5;
+  --color-text-tertiary:    #818c9b;
+  --color-text-quaternary:  #687586;
+  --color-text-inverse:     #15191f;
+  --color-text-on-primary:  #ffffff;
+  --color-text-link:        #40bf7a;
+  --color-text-link-hover:  #6dd4a0;
+  --color-text-link-visited:#aeeac7;
+  --color-text-code:        #6dd4a0;
+  --color-title:            #e3e7ec;
+
+  --color-border-subtle:   #1e2d24;
+  --color-border-default:  #2d4038;
+  --color-border-strong:   #3d5a4a;
+  --color-border-primary:  #40bf7a;
+  --color-divider:         #1e2d24;
+  --color-divider-strong:  #2d4038;
+
+  --color-accent-amber:        #FBBF24;
+  --color-accent-amber-light:  #2D2008;
+  --color-accent-amber-dark:   #F59E0B;
+
+  --color-accent-indigo:       #818CF8;
+  --color-accent-indigo-light: #1E1B4B;
+  --color-accent-indigo-dark:  #6366F1;
+
+  --color-accent-rose:         #F87171;
+  --color-accent-rose-light:   #2D0A0A;
+  --color-accent-rose-dark:    #EF4444;
+
+  --color-success:        #40bf7a;
+  --color-success-bg:     #071f10;
+  --color-success-text:   #6dd4a0;
+  --color-success-border: #1e5c34;
+
+  --color-warning:        #FBBF24;
+  --color-warning-bg:     #2D2008;
+  --color-warning-text:   #FDE68A;
+  --color-warning-border: #78350F;
+
+  --color-error:          #F87171;
+  --color-error-bg:       #2D0A0A;
+  --color-error-text:     #FCA5A5;
+  --color-error-border:   #7F1D1D;
+
+  --color-info:           #818CF8;
+  --color-info-bg:        #1E1B4B;
+  --color-info-text:      #C7D2FE;
+  --color-info-border:    #312E81;
+
+  --color-code-bg:           #1c222b;
+  --color-code-border:       #2d4038;
+  --color-code-line-number:  #3d5a4a;
+  --color-code-highlight:    #21332a;
+  --color-code-inline-bg:    #21332a;
+  --color-code-inline-text:  #6dd4a0;
+  --color-code-inline-border:#2d4038;
+  --color-comment-code-bg:    #1c222b;
+  --color-comment-code-border:#2d4038;
+  --color-comment-code-text:  #dbe3ea;
+
+  /* Shiki: coordinated dark palette */
+  --astro-code-color-background: var(--color-code-bg);
+  --astro-code-color-text: #dbe3ea;
+  --astro-code-token-constant: #79c0ff;
+  --astro-code-token-string: #7ee787;
+  --astro-code-token-comment: #8b949e;
+  --astro-code-token-keyword: #ff7b72;
+  --astro-code-token-parameter: #ffa657;
+  --astro-code-token-function: #d2a8ff;
+  --astro-code-token-string-expression: #7ee787;
+  --astro-code-token-punctuation: #b1bac4;
+  --astro-code-token-link: #58a6ff;
+
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.22), 0 1px 3px rgba(0,0,0,0.28);
+  --shadow-md:  0 4px 6px rgba(0,0,0,0.24), 0 2px 8px rgba(0,0,0,0.32);
+  --shadow-lg:  0 10px 15px rgba(0,0,0,0.28), 0 4px 16px rgba(0,0,0,0.36);
+  --shadow-xl:  0 20px 25px rgba(0,0,0,0.32), 0 8px 24px rgba(0,0,0,0.42);
+  --shadow-card-inset: inset 0 1px 0 rgb(255 255 255 / 4%);
+  --shadow-focus: 0 0 0 3px rgb(64 191 122 / 22%);
+
+  --color-action-bg: #27ae60;
+  --color-action-bg-hover: #40bf7a;
+  --color-action-text: #15191f;
+  --color-focus-ring: #6dd4a0;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --page-gutter: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --page-gutter: 16px;
+  }
+}
