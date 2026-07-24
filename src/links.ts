@@ -302,14 +302,6 @@ export const links: Link[] = [
     organization: true
   },
   {
-    name: "拾趣博客导航",
-    href: "https://s7.fan/",
-    logo: "https://s7.fan/img/tubiao.png",
-    description: "捡拾文字里的小乐趣！",
-    inactive: true, // 👉 加上这个字段表示此人“停更”或“下线”
-    organization: true
-  },
-  {
     name: "博友圈",
     href: "https://www.boyouquan.com/",
     logo: "https://www.boyouquan.com/assets/images/sites/logo/logo-small.png",
