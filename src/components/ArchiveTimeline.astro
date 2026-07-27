@@ -1,6 +1,10 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { groupPostsByDate, getArchiveStats, getMonthName } from "@utils/archiveHelper";
+import {
+  groupPostsByDate,
+  getArchiveStats,
+  getMonthName,
+} from "@utils/archiveHelper";
 
 export interface Props {
   posts: CollectionEntry<"blog">[];
@@ -25,55 +29,71 @@ const stats = getArchiveStats(posts);
 
   <!-- 时间轴 -->
   <div class="visual-timeline">
-    {postGroups.map((group) => (
-      <div class="year-section" id={`year-${group.year}`} data-year={group.year}>
-        <div class="year-label">
-          <span class="year-text">{group.year}</span>
-          <div class="year-line"></div>
-        </div>
+    {
+      postGroups.map((group) => (
+        <div
+          class="year-section"
+          id={`year-${group.year}`}
+          data-year={group.year}
+        >
+          <div class="year-label">
+            <span class="year-text">{group.year}</span>
+            <div class="year-line" />
+          </div>
 
-        <div class="months-grid">
-          {group.months.map((monthGroup) => (
-            <div class="month-block">
-              <div class="month-dot" data-count={monthGroup.count}>
+          <div class="months-grid">
+            {group.months.map((monthGroup) => (
+              <div class="month-block">
+                <div class="month-dot" data-count={monthGroup.count} />
+                <div class="month-tooltip">
+                  <div class="tooltip-month">
+                    {getMonthName(monthGroup.month)}
+                  </div>
+                  <div class="tooltip-count">{monthGroup.count} 篇文章</div>
+                </div>
               </div>
-              <div class="month-tooltip">
-                <div class="tooltip-month">{getMonthName(monthGroup.month)}</div>
-                <div class="tooltip-count">{monthGroup.count} 篇文章</div>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <!-- 文章列表 -->
-        <div class="posts-list">
-          {group.months.map(monthGroup => (
-            monthGroup.posts.map(post => (
-              <a href={`/posts/${post.slug}/`} class="post-item">
-                <span class="post-date">
-                  {new Date(post.data.pubDatetime).toLocaleDateString("zh-CN", {
-                    month: '2-digit',
-                    day: '2-digit'
-                  })}
-                </span>
-                <span class="post-title-text">{post.data.title}</span>
-              </a>
-            ))
-          ))}
+          {/* 文章列表 */}
+          <div class="posts-list">
+            {group.months.map((monthGroup) =>
+              monthGroup.posts.map((post) => (
+                <a href={`/posts/${post.id}/`} class="post-item">
+                  <span class="post-date">
+                    {new Date(post.data.pubDatetime).toLocaleDateString(
+                      "zh-CN",
+                      {
+                        month: "2-digit",
+                        day: "2-digit",
+                      },
+                    )}
+                  </span>
+                  <span class="post-title-text">{post.data.title}</span>
+                </a>
+              )),
+            )}
+          </div>
         </div>
-      </div>
-    ))}
+      ))
+    }
   </div>
 
   <!-- 年份导航 -->
   <nav class="years-navigation" aria-label="年份导航">
     <div class="nav-title">时光穿梭</div>
     <div class="nav-years">
-      {postGroups.map((group) => (
-        <a href={`#year-${group.year}`} class="nav-year" data-year={group.year}>
-          {group.year}
-        </a>
-      ))}
+      {
+        postGroups.map((group) => (
+          <a
+            href={`#year-${group.year}`}
+            class="nav-year"
+            data-year={group.year}
+          >
+            {group.year}
+          </a>
+        ))
+      }
     </div>
   </nav>
 </section>
@@ -97,8 +117,9 @@ const stats = getArchiveStats(posts);
     font-weight: 700;
     color: var(--color-primary-500);
     margin-bottom: 0.4em;
-    font-family: "Noto Serif SC", serif;
+    font-family: var(--font-sans);
     letter-spacing: 0.05em;
+    line-height: 1.2;
   }
 
   .stats-text {
@@ -149,7 +170,11 @@ const stats = getArchiveStats(posts);
   .year-line {
     flex: 1;
     height: 1px;
-    background: linear-gradient(to right, var(--color-primary-400), transparent);
+    background: linear-gradient(
+      to right,
+      var(--color-primary-400),
+      transparent
+    );
     opacity: 0.5;
   }
 
@@ -180,7 +205,7 @@ const stats = getArchiveStats(posts);
   }
 
   .month-dot::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 8px;
     height: 8px;
@@ -234,7 +259,7 @@ const stats = getArchiveStats(posts);
   }
 
   .month-tooltip::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 100%;
     left: 50%;
@@ -415,41 +440,49 @@ const stats = getArchiveStats(posts);
 <script>
   function initArchiveFeatures() {
     // 年份导航点击
-    const navYears = document.querySelectorAll('.nav-year');
-    navYears.forEach(navYear => {
-      navYear.addEventListener('click', (e) => {
+    const navYears = document.querySelectorAll(".nav-year");
+    navYears.forEach((navYear) => {
+      navYear.addEventListener("click", (e) => {
         e.preventDefault();
-        const year = navYear.getAttribute('data-year');
+        const year = navYear.getAttribute("data-year");
         if (year) {
-          const section = document.querySelector(`.year-section[data-year="${year}"]`);
+          const section = document.querySelector(
+            `.year-section[data-year="${year}"]`,
+          );
           if (section) {
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         }
       });
     });
 
     // 滚动高亮当前年份
-    const yearSections = document.querySelectorAll('.year-section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const year = entry.target.getAttribute('data-year');
-          navYears.forEach(nav => {
-            nav.classList.toggle('active', nav.getAttribute('data-year') === year);
-          });
-        }
-      });
-    }, { threshold: 0.2 });
+    const yearSections = document.querySelectorAll(".year-section");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const year = entry.target.getAttribute("data-year");
+            navYears.forEach((nav) => {
+              nav.classList.toggle(
+                "active",
+                nav.getAttribute("data-year") === year,
+              );
+            });
+          }
+        });
+      },
+      { threshold: 0.2 },
+    );
 
-    yearSections.forEach(section => observer.observe(section));
+    yearSections.forEach((section) => observer.observe(section));
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initArchiveFeatures);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initArchiveFeatures);
   } else {
     initArchiveFeatures();
   }
 
-  document.addEventListener('astro:after-swap', initArchiveFeatures);
+  document.addEventListener("astro:after-swap", initArchiveFeatures);
 </script>

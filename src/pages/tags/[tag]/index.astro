@@ -27,6 +27,7 @@ const pagination = getPagination({
   page: 1,
   isIndex: true,
 });
+const totalPosts = postsByTag.length;
 ---
 
-<TagPosts {...pagination} {tag} {tagName} />
+<TagPosts {...pagination} {totalPosts} {tag} {tagName} />

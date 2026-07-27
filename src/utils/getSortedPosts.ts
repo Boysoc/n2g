@@ -2,6 +2,7 @@ import type { CollectionEntry } from "astro:content";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
 import postFilter from "./postFilter";
+import { enhanceImageHtml } from "./responsive-images";
 
 function processCustomFormatting(html: string): string {
   return html
@@ -9,17 +10,32 @@ function processCustomFormatting(html: string): string {
     .replace(/<p>\s*::drop-cap\s*(.*?)<\/p>/gs, '<p class="drop-cap">$1</p>');
 }
 
-const getSortedPosts = (posts: CollectionEntry<"blog">[]) => {
-  posts.forEach((post) => {
-    const processedContent = remark()
-      .use(remarkHtml, { sanitize: false })
-      .processSync(post.body)
-      .toString();
-    post.data.description = processCustomFormatting(processedContent);
-  });
+export interface SortedPostsOptions {
+  renderContent?: boolean;
+}
 
+const getSortedPosts = (
+  posts: CollectionEntry<"blog">[],
+  { renderContent = true }: SortedPostsOptions = {},
+) => {
   return posts
     .filter(postFilter)
+    .map((post) => {
+      if (!renderContent) return post;
+      const processedContent = remark()
+        .use(remarkHtml, { sanitize: false })
+        .processSync(post.body)
+        .toString();
+      return {
+        ...post,
+        data: {
+          ...post.data,
+          description: enhanceImageHtml(
+            processCustomFormatting(processedContent),
+          ),
+        },
+      };
+    })
     .sort(
       (a, b) =>
         Math.floor(

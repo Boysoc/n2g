@@ -4,7 +4,12 @@ dist/
 .astro/
 # jampack cache
 .jampack/
+# generated responsive images (rebuilt by predev/prebuild)
+public/images/_optimized/
 # dependencies
 node_modules/
+# local editor settings
+.codebuddy/
+.vscode/
 # macOS
 .DS_Store

@@ -2,14 +2,18 @@
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import Component from '@components/Comment.astro';
+import Component from "@components/Comment.astro";
 import { links } from "../links";
 
 // 分类邻居
-const friends = links.filter(l => !l.organization && !l.inactive && l.verified); // 已认证邻居
-const unverified = links.filter(l => !l.organization && !l.inactive && !l.verified); // 未认证邻居
-const orgs = links.filter(l => l.organization);
-const inactives = links.filter(l => l.inactive && !l.organization); // 已失效邻居
+const friends = links.filter(
+  (l) => !l.organization && !l.inactive && l.verified,
+); // 已认证邻居
+const unverified = links.filter(
+  (l) => !l.organization && !l.inactive && !l.verified,
+); // 未认证邻居
+const orgs = links.filter((l) => l.organization);
+const inactives = links.filter((l) => l.inactive && !l.organization); // 已失效邻居
 ---
 
 <Layout>
@@ -22,20 +26,34 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
           <span class="title-icon">🏠</span>
           邻居们
         </h1>
-        <p class="links-subtitle">
-          互联网上的有趣灵魂，与他们为邻
-        </p>
+        <p class="links-subtitle">互联网上的有趣灵魂，与他们为邻</p>
         <div class="header-actions">
           <div class="search-wrap">
             <span class="search-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="M21 21l-4.35-4.35"/>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M21 21l-4.35-4.35"></path>
               </svg>
             </span>
-            <input type="text" id="link-search" placeholder="搜索邻居..." class="search-input" />
+            <input
+              type="text"
+              id="link-search"
+              placeholder="搜索邻居..."
+              class="search-input"
+            />
           </div>
-          <button id="random-visit-btn" class="random-btn" title="随机访问一位邻居">
+          <button
+            id="random-visit-btn"
+            class="random-btn"
+            title="随机访问一位邻居"
+          >
             <span class="btn-icon">🎲</span>
             <span class="btn-text">随机访问</span>
           </button>
@@ -43,133 +61,182 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
       </header>
 
       <!-- 已认证邻居网格 -->
-      {friends.length > 0 && (
-        <div class="neighbors-grid" id="neighbors-grid">
-          {friends.map((link, index) => (
-            <div class="neighbor-card-wrapper" data-index={index}>
-              <a 
-                href={link.href} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                class={`neighbor-card ${link.verified ? 'verified' : ''}`}
-                data-name={link.name.toLowerCase()}
-                data-description={link.description?.toLowerCase() || ''}
-                data-category="friends"
-                title={link.tooltip || link.description || link.name}
-              >
-                <div class="card-inner">
-                  <div class="avatar-wrap">
-                    <img src={link.logo} alt={link.name} class="avatar" loading="lazy" />
+      {
+        friends.length > 0 && (
+          <div class="neighbors-grid" id="neighbors-grid">
+            {friends.map((link, index) => (
+              <div class="neighbor-card-wrapper" data-index={index}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class={`neighbor-card ${link.verified ? "verified" : ""}`}
+                  data-name={link.name.toLowerCase()}
+                  data-description={link.description?.toLowerCase() || ""}
+                  data-category="friends"
+                  title={link.tooltip || link.description || link.name}
+                >
+                  <div class="card-inner">
+                    <div class="avatar-wrap">
+                      <img
+                        src={link.logo}
+                        alt={link.name}
+                        class="avatar"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="card-info">
+                      <h3 class="card-name">{link.name}</h3>
+                      <p class="card-desc">{link.description || "暂无简介"}</p>
+                    </div>
+                    <span class="card-arrow">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M7 17L17 7" />
+                        <path d="M7 7h10v10" />
+                      </svg>
+                    </span>
                   </div>
-                  <div class="card-info">
-                    <h3 class="card-name">{link.name}</h3>
-                    <p class="card-desc">{link.description || '暂无简介'}</p>
-                  </div>
-                  <span class="card-arrow">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M7 17L17 7"/>
-                      <path d="M7 7h10v10"/>
-                    </svg>
-                  </span>
-                </div>
-              </a>
-            </div>
-          ))}
-        </div>
-      )}
+                </a>
+              </div>
+            ))}
+          </div>
+        )
+      }
 
       <!-- 更多链接按钮 -->
-      {(unverified.length > 0 || inactives.length > 0 || orgs.length > 0) && (
-        <div class="more-toggle-section">
-          <button id="more-toggle-btn" class="more-toggle-btn">
-            <span class="toggle-text">更多链接</span>
-            <span class="toggle-count">({unverified.length + inactives.length + orgs.length})</span>
-            <span class="toggle-arrow">▾</span>
-          </button>
-        </div>
-      )}
+      {
+        (unverified.length > 0 || inactives.length > 0 || orgs.length > 0) && (
+          <div class="more-toggle-section">
+            <button id="more-toggle-btn" class="more-toggle-btn">
+              <span class="toggle-text">更多链接</span>
+              <span class="toggle-count">
+                ({unverified.length + inactives.length + orgs.length})
+              </span>
+              <span class="toggle-arrow">▾</span>
+            </button>
+          </div>
+        )
+      }
 
       <!-- 折叠内容 -->
       <div id="more-content" class="more-content" style="display: none;">
         <!-- 博客组织 -->
-        {orgs.length > 0 && (
-          <div class="orgs-section">
-            <h3 class="section-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-              </svg>
-              博客组织
-            </h3>
-            <div class="orgs-grid">
-              {orgs.map((link) => (
-                <a 
-                  href={link.href} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="org-card"
-                  data-name={link.name.toLowerCase()}
-                  data-description={link.description?.toLowerCase() || ''}
-                  data-category="orgs"
-                  title={link.description || link.name}
+        {
+          orgs.length > 0 && (
+            <div class="orgs-section">
+              <h3 class="section-title">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 >
-                  <div class="org-card-inner">
-                    <img src={link.logo} alt={link.name} class="org-logo" loading="lazy" />
-                    <div class="org-info">
-                      <span class="org-name">{link.name}</span>
-                      {link.description && <span class="org-desc">{link.description}</span>}
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+                博客组织
+              </h3>
+              <div class="orgs-grid">
+                {orgs.map((link) => (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="org-card"
+                    data-name={link.name.toLowerCase()}
+                    data-description={link.description?.toLowerCase() || ""}
+                    data-category="orgs"
+                    title={link.description || link.name}
+                  >
+                    <div class="org-card-inner">
+                      <img
+                        src={link.logo}
+                        alt={link.name}
+                        class="org-logo"
+                        loading="lazy"
+                      />
+                      <div class="org-info">
+                        <span class="org-name">{link.name}</span>
+                        {link.description && (
+                          <span class="org-desc">{link.description}</span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </a>
-              ))}
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
 
         <!-- 其他链接（简洁文字链接样式） -->
-        {(unverified.length > 0 || inactives.length > 0) && (
-          <div class="text-links-section">
-            <h3 class="section-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-              </svg>
-              其他链接
-            </h3>
-            <div class="text-links-list">
-              {/* 未认证的正常链接 */}
-              {unverified.map((link) => (
-                <a 
-                  href={link.href} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="text-link-item"
-                  data-name={link.name.toLowerCase()}
-                  data-description={link.description?.toLowerCase() || ''}
-                  title={link.tooltip || link.description || link.name}
+        {
+          (unverified.length > 0 || inactives.length > 0) && (
+            <div class="text-links-section">
+              <h3 class="section-title">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 >
-                  <span class="link-name">{link.name}</span>
-                </a>
-              ))}
-              {/* 已失效的链接 */}
-              {inactives.map((link) => (
-                <a 
-                  href={link.href} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="text-link-item inactive"
-                  data-name={link.name.toLowerCase()}
-                  data-description={link.description?.toLowerCase() || ''}
-                  title={`已失效 - ${link.tooltip || link.description || link.name}`}
-                >
-                  <span class="link-name">{link.name}</span>
-                  <span class="offline-badge">已失效</span>
-                </a>
-              ))}
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                </svg>
+                其他链接
+              </h3>
+              <div class="text-links-list">
+                {/* 未认证的正常链接 */}
+                {unverified.map((link) => (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-link-item"
+                    data-name={link.name.toLowerCase()}
+                    data-description={link.description?.toLowerCase() || ""}
+                    title={link.tooltip || link.description || link.name}
+                  >
+                    <span class="link-name">{link.name}</span>
+                  </a>
+                ))}
+                {/* 已失效的链接 */}
+                {inactives.map((link) => (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-link-item inactive"
+                    data-name={link.name.toLowerCase()}
+                    data-description={link.description?.toLowerCase() || ""}
+                    title={`已失效 - ${link.tooltip || link.description || link.name}`}
+                  >
+                    <span class="link-name">{link.name}</span>
+                    <span class="offline-badge">已失效</span>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
       </div>
 
       <!-- 评论区 -->
@@ -188,17 +255,21 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
 
   .links-title {
     font-size: var(--font-size-page-title);
-    font-weight: 400;
+    font-family: var(--font-sans);
+    font-weight: 700;
     color: var(--color-primary-500);
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
   }
 
   .title-icon {
-    font-size: 1.8rem;
+    font-size: 0.88em;
+    line-height: 1;
   }
 
   .links-subtitle {
@@ -257,7 +328,11 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
     align-items: center;
     gap: 0.4rem;
     padding: 0.6rem 1.2rem;
-    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-400) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-primary-500) 0%,
+      var(--color-primary-400) 100%
+    );
     color: var(--color-text-on-primary);
     border: none;
     border-radius: 24px;
@@ -281,11 +356,21 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
   }
 
   @keyframes dice-roll {
-    0% { transform: rotate(0deg) scale(1); }
-    25% { transform: rotate(15deg) scale(1.1); }
-    50% { transform: rotate(-15deg) scale(1.1); }
-    75% { transform: rotate(10deg) scale(1.05); }
-    100% { transform: rotate(0deg) scale(1); }
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    25% {
+      transform: rotate(15deg) scale(1.1);
+    }
+    50% {
+      transform: rotate(-15deg) scale(1.1);
+    }
+    75% {
+      transform: rotate(10deg) scale(1.05);
+    }
+    100% {
+      transform: rotate(0deg) scale(1);
+    }
   }
 
   /* 跑马灯高亮 */
@@ -305,7 +390,11 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
 
   /* 最终选中 */
   .neighbor-card.selected .card-inner {
-    background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-400) 100%) !important;
+    background: linear-gradient(
+      135deg,
+      var(--color-primary-500) 0%,
+      var(--color-primary-400) 100%
+    ) !important;
     border-color: var(--color-primary-500) !important;
     box-shadow: 0 8px 30px rgba(39, 174, 96, 0.35) !important;
   }
@@ -320,7 +409,7 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
   }
 
   .neighbor-card.selected .card-inner .card-arrow {
-    color: rgba(255,255,255,0.7) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
   }
 
   /* 邻居网格 */
@@ -413,7 +502,7 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
   }
 
   .card-name {
-    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: var(--font-sans);
     font-size: 1rem;
     font-weight: 500;
     color: var(--color-text-primary);
@@ -431,7 +520,7 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
   }
 
   .card-desc {
-    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.85rem;
     color: var(--color-text-tertiary);
     margin: 0;
@@ -595,7 +684,7 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
   }
 
   .org-name {
-    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--color-text-primary);
@@ -605,7 +694,7 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
   }
 
   .org-desc {
-    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.75rem;
     color: var(--color-text-tertiary);
     white-space: nowrap;
@@ -674,7 +763,7 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
   }
 
   .text-link-item .link-name {
-    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.9rem;
     color: var(--color-text-primary);
     white-space: nowrap;
@@ -741,129 +830,142 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
 <script>
   function initLinksPage() {
     // 更多链接展开/收起
-    const moreToggleBtn = document.getElementById('more-toggle-btn');
-    const moreContent = document.getElementById('more-content');
+    const moreToggleBtn = document.getElementById("more-toggle-btn");
+    const moreContent = document.getElementById("more-content");
 
     if (moreToggleBtn && moreContent) {
       // 避免重复绑定
       moreToggleBtn.replaceWith(moreToggleBtn.cloneNode(true));
-      const freshBtn = document.getElementById('more-toggle-btn')!;
+      const freshBtn = document.getElementById("more-toggle-btn")!;
 
-      freshBtn.addEventListener('click', () => {
-        const isHidden = moreContent.style.display === 'none';
+      freshBtn.addEventListener("click", () => {
+        const isHidden = moreContent.style.display === "none";
 
         if (isHidden) {
-          moreContent.style.display = 'block';
-          freshBtn.classList.add('active');
+          moreContent.style.display = "block";
+          freshBtn.classList.add("active");
         } else {
-          moreContent.style.display = 'none';
-          freshBtn.classList.remove('active');
+          moreContent.style.display = "none";
+          freshBtn.classList.remove("active");
         }
       });
     }
 
     // 搜索功能
-    const searchInput = document.getElementById('link-search') as HTMLInputElement | null;
-    const cards = document.querySelectorAll('.neighbor-card');
-    const textLinks = document.querySelectorAll('.text-link-item');
-    const orgCards = document.querySelectorAll('.org-card');
+    const searchInput = document.getElementById(
+      "link-search",
+    ) as HTMLInputElement | null;
+    const cards = document.querySelectorAll(".neighbor-card");
+    const textLinks = document.querySelectorAll(".text-link-item");
+    const orgCards = document.querySelectorAll(".org-card");
 
     function filterCards() {
-      const query = searchInput?.value.toLowerCase() || '';
+      const query = searchInput?.value.toLowerCase() || "";
 
       // 搜索时自动展开折叠内容
       if (moreContent && moreToggleBtn) {
-        if (query && moreContent.style.display === 'none') {
-          moreContent.style.display = 'block';
-          moreToggleBtn.classList.add('active');
-        } else if (!query && moreToggleBtn.classList.contains('active')) {
-          moreContent.style.display = 'none';
-          moreToggleBtn.classList.remove('active');
+        if (query && moreContent.style.display === "none") {
+          moreContent.style.display = "block";
+          moreToggleBtn.classList.add("active");
+        } else if (!query && moreToggleBtn.classList.contains("active")) {
+          moreContent.style.display = "none";
+          moreToggleBtn.classList.remove("active");
         }
       }
 
       // 处理邻居卡片
       cards.forEach((card) => {
         const el = card as HTMLElement;
-        const name = el.dataset.name || '';
-        const desc = el.dataset.description || '';
+        const name = el.dataset.name || "";
+        const desc = el.dataset.description || "";
         const show = !query || name.includes(query) || desc.includes(query);
-        el.classList.toggle('hidden', !show);
+        el.classList.toggle("hidden", !show);
       });
 
       // 处理文字链接
       textLinks.forEach((link) => {
         const el = link as HTMLElement;
-        const name = el.dataset.name || '';
-        const desc = el.dataset.description || '';
+        const name = el.dataset.name || "";
+        const desc = el.dataset.description || "";
         const show = !query || name.includes(query) || desc.includes(query);
-        el.classList.toggle('hidden', !show);
+        el.classList.toggle("hidden", !show);
       });
 
       // 处理博客组织卡片
       orgCards.forEach((card) => {
         const el = card as HTMLElement;
-        const name = el.dataset.name || '';
-        const desc = el.dataset.description || '';
+        const name = el.dataset.name || "";
+        const desc = el.dataset.description || "";
         const show = !query || name.includes(query) || desc.includes(query);
-        el.classList.toggle('hidden', !show);
+        el.classList.toggle("hidden", !show);
       });
 
       // 隐藏没有可见子项的分组标题
       if (query) {
-        document.querySelectorAll('.orgs-section, .text-links-section').forEach((section) => {
-          const visibleItems = section.querySelectorAll('.org-card:not(.hidden), .text-link-item:not(.hidden)');
-          if (visibleItems.length === 0) {
-            (section as HTMLElement).style.display = 'none';
-          } else {
-            (section as HTMLElement).style.display = '';
-            // 搜索时隐藏分组标题（如"博客组织""其他链接"）
-            const title = section.querySelector('.section-title') as HTMLElement;
-            if (title) title.style.display = 'none';
-          }
-        });
+        document
+          .querySelectorAll(".orgs-section, .text-links-section")
+          .forEach((section) => {
+            const visibleItems = section.querySelectorAll(
+              ".org-card:not(.hidden), .text-link-item:not(.hidden)",
+            );
+            if (visibleItems.length === 0) {
+              (section as HTMLElement).style.display = "none";
+            } else {
+              (section as HTMLElement).style.display = "";
+              // 搜索时隐藏分组标题（如"博客组织""其他链接"）
+              const title = section.querySelector(
+                ".section-title",
+              ) as HTMLElement;
+              if (title) title.style.display = "none";
+            }
+          });
       } else {
-        document.querySelectorAll('.orgs-section, .text-links-section').forEach((section) => {
-          (section as HTMLElement).style.display = '';
-          const title = section.querySelector('.section-title') as HTMLElement;
-          if (title) title.style.display = '';
-        });
+        document
+          .querySelectorAll(".orgs-section, .text-links-section")
+          .forEach((section) => {
+            (section as HTMLElement).style.display = "";
+            const title = section.querySelector(
+              ".section-title",
+            ) as HTMLElement;
+            if (title) title.style.display = "";
+          });
       }
     }
 
     if (searchInput) {
-      searchInput.addEventListener('input', filterCards);
+      searchInput.addEventListener("input", filterCards);
     }
 
     // 随机访问功能
-    const randomBtn = document.getElementById('random-visit-btn');
+    const randomBtn = document.getElementById("random-visit-btn");
 
     if (randomBtn) {
-      randomBtn.addEventListener('click', async () => {
+      randomBtn.addEventListener("click", async () => {
         const verifiedCards = Array.from(cards);
 
         if (verifiedCards.length === 0) return;
 
-        randomBtn.classList.add('rolling');
+        randomBtn.classList.add("rolling");
 
         const highlightCount = 15;
         let lastHighlighted: Element | null = null;
 
         for (let i = 0; i < highlightCount; i++) {
           const progress = i / highlightCount;
-          const delay = progress < 0.6
-            ? 40 + progress * 30
-            : 80 + Math.pow(progress - 0.6, 2) * 400;
+          const delay =
+            progress < 0.6
+              ? 40 + progress * 30
+              : 80 + Math.pow(progress - 0.6, 2) * 400;
 
-          await new Promise(resolve => setTimeout(resolve, delay));
+          await new Promise((resolve) => setTimeout(resolve, delay));
 
           if (lastHighlighted) {
-            lastHighlighted.classList.remove('highlight');
+            lastHighlighted.classList.remove("highlight");
           }
 
           const cardIdx = i % verifiedCards.length;
           const card = verifiedCards[cardIdx];
-          card.classList.add('highlight');
+          card.classList.add("highlight");
           lastHighlighted = card;
         }
 
@@ -871,20 +973,20 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
         const finalCard = verifiedCards[finalIndex] as HTMLAnchorElement;
 
         if (lastHighlighted) {
-          lastHighlighted.classList.remove('highlight');
+          lastHighlighted.classList.remove("highlight");
         }
-        finalCard.classList.add('selected');
-        finalCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        finalCard.classList.add("selected");
+        finalCard.scrollIntoView({ behavior: "smooth", block: "center" });
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         if (finalCard.href) {
-          window.open(finalCard.href, '_blank', 'noopener,noreferrer');
+          window.open(finalCard.href, "_blank", "noopener,noreferrer");
         }
 
-        randomBtn.classList.remove('rolling');
+        randomBtn.classList.remove("rolling");
         setTimeout(() => {
-          finalCard.classList.remove('selected');
+          finalCard.classList.remove("selected");
         }, 300);
       });
     }
@@ -894,5 +996,5 @@ const inactives = links.filter(l => l.inactive && !l.organization); // 已失效
   initLinksPage();
 
   // View Transitions 页面切换后重新初始化
-  document.addEventListener('astro:after-swap', initLinksPage);
+  document.addEventListener("astro:after-swap", initLinksPage);
 </script>

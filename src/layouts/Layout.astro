@@ -1,10 +1,11 @@
 ---
 import { LOCALE, SITE } from "@config";
+import "@styles/tailwind.css";
 import "@styles/theme.css";
 import "@styles/base.css";
 import "@styles/vendor.css";
 import "@styles/legacy-content.css";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
@@ -83,18 +84,6 @@ const socialImageURL = new URL(
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 
-    <!-- Reference typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700;800&family=Noto+Serif+SC:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Self-hosted OPPO Sans 4.0 (primary body font). Falls back to Noto Sans SC /
-         Plus Jakarta Sans automatically if these woff2 subsets fail to load. -->
-    <link rel="stylesheet" href="/fonts/OPPO_Sans_4/result.css" />
-
     <meta name="theme-color" content="#fbfcfb" />
 
     {
@@ -109,7 +98,7 @@ const socialImageURL = new URL(
       )
     }
 
-    <ViewTransitions />
+    <ClientRouter />
     <script is:inline>
       (function () {
         try {

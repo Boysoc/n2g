@@ -1,189 +1,171 @@
 ---
+import "@waline/client/waline.css";
 ---
-<div class="waline-container">
-  <div id="waline-comments"></div>
+
+<div class="waline-container" data-waline-root aria-busy="false">
+  <div class="waline-status" data-waline-status>评论将在接近这里时自动加载</div>
+  <div class="waline-mount" data-waline-mount></div>
 </div>
+
+<script>
+  import type { WalineInstance } from "@waline/client";
+
+  let walineInstance: WalineInstance | null = null;
+  let clientPromise: Promise<typeof import("@waline/client")> | null = null;
+  let commentsObserver: IntersectionObserver | null = null;
+  let navigationVersion = 0;
+
+  function normalizedPath() {
+    const pathname = window.location.pathname;
+    return pathname.endsWith("/") ? pathname : `${pathname}/`;
+  }
+
+  function loadWalineClient() {
+    if (!clientPromise) {
+      clientPromise = import("@waline/client").catch((error) => {
+        clientPromise = null;
+        throw error;
+      });
+    }
+    return clientPromise;
+  }
+
+  function setStatus(
+    root: HTMLElement,
+    state: "idle" | "loading" | "error" | "ready",
+  ) {
+    const status = root.querySelector<HTMLElement>("[data-waline-status]");
+    if (!status) return;
+    root.dataset.state = state;
+    root.setAttribute("aria-busy", state === "loading" ? "true" : "false");
+    status.hidden = state === "ready";
+    if (state === "loading") status.textContent = "正在加载评论…";
+    if (state === "error") {
+      status.innerHTML =
+        '评论加载失败，请检查网络后 <button type="button" data-waline-retry>重新加载</button>';
+    }
+  }
+
+  function addServerHint() {
+    if (document.querySelector("link[data-waline-preconnect]")) return;
+    const link = document.createElement("link");
+    link.rel = "preconnect";
+    link.href = "https://tencent.n2g.cn";
+    link.crossOrigin = "anonymous";
+    link.dataset.walinePreconnect = "true";
+    document.head.appendChild(link);
+  }
+
+  async function mountWaline(root: HTMLElement, version: number) {
+    if (root.dataset.state === "loading" || root.dataset.state === "ready")
+      return;
+    const mount = root.querySelector<HTMLElement>("[data-waline-mount]");
+    if (!mount) return;
+    setStatus(root, "loading");
+    addServerHint();
+
+    try {
+      const { init } = await loadWalineClient();
+      if (version !== navigationVersion || !root.isConnected) return;
+      walineInstance?.destroy();
+      walineInstance = null;
+      mount.replaceChildren();
+      walineInstance = init({
+        el: mount,
+        serverURL: "https://tencent.n2g.cn/",
+        path: normalizedPath(),
+        lang: "zh-CN",
+        locale: {
+          placeholder: "期待你的真知灼见~",
+          sofa: "快来做第一个评论的人吧~",
+          submit: "提交",
+          reply: "回复",
+          cancelReply: "取消回复",
+          comment: "评论",
+          refresh: "刷新",
+          more: "加载更多...",
+          preview: "预览",
+          emoji: "表情",
+          uploadImage: "上传图片",
+        },
+        emoji: ["https://unpkg.com/@waline/emojis@1.2.0/qq"],
+        dark: 'html[data-theme="dark"]',
+        meta: ["nick", "mail", "link"],
+        requiredMeta: ["nick"],
+        pageSize: 10,
+        wordLimit: [0, 1000],
+        imageUploader: false,
+        highlighter: true,
+        texRenderer: false,
+        commentSorting: "latest",
+        search: false,
+        reaction: false,
+        login: "disable",
+      });
+      if (!walineInstance) throw new Error("Waline did not return an instance");
+      setStatus(root, "ready");
+    } catch (error) {
+      if (version !== navigationVersion || !root.isConnected) return;
+      console.error("Waline 初始化失败:", error);
+      mount.replaceChildren();
+      setStatus(root, "error");
+    }
+  }
+
+  function initWaline() {
+    navigationVersion += 1;
+    const version = navigationVersion;
+    commentsObserver?.disconnect();
+    commentsObserver = null;
+    walineInstance?.destroy();
+    walineInstance = null;
+
+    const root = document.querySelector<HTMLElement>("[data-waline-root]");
+    if (!root) return;
+    root.dataset.state = "idle";
+    if (root.dataset.retryReady !== "true") {
+      root.dataset.retryReady = "true";
+      root.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement;
+        if (target.closest("[data-waline-retry]")) {
+          root.dataset.state = "idle";
+          void mountWaline(root, navigationVersion);
+        }
+      });
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      void mountWaline(root, version);
+      return;
+    }
+    commentsObserver = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        commentsObserver?.disconnect();
+        commentsObserver = null;
+        void mountWaline(root, version);
+      },
+      { rootMargin: "1000px 0px", threshold: 0.01 },
+    );
+    commentsObserver.observe(root);
+  }
+
+  initWaline();
+  document.addEventListener("astro:page-load", initWaline);
+  document.addEventListener("astro:before-swap", () => {
+    navigationVersion += 1;
+    commentsObserver?.disconnect();
+    commentsObserver = null;
+    walineInstance?.destroy();
+    walineInstance = null;
+  });
+</script>
 
 <style>
   .waline-container {
+    min-height: 8rem;
     margin: 2em 0;
     padding: 1em 0;
     border-top: 1px solid var(--color-border-subtle);
   }
 </style>
-
-<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
-
-<script is:inline>
-  // 全局 Waline 实例
-  let walineInstance = null;
-  
-  // 初始化 Waline 评论系统
-  function initWaline() {
-    // 清理旧的 Waline 实例
-    if (walineInstance) {
-      try {
-        walineInstance.destroy();
-      } catch (e) {
-        console.log('清理旧实例:', e.message);
-      }
-      walineInstance = null;
-    }
-    
-    // 确保评论容器存在
-    const commentsContainer = document.getElementById('waline-comments');
-    if (!commentsContainer) {
-      console.log('评论容器不存在，等待DOM更新');
-      return;
-    }
-    
-    // 检查 Waline 库是否已加载
-    if (typeof window.Waline === 'undefined') {
-      // 加载 Waline UMD 版本
-      const script = document.createElement('script');
-      script.src = 'https://unpkg.com/@waline/client@v3/dist/waline.umd.js';
-      script.onload = function() {
-        createWalineInstance();
-      };
-      script.onerror = function() {
-        console.error('Waline 加载失败');
-        commentsContainer.innerHTML = '<p class="waline-status" data-state="error">评论系统加载失败，请刷新页面重试</p>';
-      };
-      document.head.appendChild(script);
-    } else {
-      createWalineInstance();
-    }
-  }
-
-  // 创建 Waline 实例
-  function createWalineInstance() {
-    const commentsContainer = document.getElementById('waline-comments');
-    if (!commentsContainer) return;
-    
-    // 清理容器内容
-    commentsContainer.innerHTML = '';
-    
-    try {
-      walineInstance = window.Waline.init({
-        el: '#waline-comments',
-        serverURL: 'https://tencent.n2g.cn/',
-        // 确保路径格式与数据库中的URL格式一致
-        path: window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/',
-        lang: 'zh-CN',
-        avatar: 'qq', // 启用QQ头像，当用户使用QQ邮箱时会自动获取QQ头像
-        locale: {
-          placeholder: '期待你的真知灼见~',
-          sofa: '快来做第一个评论的人吧~',
-          submit: '提交',
-          reply: '回复',
-          cancelReply: '取消回复',
-          comment: '评论',
-          refresh: '刷新',
-          more: '加载更多...',
-          preview: '预览',
-          emoji: '表情',
-          uploadImage: '上传图片'
-        },
-        // 自定义时间格式化函数
-        formatTime: function(date) {
-          const d = new Date(date);
-          const year = d.getFullYear();
-          const month = String(d.getMonth() + 1).padStart(2, '0');
-          const day = String(d.getDate()).padStart(2, '0');
-          const hours = String(d.getHours()).padStart(2, '0');
-          const minutes = String(d.getMinutes()).padStart(2, '0');
-          const seconds = String(d.getSeconds()).padStart(2, '0');
-          return `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds}`;
-        },
-        emoji: [
-          'https://unpkg.com/@waline/emojis@1.2.0/qq'
-        ], // 使用官方 QQ 表情包，不包含 GIF
-        dark: '[data-theme="dark"]',
-        meta: ['nick', 'mail', 'link'],
-        requiredMeta: ['nick'],
-        pageSize: 10,
-        wordLimit: [0, 1000],
-        imageUploader: false,
-        highlight: true, // 支持 Markdown 代码高亮
-        mathTagSupport: false,
-        commentSorting: 'latest',
-        search: false,
-        reaction: false,
-        copyright: false,
-        login: 'disable'
-      });
-      
-      console.log('Waline 评论系统初始化成功，路径:', window.location.pathname);
-    } catch (error) {
-      console.error('Waline 初始化失败:', error);
-      commentsContainer.innerHTML = '<p class="waline-status" data-state="error">评论系统初始化失败</p>';
-    }
-  }
-
-  // 处理 SPA 页面导航
-  function handlePageNavigation() {
-    console.log('检测到页面导航，重新初始化评论系统');
-    
-    // 延迟执行，等待DOM完全更新
-    setTimeout(() => {
-      initWaline();
-    }, 300);
-  }
-
-  // Astro SPA 导航检测
-  function setupSPAHandlers() {
-    // 监听 URL 变化
-    let lastUrl = window.location.href;
-    
-    const checkUrlChange = () => {
-      const currentUrl = window.location.href;
-      if (currentUrl !== lastUrl) {
-        lastUrl = currentUrl;
-        handlePageNavigation();
-      }
-    };
-    
-    // 定期检查 URL 变化
-    setInterval(checkUrlChange, 200);
-    
-    // 监听 pushState 和 replaceState（SPA路由变化）
-    const originalPushState = history.pushState;
-    const originalReplaceState = history.replaceState;
-    
-    history.pushState = function(...args) {
-      originalPushState.apply(this, args);
-      handlePageNavigation();
-    };
-    
-    history.replaceState = function(...args) {
-      originalReplaceState.apply(this, args);
-      handlePageNavigation();
-    };
-    
-    // 监听 popstate 事件（浏览器前进后退）
-    window.addEventListener('popstate', handlePageNavigation);
-    
-    // 监听点击事件，检测可能的导航
-    document.addEventListener('click', function(e) {
-      const target = e.target.closest('a');
-      if (target && target.href && target.href.startsWith(window.location.origin)) {
-        // 延迟处理，让Astro的导航先完成
-        setTimeout(handlePageNavigation, 500);
-      }
-    }, true);
-  }
-
-  // 初始加载
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      // 初次初始化
-      setTimeout(initWaline, 100);
-      // 设置SPA处理器
-      setupSPAHandlers();
-    });
-  } else {
-    // 页面已经加载完成
-    setTimeout(initWaline, 100);
-    setupSPAHandlers();
-  }
-</script>

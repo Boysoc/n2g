@@ -21,8 +21,8 @@ export async function getStaticPaths() {
     const tagPosts = getPostsByTag(posts, tag);
     const totalPages = getPageNumbers(tagPosts.length);
 
-    return totalPages.map(page => ({
-      params: { tag, page },
+    return totalPages.map((page) => ({
+      params: { tag, page: String(page) },
       props: { tag, tagName },
     }));
   });
@@ -39,6 +39,7 @@ const pagination = getPagination({
   posts: postsByTag,
   page,
 });
+const totalPosts = postsByTag.length;
 ---
 
-<TagPosts {...pagination} {tag} {tagName} />
+<TagPosts {...pagination} {totalPosts} {tag} {tagName} />

@@ -27,6 +27,40 @@
   text-align: center;
 }
 
+.waline-status[hidden] {
+  display: none;
+}
+
+.waline-container[data-state="loading"] .waline-status::before {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-right: 0.55rem;
+  border: 2px solid var(--color-border-default);
+  border-top-color: var(--color-primary-500);
+  border-radius: 50%;
+  content: "";
+  vertical-align: -0.12em;
+  animation: waline-loading 700ms linear infinite;
+}
+
+.waline-status button {
+  padding: 0;
+  border: 0;
+  color: var(--color-text-link);
+  background: transparent;
+  font-weight: 650;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@keyframes waline-loading {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 .waline-status[data-state="error"] {
   border-color: var(--color-error-border);
   color: var(--color-error);
@@ -36,6 +70,17 @@
 .waline-container :where(input, textarea) {
   color: var(--color-text-primary);
   background: var(--color-bg-surface);
+}
+
+.waline-container,
+.waline-container :where(input, textarea, button) {
+  font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waline-container[data-state="loading"] .waline-status::before {
+    animation: none;
+  }
 }
 
 .waline-container :where(input, textarea):focus {
@@ -65,17 +110,20 @@ html:not([data-theme="dark"])
   color: #57606a;
 }
 
-html:not([data-theme="dark"])
-  .waline-container
-  .wl-content
-  .token.punctuation {
+html:not([data-theme="dark"]) .waline-container .wl-content .token.punctuation {
   color: #4b5563;
 }
 
 html:not([data-theme="dark"])
   .waline-container
   .wl-content
-  :where(.token.property, .token.tag, .token.constant, .token.symbol, .token.deleted) {
+  :where(
+    .token.property,
+    .token.tag,
+    .token.constant,
+    .token.symbol,
+    .token.deleted
+  ) {
   color: #953800;
 }
 
@@ -89,7 +137,14 @@ html:not([data-theme="dark"])
 html:not([data-theme="dark"])
   .waline-container
   .wl-content
-  :where(.token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted) {
+  :where(
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted
+  ) {
   color: #08783f;
 }
 
@@ -107,9 +162,6 @@ html:not([data-theme="dark"])
   color: #8250df;
 }
 
-html:not([data-theme="dark"])
-  .waline-container
-  .wl-content
-  .token.keyword {
+html:not([data-theme="dark"]) .waline-container .wl-content .token.keyword {
   color: #cf222e;
 }

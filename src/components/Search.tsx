@@ -1,5 +1,5 @@
 import Fuse from "fuse.js";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, type ChangeEvent } from "react";
 import Card from "@components/Card";
 import type { CollectionEntry } from "astro:content";
 
@@ -7,7 +7,7 @@ export type SearchItem = {
   title: string;
   description: string;
   data: CollectionEntry<"blog">["data"];
-  slug: string;
+  id: string;
 };
 
 interface Props {
@@ -23,10 +23,10 @@ export default function SearchBar({ searchList }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputVal, setInputVal] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[] | null>(
-    null
+    null,
   );
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputVal(e.currentTarget.value);
   };
 
@@ -38,7 +38,7 @@ export default function SearchBar({ searchList }: Props) {
         minMatchCharLength: 2,
         threshold: 0.5,
       }),
-    [searchList]
+    [searchList],
   );
 
   useEffect(() => {
@@ -99,17 +99,19 @@ export default function SearchBar({ searchList }: Props) {
       )}
 
       {inputVal.length > 1 && searchResults?.length === 0 && (
-        <div className="search-empty" role="status">没有找到匹配文章，试试更短的关键词。</div>
+        <div className="search-empty" role="status">
+          没有找到匹配文章，试试更短的关键词。
+        </div>
       )}
 
-      <ul className="card-ul" >
+      <ul className="card-ul">
         {searchResults &&
           searchResults.map(({ item, refIndex }) => (
             <Card
-              href={`/posts/${item.slug}/`}
+              href={`/posts/${item.id}/`}
               frontmatter={item.data}
-              slug={item.slug}
-              key={`${refIndex}-${item.slug}`}
+              slug={item.id}
+              key={`${refIndex}-${item.id}`}
             />
           ))}
       </ul>

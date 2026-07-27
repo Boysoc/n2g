@@ -1,5 +1,5 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { render, type CollectionEntry } from "astro:content";
 import { SITE } from "@config";
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
@@ -7,6 +7,7 @@ import Footer from "@components/Footer.astro";
 import Tag from "@components/Tag.astro";
 import Datetime from "@components/Datetime";
 import Comment from "@components/Comment.astro";
+import ImageLightbox from "@components/ImageLightbox.astro";
 import { slugifyStr } from "@utils/slugify";
 
 export interface Props {
@@ -16,7 +17,7 @@ export interface Props {
 }
 
 const { post, next, prev } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 const {
   title,
   author,
@@ -61,7 +62,7 @@ const layoutProps = {
       modDatetime={modDatetime}
       className="post-date"
     />
-    <h1 transition:name={slugifyStr(post.slug)} class="post-title">{title}</h1>
+    <h1 transition:name={slugifyStr(post.id)} class="post-title">{title}</h1>
     <article id="article" role="article" class="post-content">
       <Content />
     </article>
@@ -73,8 +74,8 @@ const layoutProps = {
             {prev && (
               <>
                 <span class="date-box">← 上一篇</span>
-                <h2 class="post-title" style="font-size: 1.2em;">
-                  <a href={`/posts/${prev.slug}/`}>{prev.data.title}</a>
+                <h2 class="post-title">
+                  <a href={`/posts/${prev.id}/`}>{prev.data.title}</a>
                 </h2>
               </>
             )}
@@ -83,8 +84,8 @@ const layoutProps = {
             {next && (
               <>
                 <span class="date-box">下一篇 →</span>
-                <h2 class="post-title" style="font-size: 1.2em;">
-                  <a href={`/posts/${next.slug}/`}>{next.data.title}</a>
+                <h2 class="post-title">
+                  <a href={`/posts/${next.id}/`}>{next.data.title}</a>
                 </h2>
               </>
             )}
@@ -100,11 +101,32 @@ const layoutProps = {
     <div class="comment">
       <Comment />
     </div>
+    <ImageLightbox />
   </main>
   <Footer />
 </Layout>
 
 <script>
+  let progressFrame = 0;
+
+  function updateReadingProgress() {
+    progressFrame = 0;
+    const bar = document.querySelector<HTMLElement>(".progress-bar");
+    if (!bar) return;
+    const scrollTop = document.documentElement.scrollTop;
+    const height =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
+    const progress =
+      height > 0 ? Math.min(1, Math.max(0, scrollTop / height)) : 0;
+    bar.style.transform = `scaleX(${progress})`;
+  }
+
+  function requestReadingProgress() {
+    if (!progressFrame)
+      progressFrame = window.requestAnimationFrame(updateReadingProgress);
+  }
+
   function initPostDetails() {
     // 代码复制按钮
     const codeBlocks = document.querySelectorAll("pre");
@@ -151,7 +173,7 @@ const layoutProps = {
       });
     });
 
-    // 阅读进度条（防止重复创建）
+    // 阅读进度条：只注册一次被动监听，每帧最多更新一次 transform。
     if (!document.querySelector(".progress-container")) {
       const progressContainer = document.createElement("div");
       progressContainer.className = "progress-container";
@@ -159,17 +181,17 @@ const layoutProps = {
       bar.className = "progress-bar";
       progressContainer.appendChild(bar);
       document.body.appendChild(progressContainer);
-
-      window.addEventListener("scroll", () => {
-        const winScroll =
-          document.body.scrollTop || document.documentElement.scrollTop;
-        const height =
-          document.documentElement.scrollHeight -
-          document.documentElement.clientHeight;
-        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-        bar.style.width = scrolled + "%";
+    }
+    if (document.documentElement.dataset.readingProgressReady !== "true") {
+      document.documentElement.dataset.readingProgressReady = "true";
+      window.addEventListener("scroll", requestReadingProgress, {
+        passive: true,
+      });
+      window.addEventListener("resize", requestReadingProgress, {
+        passive: true,
       });
     }
+    requestReadingProgress();
 
     // 标题锚点链接
     document

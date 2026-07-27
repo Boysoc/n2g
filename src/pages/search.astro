@@ -10,14 +10,14 @@ import getSortedPosts from "@utils/getSortedPosts";
 
 // Retrieve all published articles
 const posts = await getCollection("blog", ({ data }) => !data.draft);
-const sortedPosts = getSortedPosts(posts);
+const sortedPosts = getSortedPosts(posts, { renderContent: false });
 
 // List of items to search in
-const searchList = sortedPosts.map(({ data, slug }) => ({
+const searchList = sortedPosts.map(({ data, id }) => ({
   title: data.title,
   description: data.description,
   data,
-  slug,
+  id,
 }));
 ---
 

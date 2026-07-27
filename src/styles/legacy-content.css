@@ -1,4 +1,20 @@
 /* Historical imported posts contain inline light-only table styles. Keep overrides local. */
+.post-content
+  :where(
+    table,
+    thead,
+    tbody,
+    tfoot,
+    tr,
+    th,
+    td,
+    font,
+    span,
+    i
+  )[style*="font-family"] {
+  font-family: var(--font-sans) !important;
+}
+
 [data-theme="dark"]
   .post-content
   :where(table, thead, tbody, tfoot, tr, th, td)[style] {

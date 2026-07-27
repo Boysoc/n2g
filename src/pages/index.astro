@@ -5,11 +5,17 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import LinkButton from "@components/LinkButton.astro";
 import Card from "@components/Card";
+import PostPreviewController from "@components/PostPreviewController.astro";
 import getSortedPosts from "@utils/getSortedPosts";
+import getPostPreview from "@utils/getPostPreview";
 import { SITE } from "@config";
 
 const posts = await getCollection("blog");
-const recentPosts = getSortedPosts(posts);
+const sortedPosts = getSortedPosts(posts, { renderContent: false });
+const recentPosts = sortedPosts.slice(0, SITE.postPerPage).map((post) => ({
+  ...post,
+  preview: getPostPreview(post.body ?? ""),
+}));
 ---
 
 <Layout>
@@ -19,28 +25,29 @@ const recentPosts = getSortedPosts(posts);
       recentPosts.length > 0 && (
         <section id="recent-posts">
           <ul class="card-ul">
-            {recentPosts.map(
-              ({ data, slug }, index) =>
-                index < SITE.postPerPage && (
-                  <Card
-                    slug={slug}
-                    href={`/posts/${slug}/`}
-                    frontmatter={data}
-                    secHeading={false}
-                  />
-                ),
-            )}
+            {recentPosts.map(({ data, id, preview }) => (
+              <Card
+                slug={id}
+                href={`/posts/${id}/`}
+                frontmatter={data}
+                secHeading={false}
+                variant="preview"
+                previewMedia={preview.media}
+                previewContent={preview.content}
+              />
+            ))}
           </ul>
         </section>
       )
     }
     {
-      recentPosts.length > SITE.postPerPage && (
+      sortedPosts.length > SITE.postPerPage && (
         <div class="all-posts-btn-wrapper">
           <LinkButton href="/posts/2/">更多文章 &gt;</LinkButton>
         </div>
       )
     }
   </main>
+  <PostPreviewController />
   <Footer />
 </Layout>

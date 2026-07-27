@@ -1,1356 +1,8 @@
-<!DOCTYPE html><html lang="zh-CN" class="scroll-smooth"><head><meta charset="UTF-8"><style>:where(img){height:auto}</style><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://n2g.cn/posts/markdown-reference/"><meta name="generator" content="Astro v4.2.1"><!-- General Meta Tags --><title>Markdown 语法参考文档 | Xio's</title><meta name="title" content="Markdown 语法参考文档 | Xio's"><meta name="description" content="<h1>Markdown 语法参考文档</h1>
-<p>本文档展示了本博客平台支持的所有 Markdown 语法元素，每个语法都包含工作示例和说明。</p>
-<h2>目录</h2>
-<ul>
-<li><a href=&quot;#%E6%A0%87%E9%A2%98&quot;>标题</a></li>
-<li><a href=&quot;#%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F&quot;>文本格式</a></li>
-<li><a href=&quot;#%E5%88%97%E8%A1%A8&quot;>列表</a></li>
-<li><a href=&quot;#%E9%93%BE%E6%8E%A5&quot;>链接</a></li>
-<li><a href=&quot;#%E5%9B%BE%E7%89%87&quot;>图片</a></li>
-<li><a href=&quot;#%E4%BB%A3%E7%A0%81&quot;>代码</a></li>
-<li><a href=&quot;#%E8%A1%A8%E6%A0%BC&quot;>表格</a></li>
-<li><a href=&quot;#%E5%BC%95%E7%94%A8&quot;>引用</a></li>
-<li><a href=&quot;#%E5%88%86%E5%89%B2%E7%BA%BF&quot;>分割线</a></li>
-<li><a href=&quot;#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6&quot;>特殊字符</a></li>
-<li><a href=&quot;#html%E6%A0%87%E7%AD%BE&quot;>HTML标签</a></li>
-</ul>
-<h2>标题</h2>
-<p>Markdown 支持六级标题，使用 <code>#</code> 符号：</p>
-<pre><code class=&quot;language-markdown&quot;># 一级标题
-## 二级标题
-### 三级标题
-#### 四级标题
-##### 五级标题
-###### 六级标题
-</code></pre>
-<p>效果展示：</p>
-<h1>一级标题示例</h1>
-<h2>二级标题示例</h2>
-<h3>三级标题示例</h3>
-<h4>四级标题示例</h4>
-<h5>五级标题示例</h5>
-<h6>六级标题示例</h6>
-<h2>文本格式</h2>
-<h3>基本格式</h3>
-<pre><code class=&quot;language-markdown&quot;>**粗体文本**
-*斜体文本*
-***粗斜体文本***
-~~删除线文本~~
-`行内代码`
-</code></pre>
-<p>效果展示：</p>
-<p><strong>粗体文本</strong><br>
-<em>斜体文本</em><br>
-<em><strong>粗斜体文本</strong></em><br>
-~~删除线文本~~<br>
-<code>行内代码</code></p>
-<h3>下划线和上标下标</h3>
-<pre><code class=&quot;language-markdown&quot;>&amp;#x3C;u>下划线文本&amp;#x3C;/u>
-X&amp;#x3C;sup>2&amp;#x3C;/sup> (上标)
-H&amp;#x3C;sub>2&amp;#x3C;/sub>O (下标)
-</code></pre>
-<p>效果展示：</p>
-<p><u>下划线文本</u><br>
-X<sup>2</sup> (上标)<br>
-H<sub>2</sub>O (下标)</p>
-<h2>列表</h2>
-<h3>无序列表</h3>
-<pre><code class=&quot;language-markdown&quot;>- 项目一
-- 项目二
-  - 子项目一
-  - 子项目二
-    - 子子项目
-- 项目三
-
-* 使用星号
-+ 使用加号
-</code></pre>
-<p>效果展示：</p>
-<ul>
-<li>项目一</li>
-<li>项目二
-<ul>
-<li>子项目一</li>
-<li>子项目二
-<ul>
-<li>子子项目</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>项目三</li>
-</ul>
-<ul>
-<li>使用星号</li>
-</ul>
-<ul>
-<li>使用加号</li>
-</ul>
-<h3>有序列表</h3>
-<pre><code class=&quot;language-markdown&quot;>1. 第一项
-2. 第二项
-   1. 子项目一
-   2. 子项目二
-3. 第三项
-</code></pre>
-<p>效果展示：</p>
-<ol>
-<li>第一项</li>
-<li>第二项
-<ol>
-<li>子项目一</li>
-<li>子项目二</li>
-</ol>
-</li>
-<li>第三项</li>
-</ol>
-<h3>任务列表</h3>
-<pre><code class=&quot;language-markdown&quot;>- [x] 已完成任务
-- [ ] 未完成任务
-- [x] 另一个已完成任务
-</code></pre>
-<p>效果展示：</p>
-<ul>
-<li>[x] 已完成任务</li>
-<li>[ ] 未完成任务</li>
-<li>[x] 另一个已完成任务</li>
-</ul>
-<h2>链接</h2>
-<h3>基本链接</h3>
-<pre><code class=&quot;language-markdown&quot;>[链接文本](https://example.com)
-[带标题的链接](https://example.com &quot;这是标题&quot;)
-&amp;#x3C;https://example.com>
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;https://example.com&quot;>链接文本</a><br>
-<a href=&quot;https://example.com&quot; title=&quot;这是标题&quot;>带标题的链接</a><br>
-<a href=&quot;https://example.com&quot;>https://example.com</a></p>
-<h3>引用式链接</h3>
-<pre><code class=&quot;language-markdown&quot;>[引用式链接][1]
-[另一个引用][link-ref]
-
-[1]: https://example.com
-[link-ref]: https://example.com &quot;可选标题&quot;
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;https://example.com&quot;>引用式链接</a><br>
-<a href=&quot;https://example.com&quot; title=&quot;可选标题&quot;>另一个引用</a></p>
-<h3>内部链接</h3>
-<pre><code class=&quot;language-markdown&quot;>[跳转到标题](#标题)
-[跳转到代码部分](#代码)
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;#%E6%A0%87%E9%A2%98&quot;>跳转到标题</a><br>
-<a href=&quot;#%E4%BB%A3%E7%A0%81&quot;>跳转到代码部分</a></p>
-<h2>图片</h2>
-<h3>基本图片</h3>
-<pre><code class=&quot;language-markdown&quot;>![替代文本](https://via.placeholder.com/300x200 &quot;图片标题&quot;)
-</code></pre>
-<p>效果展示：</p>
-<p><img src=&quot;https://via.placeholder.com/300x200&quot; alt=&quot;替代文本&quot; title=&quot;图片标题&quot;></p>
-<h3>引用式图片</h3>
-<pre><code class=&quot;language-markdown&quot;>![替代文本][image-ref]
-
-[image-ref]: https://via.placeholder.com/200x150 &quot;引用式图片&quot;
-</code></pre>
-<p>效果展示：</p>
-<p><img src=&quot;https://via.placeholder.com/200x150&quot; alt=&quot;替代文本&quot; title=&quot;引用式图片&quot;></p>
-<h3>带链接的图片</h3>
-<pre><code class=&quot;language-markdown&quot;>[![图片](https://via.placeholder.com/150x100)](https://example.com)
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;https://example.com&quot;><img src=&quot;https://via.placeholder.com/150x100&quot; alt=&quot;图片&quot;></a></p>
-<h2>代码</h2>
-<h3>行内代码</h3>
-<pre><code class=&quot;language-markdown&quot;>这是 `行内代码` 示例。
-</code></pre>
-<p>效果展示：</p>
-<p>这是 <code>行内代码</code> 示例。</p>
-<h3>代码块</h3>
-<pre><code class=&quot;language-markdown&quot;>```javascript
-function hello() {
-    console.log(&quot;Hello, World!&quot;);
-}
-```
-</code></pre>
-<p>效果展示：</p>
-<pre><code class=&quot;language-javascript&quot;>function hello() {
-    console.log(&quot;Hello, World!&quot;);
-}
-</code></pre>
-<h3>不同语言的代码块</h3>
-<pre><code class=&quot;language-markdown&quot;>```python
-def hello():
-    print(&quot;Hello, Python!&quot;)
-```
-
-```css
-.example {
-    color: #333;
-    font-size: 16px;
-}
-```
-
-```html
-&amp;#x3C;div class=&quot;example&quot;>
-    &amp;#x3C;p>HTML 示例&amp;#x3C;/p>
-&amp;#x3C;/div>
-```
-</code></pre>
-<p>效果展示：</p>
-<pre><code class=&quot;language-python&quot;>def hello():
-    print(&quot;Hello, Python!&quot;)
-</code></pre>
-<pre><code class=&quot;language-css&quot;>.example {
-    color: #333;
-    font-size: 16px;
-}
-</code></pre>
-<pre><code class=&quot;language-html&quot;>&amp;#x3C;div class=&quot;example&quot;>
-    &amp;#x3C;p>HTML 示例&amp;#x3C;/p>
-&amp;#x3C;/div>
-</code></pre>
-<h3>无语言标识的代码块</h3>
-<pre><code>这是没有语言标识的代码块
-可以用来显示纯文本
-</code></pre>
-<h2>表格</h2>
-<h3>基本表格</h3>
-<pre><code class=&quot;language-markdown&quot;>| 标题1 | 标题2 | 标题3 |
-|-------|-------|-------|
-| 内容1 | 内容2 | 内容3 |
-| 内容4 | 内容5 | 内容6 |
-</code></pre>
-<p>效果展示：</p>
-<p>| 标题1 | 标题2 | 标题3 |
-|-------|-------|-------|
-| 内容1 | 内容2 | 内容3 |
-| 内容4 | 内容5 | 内容6 |</p>
-<h3>对齐表格</h3>
-<pre><code class=&quot;language-markdown&quot;>| 左对齐 | 居中对齐 | 右对齐 |
-|:-------|:--------:|-------:|
-| 左     | 中       | 右     |
-| 内容   | 内容     | 内容   |
-</code></pre>
-<p>效果展示：</p>
-<p>| 左对齐 | 居中对齐 | 右对齐 |
-|:-------|:--------:|-------:|
-| 左     | 中       | 右     |
-| 内容   | 内容     | 内容   |</p>
-<h3>复杂表格</h3>
-<pre><code class=&quot;language-markdown&quot;>| 功能 | 支持 | 说明 |
-|------|:----:|------|
-| **粗体** | ✅ | 完全支持 |
-| *斜体* | ✅ | 完全支持 |
-| `代码` | ✅ | 行内代码 |
-| [链接](https://example.com) | ✅ | 外部链接 |
-</code></pre>
-<p>效果展示：</p>
-<p>| 功能 | 支持 | 说明 |
-|------|:----:|------|
-| <strong>粗体</strong> | ✅ | 完全支持 |
-| <em>斜体</em> | ✅ | 完全支持 |
-| <code>代码</code> | ✅ | 行内代码 |
-| <a href=&quot;https://example.com&quot;>链接</a> | ✅ | 外部链接 |</p>
-<h2>引用</h2>
-<h3>基本引用</h3>
-<pre><code class=&quot;language-markdown&quot;>> 这是一个引用块。
-> 可以包含多行内容。
-</code></pre>
-<p>效果展示：</p>
-<blockquote>
-<p>这是一个引用块。
-可以包含多行内容。</p>
-</blockquote>
-<h3>嵌套引用</h3>
-<pre><code class=&quot;language-markdown&quot;>> 第一层引用
-> > 第二层引用
-> > > 第三层引用
-</code></pre>
-<p>效果展示：</p>
-<blockquote>
-<p>第一层引用</p>
-<blockquote>
-<p>第二层引用</p>
-<blockquote>
-<p>第三层引用</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h3>引用中的其他元素</h3>
-<pre><code class=&quot;language-markdown&quot;>> ## 引用中的标题
-> 
-> 引用中可以包含：
-> - 列表项
-> - **粗体文本**
-> - `代码`
-> 
-> ```javascript
-> // 甚至代码块
-> console.log(&quot;Hello&quot;);
-> ```
-</code></pre>
-<p>效果展示：</p>
-<blockquote>
-<h2>引用中的标题</h2>
-<p>引用中可以包含：</p>
-<ul>
-<li>列表项</li>
-<li><strong>粗体文本</strong></li>
-<li><code>代码</code></li>
-</ul>
-<pre><code class=&quot;language-javascript&quot;>// 甚至代码块
-console.log(&quot;Hello&quot;);
-</code></pre>
-</blockquote>
-<h2>分割线</h2>
-<pre><code class=&quot;language-markdown&quot;>---
-***
-___
-</code></pre>
-<p>效果展示：</p>
-<hr>
-<hr>
-<hr>
-<h2>特殊字符</h2>
-<h3>转义字符</h3>
-<pre><code class=&quot;language-markdown&quot;>\* 不是斜体
-\# 不是标题
-\` 不是代码
-\\ 反斜杠
-</code></pre>
-<p>效果展示：</p>
-<p>* 不是斜体<br>
-# 不是标题<br>
-` 不是代码<br>
-\ 反斜杠</p>
-<h3>特殊符号</h3>
-<pre><code class=&quot;language-markdown&quot;>版权符号: &amp;#x26;copy;
-注册商标: &amp;#x26;reg;
-商标符号: &amp;#x26;trade;
-小于号: &amp;#x26;lt;
-大于号: &amp;#x26;gt;
-和号: &amp;#x26;amp;
-</code></pre>
-<p>效果展示：</p>
-<p>版权符号: ©<br>
-注册商标: ®<br>
-商标符号: ™<br>
-小于号: &amp;#x3C;<br>
-大于号: ><br>
-和号: &amp;#x26;</p>
-<h2>HTML标签</h2>
-<h3>基本HTML标签</h3>
-<pre><code class=&quot;language-markdown&quot;>&amp;#x3C;strong>强调文本&amp;#x3C;/strong>
-&amp;#x3C;em>斜体文本&amp;#x3C;/em>
-&amp;#x3C;mark>高亮文本&amp;#x3C;/mark>
-&amp;#x3C;small>小号文本&amp;#x3C;/small>
-</code></pre>
-<p>效果展示：</p>
-<p><strong>强调文本</strong><br>
-<em>斜体文本</em><br>
-<mark>高亮文本</mark><br>
-<small>小号文本</small></p>
-<h3>键盘按键</h3>
-<pre><code class=&quot;language-markdown&quot;>按 &amp;#x3C;kbd>Ctrl&amp;#x3C;/kbd> + &amp;#x3C;kbd>C&amp;#x3C;/kbd> 复制
-按 &amp;#x3C;kbd>Ctrl&amp;#x3C;/kbd> + &amp;#x3C;kbd>V&amp;#x3C;/kbd> 粘贴
-</code></pre>
-<p>效果展示：</p>
-<p>按 <kbd>Ctrl</kbd> + <kbd>C</kbd> 复制<br>
-按 <kbd>Ctrl</kbd> + <kbd>V</kbd> 粘贴</p>
-<h3>详情折叠</h3>
-<pre><code class=&quot;language-markdown&quot;>&amp;#x3C;details>
-&amp;#x3C;summary>点击展开详情&amp;#x3C;/summary>
-
-这里是折叠的内容。
-
-- 可以包含列表
-- **格式化文本**
-- `代码`
-
-```javascript
-console.log(&quot;甚至代码块&quot;);
-</code></pre>
-</details>
-```
-<p>效果展示：</p>
-<details>
-<summary>点击展开详情</summary>
-<p>这里是折叠的内容。</p>
-<ul>
-<li>可以包含列表</li>
-<li><strong>格式化文本</strong></li>
-<li><code>代码</code></li>
-</ul>
-<pre><code class=&quot;language-javascript&quot;>console.log(&quot;甚至代码块&quot;);
-</code></pre>
-</details>
-<h2>注意事项和限制</h2>
-<h3>1. 空行的重要性</h3>
-<ul>
-<li>列表项之间需要空行来分隔不同的列表</li>
-<li>代码块前后需要空行</li>
-<li>引用块前后建议添加空行</li>
-</ul>
-<h3>2. 缩进规则</h3>
-<ul>
-<li>列表的子项目需要正确缩进（2或4个空格）</li>
-<li>代码块的缩进会被保留</li>
-</ul>
-<h3>3. 特殊情况</h3>
-<ul>
-<li>表格中的管道符 <code>|</code> 需要转义：<code>\|</code></li>
-<li>在代码块中显示三个反引号需要使用四个反引号包围</li>
-</ul>
-<h3>4. 最佳实践</h3>
-<ul>
-<li>使用一致的列表标记（建议使用 <code>-</code>）</li>
-<li>为图片添加有意义的替代文本</li>
-<li>为链接添加描述性文本</li>
-<li>保持文档结构清晰</li>
-</ul>
-<h2>兼容性说明</h2>
-<p>本平台基于标准 Markdown 语法，支持：</p>
-<ul>
-<li>✅ CommonMark 标准</li>
-<li>✅ GitHub Flavored Markdown (GFM)</li>
-<li>✅ 基本 HTML 标签</li>
-<li>✅ 语法高亮代码块</li>
-<li>✅ 表格扩展</li>
-<li>✅ 任务列表</li>
-<li>✅ 删除线</li>
-</ul>
-<hr>
-<p><em>本文档会持续更新，如发现问题或有建议，欢迎反馈。</em></p>
-"><meta name="author" content="Xio"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="Markdown 语法参考文档 | Xio's"><meta property="og:description" content="<h1>Markdown 语法参考文档</h1>
-<p>本文档展示了本博客平台支持的所有 Markdown 语法元素，每个语法都包含工作示例和说明。</p>
-<h2>目录</h2>
-<ul>
-<li><a href=&quot;#%E6%A0%87%E9%A2%98&quot;>标题</a></li>
-<li><a href=&quot;#%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F&quot;>文本格式</a></li>
-<li><a href=&quot;#%E5%88%97%E8%A1%A8&quot;>列表</a></li>
-<li><a href=&quot;#%E9%93%BE%E6%8E%A5&quot;>链接</a></li>
-<li><a href=&quot;#%E5%9B%BE%E7%89%87&quot;>图片</a></li>
-<li><a href=&quot;#%E4%BB%A3%E7%A0%81&quot;>代码</a></li>
-<li><a href=&quot;#%E8%A1%A8%E6%A0%BC&quot;>表格</a></li>
-<li><a href=&quot;#%E5%BC%95%E7%94%A8&quot;>引用</a></li>
-<li><a href=&quot;#%E5%88%86%E5%89%B2%E7%BA%BF&quot;>分割线</a></li>
-<li><a href=&quot;#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6&quot;>特殊字符</a></li>
-<li><a href=&quot;#html%E6%A0%87%E7%AD%BE&quot;>HTML标签</a></li>
-</ul>
-<h2>标题</h2>
-<p>Markdown 支持六级标题，使用 <code>#</code> 符号：</p>
-<pre><code class=&quot;language-markdown&quot;># 一级标题
-## 二级标题
-### 三级标题
-#### 四级标题
-##### 五级标题
-###### 六级标题
-</code></pre>
-<p>效果展示：</p>
-<h1>一级标题示例</h1>
-<h2>二级标题示例</h2>
-<h3>三级标题示例</h3>
-<h4>四级标题示例</h4>
-<h5>五级标题示例</h5>
-<h6>六级标题示例</h6>
-<h2>文本格式</h2>
-<h3>基本格式</h3>
-<pre><code class=&quot;language-markdown&quot;>**粗体文本**
-*斜体文本*
-***粗斜体文本***
-~~删除线文本~~
-`行内代码`
-</code></pre>
-<p>效果展示：</p>
-<p><strong>粗体文本</strong><br>
-<em>斜体文本</em><br>
-<em><strong>粗斜体文本</strong></em><br>
-~~删除线文本~~<br>
-<code>行内代码</code></p>
-<h3>下划线和上标下标</h3>
-<pre><code class=&quot;language-markdown&quot;>&amp;#x3C;u>下划线文本&amp;#x3C;/u>
-X&amp;#x3C;sup>2&amp;#x3C;/sup> (上标)
-H&amp;#x3C;sub>2&amp;#x3C;/sub>O (下标)
-</code></pre>
-<p>效果展示：</p>
-<p><u>下划线文本</u><br>
-X<sup>2</sup> (上标)<br>
-H<sub>2</sub>O (下标)</p>
-<h2>列表</h2>
-<h3>无序列表</h3>
-<pre><code class=&quot;language-markdown&quot;>- 项目一
-- 项目二
-  - 子项目一
-  - 子项目二
-    - 子子项目
-- 项目三
-
-* 使用星号
-+ 使用加号
-</code></pre>
-<p>效果展示：</p>
-<ul>
-<li>项目一</li>
-<li>项目二
-<ul>
-<li>子项目一</li>
-<li>子项目二
-<ul>
-<li>子子项目</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>项目三</li>
-</ul>
-<ul>
-<li>使用星号</li>
-</ul>
-<ul>
-<li>使用加号</li>
-</ul>
-<h3>有序列表</h3>
-<pre><code class=&quot;language-markdown&quot;>1. 第一项
-2. 第二项
-   1. 子项目一
-   2. 子项目二
-3. 第三项
-</code></pre>
-<p>效果展示：</p>
-<ol>
-<li>第一项</li>
-<li>第二项
-<ol>
-<li>子项目一</li>
-<li>子项目二</li>
-</ol>
-</li>
-<li>第三项</li>
-</ol>
-<h3>任务列表</h3>
-<pre><code class=&quot;language-markdown&quot;>- [x] 已完成任务
-- [ ] 未完成任务
-- [x] 另一个已完成任务
-</code></pre>
-<p>效果展示：</p>
-<ul>
-<li>[x] 已完成任务</li>
-<li>[ ] 未完成任务</li>
-<li>[x] 另一个已完成任务</li>
-</ul>
-<h2>链接</h2>
-<h3>基本链接</h3>
-<pre><code class=&quot;language-markdown&quot;>[链接文本](https://example.com)
-[带标题的链接](https://example.com &quot;这是标题&quot;)
-&amp;#x3C;https://example.com>
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;https://example.com&quot;>链接文本</a><br>
-<a href=&quot;https://example.com&quot; title=&quot;这是标题&quot;>带标题的链接</a><br>
-<a href=&quot;https://example.com&quot;>https://example.com</a></p>
-<h3>引用式链接</h3>
-<pre><code class=&quot;language-markdown&quot;>[引用式链接][1]
-[另一个引用][link-ref]
-
-[1]: https://example.com
-[link-ref]: https://example.com &quot;可选标题&quot;
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;https://example.com&quot;>引用式链接</a><br>
-<a href=&quot;https://example.com&quot; title=&quot;可选标题&quot;>另一个引用</a></p>
-<h3>内部链接</h3>
-<pre><code class=&quot;language-markdown&quot;>[跳转到标题](#标题)
-[跳转到代码部分](#代码)
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;#%E6%A0%87%E9%A2%98&quot;>跳转到标题</a><br>
-<a href=&quot;#%E4%BB%A3%E7%A0%81&quot;>跳转到代码部分</a></p>
-<h2>图片</h2>
-<h3>基本图片</h3>
-<pre><code class=&quot;language-markdown&quot;>![替代文本](https://via.placeholder.com/300x200 &quot;图片标题&quot;)
-</code></pre>
-<p>效果展示：</p>
-<p><img src=&quot;https://via.placeholder.com/300x200&quot; alt=&quot;替代文本&quot; title=&quot;图片标题&quot;></p>
-<h3>引用式图片</h3>
-<pre><code class=&quot;language-markdown&quot;>![替代文本][image-ref]
-
-[image-ref]: https://via.placeholder.com/200x150 &quot;引用式图片&quot;
-</code></pre>
-<p>效果展示：</p>
-<p><img src=&quot;https://via.placeholder.com/200x150&quot; alt=&quot;替代文本&quot; title=&quot;引用式图片&quot;></p>
-<h3>带链接的图片</h3>
-<pre><code class=&quot;language-markdown&quot;>[![图片](https://via.placeholder.com/150x100)](https://example.com)
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;https://example.com&quot;><img src=&quot;https://via.placeholder.com/150x100&quot; alt=&quot;图片&quot;></a></p>
-<h2>代码</h2>
-<h3>行内代码</h3>
-<pre><code class=&quot;language-markdown&quot;>这是 `行内代码` 示例。
-</code></pre>
-<p>效果展示：</p>
-<p>这是 <code>行内代码</code> 示例。</p>
-<h3>代码块</h3>
-<pre><code class=&quot;language-markdown&quot;>```javascript
-function hello() {
-    console.log(&quot;Hello, World!&quot;);
-}
-```
-</code></pre>
-<p>效果展示：</p>
-<pre><code class=&quot;language-javascript&quot;>function hello() {
-    console.log(&quot;Hello, World!&quot;);
-}
-</code></pre>
-<h3>不同语言的代码块</h3>
-<pre><code class=&quot;language-markdown&quot;>```python
-def hello():
-    print(&quot;Hello, Python!&quot;)
-```
-
-```css
-.example {
-    color: #333;
-    font-size: 16px;
-}
-```
-
-```html
-&amp;#x3C;div class=&quot;example&quot;>
-    &amp;#x3C;p>HTML 示例&amp;#x3C;/p>
-&amp;#x3C;/div>
-```
-</code></pre>
-<p>效果展示：</p>
-<pre><code class=&quot;language-python&quot;>def hello():
-    print(&quot;Hello, Python!&quot;)
-</code></pre>
-<pre><code class=&quot;language-css&quot;>.example {
-    color: #333;
-    font-size: 16px;
-}
-</code></pre>
-<pre><code class=&quot;language-html&quot;>&amp;#x3C;div class=&quot;example&quot;>
-    &amp;#x3C;p>HTML 示例&amp;#x3C;/p>
-&amp;#x3C;/div>
-</code></pre>
-<h3>无语言标识的代码块</h3>
-<pre><code>这是没有语言标识的代码块
-可以用来显示纯文本
-</code></pre>
-<h2>表格</h2>
-<h3>基本表格</h3>
-<pre><code class=&quot;language-markdown&quot;>| 标题1 | 标题2 | 标题3 |
-|-------|-------|-------|
-| 内容1 | 内容2 | 内容3 |
-| 内容4 | 内容5 | 内容6 |
-</code></pre>
-<p>效果展示：</p>
-<p>| 标题1 | 标题2 | 标题3 |
-|-------|-------|-------|
-| 内容1 | 内容2 | 内容3 |
-| 内容4 | 内容5 | 内容6 |</p>
-<h3>对齐表格</h3>
-<pre><code class=&quot;language-markdown&quot;>| 左对齐 | 居中对齐 | 右对齐 |
-|:-------|:--------:|-------:|
-| 左     | 中       | 右     |
-| 内容   | 内容     | 内容   |
-</code></pre>
-<p>效果展示：</p>
-<p>| 左对齐 | 居中对齐 | 右对齐 |
-|:-------|:--------:|-------:|
-| 左     | 中       | 右     |
-| 内容   | 内容     | 内容   |</p>
-<h3>复杂表格</h3>
-<pre><code class=&quot;language-markdown&quot;>| 功能 | 支持 | 说明 |
-|------|:----:|------|
-| **粗体** | ✅ | 完全支持 |
-| *斜体* | ✅ | 完全支持 |
-| `代码` | ✅ | 行内代码 |
-| [链接](https://example.com) | ✅ | 外部链接 |
-</code></pre>
-<p>效果展示：</p>
-<p>| 功能 | 支持 | 说明 |
-|------|:----:|------|
-| <strong>粗体</strong> | ✅ | 完全支持 |
-| <em>斜体</em> | ✅ | 完全支持 |
-| <code>代码</code> | ✅ | 行内代码 |
-| <a href=&quot;https://example.com&quot;>链接</a> | ✅ | 外部链接 |</p>
-<h2>引用</h2>
-<h3>基本引用</h3>
-<pre><code class=&quot;language-markdown&quot;>> 这是一个引用块。
-> 可以包含多行内容。
-</code></pre>
-<p>效果展示：</p>
-<blockquote>
-<p>这是一个引用块。
-可以包含多行内容。</p>
-</blockquote>
-<h3>嵌套引用</h3>
-<pre><code class=&quot;language-markdown&quot;>> 第一层引用
-> > 第二层引用
-> > > 第三层引用
-</code></pre>
-<p>效果展示：</p>
-<blockquote>
-<p>第一层引用</p>
-<blockquote>
-<p>第二层引用</p>
-<blockquote>
-<p>第三层引用</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h3>引用中的其他元素</h3>
-<pre><code class=&quot;language-markdown&quot;>> ## 引用中的标题
-> 
-> 引用中可以包含：
-> - 列表项
-> - **粗体文本**
-> - `代码`
-> 
-> ```javascript
-> // 甚至代码块
-> console.log(&quot;Hello&quot;);
-> ```
-</code></pre>
-<p>效果展示：</p>
-<blockquote>
-<h2>引用中的标题</h2>
-<p>引用中可以包含：</p>
-<ul>
-<li>列表项</li>
-<li><strong>粗体文本</strong></li>
-<li><code>代码</code></li>
-</ul>
-<pre><code class=&quot;language-javascript&quot;>// 甚至代码块
-console.log(&quot;Hello&quot;);
-</code></pre>
-</blockquote>
-<h2>分割线</h2>
-<pre><code class=&quot;language-markdown&quot;>---
-***
-___
-</code></pre>
-<p>效果展示：</p>
-<hr>
-<hr>
-<hr>
-<h2>特殊字符</h2>
-<h3>转义字符</h3>
-<pre><code class=&quot;language-markdown&quot;>\* 不是斜体
-\# 不是标题
-\` 不是代码
-\\ 反斜杠
-</code></pre>
-<p>效果展示：</p>
-<p>* 不是斜体<br>
-# 不是标题<br>
-` 不是代码<br>
-\ 反斜杠</p>
-<h3>特殊符号</h3>
-<pre><code class=&quot;language-markdown&quot;>版权符号: &amp;#x26;copy;
-注册商标: &amp;#x26;reg;
-商标符号: &amp;#x26;trade;
-小于号: &amp;#x26;lt;
-大于号: &amp;#x26;gt;
-和号: &amp;#x26;amp;
-</code></pre>
-<p>效果展示：</p>
-<p>版权符号: ©<br>
-注册商标: ®<br>
-商标符号: ™<br>
-小于号: &amp;#x3C;<br>
-大于号: ><br>
-和号: &amp;#x26;</p>
-<h2>HTML标签</h2>
-<h3>基本HTML标签</h3>
-<pre><code class=&quot;language-markdown&quot;>&amp;#x3C;strong>强调文本&amp;#x3C;/strong>
-&amp;#x3C;em>斜体文本&amp;#x3C;/em>
-&amp;#x3C;mark>高亮文本&amp;#x3C;/mark>
-&amp;#x3C;small>小号文本&amp;#x3C;/small>
-</code></pre>
-<p>效果展示：</p>
-<p><strong>强调文本</strong><br>
-<em>斜体文本</em><br>
-<mark>高亮文本</mark><br>
-<small>小号文本</small></p>
-<h3>键盘按键</h3>
-<pre><code class=&quot;language-markdown&quot;>按 &amp;#x3C;kbd>Ctrl&amp;#x3C;/kbd> + &amp;#x3C;kbd>C&amp;#x3C;/kbd> 复制
-按 &amp;#x3C;kbd>Ctrl&amp;#x3C;/kbd> + &amp;#x3C;kbd>V&amp;#x3C;/kbd> 粘贴
-</code></pre>
-<p>效果展示：</p>
-<p>按 <kbd>Ctrl</kbd> + <kbd>C</kbd> 复制<br>
-按 <kbd>Ctrl</kbd> + <kbd>V</kbd> 粘贴</p>
-<h3>详情折叠</h3>
-<pre><code class=&quot;language-markdown&quot;>&amp;#x3C;details>
-&amp;#x3C;summary>点击展开详情&amp;#x3C;/summary>
-
-这里是折叠的内容。
-
-- 可以包含列表
-- **格式化文本**
-- `代码`
-
-```javascript
-console.log(&quot;甚至代码块&quot;);
-</code></pre>
-</details>
-```
-<p>效果展示：</p>
-<details>
-<summary>点击展开详情</summary>
-<p>这里是折叠的内容。</p>
-<ul>
-<li>可以包含列表</li>
-<li><strong>格式化文本</strong></li>
-<li><code>代码</code></li>
-</ul>
-<pre><code class=&quot;language-javascript&quot;>console.log(&quot;甚至代码块&quot;);
-</code></pre>
-</details>
-<h2>注意事项和限制</h2>
-<h3>1. 空行的重要性</h3>
-<ul>
-<li>列表项之间需要空行来分隔不同的列表</li>
-<li>代码块前后需要空行</li>
-<li>引用块前后建议添加空行</li>
-</ul>
-<h3>2. 缩进规则</h3>
-<ul>
-<li>列表的子项目需要正确缩进（2或4个空格）</li>
-<li>代码块的缩进会被保留</li>
-</ul>
-<h3>3. 特殊情况</h3>
-<ul>
-<li>表格中的管道符 <code>|</code> 需要转义：<code>\|</code></li>
-<li>在代码块中显示三个反引号需要使用四个反引号包围</li>
-</ul>
-<h3>4. 最佳实践</h3>
-<ul>
-<li>使用一致的列表标记（建议使用 <code>-</code>）</li>
-<li>为图片添加有意义的替代文本</li>
-<li>为链接添加描述性文本</li>
-<li>保持文档结构清晰</li>
-</ul>
-<h2>兼容性说明</h2>
-<p>本平台基于标准 Markdown 语法，支持：</p>
-<ul>
-<li>✅ CommonMark 标准</li>
-<li>✅ GitHub Flavored Markdown (GFM)</li>
-<li>✅ 基本 HTML 标签</li>
-<li>✅ 语法高亮代码块</li>
-<li>✅ 表格扩展</li>
-<li>✅ 任务列表</li>
-<li>✅ 删除线</li>
-</ul>
-<hr>
-<p><em>本文档会持续更新，如发现问题或有建议，欢迎反馈。</em></p>
-"><meta property="og:url" content="https://n2g.cn/posts/markdown-reference/"><meta property="og:image" content="https://n2g.cn/"><!-- Article Published/Modified time --><meta property="article:published_time" content="2025-01-20T10:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://n2g.cn/posts/markdown-reference/"><meta property="twitter:title" content="Markdown 语法参考文档 | Xio's"><meta property="twitter:description" content="<h1>Markdown 语法参考文档</h1>
-<p>本文档展示了本博客平台支持的所有 Markdown 语法元素，每个语法都包含工作示例和说明。</p>
-<h2>目录</h2>
-<ul>
-<li><a href=&quot;#%E6%A0%87%E9%A2%98&quot;>标题</a></li>
-<li><a href=&quot;#%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F&quot;>文本格式</a></li>
-<li><a href=&quot;#%E5%88%97%E8%A1%A8&quot;>列表</a></li>
-<li><a href=&quot;#%E9%93%BE%E6%8E%A5&quot;>链接</a></li>
-<li><a href=&quot;#%E5%9B%BE%E7%89%87&quot;>图片</a></li>
-<li><a href=&quot;#%E4%BB%A3%E7%A0%81&quot;>代码</a></li>
-<li><a href=&quot;#%E8%A1%A8%E6%A0%BC&quot;>表格</a></li>
-<li><a href=&quot;#%E5%BC%95%E7%94%A8&quot;>引用</a></li>
-<li><a href=&quot;#%E5%88%86%E5%89%B2%E7%BA%BF&quot;>分割线</a></li>
-<li><a href=&quot;#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6&quot;>特殊字符</a></li>
-<li><a href=&quot;#html%E6%A0%87%E7%AD%BE&quot;>HTML标签</a></li>
-</ul>
-<h2>标题</h2>
-<p>Markdown 支持六级标题，使用 <code>#</code> 符号：</p>
-<pre><code class=&quot;language-markdown&quot;># 一级标题
-## 二级标题
-### 三级标题
-#### 四级标题
-##### 五级标题
-###### 六级标题
-</code></pre>
-<p>效果展示：</p>
-<h1>一级标题示例</h1>
-<h2>二级标题示例</h2>
-<h3>三级标题示例</h3>
-<h4>四级标题示例</h4>
-<h5>五级标题示例</h5>
-<h6>六级标题示例</h6>
-<h2>文本格式</h2>
-<h3>基本格式</h3>
-<pre><code class=&quot;language-markdown&quot;>**粗体文本**
-*斜体文本*
-***粗斜体文本***
-~~删除线文本~~
-`行内代码`
-</code></pre>
-<p>效果展示：</p>
-<p><strong>粗体文本</strong><br>
-<em>斜体文本</em><br>
-<em><strong>粗斜体文本</strong></em><br>
-~~删除线文本~~<br>
-<code>行内代码</code></p>
-<h3>下划线和上标下标</h3>
-<pre><code class=&quot;language-markdown&quot;>&amp;#x3C;u>下划线文本&amp;#x3C;/u>
-X&amp;#x3C;sup>2&amp;#x3C;/sup> (上标)
-H&amp;#x3C;sub>2&amp;#x3C;/sub>O (下标)
-</code></pre>
-<p>效果展示：</p>
-<p><u>下划线文本</u><br>
-X<sup>2</sup> (上标)<br>
-H<sub>2</sub>O (下标)</p>
-<h2>列表</h2>
-<h3>无序列表</h3>
-<pre><code class=&quot;language-markdown&quot;>- 项目一
-- 项目二
-  - 子项目一
-  - 子项目二
-    - 子子项目
-- 项目三
-
-* 使用星号
-+ 使用加号
-</code></pre>
-<p>效果展示：</p>
-<ul>
-<li>项目一</li>
-<li>项目二
-<ul>
-<li>子项目一</li>
-<li>子项目二
-<ul>
-<li>子子项目</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>项目三</li>
-</ul>
-<ul>
-<li>使用星号</li>
-</ul>
-<ul>
-<li>使用加号</li>
-</ul>
-<h3>有序列表</h3>
-<pre><code class=&quot;language-markdown&quot;>1. 第一项
-2. 第二项
-   1. 子项目一
-   2. 子项目二
-3. 第三项
-</code></pre>
-<p>效果展示：</p>
-<ol>
-<li>第一项</li>
-<li>第二项
-<ol>
-<li>子项目一</li>
-<li>子项目二</li>
-</ol>
-</li>
-<li>第三项</li>
-</ol>
-<h3>任务列表</h3>
-<pre><code class=&quot;language-markdown&quot;>- [x] 已完成任务
-- [ ] 未完成任务
-- [x] 另一个已完成任务
-</code></pre>
-<p>效果展示：</p>
-<ul>
-<li>[x] 已完成任务</li>
-<li>[ ] 未完成任务</li>
-<li>[x] 另一个已完成任务</li>
-</ul>
-<h2>链接</h2>
-<h3>基本链接</h3>
-<pre><code class=&quot;language-markdown&quot;>[链接文本](https://example.com)
-[带标题的链接](https://example.com &quot;这是标题&quot;)
-&amp;#x3C;https://example.com>
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;https://example.com&quot;>链接文本</a><br>
-<a href=&quot;https://example.com&quot; title=&quot;这是标题&quot;>带标题的链接</a><br>
-<a href=&quot;https://example.com&quot;>https://example.com</a></p>
-<h3>引用式链接</h3>
-<pre><code class=&quot;language-markdown&quot;>[引用式链接][1]
-[另一个引用][link-ref]
-
-[1]: https://example.com
-[link-ref]: https://example.com &quot;可选标题&quot;
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;https://example.com&quot;>引用式链接</a><br>
-<a href=&quot;https://example.com&quot; title=&quot;可选标题&quot;>另一个引用</a></p>
-<h3>内部链接</h3>
-<pre><code class=&quot;language-markdown&quot;>[跳转到标题](#标题)
-[跳转到代码部分](#代码)
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;#%E6%A0%87%E9%A2%98&quot;>跳转到标题</a><br>
-<a href=&quot;#%E4%BB%A3%E7%A0%81&quot;>跳转到代码部分</a></p>
-<h2>图片</h2>
-<h3>基本图片</h3>
-<pre><code class=&quot;language-markdown&quot;>![替代文本](https://via.placeholder.com/300x200 &quot;图片标题&quot;)
-</code></pre>
-<p>效果展示：</p>
-<p><img src=&quot;https://via.placeholder.com/300x200&quot; alt=&quot;替代文本&quot; title=&quot;图片标题&quot;></p>
-<h3>引用式图片</h3>
-<pre><code class=&quot;language-markdown&quot;>![替代文本][image-ref]
-
-[image-ref]: https://via.placeholder.com/200x150 &quot;引用式图片&quot;
-</code></pre>
-<p>效果展示：</p>
-<p><img src=&quot;https://via.placeholder.com/200x150&quot; alt=&quot;替代文本&quot; title=&quot;引用式图片&quot;></p>
-<h3>带链接的图片</h3>
-<pre><code class=&quot;language-markdown&quot;>[![图片](https://via.placeholder.com/150x100)](https://example.com)
-</code></pre>
-<p>效果展示：</p>
-<p><a href=&quot;https://example.com&quot;><img src=&quot;https://via.placeholder.com/150x100&quot; alt=&quot;图片&quot;></a></p>
-<h2>代码</h2>
-<h3>行内代码</h3>
-<pre><code class=&quot;language-markdown&quot;>这是 `行内代码` 示例。
-</code></pre>
-<p>效果展示：</p>
-<p>这是 <code>行内代码</code> 示例。</p>
-<h3>代码块</h3>
-<pre><code class=&quot;language-markdown&quot;>```javascript
-function hello() {
-    console.log(&quot;Hello, World!&quot;);
-}
-```
-</code></pre>
-<p>效果展示：</p>
-<pre><code class=&quot;language-javascript&quot;>function hello() {
-    console.log(&quot;Hello, World!&quot;);
-}
-</code></pre>
-<h3>不同语言的代码块</h3>
-<pre><code class=&quot;language-markdown&quot;>```python
-def hello():
-    print(&quot;Hello, Python!&quot;)
-```
-
-```css
-.example {
-    color: #333;
-    font-size: 16px;
-}
-```
-
-```html
-&amp;#x3C;div class=&quot;example&quot;>
-    &amp;#x3C;p>HTML 示例&amp;#x3C;/p>
-&amp;#x3C;/div>
-```
-</code></pre>
-<p>效果展示：</p>
-<pre><code class=&quot;language-python&quot;>def hello():
-    print(&quot;Hello, Python!&quot;)
-</code></pre>
-<pre><code class=&quot;language-css&quot;>.example {
-    color: #333;
-    font-size: 16px;
-}
-</code></pre>
-<pre><code class=&quot;language-html&quot;>&amp;#x3C;div class=&quot;example&quot;>
-    &amp;#x3C;p>HTML 示例&amp;#x3C;/p>
-&amp;#x3C;/div>
-</code></pre>
-<h3>无语言标识的代码块</h3>
-<pre><code>这是没有语言标识的代码块
-可以用来显示纯文本
-</code></pre>
-<h2>表格</h2>
-<h3>基本表格</h3>
-<pre><code class=&quot;language-markdown&quot;>| 标题1 | 标题2 | 标题3 |
-|-------|-------|-------|
-| 内容1 | 内容2 | 内容3 |
-| 内容4 | 内容5 | 内容6 |
-</code></pre>
-<p>效果展示：</p>
-<p>| 标题1 | 标题2 | 标题3 |
-|-------|-------|-------|
-| 内容1 | 内容2 | 内容3 |
-| 内容4 | 内容5 | 内容6 |</p>
-<h3>对齐表格</h3>
-<pre><code class=&quot;language-markdown&quot;>| 左对齐 | 居中对齐 | 右对齐 |
-|:-------|:--------:|-------:|
-| 左     | 中       | 右     |
-| 内容   | 内容     | 内容   |
-</code></pre>
-<p>效果展示：</p>
-<p>| 左对齐 | 居中对齐 | 右对齐 |
-|:-------|:--------:|-------:|
-| 左     | 中       | 右     |
-| 内容   | 内容     | 内容   |</p>
-<h3>复杂表格</h3>
-<pre><code class=&quot;language-markdown&quot;>| 功能 | 支持 | 说明 |
-|------|:----:|------|
-| **粗体** | ✅ | 完全支持 |
-| *斜体* | ✅ | 完全支持 |
-| `代码` | ✅ | 行内代码 |
-| [链接](https://example.com) | ✅ | 外部链接 |
-</code></pre>
-<p>效果展示：</p>
-<p>| 功能 | 支持 | 说明 |
-|------|:----:|------|
-| <strong>粗体</strong> | ✅ | 完全支持 |
-| <em>斜体</em> | ✅ | 完全支持 |
-| <code>代码</code> | ✅ | 行内代码 |
-| <a href=&quot;https://example.com&quot;>链接</a> | ✅ | 外部链接 |</p>
-<h2>引用</h2>
-<h3>基本引用</h3>
-<pre><code class=&quot;language-markdown&quot;>> 这是一个引用块。
-> 可以包含多行内容。
-</code></pre>
-<p>效果展示：</p>
-<blockquote>
-<p>这是一个引用块。
-可以包含多行内容。</p>
-</blockquote>
-<h3>嵌套引用</h3>
-<pre><code class=&quot;language-markdown&quot;>> 第一层引用
-> > 第二层引用
-> > > 第三层引用
-</code></pre>
-<p>效果展示：</p>
-<blockquote>
-<p>第一层引用</p>
-<blockquote>
-<p>第二层引用</p>
-<blockquote>
-<p>第三层引用</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h3>引用中的其他元素</h3>
-<pre><code class=&quot;language-markdown&quot;>> ## 引用中的标题
-> 
-> 引用中可以包含：
-> - 列表项
-> - **粗体文本**
-> - `代码`
-> 
-> ```javascript
-> // 甚至代码块
-> console.log(&quot;Hello&quot;);
-> ```
-</code></pre>
-<p>效果展示：</p>
-<blockquote>
-<h2>引用中的标题</h2>
-<p>引用中可以包含：</p>
-<ul>
-<li>列表项</li>
-<li><strong>粗体文本</strong></li>
-<li><code>代码</code></li>
-</ul>
-<pre><code class=&quot;language-javascript&quot;>// 甚至代码块
-console.log(&quot;Hello&quot;);
-</code></pre>
-</blockquote>
-<h2>分割线</h2>
-<pre><code class=&quot;language-markdown&quot;>---
-***
-___
-</code></pre>
-<p>效果展示：</p>
-<hr>
-<hr>
-<hr>
-<h2>特殊字符</h2>
-<h3>转义字符</h3>
-<pre><code class=&quot;language-markdown&quot;>\* 不是斜体
-\# 不是标题
-\` 不是代码
-\\ 反斜杠
-</code></pre>
-<p>效果展示：</p>
-<p>* 不是斜体<br>
-# 不是标题<br>
-` 不是代码<br>
-\ 反斜杠</p>
-<h3>特殊符号</h3>
-<pre><code class=&quot;language-markdown&quot;>版权符号: &amp;#x26;copy;
-注册商标: &amp;#x26;reg;
-商标符号: &amp;#x26;trade;
-小于号: &amp;#x26;lt;
-大于号: &amp;#x26;gt;
-和号: &amp;#x26;amp;
-</code></pre>
-<p>效果展示：</p>
-<p>版权符号: ©<br>
-注册商标: ®<br>
-商标符号: ™<br>
-小于号: &amp;#x3C;<br>
-大于号: ><br>
-和号: &amp;#x26;</p>
-<h2>HTML标签</h2>
-<h3>基本HTML标签</h3>
-<pre><code class=&quot;language-markdown&quot;>&amp;#x3C;strong>强调文本&amp;#x3C;/strong>
-&amp;#x3C;em>斜体文本&amp;#x3C;/em>
-&amp;#x3C;mark>高亮文本&amp;#x3C;/mark>
-&amp;#x3C;small>小号文本&amp;#x3C;/small>
-</code></pre>
-<p>效果展示：</p>
-<p><strong>强调文本</strong><br>
-<em>斜体文本</em><br>
-<mark>高亮文本</mark><br>
-<small>小号文本</small></p>
-<h3>键盘按键</h3>
-<pre><code class=&quot;language-markdown&quot;>按 &amp;#x3C;kbd>Ctrl&amp;#x3C;/kbd> + &amp;#x3C;kbd>C&amp;#x3C;/kbd> 复制
-按 &amp;#x3C;kbd>Ctrl&amp;#x3C;/kbd> + &amp;#x3C;kbd>V&amp;#x3C;/kbd> 粘贴
-</code></pre>
-<p>效果展示：</p>
-<p>按 <kbd>Ctrl</kbd> + <kbd>C</kbd> 复制<br>
-按 <kbd>Ctrl</kbd> + <kbd>V</kbd> 粘贴</p>
-<h3>详情折叠</h3>
-<pre><code class=&quot;language-markdown&quot;>&amp;#x3C;details>
-&amp;#x3C;summary>点击展开详情&amp;#x3C;/summary>
-
-这里是折叠的内容。
-
-- 可以包含列表
-- **格式化文本**
-- `代码`
-
-```javascript
-console.log(&quot;甚至代码块&quot;);
-</code></pre>
-</details>
-```
-<p>效果展示：</p>
-<details>
-<summary>点击展开详情</summary>
-<p>这里是折叠的内容。</p>
-<ul>
-<li>可以包含列表</li>
-<li><strong>格式化文本</strong></li>
-<li><code>代码</code></li>
-</ul>
-<pre><code class=&quot;language-javascript&quot;>console.log(&quot;甚至代码块&quot;);
-</code></pre>
-</details>
-<h2>注意事项和限制</h2>
-<h3>1. 空行的重要性</h3>
-<ul>
-<li>列表项之间需要空行来分隔不同的列表</li>
-<li>代码块前后需要空行</li>
-<li>引用块前后建议添加空行</li>
-</ul>
-<h3>2. 缩进规则</h3>
-<ul>
-<li>列表的子项目需要正确缩进（2或4个空格）</li>
-<li>代码块的缩进会被保留</li>
-</ul>
-<h3>3. 特殊情况</h3>
-<ul>
-<li>表格中的管道符 <code>|</code> 需要转义：<code>\|</code></li>
-<li>在代码块中显示三个反引号需要使用四个反引号包围</li>
-</ul>
-<h3>4. 最佳实践</h3>
-<ul>
-<li>使用一致的列表标记（建议使用 <code>-</code>）</li>
-<li>为图片添加有意义的替代文本</li>
-<li>为链接添加描述性文本</li>
-<li>保持文档结构清晰</li>
-</ul>
-<h2>兼容性说明</h2>
-<p>本平台基于标准 Markdown 语法，支持：</p>
-<ul>
-<li>✅ CommonMark 标准</li>
-<li>✅ GitHub Flavored Markdown (GFM)</li>
-<li>✅ 基本 HTML 标签</li>
-<li>✅ 语法高亮代码块</li>
-<li>✅ 表格扩展</li>
-<li>✅ 任务列表</li>
-<li>✅ 删除线</li>
-</ul>
-<hr>
-<p><em>本文档会持续更新，如发现问题或有建议，欢迎反馈。</em></p>
-"><meta property="twitter:image" content="https://n2g.cn/"><!-- Reference typography --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Noto+Sans+SC:wght@400;500;600;700;800&amp;family=Noto+Serif+SC:wght@400;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"><!-- Self-hosted OPPO Sans 4.0 (primary body font). Falls back to Noto Sans SC /
-         Plus Jakarta Sans automatically if these woff2 subsets fail to load. --><link rel="stylesheet" href="/fonts/OPPO_Sans_4/result.css"><meta name="theme-color" content="#fbfcfb"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script>(function(){try{var e=localStorage.getItem("theme"),t=e==="light"||e==="dark"?e:window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t),document.documentElement.style.colorScheme=t}catch{document.documentElement.setAttribute("data-theme","light")}})();
-</script><script src="/toggle-theme.js"></script><link rel="stylesheet" href="/_astro/index.tAVty8tb.css">
-<style>.link-btn[data-astro-cid-5eunqzkt]{display:inline-block;text-decoration:none;color:var(--color-text-primary);transition:color var(--transition-fast)}a[data-astro-cid-5eunqzkt].link-btn:hover{color:var(--color-primary-500)}
-.tag-item[data-astro-cid-blwjyjpt]{display:inline-block;list-style:none}.tag-sm[data-astro-cid-blwjyjpt]{margin:.25rem 0}.tag-lg[data-astro-cid-blwjyjpt]{margin:.75rem .25rem}.tag-link[data-astro-cid-blwjyjpt]{position:relative;color:var(--color-text-primary);-webkit-text-decoration:underline dashed;text-decoration:underline dashed;text-underline-offset:4px;transition:color var(--transition-fast),transform var(--transition-fast);font-size:.875rem}.tag-lg[data-astro-cid-blwjyjpt] .tag-link[data-astro-cid-blwjyjpt]{font-size:1.125rem}.tag-link[data-astro-cid-blwjyjpt]:hover{color:var(--color-primary-500);transform:translateY(-1px)}.tag-icon[data-astro-cid-blwjyjpt]{width:1.2rem;height:1.2rem;margin-right:.2rem;vertical-align:middle;opacity:.7;fill:var(--color-text-primary);transition:fill var(--transition-fast)}.tag-link[data-astro-cid-blwjyjpt]:hover .tag-icon[data-astro-cid-blwjyjpt]{fill:var(--color-primary-500)}
-.pagination-wrapper{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:1.5rem 0}.page-btn{display:inline-flex;min-width:38px;height:38px;align-items:center;justify-content:center;-webkit-user-select:none;-moz-user-select:none;user-select:none;padding:.35rem .7rem;border:1px solid var(--color-border-default);border-radius:var(--radius-md);color:var(--color-text-secondary);background:var(--color-bg-surface);font-size:.9rem;transition:color var(--transition-fast),border-color var(--transition-fast),background-color var(--transition-fast),transform var(--transition-fast)}.page-btn:hover:not(.disabled){color:var(--color-primary-500);border-color:var(--color-border-primary);background:var(--color-bg-surface-elevated)}.page-btn.active{border-color:var(--color-action-bg);background:var(--color-action-bg);color:var(--color-action-text);font-weight:600}.page-btn.disabled{opacity:.4;cursor:not-allowed;pointer-events:none}.prev-btn{margin-right:.6rem}.next-btn{margin-left:.6rem}
-@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0}}@keyframes astroFadeOut{to{opacity:0}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
-.waline-container[data-astro-cid-ksttp56e]{margin:2em 0;padding:1em 0;border-top:1px solid var(--color-border-subtle)}
-</style><script type="module" src="/_astro/hoisted.uILKiLqr.js"></script><style>[data-astro-transition-scope=astro-fam6wyqg-1]{view-transition-name:markdown-reference}@layer astro{::view-transition-old(markdown-reference){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}::view-transition-new(markdown-reference){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-old(markdown-reference){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-new(markdown-reference){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}}[data-astro-transition-fallback=old] [data-astro-transition-scope=astro-fam6wyqg-1],[data-astro-transition-fallback=old][data-astro-transition-scope=astro-fam6wyqg-1]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition-fallback=new] [data-astro-transition-scope=astro-fam6wyqg-1],[data-astro-transition-fallback=new][data-astro-transition-scope=astro-fam6wyqg-1]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=old] [data-astro-transition-scope=astro-fam6wyqg-1],[data-astro-transition=back][data-astro-transition-fallback=old][data-astro-transition-scope=astro-fam6wyqg-1]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=new] [data-astro-transition-scope=astro-fam6wyqg-1],[data-astro-transition=back][data-astro-transition-fallback=new][data-astro-transition-scope=astro-fam6wyqg-1]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}</style><style>[data-astro-transition-scope=astro-36ssibgs-2]{view-transition-name:markdown}@layer astro{::view-transition-old(markdown){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}::view-transition-new(markdown){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-old(markdown){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-new(markdown){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}}[data-astro-transition-fallback=old] [data-astro-transition-scope=astro-36ssibgs-2],[data-astro-transition-fallback=old][data-astro-transition-scope=astro-36ssibgs-2]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition-fallback=new] [data-astro-transition-scope=astro-36ssibgs-2],[data-astro-transition-fallback=new][data-astro-transition-scope=astro-36ssibgs-2]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=old] [data-astro-transition-scope=astro-36ssibgs-2],[data-astro-transition=back][data-astro-transition-fallback=old][data-astro-transition-scope=astro-36ssibgs-2]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=new] [data-astro-transition-scope=astro-36ssibgs-2],[data-astro-transition=back][data-astro-transition-fallback=new][data-astro-transition-scope=astro-36ssibgs-2]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}</style><style>[data-astro-transition-scope="astro-36ssibgs-3"] { view-transition-name: ; }@layer astro { ::view-transition-old() { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeOut; }::view-transition-new() { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old() { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new() { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
-			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
-			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
-			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
-			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-4"] { view-transition-name: ; }@layer astro { ::view-transition-old() { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeOut; }::view-transition-new() { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old() { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new() { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
-			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
-			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
-			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
-			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
-	animation-duration: 180ms;
-	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
-	animation-fill-mode: both;
-	animation-name: astroFadeIn; }</style></head> <body>  <header data-site-header=""> <div class="content top-nav-wrap"> <a href="/" class="logo" aria-label="Xio's 首页"> <span class="logo-text">Xio's</span> <span class="logo-slogan">一切从简，记录生活。</span> </a> <nav id="nav-menu" aria-label="主导航"> <ul id="menu-items"> <li> <a href="/" class=""> 首页 </a> </li><li> <a href="/archive/" class=""> 归档 </a> </li><li> <a href="/links/" class=""> 友链 </a> </li><li> <a href="/about/" class=""> 关于 </a> </li> </ul> <a class="theme-btn" href="/search/" aria-label="搜索" title="搜索"> <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="11" cy="11" r="8"></circle> <path d="m21 21-4.35-4.35"></path> </svg> </a> <button id="theme-btn" class="theme-btn" type="button" aria-label="切换明暗模式" aria-pressed="false" title="切换明暗模式"> <svg class="sun" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="5"></circle> <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path> </svg> <svg class="moon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> <button id="hamburger-menu" class="hamburger-menu" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="menu-items"> <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M3 6h18M3 12h18M3 18h18"></path> </svg> </button> </nav> </div> </header>  <main id="main-content" class="content"> <div class="date-box post-date"><time class="text-sm" datetime="2025-01-20T10:00:00.000Z">Jan 20, 2025</time></div> <h1 class="post-title" data-astro-transition-scope="astro-fam6wyqg-1">Markdown 语法参考文档</h1> <article id="article" role="article" class="post-content"> <h1 id="markdown-语法参考文档">Markdown 语法参考文档</h1>
+<!DOCTYPE html><html lang="zh-CN" class="scroll-smooth"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://n2g.cn/posts/markdown-reference/"><meta name="generator" content="Astro v7.1.3"><!-- General Meta Tags --><title>Markdown 语法参考文档 | Xio&#39;s</title><meta name="title" content="Markdown 语法参考文档 | Xio's"><meta name="description" content="完整的 Markdown 语法参考文档，展示本平台支持的所有格式化元素和语法示例。"><meta name="author" content="Xio"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="Markdown 语法参考文档 | Xio's"><meta property="og:description" content="完整的 Markdown 语法参考文档，展示本平台支持的所有格式化元素和语法示例。"><meta property="og:url" content="https://n2g.cn/posts/markdown-reference/"><meta property="og:image" content="https://n2g.cn/"><!-- Article Published/Modified time --><meta property="article:published_time" content="2025-01-20T10:00:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://n2g.cn/posts/markdown-reference/"><meta property="twitter:title" content="Markdown 语法参考文档 | Xio's"><meta property="twitter:description" content="完整的 Markdown 语法参考文档，展示本平台支持的所有格式化元素和语法示例。"><meta property="twitter:image" content="https://n2g.cn/"><meta name="theme-color" content="#fbfcfb"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.aQfDf-Kh.js"></script><script>(function(){try{var e=localStorage.getItem("theme"),t=e==="light"||e==="dark"?e:window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t),document.documentElement.style.colorScheme=t}catch{document.documentElement.setAttribute("data-theme","light")}})();
+</script><script src="/toggle-theme.js"></script><style>.link-btn[data-astro-cid-c75bxee4]{color:var(--color-text-primary);transition:color var(--transition-fast);text-decoration:none;display:inline-block}a[data-astro-cid-c75bxee4].link-btn:hover{color:var(--color-primary-500)}</style><link rel="stylesheet" href="/_astro/Footer.B_YpITL0.css"><style>.pagination-wrapper{justify-content:center;align-items:center;gap:.4rem;padding:1.5rem 0;display:flex}.page-btn{user-select:none;border:1px solid var(--color-border-default);border-radius:var(--radius-md);min-width:38px;height:38px;color:var(--color-text-secondary);background:var(--color-bg-surface);transition:color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);justify-content:center;align-items:center;padding:.35rem .7rem;font-size:.9rem;display:inline-flex}.page-btn:hover:not(.disabled){color:var(--color-primary-500);border-color:var(--color-border-primary);background:var(--color-bg-surface-elevated)}.page-btn.active{border-color:var(--color-action-bg);background:var(--color-action-bg);color:var(--color-action-text);font-weight:600}.page-btn.disabled{opacity:.4;cursor:not-allowed;pointer-events:none}.prev-btn{margin-right:.6rem}.next-btn{margin-left:.6rem}
+@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*),[data-astro-transition-scope]{animation:none!important}}
+.tag-item[data-astro-cid-7t72llso]{list-style:none;display:inline-block}.tag-sm[data-astro-cid-7t72llso]{margin:.25rem 0}.tag-lg[data-astro-cid-7t72llso]{margin:.75rem .25rem}.tag-link[data-astro-cid-7t72llso]{color:var(--color-text-primary);text-underline-offset:4px;transition:color var(--transition-fast), transform var(--transition-fast);font-size:.875rem;text-decoration:underline dashed;position:relative}.tag-lg[data-astro-cid-7t72llso] .tag-link[data-astro-cid-7t72llso]{font-size:1.125rem}.tag-link[data-astro-cid-7t72llso]:hover{color:var(--color-primary-500);transform:translateY(-1px)}.tag-icon[data-astro-cid-7t72llso]{vertical-align:middle;opacity:.7;width:1.2rem;height:1.2rem;fill:var(--color-text-primary);transition:fill var(--transition-fast);margin-right:.2rem}.tag-link[data-astro-cid-7t72llso]:hover .tag-icon[data-astro-cid-7t72llso]{fill:var(--color-primary-500)}
+</style><link rel="stylesheet" href="/_astro/Comment.p6dKNY6Y.css"><style>html.lightbox-open{overflow:hidden}.image-lightbox[data-astro-cid-ot6ntcxl]{color:#edf3ef;background:#0c110ff5;border:0;width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:clamp(3.5rem,7vw,5rem) clamp(1rem,4vw,3rem) 1.25rem}.image-lightbox[data-astro-cid-ot6ntcxl][open]{grid-template-columns:3rem minmax(0,1fr) 3rem;align-items:center;gap:clamp(.5rem,2vw,1.5rem);display:grid}.image-lightbox[data-astro-cid-ot6ntcxl]::backdrop{backdrop-filter:blur(8px);background:#080c0ad1}.lightbox-figure[data-astro-cid-ot6ntcxl]{align-content:center;min-width:0;height:100%;margin:0;display:grid}.lightbox-image[data-astro-cid-ot6ntcxl]{border-radius:var(--radius-md);object-fit:contain;width:auto;max-width:100%;height:auto;max-height:calc(100dvh - 8.5rem);margin:auto;display:block;box-shadow:0 24px 70px #00000061}.lightbox-caption[data-astro-cid-ot6ntcxl]{color:#b8c5bd;text-align:center;justify-content:center;align-items:baseline;gap:1rem;min-height:2rem;padding-top:.75rem;font-size:.82rem;line-height:1.5;display:flex}[data-astro-cid-ot6ntcxl][data-lightbox-counter]{color:#7f9187;font-variant-numeric:tabular-nums;white-space:nowrap}.lightbox-close[data-astro-cid-ot6ntcxl],.lightbox-nav[data-astro-cid-ot6ntcxl]{border-radius:var(--radius-pill);color:#edf3ef;cursor:pointer;width:2.75rem;height:2.75rem;transition:background-color var(--transition-fast), transform var(--transition-fast);background:#202c26c2;border:1px solid #dfeee529;place-items:center;display:inline-grid}.lightbox-close[data-astro-cid-ot6ntcxl]:hover,.lightbox-nav[data-astro-cid-ot6ntcxl]:hover{background:#304439eb;transform:translateY(-1px)}.lightbox-close[data-astro-cid-ot6ntcxl]{z-index:2;font-size:1.65rem;line-height:1;position:absolute;top:1rem;right:1rem}.lightbox-nav[data-astro-cid-ot6ntcxl]{font-size:2rem;line-height:1}@media (width<=640px){.image-lightbox[data-astro-cid-ot6ntcxl]{padding-inline:.75rem}.image-lightbox[data-astro-cid-ot6ntcxl][open]{grid-template-columns:1fr}.lightbox-nav[data-astro-cid-ot6ntcxl]{z-index:2;position:absolute;bottom:1rem}.lightbox-prev[data-astro-cid-ot6ntcxl]{left:1rem}.lightbox-next[data-astro-cid-ot6ntcxl]{right:1rem}.lightbox-image[data-astro-cid-ot6ntcxl]{max-height:calc(100dvh - 10rem)}}@media (prefers-reduced-motion:reduce){.lightbox-close[data-astro-cid-ot6ntcxl],.lightbox-nav[data-astro-cid-ot6ntcxl]{transition:none}}</style><style>[data-astro-transition-scope=astro-eq54l3i4-1]{view-transition-name:markdown-reference}@layer astro{::view-transition-old(markdown-reference){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}::view-transition-new(markdown-reference){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-old(markdown-reference){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-new(markdown-reference){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}}[data-astro-transition-fallback=old] [data-astro-transition-scope=astro-eq54l3i4-1],[data-astro-transition-fallback=old][data-astro-transition-scope=astro-eq54l3i4-1]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition-fallback=new] [data-astro-transition-scope=astro-eq54l3i4-1],[data-astro-transition-fallback=new][data-astro-transition-scope=astro-eq54l3i4-1]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=old] [data-astro-transition-scope=astro-eq54l3i4-1],[data-astro-transition=back][data-astro-transition-fallback=old][data-astro-transition-scope=astro-eq54l3i4-1]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=new] [data-astro-transition-scope=astro-eq54l3i4-1],[data-astro-transition=back][data-astro-transition-fallback=new][data-astro-transition-scope=astro-eq54l3i4-1]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}</style><style>[data-astro-transition-scope=astro-bztu2lml-2]{view-transition-name:markdown}@layer astro{::view-transition-old(markdown){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}::view-transition-new(markdown){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-old(markdown){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-new(markdown){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}}[data-astro-transition-fallback=old] [data-astro-transition-scope=astro-bztu2lml-2],[data-astro-transition-fallback=old][data-astro-transition-scope=astro-bztu2lml-2]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition-fallback=new] [data-astro-transition-scope=astro-bztu2lml-2],[data-astro-transition-fallback=new][data-astro-transition-scope=astro-bztu2lml-2]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=old] [data-astro-transition-scope=astro-bztu2lml-2],[data-astro-transition=back][data-astro-transition-fallback=old][data-astro-transition-scope=astro-bztu2lml-2]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=new] [data-astro-transition-scope=astro-bztu2lml-2],[data-astro-transition=back][data-astro-transition-fallback=new][data-astro-transition-scope=astro-bztu2lml-2]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}</style><style>[data-astro-transition-scope=astro-bztu2lml-3]{view-transition-name:文档}@layer astro{::view-transition-old(文档){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}::view-transition-new(文档){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-old(文档){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-new(文档){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}}[data-astro-transition-fallback=old] [data-astro-transition-scope=astro-bztu2lml-3],[data-astro-transition-fallback=old][data-astro-transition-scope=astro-bztu2lml-3]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition-fallback=new] [data-astro-transition-scope=astro-bztu2lml-3],[data-astro-transition-fallback=new][data-astro-transition-scope=astro-bztu2lml-3]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=old] [data-astro-transition-scope=astro-bztu2lml-3],[data-astro-transition=back][data-astro-transition-fallback=old][data-astro-transition-scope=astro-bztu2lml-3]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=new] [data-astro-transition-scope=astro-bztu2lml-3],[data-astro-transition=back][data-astro-transition-fallback=new][data-astro-transition-scope=astro-bztu2lml-3]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}</style><style>[data-astro-transition-scope=astro-bztu2lml-4]{view-transition-name:参考}@layer astro{::view-transition-old(参考){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}::view-transition-new(参考){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-old(参考){animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back]::view-transition-new(参考){animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}}[data-astro-transition-fallback=old] [data-astro-transition-scope=astro-bztu2lml-4],[data-astro-transition-fallback=old][data-astro-transition-scope=astro-bztu2lml-4]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition-fallback=new] [data-astro-transition-scope=astro-bztu2lml-4],[data-astro-transition-fallback=new][data-astro-transition-scope=astro-bztu2lml-4]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=old] [data-astro-transition-scope=astro-bztu2lml-4],[data-astro-transition=back][data-astro-transition-fallback=old][data-astro-transition-scope=astro-bztu2lml-4]{animation-name:astroFadeOut;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}[data-astro-transition=back][data-astro-transition-fallback=new] [data-astro-transition-scope=astro-bztu2lml-4],[data-astro-transition=back][data-astro-transition-fallback=new][data-astro-transition-scope=astro-bztu2lml-4]{animation-name:astroFadeIn;animation-duration:.18s;animation-timing-function:cubic-bezier(.76,0,.24,1);animation-fill-mode:both}</style></head><body><header data-site-header><div class="content top-nav-wrap"><a href="/" class="logo" aria-label="Xio's 首页"><span class="logo-text">Xio's</span><span class="logo-slogan">一切从简，记录生活。</span></a><nav id="nav-menu" aria-label="主导航"><ul id="menu-items"><li><a href="/" class>首页</a></li><li><a href="/archive/" class>归档</a></li><li><a href="/links/" class>友链</a></li><li><a href="/about/" class>关于</a></li></ul><a class="theme-btn" href="/search/" aria-label="搜索" title="搜索"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg></a><button id="theme-btn" class="theme-btn" type="button" aria-label="切换明暗模式" aria-pressed="false" title="切换明暗模式"><svg class="sun" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg><svg class="moon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button><button id="hamburger-menu" class="hamburger-menu" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="menu-items"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button></nav></div></header><script type="module">function e(){let e=document.querySelector(`[data-site-header]`),t=e?.querySelector(`#hamburger-menu`),n=e?.querySelector(`#menu-items`);if(!e||!t||!n)return;window.__n2gHeaderController?.abort();let r=new AbortController;window.__n2gHeaderController=r;let i={signal:r.signal},a=e=>{n.classList.toggle(`nav-open`,e),t.setAttribute(`aria-expanded`,String(e)),t.setAttribute(`aria-label`,e?`关闭菜单`:`打开菜单`)};t.addEventListener(`click`,()=>a(t.getAttribute(`aria-expanded`)!==`true`),i),n.querySelectorAll(`a`).forEach(e=>e.addEventListener(`click`,()=>a(!1),i)),document.addEventListener(`click`,t=>{e.contains(t.target)||a(!1)},i),document.addEventListener(`keydown`,e=>{e.key===`Escape`&&a(!1)},i)}e(),document.addEventListener(`astro:page-load`,e);</script><main id="main-content" class="content"><div class="date-box post-date"><time class="text-sm" datetime="2025-01-20T10:00:00.000Z">Jan 20, 2025</time></div><h1 data-astro-transition-scope="astro-eq54l3i4-1" class="post-title">Markdown 语法参考文档</h1><article id="article" role="article" class="post-content"><h1 id="markdown-语法参考文档">Markdown 语法参考文档</h1>
 <p>本文档展示了本博客平台支持的所有 Markdown 语法元素，每个语法都包含工作示例和说明。</p>
 <h2 id="目录">目录</h2>
 <ul>
@@ -1368,12 +20,12 @@ console.log(&quot;甚至代码块&quot;);
 </ul>
 <h2 id="标题">标题</h2>
 <p>Markdown 支持六级标题，使用 <code>#</code> 符号：</p>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text);font-weight:700"># 一级标题</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text);font-weight:700">## 二级标题</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text);font-weight:700">### 三级标题</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text);font-weight:700">#### 四级标题</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text);font-weight:700">##### 五级标题</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text);font-weight:700">###### 六级标题</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground);font-weight:700"># 一级标题</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground);font-weight:700">## 二级标题</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground);font-weight:700">### 三级标题</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground);font-weight:700">#### 四级标题</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground);font-weight:700">##### 五级标题</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground);font-weight:700">###### 六级标题</span></span></code></pre>
 <p>效果展示：</p>
 <h1 id="一级标题示例">一级标题示例</h1>
 <h2 id="二级标题示例">二级标题示例</h2>
@@ -1383,10 +35,10 @@ console.log(&quot;甚至代码块&quot;);
 <h6 id="六级标题示例">六级标题示例</h6>
 <h2 id="文本格式">文本格式</h2>
 <h3 id="基本格式">基本格式</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text);font-weight:700">**粗体文本**</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text);font-style:italic">*斜体文本*</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text);font-weight:700">**</span><span style="color:var(--astro-code-color-text);font-style:italic">*粗斜体文本*</span><span style="color:var(--astro-code-color-text);font-weight:700">**</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">~~删除线文本~~</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground);font-weight:700">**粗体文本**</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground);font-style:italic">*斜体文本*</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground);font-weight:700">**</span><span style="color:var(--astro-code-foreground);font-style:italic">*粗斜体文本*</span><span style="color:var(--astro-code-foreground);font-weight:700">**</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">~~删除线文本~~</span></span>
 <span class="line"><span style="color:var(--astro-code-token-string)">`行内代码`</span></span></code></pre>
 <p>效果展示：</p>
 <p><strong>粗体文本</strong><br>
@@ -1395,24 +47,24 @@ console.log(&quot;甚至代码块&quot;);
 <del>删除线文本</del><br>
 <code>行内代码</code></p>
 <h3 id="下划线和上标下标">下划线和上标下标</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">&lt;u&gt;下划线文本&lt;/u&gt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">X&lt;sup&gt;2&lt;/sup&gt; (上标)</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">H&lt;sub&gt;2&lt;/sub&gt;O (下标)</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;u>下划线文本&#x3C;/u></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">X&#x3C;sup>2&#x3C;/sup> (上标)</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">H&#x3C;sub>2&#x3C;/sub>O (下标)</span></span></code></pre>
 <p>效果展示：</p>
 <p><u>下划线文本</u><br>
 X<sup>2</sup> (上标)<br>
 H<sub>2</sub>O (下标)</p>
 <h2 id="列表">列表</h2>
 <h3 id="无序列表">无序列表</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">- 项目一</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">- 项目二</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">  - 子项目一</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">  - 子项目二</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">    - 子子项目</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">- 项目三</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">- 项目一</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">- 项目二</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  - 子项目一</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  - 子项目二</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">    - 子子项目</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">- 项目三</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">* 使用星号</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">+ 使用加号</span></span></code></pre>
+<span class="line"><span style="color:var(--astro-code-foreground)">* 使用星号</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">+ 使用加号</span></span></code></pre>
 <p>效果展示：</p>
 <ul>
 <li>项目一</li>
@@ -1435,11 +87,11 @@ H<sub>2</sub>O (下标)</p>
 <li>使用加号</li>
 </ul>
 <h3 id="有序列表">有序列表</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">1. 第一项</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">2. 第二项</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">   1. 子项目一</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">   2. 子项目二</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">3. 第三项</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">1. 第一项</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">2. 第二项</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">   1. 子项目一</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">   2. 子项目二</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">3. 第三项</span></span></code></pre>
 <p>效果展示：</p>
 <ol>
 <li>第一项</li>
@@ -1452,106 +104,106 @@ H<sub>2</sub>O (下标)</p>
 <li>第三项</li>
 </ol>
 <h3 id="任务列表">任务列表</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">- [</span><span style="color:var(--astro-code-token-keyword)">x</span><span style="color:var(--astro-code-color-text)">] 已完成任务</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">- [ ] 未完成任务</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">- [</span><span style="color:var(--astro-code-token-keyword)">x</span><span style="color:var(--astro-code-color-text)">] 另一个已完成任务</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">- [</span><span style="color:var(--astro-code-token-keyword)">x</span><span style="color:var(--astro-code-foreground)">] 已完成任务</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">- [ ] 未完成任务</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">- [</span><span style="color:var(--astro-code-token-keyword)">x</span><span style="color:var(--astro-code-foreground)">] 另一个已完成任务</span></span></code></pre>
 <p>效果展示：</p>
 <ul class="contains-task-list">
-<li class="task-list-item"><input type="checkbox" checked="" disabled=""> 已完成任务</li>
-<li class="task-list-item"><input type="checkbox" disabled=""> 未完成任务</li>
-<li class="task-list-item"><input type="checkbox" checked="" disabled=""> 另一个已完成任务</li>
+<li class="task-list-item"><input type="checkbox" checked="checked" disabled="disabled"> 已完成任务</li>
+<li class="task-list-item"><input type="checkbox" disabled="disabled"> 未完成任务</li>
+<li class="task-list-item"><input type="checkbox" checked="checked" disabled="disabled"> 另一个已完成任务</li>
 </ul>
 <h2 id="链接">链接</h2>
 <h3 id="基本链接">基本链接</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-link);text-decoration:underline">[</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">链接文本</span><span style="color:var(--astro-code-token-link);text-decoration:underline">](https://example.com)</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-token-link);text-decoration:underline">[</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">链接文本</span><span style="color:var(--astro-code-token-link);text-decoration:underline">](https://example.com)</span></span>
 <span class="line"><span style="color:var(--astro-code-token-link);text-decoration:underline">[</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">带标题的链接</span><span style="color:var(--astro-code-token-link);text-decoration:underline">](https://example.com </span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">"</span><span style="color:var(--astro-code-token-string);text-decoration:underline">这是标题</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">"</span><span style="color:var(--astro-code-token-link);text-decoration:underline">)</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&lt;</span><span style="color:var(--astro-code-token-link)">https://example.com</span><span style="color:var(--astro-code-color-text)">&gt;</span></span></code></pre>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-link)">https://example.com</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
 <p>效果展示：</p>
 <p><a href="https://example.com">链接文本</a><br>
 <a href="https://example.com" title="这是标题">带标题的链接</a><br>
 <a href="https://example.com">https://example.com</a></p>
 <h3 id="引用式链接">引用式链接</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">[</span><span style="color:var(--astro-code-token-keyword)">引用式链接</span><span style="color:var(--astro-code-color-text)">][1]</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">[</span><span style="color:var(--astro-code-token-keyword)">另一个引用</span><span style="color:var(--astro-code-color-text)">][link-ref]</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">[</span><span style="color:var(--astro-code-token-keyword)">引用式链接</span><span style="color:var(--astro-code-foreground)">][1]</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">[</span><span style="color:var(--astro-code-token-keyword)">另一个引用</span><span style="color:var(--astro-code-foreground)">][link-ref]</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">[1]</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-link)"> https://example.com</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">[link-ref]</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-link)"> https://example.com</span><span style="color:var(--astro-code-token-keyword)"> "</span><span style="color:var(--astro-code-token-string)">可选标题</span><span style="color:var(--astro-code-token-keyword)">"</span></span></code></pre>
+<span class="line"><span style="color:var(--astro-code-foreground)">[1]</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-link)"> https://example.com</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">[link-ref]</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-link)"> https://example.com</span><span style="color:var(--astro-code-token-keyword)"> "</span><span style="color:var(--astro-code-token-string)">可选标题</span><span style="color:var(--astro-code-token-keyword)">"</span></span></code></pre>
 <p>效果展示：</p>
 <p><a href="https://example.com">引用式链接</a><br>
 <a href="https://example.com" title="可选标题">另一个引用</a></p>
 <h3 id="内部链接">内部链接</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-link);text-decoration:underline">[</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">跳转到标题</span><span style="color:var(--astro-code-token-link);text-decoration:underline">](#标题)</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-token-link);text-decoration:underline">[</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">跳转到标题</span><span style="color:var(--astro-code-token-link);text-decoration:underline">](#标题)</span></span>
 <span class="line"><span style="color:var(--astro-code-token-link);text-decoration:underline">[</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">跳转到代码部分</span><span style="color:var(--astro-code-token-link);text-decoration:underline">](#代码)</span></span></code></pre>
 <p>效果展示：</p>
 <p><a href="#%E6%A0%87%E9%A2%98">跳转到标题</a><br>
 <a href="#%E4%BB%A3%E7%A0%81">跳转到代码部分</a></p>
 <h2 id="图片">图片</h2>
 <h3 id="基本图片">基本图片</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">![</span><span style="color:var(--astro-code-token-keyword)">替代文本</span><span style="color:var(--astro-code-color-text)">]</span><span style="color:var(--astro-code-token-link)">(https://via.placeholder.com/300x200</span><span style="color:var(--astro-code-token-keyword)"> "</span><span style="color:var(--astro-code-token-string)">图片标题</span><span style="color:var(--astro-code-token-keyword)">"</span><span style="color:var(--astro-code-token-link)">)</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">![</span><span style="color:var(--astro-code-token-keyword)">替代文本</span><span style="color:var(--astro-code-foreground)">]</span><span style="color:var(--astro-code-token-link)">(https://via.placeholder.com/300x200</span><span style="color:var(--astro-code-token-keyword)"> "</span><span style="color:var(--astro-code-token-string)">图片标题</span><span style="color:var(--astro-code-token-keyword)">"</span><span style="color:var(--astro-code-token-link)">)</span></span></code></pre>
 <p>效果展示：</p>
-<p></p><figure class="photo-single"><img src="https://via.placeholder.com/300x200" alt="替代文本" loading="lazy" decoding="async"><figcaption>图片标题</figcaption></figure><p></p>
+<p></p><figure class="photo-single"><img src="https://via.placeholder.com/300x200" alt="替代文本" loading="lazy" decoding="async" tabindex="0" role="button" aria-label="查看大图：替代文本" data-responsive-image=""><figcaption>图片标题</figcaption></figure><p></p>
 <h3 id="引用式图片">引用式图片</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">![</span><span style="color:var(--astro-code-token-keyword)">替代文本</span><span style="color:var(--astro-code-color-text)">][image-ref]</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">![</span><span style="color:var(--astro-code-token-keyword)">替代文本</span><span style="color:var(--astro-code-foreground)">][image-ref]</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">[image-ref]</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-link)"> https://via.placeholder.com/200x150</span><span style="color:var(--astro-code-token-keyword)"> "</span><span style="color:var(--astro-code-token-string)">引用式图片</span><span style="color:var(--astro-code-token-keyword)">"</span></span></code></pre>
+<span class="line"><span style="color:var(--astro-code-foreground)">[image-ref]</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-link)"> https://via.placeholder.com/200x150</span><span style="color:var(--astro-code-token-keyword)"> "</span><span style="color:var(--astro-code-token-string)">引用式图片</span><span style="color:var(--astro-code-token-keyword)">"</span></span></code></pre>
 <p>效果展示：</p>
-<p></p><figure class="photo-single"><img src="https://via.placeholder.com/200x150" alt="替代文本" loading="lazy" decoding="async"><figcaption>引用式图片</figcaption></figure><p></p>
+<p></p><figure class="photo-single"><img src="https://via.placeholder.com/200x150" alt="替代文本" loading="lazy" decoding="async" tabindex="0" role="button" aria-label="查看大图：替代文本" data-responsive-image=""><figcaption>引用式图片</figcaption></figure><p></p>
 <h3 id="带链接的图片">带链接的图片</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-link);text-decoration:underline">[</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">![图片]</span><span style="color:var(--astro-code-token-link);text-decoration:underline">(https://via.placeholder.com/150x100)</span><span style="color:var(--astro-code-token-link);text-decoration:underline">](https://example.com)</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-token-link);text-decoration:underline">[</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">![图片]</span><span style="color:var(--astro-code-token-link);text-decoration:underline">(https://via.placeholder.com/150x100)</span><span style="color:var(--astro-code-token-link);text-decoration:underline">](https://example.com)</span></span></code></pre>
 <p>效果展示：</p>
-<p><a href="https://example.com"></a></p><figure class="photo-single"><a href="https://example.com"><img src="https://via.placeholder.com/150x100" alt="图片" loading="lazy" decoding="async"></a></figure><p></p>
+<p><a href="https://example.com"></a></p><figure class="photo-single"><a href="https://example.com"><img src="https://via.placeholder.com/150x100" alt="图片" loading="lazy" decoding="async" tabindex="0" role="button" aria-label="查看大图：图片" data-responsive-image=""></a></figure><p></p>
 <h2 id="代码">代码</h2>
 <h3 id="行内代码">行内代码</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">这是 </span><span style="color:var(--astro-code-token-string)">`行内代码`</span><span style="color:var(--astro-code-color-text)"> 示例。</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">这是 </span><span style="color:var(--astro-code-token-string)">`行内代码`</span><span style="color:var(--astro-code-foreground)"> 示例。</span></span></code></pre>
 <p>效果展示：</p>
 <p>这是 <code>行内代码</code> 示例。</p>
 <h3 id="代码块">代码块</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-string)">```javascript</span></span>
-<span class="line"><span style="color:var(--astro-code-token-keyword)">function</span><span style="color:var(--astro-code-token-function)"> hello</span><span style="color:var(--astro-code-color-text)">() {</span></span>
-<span class="line"><span style="color:var(--astro-code-token-constant)">    console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">"Hello, World!"</span><span style="color:var(--astro-code-color-text)">);</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">}</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-token-string)">```javascript</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">function</span><span style="color:var(--astro-code-token-function)"> hello</span><span style="color:var(--astro-code-foreground)">() {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"Hello, World!"</span><span style="color:var(--astro-code-foreground)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">}</span></span>
 <span class="line"><span style="color:var(--astro-code-token-string)">```</span></span></code></pre>
 <p>效果展示：</p>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-keyword)">function</span><span style="color:var(--astro-code-token-function)"> hello</span><span style="color:var(--astro-code-color-text)">() {</span></span>
-<span class="line"><span style="color:var(--astro-code-token-constant)">    console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">"Hello, World!"</span><span style="color:var(--astro-code-color-text)">);</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">}</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:var(--astro-code-token-keyword)">function</span><span style="color:var(--astro-code-token-function)"> hello</span><span style="color:var(--astro-code-foreground)">() {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"Hello, World!"</span><span style="color:var(--astro-code-foreground)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">}</span></span></code></pre>
 <h3 id="不同语言的代码块">不同语言的代码块</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-string)">```python</span></span>
-<span class="line"><span style="color:var(--astro-code-token-keyword)">def</span><span style="color:var(--astro-code-token-function)"> hello</span><span style="color:var(--astro-code-color-text)">():</span></span>
-<span class="line"><span style="color:var(--astro-code-token-function)">    print</span><span style="color:var(--astro-code-token-punctuation)">(</span><span style="color:var(--astro-code-token-string-expression)">"Hello, Python!"</span><span style="color:var(--astro-code-token-punctuation)">)</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-token-string)">```python</span></span>
+<span class="line"><span style="color:var(--astro-code-token-string)">def hello():</span></span>
+<span class="line"><span style="color:var(--astro-code-token-string)">    print("Hello, Python!")</span></span>
 <span class="line"><span style="color:var(--astro-code-token-string)">```</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:var(--astro-code-token-string)">```css</span></span>
-<span class="line"><span style="color:var(--astro-code-token-function)">.example</span><span style="color:var(--astro-code-color-text)"> {</span></span>
-<span class="line"><span style="color:var(--astro-code-token-constant)">    color</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> #333</span><span style="color:var(--astro-code-color-text)">;</span></span>
-<span class="line"><span style="color:var(--astro-code-token-constant)">    font-size</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> 16</span><span style="color:var(--astro-code-token-keyword)">px</span><span style="color:var(--astro-code-color-text)">;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">}</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">.example</span><span style="color:var(--astro-code-foreground)"> {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    color</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> #333</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    font-size</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> 16</span><span style="color:var(--astro-code-token-keyword)">px</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">}</span></span>
 <span class="line"><span style="color:var(--astro-code-token-string)">```</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:var(--astro-code-token-string)">```html</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&lt;</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"example"</span><span style="color:var(--astro-code-color-text)">&gt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">    &lt;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-color-text)">&gt;HTML 示例&lt;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-color-text)">&gt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&lt;/</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-color-text)">&gt;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-string)">&#x3C;div class="example"></span></span>
+<span class="line"><span style="color:var(--astro-code-token-string)">    &#x3C;p>HTML 示例&#x3C;/p></span></span>
+<span class="line"><span style="color:var(--astro-code-token-string)">&#x3C;/div></span></span>
 <span class="line"><span style="color:var(--astro-code-token-string)">```</span></span></code></pre>
 <p>效果展示：</p>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-keyword)">def</span><span style="color:var(--astro-code-token-function)"> hello</span><span style="color:var(--astro-code-color-text)">():</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:var(--astro-code-token-keyword)">def</span><span style="color:var(--astro-code-token-function)"> hello</span><span style="color:var(--astro-code-foreground)">():</span></span>
 <span class="line"><span style="color:var(--astro-code-token-function)">    print</span><span style="color:var(--astro-code-token-punctuation)">(</span><span style="color:var(--astro-code-token-string-expression)">"Hello, Python!"</span><span style="color:var(--astro-code-token-punctuation)">)</span></span></code></pre>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-function)">.example</span><span style="color:var(--astro-code-color-text)"> {</span></span>
-<span class="line"><span style="color:var(--astro-code-token-constant)">    color</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> #333</span><span style="color:var(--astro-code-color-text)">;</span></span>
-<span class="line"><span style="color:var(--astro-code-token-constant)">    font-size</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> 16</span><span style="color:var(--astro-code-token-keyword)">px</span><span style="color:var(--astro-code-color-text)">;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">}</span></span></code></pre>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">&lt;</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"example"</span><span style="color:var(--astro-code-color-text)">&gt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">    &lt;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-color-text)">&gt;HTML 示例&lt;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-color-text)">&gt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&lt;/</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-color-text)">&gt;</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:var(--astro-code-token-function)">.example</span><span style="color:var(--astro-code-foreground)"> {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    color</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> #333</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    font-size</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> 16</span><span style="color:var(--astro-code-token-keyword)">px</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">}</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"example"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">    &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">>HTML 示例&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
 <h3 id="无语言标识的代码块">无语言标识的代码块</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span>这是没有语言标识的代码块</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>这是没有语言标识的代码块</span></span>
 <span class="line"><span>可以用来显示纯文本</span></span></code></pre>
 <h2 id="表格">表格</h2>
 <h3 id="基本表格">基本表格</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">| 标题1 | 标题2 | 标题3 |</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">|</span><span style="color:var(--astro-code-token-punctuation)">-------</span><span style="color:var(--astro-code-color-text)">|</span><span style="color:var(--astro-code-token-punctuation)">-------</span><span style="color:var(--astro-code-color-text)">|</span><span style="color:var(--astro-code-token-punctuation)">-------</span><span style="color:var(--astro-code-color-text)">|</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">| 内容1 | 内容2 | 内容3 |</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">| 内容4 | 内容5 | 内容6 |</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">| 标题1 | 标题2 | 标题3 |</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">|</span><span style="color:var(--astro-code-token-punctuation)">-------</span><span style="color:var(--astro-code-foreground)">|</span><span style="color:var(--astro-code-token-punctuation)">-------</span><span style="color:var(--astro-code-foreground)">|</span><span style="color:var(--astro-code-token-punctuation)">-------</span><span style="color:var(--astro-code-foreground)">|</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">| 内容1 | 内容2 | 内容3 |</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">| 内容4 | 内容5 | 内容6 |</span></span></code></pre>
 <p>效果展示：</p>
 
 
@@ -1575,10 +227,10 @@ H<sub>2</sub>O (下标)</p>
 
 <table><thead><tr><th>标题1</th><th>标题2</th><th>标题3</th></tr></thead><tbody><tr><td>内容1</td><td>内容2</td><td>内容3</td></tr><tr><td>内容4</td><td>内容5</td><td>内容6</td></tr></tbody></table>
 <h3 id="对齐表格">对齐表格</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">| 左对齐 | 居中对齐 | 右对齐 |</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">|</span><span style="color:var(--astro-code-token-punctuation)">:-------</span><span style="color:var(--astro-code-color-text)">|</span><span style="color:var(--astro-code-token-punctuation)">:--------:</span><span style="color:var(--astro-code-color-text)">|</span><span style="color:var(--astro-code-token-punctuation)">-------:</span><span style="color:var(--astro-code-color-text)">|</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">| 左     | 中       | 右     |</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">| 内容   | 内容     | 内容   |</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">| 左对齐 | 居中对齐 | 右对齐 |</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">|</span><span style="color:var(--astro-code-token-punctuation)">:-------</span><span style="color:var(--astro-code-foreground)">|</span><span style="color:var(--astro-code-token-punctuation)">:--------:</span><span style="color:var(--astro-code-foreground)">|</span><span style="color:var(--astro-code-token-punctuation)">-------:</span><span style="color:var(--astro-code-foreground)">|</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">| 左     | 中       | 右     |</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">| 内容   | 内容     | 内容   |</span></span></code></pre>
 <p>效果展示：</p>
 
 
@@ -1602,12 +254,12 @@ H<sub>2</sub>O (下标)</p>
 
 <table><thead><tr><th align="left">左对齐</th><th align="center">居中对齐</th><th align="right">右对齐</th></tr></thead><tbody><tr><td align="left">左</td><td align="center">中</td><td align="right">右</td></tr><tr><td align="left">内容</td><td align="center">内容</td><td align="right">内容</td></tr></tbody></table>
 <h3 id="复杂表格">复杂表格</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">| 功能 | 支持 | 说明 |</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">|</span><span style="color:var(--astro-code-token-punctuation)">------</span><span style="color:var(--astro-code-color-text)">|</span><span style="color:var(--astro-code-token-punctuation)">:----:</span><span style="color:var(--astro-code-color-text)">|</span><span style="color:var(--astro-code-token-punctuation)">------</span><span style="color:var(--astro-code-color-text)">|</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">| </span><span style="color:var(--astro-code-color-text);font-weight:700">**粗体**</span><span style="color:var(--astro-code-color-text)"> | ✅ | 完全支持 |</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">| </span><span style="color:var(--astro-code-color-text);font-style:italic">*斜体*</span><span style="color:var(--astro-code-color-text)"> | ✅ | 完全支持 |</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">| </span><span style="color:var(--astro-code-token-string)">`代码`</span><span style="color:var(--astro-code-color-text)"> | ✅ | 行内代码 |</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">| </span><span style="color:var(--astro-code-token-link);text-decoration:underline">[</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">链接</span><span style="color:var(--astro-code-token-link);text-decoration:underline">](https://example.com)</span><span style="color:var(--astro-code-color-text)"> | ✅ | 外部链接 |</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">| 功能 | 支持 | 说明 |</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">|</span><span style="color:var(--astro-code-token-punctuation)">------</span><span style="color:var(--astro-code-foreground)">|</span><span style="color:var(--astro-code-token-punctuation)">:----:</span><span style="color:var(--astro-code-foreground)">|</span><span style="color:var(--astro-code-token-punctuation)">------</span><span style="color:var(--astro-code-foreground)">|</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">| </span><span style="color:var(--astro-code-foreground);font-weight:700">**粗体**</span><span style="color:var(--astro-code-foreground)"> | ✅ | 完全支持 |</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">| </span><span style="color:var(--astro-code-foreground);font-style:italic">*斜体*</span><span style="color:var(--astro-code-foreground)"> | ✅ | 完全支持 |</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">| </span><span style="color:var(--astro-code-token-string)">`代码`</span><span style="color:var(--astro-code-foreground)"> | ✅ | 行内代码 |</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">| </span><span style="color:var(--astro-code-token-link);text-decoration:underline">[</span><span style="color:var(--astro-code-token-keyword);text-decoration:underline">链接</span><span style="color:var(--astro-code-token-link);text-decoration:underline">](https://example.com)</span><span style="color:var(--astro-code-foreground)"> | ✅ | 外部链接 |</span></span></code></pre>
 <p>效果展示：</p>
 
 
@@ -1642,17 +294,17 @@ H<sub>2</sub>O (下标)</p>
 <table><thead><tr><th>功能</th><th align="center">支持</th><th>说明</th></tr></thead><tbody><tr><td><strong>粗体</strong></td><td align="center">✅</td><td>完全支持</td></tr><tr><td><em>斜体</em></td><td align="center">✅</td><td>完全支持</td></tr><tr><td><code>代码</code></td><td align="center">✅</td><td>行内代码</td></tr><tr><td><a href="https://example.com">链接</a></td><td align="center">✅</td><td>外部链接</td></tr></tbody></table>
 <h2 id="引用">引用</h2>
 <h3 id="基本引用">基本引用</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">&gt; 这是一个引用块。</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; 可以包含多行内容。</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">> 这是一个引用块。</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> 可以包含多行内容。</span></span></code></pre>
 <p>效果展示：</p>
 <blockquote>
 <p>这是一个引用块。
 可以包含多行内容。</p>
 </blockquote>
 <h3 id="嵌套引用">嵌套引用</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">&gt; 第一层引用</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; &gt; 第二层引用</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; &gt; &gt; 第三层引用</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">> 第一层引用</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> > 第二层引用</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> > > 第三层引用</span></span></code></pre>
 <p>效果展示：</p>
 <blockquote>
 <p>第一层引用</p>
@@ -1664,17 +316,17 @@ H<sub>2</sub>O (下标)</p>
 </blockquote>
 </blockquote>
 <h3 id="引用中的其他元素">引用中的其他元素</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">&gt; </span><span style="color:var(--astro-code-color-text);font-weight:700">## 引用中的标题</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; </span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; 引用中可以包含：</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; - 列表项</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; - </span><span style="color:var(--astro-code-color-text);font-weight:700">**粗体文本**</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; - </span><span style="color:var(--astro-code-token-string)">`代码`</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; </span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; </span><span style="color:var(--astro-code-token-string)">```javascript</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; </span><span style="color:var(--astro-code-token-comment)">// 甚至代码块</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; </span><span style="color:var(--astro-code-token-constant)">console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">"Hello"</span><span style="color:var(--astro-code-color-text)">);</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&gt; </span><span style="color:var(--astro-code-token-string)">```</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">> </span><span style="color:var(--astro-code-foreground);font-weight:700">## 引用中的标题</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> </span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> 引用中可以包含：</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> - 列表项</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> - </span><span style="color:var(--astro-code-foreground);font-weight:700">**粗体文本**</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> - </span><span style="color:var(--astro-code-token-string)">`代码`</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> </span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> </span><span style="color:var(--astro-code-token-string)">```javascript</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> </span><span style="color:var(--astro-code-token-comment)">// 甚至代码块</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> </span><span style="color:var(--astro-code-token-constant)">console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"Hello"</span><span style="color:var(--astro-code-foreground)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">> </span><span style="color:var(--astro-code-token-string)">```</span></span></code></pre>
 <p>效果展示：</p>
 <blockquote>
 <h2 id="引用中的标题">引用中的标题</h2>
@@ -1684,71 +336,71 @@ H<sub>2</sub>O (下标)</p>
 <li><strong>粗体文本</strong></li>
 <li><code>代码</code></li>
 </ul>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-comment)">// 甚至代码块</span></span>
-<span class="line"><span style="color:var(--astro-code-token-constant)">console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">"Hello"</span><span style="color:var(--astro-code-color-text)">);</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:var(--astro-code-token-comment)">// 甚至代码块</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"Hello"</span><span style="color:var(--astro-code-foreground)">);</span></span></code></pre>
 </blockquote>
 <h2 id="分割线">分割线</h2>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">---</span></span>
-<span class="line"><span style="color:var(--astro-code-token-keyword)">*</span><span style="color:var(--astro-code-color-text)">**</span></span>
-<span class="line"><span style="color:var(--astro-code-token-string-expression)">___</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">---</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">***</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">___</span></span></code></pre>
 <p>效果展示：</p>
 <hr>
 <hr>
 <hr>
 <h2 id="特殊字符">特殊字符</h2>
 <h3 id="转义字符">转义字符</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">\* 不是斜体</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">\# 不是标题</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">\` 不是代码</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">\\ 反斜杠</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">\* 不是斜体</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">\# 不是标题</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">\` 不是代码</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">\\ 反斜杠</span></span></code></pre>
 <p>效果展示：</p>
 <p>* 不是斜体<br>
 # 不是标题<br>
 ` 不是代码<br>
 \ 反斜杠</p>
 <h3 id="特殊符号">特殊符号</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">版权符号: &amp;copy;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">注册商标: &amp;reg;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">商标符号: &amp;trade;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">小于号: &amp;lt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">大于号: &amp;gt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">和号: &amp;amp;</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">版权符号: &#x26;copy;</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">注册商标: &#x26;reg;</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">商标符号: &#x26;trade;</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">小于号: &#x26;lt;</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">大于号: &#x26;gt;</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">和号: &#x26;amp;</span></span></code></pre>
 <p>效果展示：</p>
 <p>版权符号: ©<br>
 注册商标: ®<br>
 商标符号: ™<br>
-小于号: &lt;<br>
-大于号: &gt;<br>
-和号: &amp;</p>
+小于号: &#x3C;<br>
+大于号: ><br>
+和号: &#x26;</p>
 <h2 id="html标签">HTML标签</h2>
 <h3 id="基本html标签">基本HTML标签</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">&lt;strong&gt;强调文本&lt;/strong&gt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&lt;em&gt;斜体文本&lt;/em&gt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&lt;mark&gt;高亮文本&lt;/mark&gt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&lt;small&gt;小号文本&lt;/small&gt;</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;strong>强调文本&#x3C;/strong></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;em>斜体文本&#x3C;/em></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;mark>高亮文本&#x3C;/mark></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;small>小号文本&#x3C;/small></span></span></code></pre>
 <p>效果展示：</p>
 <p><strong>强调文本</strong><br>
 <em>斜体文本</em><br>
 <mark>高亮文本</mark><br>
 <small>小号文本</small></p>
 <h3 id="键盘按键">键盘按键</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">按 &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt; 复制</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">按 &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;V&lt;/kbd&gt; 粘贴</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">按 &#x3C;kbd>Ctrl&#x3C;/kbd> + &#x3C;kbd>C&#x3C;/kbd> 复制</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">按 &#x3C;kbd>Ctrl&#x3C;/kbd> + &#x3C;kbd>V&#x3C;/kbd> 粘贴</span></span></code></pre>
 <p>效果展示：</p>
 <p>按 <kbd>Ctrl</kbd> + <kbd>C</kbd> 复制<br>
 按 <kbd>Ctrl</kbd> + <kbd>V</kbd> 粘贴</p>
 <h3 id="详情折叠">详情折叠</h3>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-color-text)">&lt;details&gt;</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">&lt;summary&gt;点击展开详情&lt;/summary&gt;</span></span>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;details></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;summary>点击展开详情&#x3C;/summary></span></span>
 <span class="line"></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">这里是折叠的内容。</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">这里是折叠的内容。</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">- 可以包含列表</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">- </span><span style="color:var(--astro-code-color-text);font-weight:700">**格式化文本**</span></span>
-<span class="line"><span style="color:var(--astro-code-color-text)">- </span><span style="color:var(--astro-code-token-string)">`代码`</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">- 可以包含列表</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">- </span><span style="color:var(--astro-code-foreground);font-weight:700">**格式化文本**</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">- </span><span style="color:var(--astro-code-token-string)">`代码`</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:var(--astro-code-token-string)">```javascript</span></span>
-<span class="line"><span style="color:var(--astro-code-token-constant)">console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">"甚至代码块"</span><span style="color:var(--astro-code-color-text)">);</span></span></code></pre>
+<span class="line"><span style="color:var(--astro-code-token-constant)">console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"甚至代码块"</span><span style="color:var(--astro-code-foreground)">);</span></span></code></pre>
 
 ```
 <p>效果展示：</p>
@@ -1760,7 +412,7 @@ H<sub>2</sub>O (下标)</p>
 <li><strong>格式化文本</strong></li>
 <li><code>代码</code></li>
 </ul>
-<pre class="astro-code css-variables" style="background-color:var(--astro-code-color-background);color:var(--astro-code-color-text);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:var(--astro-code-token-constant)">console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-color-text)">(</span><span style="color:var(--astro-code-token-string-expression)">"甚至代码块"</span><span style="color:var(--astro-code-color-text)">);</span></span></code></pre>
+<pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground);white-space:pre-wrap;word-wrap:break-word;overflow-x:auto" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:var(--astro-code-token-constant)">console</span><span style="color:var(--astro-code-token-function)">.log</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"甚至代码块"</span><span style="color:var(--astro-code-foreground)">);</span></span></code></pre>
 </details>
 <h2 id="注意事项和限制">注意事项和限制</h2>
 <h3 id="1-空行的重要性">1. 空行的重要性</h3>
@@ -1798,6 +450,5 @@ H<sub>2</sub>O (下标)</p>
 <li>✅ 删除线</li>
 </ul>
 <hr>
-<p><em>本文档会持续更新，如发现问题或有建议，欢迎反馈。</em></p> </article> <div class="related-post"> <div class="prev-post">  <span class="date-box">← 上一篇</span> <h2 class="post-title" style="font-size:1.2em"> <a href="/posts/investment-ten-years/">十年投资，最值得持有的标的</a> </h2>  </div> <div class="next-post">  <span class="date-box">下一篇 →</span> <h2 class="post-title" style="font-size:1.2em"> <a href="/posts/2025-05-30/">擦肩而过的光芒</a> </h2>  </div> </div> <ul class="tag-list"> <li class="tag-item tag-sm" data-astro-cid-blwjyjpt=""> <a href="/tags/markdown/" class="tag-link" data-astro-cid-blwjyjpt="" data-astro-transition-scope="astro-36ssibgs-2"> <svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-blwjyjpt=""> <path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-blwjyjpt=""></path> </svg> <span data-astro-cid-blwjyjpt="">markdown</span> </a> </li> <li class="tag-item tag-sm" data-astro-cid-blwjyjpt=""> <a href="/tags/%E6%96%87%E6%A1%A3/" class="tag-link" data-astro-cid-blwjyjpt="" data-astro-transition-scope="astro-36ssibgs-3"> <svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-blwjyjpt=""> <path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-blwjyjpt=""></path> </svg> <span data-astro-cid-blwjyjpt="">文档</span> </a> </li> <li class="tag-item tag-sm" data-astro-cid-blwjyjpt=""> <a href="/tags/%E5%8F%82%E8%80%83/" class="tag-link" data-astro-cid-blwjyjpt="" data-astro-transition-scope="astro-36ssibgs-4"> <svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-blwjyjpt=""> <path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-blwjyjpt=""></path> </svg> <span data-astro-cid-blwjyjpt="">参考</span> </a> </li>  </ul> <div class="comment"> <div class="waline-container" data-astro-cid-ksttp56e=""> <div id="waline-comments" data-astro-cid-ksttp56e=""></div> </div>  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css"> <script>let walineInstance=null;function initWaline(){if(walineInstance){try{walineInstance.destroy()}catch(e){console.log("\u6E05\u7406\u65E7\u5B9E\u4F8B:",e.message)}walineInstance=null}const n=document.getElementById("waline-comments");if(!n){console.log("\u8BC4\u8BBA\u5BB9\u5668\u4E0D\u5B58\u5728\uFF0C\u7B49\u5F85DOM\u66F4\u65B0");return}if(typeof window.Waline>"u"){const e=document.createElement("script");e.src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js",e.onload=function(){createWalineInstance()},e.onerror=function(){console.error("Waline \u52A0\u8F7D\u5931\u8D25"),n.innerHTML='<p class="waline-status" data-state="error">\u8BC4\u8BBA\u7CFB\u7EDF\u52A0\u8F7D\u5931\u8D25\uFF0C\u8BF7\u5237\u65B0\u9875\u9762\u91CD\u8BD5</p>'},document.head.appendChild(e)}else createWalineInstance()}function createWalineInstance(){const n=document.getElementById("waline-comments");if(n){n.innerHTML="";try{walineInstance=window.Waline.init({el:"#waline-comments",serverURL:"https://tencent.n2g.cn/",path:window.location.pathname.endsWith("/")?window.location.pathname:window.location.pathname+"/",lang:"zh-CN",avatar:"qq",locale:{placeholder:"\u671F\u5F85\u4F60\u7684\u771F\u77E5\u707C\u89C1~",sofa:"\u5FEB\u6765\u505A\u7B2C\u4E00\u4E2A\u8BC4\u8BBA\u7684\u4EBA\u5427~",submit:"\u63D0\u4EA4",reply:"\u56DE\u590D",cancelReply:"\u53D6\u6D88\u56DE\u590D",comment:"\u8BC4\u8BBA",refresh:"\u5237\u65B0",more:"\u52A0\u8F7D\u66F4\u591A...",preview:"\u9884\u89C8",emoji:"\u8868\u60C5",uploadImage:"\u4E0A\u4F20\u56FE\u7247"},formatTime:function(e){const a=new Date(e),i=a.getFullYear(),t=String(a.getMonth()+1).padStart(2,"0"),o=String(a.getDate()).padStart(2,"0"),r=String(a.getHours()).padStart(2,"0"),s=String(a.getMinutes()).padStart(2,"0"),c=String(a.getSeconds()).padStart(2,"0");return`${i}\u5E74${t}\u6708${o}\u65E5 ${r}:${s}:${c}`},emoji:["https://unpkg.com/@waline/emojis@1.2.0/qq"],dark:'[data-theme="dark"]',meta:["nick","mail","link"],requiredMeta:["nick"],pageSize:10,wordLimit:[0,1e3],imageUploader:!1,highlight:!0,mathTagSupport:!1,commentSorting:"latest",search:!1,reaction:!1,copyright:!1,login:"disable"}),console.log("Waline \u8BC4\u8BBA\u7CFB\u7EDF\u521D\u59CB\u5316\u6210\u529F\uFF0C\u8DEF\u5F84:",window.location.pathname)}catch(e){console.error("Waline \u521D\u59CB\u5316\u5931\u8D25:",e),n.innerHTML='<p class="waline-status" data-state="error">\u8BC4\u8BBA\u7CFB\u7EDF\u521D\u59CB\u5316\u5931\u8D25</p>'}}}function handlePageNavigation(){console.log("\u68C0\u6D4B\u5230\u9875\u9762\u5BFC\u822A\uFF0C\u91CD\u65B0\u521D\u59CB\u5316\u8BC4\u8BBA\u7CFB\u7EDF"),setTimeout(()=>{initWaline()},300)}function setupSPAHandlers(){let n=window.location.href;setInterval(()=>{const t=window.location.href;t!==n&&(n=t,handlePageNavigation())},200);const a=history.pushState,i=history.replaceState;history.pushState=function(...t){a.apply(this,t),handlePageNavigation()},history.replaceState=function(...t){i.apply(this,t),handlePageNavigation()},window.addEventListener("popstate",handlePageNavigation),document.addEventListener("click",function(t){const o=t.target.closest("a");o&&o.href&&o.href.startsWith(window.location.origin)&&setTimeout(handlePageNavigation,500)},!0)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",function(){setTimeout(initWaline,100),setupSPAHandlers()}):(setTimeout(initWaline,100),setupSPAHandlers());
-</script> </div> </main> <footer class="mt-auto"> <div class="content"> <div class="footer-wrapper"> <div class="copyright-wrapper"> <span> <img src="/assets/logo.svg.svg" alt="Xio's" width="30" height="30" loading="lazy" decoding="async"> </span> <span>Xio's © 2026 .</span> <span class="slogan">一切从简，记录生活。</span> <a target="_blank" href="/rss.xml" class="rss-link" aria-label="RSS 订阅" title="RSS FEED">RSS</a> </div> </div> </div> </footer> <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
-</script>   </body></html>
+<p><em>本文档会持续更新，如发现问题或有建议，欢迎反馈。</em></p></article><div class="related-post"><div class="prev-post"><span class="date-box">← 上一篇</span><h2 class="post-title"><a href="/posts/investment-ten-years/">十年投资，最值得持有的标的</a></h2></div><div class="next-post"><span class="date-box">下一篇 →</span><h2 class="post-title"><a href="/posts/2025-05-30/">擦肩而过的光芒</a></h2></div></div><ul class="tag-list"><li class="tag-item tag-sm" data-astro-cid-7t72llso><a data-astro-transition-scope="astro-bztu2lml-2" href="/tags/markdown/" class="tag-link" data-astro-cid-7t72llso><svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-7t72llso><path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-7t72llso></path></svg><span data-astro-cid-7t72llso>markdown</span></a></li><li class="tag-item tag-sm" data-astro-cid-7t72llso><a data-astro-transition-scope="astro-bztu2lml-3" href="/tags/%E6%96%87%E6%A1%A3/" class="tag-link" data-astro-cid-7t72llso><svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-7t72llso><path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-7t72llso></path></svg><span data-astro-cid-7t72llso>文档</span></a></li><li class="tag-item tag-sm" data-astro-cid-7t72llso><a data-astro-transition-scope="astro-bztu2lml-4" href="/tags/%E5%8F%82%E8%80%83/" class="tag-link" data-astro-cid-7t72llso><svg class="tag-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" data-astro-cid-7t72llso><path d="M16.018 3.815 15.232 8h-4.966l.716-3.815-1.964-.37L8.232 8H4v2h3.857l-.751 4H3v2h3.731l-.714 3.805 1.965.369L8.766 16h4.966l-.714 3.805 1.965.369.783-4.174H20v-2h-3.859l.751-4H21V8h-3.733l.716-3.815-1.965-.37zM14.106 14H9.141l.751-4h4.966l-.752 4z" data-astro-cid-7t72llso></path></svg><span data-astro-cid-7t72llso>参考</span></a></li></ul><div class="comment"><div class="waline-container" data-waline-root aria-busy="false" data-astro-cid-hbcs7qvy><div class="waline-status" data-waline-status data-astro-cid-hbcs7qvy>评论将在接近这里时自动加载</div><div class="waline-mount" data-waline-mount data-astro-cid-hbcs7qvy></div></div><script type="module" src="/_astro/Comment.astro_astro_type_script_index_0_lang.-jhRgmap.js"></script></div><dialog class="image-lightbox" aria-label="图片查看器" data-astro-cid-ot6ntcxl><button class="lightbox-close" type="button" aria-label="关闭图片查看器" data-astro-cid-ot6ntcxl>×</button><button class="lightbox-nav lightbox-prev" type="button" aria-label="上一张图片" data-astro-cid-ot6ntcxl>‹</button><figure class="lightbox-figure" data-astro-cid-ot6ntcxl><img class="lightbox-image" alt="" data-astro-cid-ot6ntcxl><figcaption class="lightbox-caption" data-astro-cid-ot6ntcxl><span data-lightbox-title data-astro-cid-ot6ntcxl></span><span data-lightbox-counter aria-live="polite" data-astro-cid-ot6ntcxl></span></figcaption></figure><button class="lightbox-nav lightbox-next" type="button" aria-label="下一张图片" data-astro-cid-ot6ntcxl>›</button></dialog><script type="module">function e(){let e=document.querySelector(`.image-lightbox`);if(!e||e.dataset.lightboxReady===`true`)return;let t=Array.from(document.querySelectorAll(`#article :is(.photo-single, .photo-gallery) img:not(.inline)`));if(!t.length)return;let n=e.querySelector(`.lightbox-image`),r=e.querySelector(`[data-lightbox-title]`),i=e.querySelector(`[data-lightbox-counter]`),a=e.querySelector(`.lightbox-close`),o=e.querySelector(`.lightbox-prev`),s=e.querySelector(`.lightbox-next`);if(!n||!r||!i||!a||!o||!s)return;e.dataset.lightboxReady=`true`;let c=0,l=e=>{c=(e+t.length)%t.length;let a=t[c],o=a.closest(`figure`)?.querySelector(`figcaption`)?.textContent?.trim();n.src=a.dataset.fullSrc||a.currentSrc||a.src,n.alt=a.alt,r.textContent=o||a.alt,i.textContent=t.length>1?`${c+1} / ${t.length}`:``},u=t=>{l(t),e.showModal(),document.documentElement.classList.add(`lightbox-open`),a.focus({preventScroll:!0})};t.forEach((e,t)=>{e.addEventListener(`click`,e=>{e.preventDefault(),u(t)}),e.addEventListener(`keydown`,e=>{(e.key===`Enter`||e.key===` `)&&(e.preventDefault(),u(t))})}),a.addEventListener(`click`,()=>e.close()),o.addEventListener(`click`,()=>l(c-1)),s.addEventListener(`click`,()=>l(c+1)),o.hidden=t.length<2,s.hidden=t.length<2,e.addEventListener(`click`,t=>{t.target===e&&e.close()}),e.addEventListener(`keydown`,n=>{n.key===`Escape`?(n.preventDefault(),e.close()):n.key===`ArrowLeft`&&t.length>1?(n.preventDefault(),l(c-1)):n.key===`ArrowRight`&&t.length>1&&(n.preventDefault(),l(c+1))}),e.addEventListener(`close`,()=>{document.documentElement.classList.remove(`lightbox-open`),n.removeAttribute(`src`)})}e(),document.addEventListener(`astro:page-load`,e),document.addEventListener(`astro:before-swap`,()=>{document.querySelector(`.image-lightbox[open]`)?.close()});</script></main><footer class="mt-auto"><div class="content"><div class="footer-wrapper"><div class="copyright-wrapper"><span><img src="/assets/logo.svg" alt="Xio's" width="30" height="30"></span><span>Xio&#39;s &#169; 2026 .</span><span class="slogan">一切从简，记录生活。</span><a target="_blank" href="/rss.xml" class="rss-link" aria-label="RSS 订阅" title="RSS FEED">RSS</a></div></div></div></footer><script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
+</script></body></html><script type="module">var e=0;function t(){e=0;let t=document.querySelector(`.progress-bar`);if(!t)return;let n=document.documentElement.scrollTop,r=document.documentElement.scrollHeight-document.documentElement.clientHeight,i=r>0?Math.min(1,Math.max(0,n/r)):0;t.style.transform=`scaleX(${i})`}function n(){e||=window.requestAnimationFrame(t)}function r(){if(document.querySelectorAll(`pre`).forEach(e=>{if(!e.parentElement?.classList.contains(`code-wrapper`)&&e.children.length>0){let t=document.createElement(`div`);t.classList.add(`code-wrapper`),t.style.position=`relative`,e.parentElement?.insertBefore(t,e),t.appendChild(e);let n=document.createElement(`button`);n.className=`copy-code`,n.textContent=`复制`,t.appendChild(n)}}),document.querySelectorAll(`.copy-code`).forEach(e=>{e.dataset.copyReady!==`true`&&(e.dataset.copyReady=`true`,e.addEventListener(`click`,()=>{let t=e.parentElement?.querySelector(`pre > code`);t&&navigator.clipboard.writeText(t.textContent||``).then(()=>{e.textContent=`已复制`,setTimeout(()=>{e.textContent=`复制`},2e3)}).catch(()=>{e.textContent=`失败`,setTimeout(()=>{e.textContent=`复制`},2e3)})}))}),!document.querySelector(`.progress-container`)){let e=document.createElement(`div`);e.className=`progress-container`;let t=document.createElement(`div`);t.className=`progress-bar`,e.appendChild(t),document.body.appendChild(e)}document.documentElement.dataset.readingProgressReady!==`true`&&(document.documentElement.dataset.readingProgressReady=`true`,window.addEventListener(`scroll`,n,{passive:!0}),window.addEventListener(`resize`,n,{passive:!0})),n(),document.querySelectorAll(`#article h2, #article h3, #article h4`).forEach(e=>{if(!e.id||e.querySelector(`.heading-link`))return;let t=document.createElement(`a`);t.className=`heading-link`,t.href=`#${e.id}`,t.textContent=`#`,t.setAttribute(`aria-label`,`段落链接`),e.appendChild(t)})}r(),document.addEventListener(`astro:page-load`,r);</script>

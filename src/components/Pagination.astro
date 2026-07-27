@@ -6,9 +6,16 @@ export interface Props {
   totalPages: number;
   prevUrl: string;
   nextUrl: string;
+  pageBaseUrl?: string;
 }
 
-const { currentPage, totalPages, prevUrl, nextUrl } = Astro.props;
+const {
+  currentPage,
+  totalPages,
+  prevUrl,
+  nextUrl,
+  pageBaseUrl = "/posts",
+} = Astro.props;
 
 const prev = currentPage > 1 ? "" : "disabled";
 const next = currentPage < totalPages ? "" : "disabled";
@@ -34,7 +41,9 @@ for (let i = 1; i <= totalPages; i++) {
 
       {pageNumbers.map((pageNum) => (
         <LinkButton
-          href={pageNum === 1 ? "/posts/" : `/posts/${pageNum}/`}
+          href={
+            pageNum === 1 ? `${pageBaseUrl}/` : `${pageBaseUrl}/${pageNum}/`
+          }
           className={`page-btn ${currentPage === pageNum ? "active" : ""}`}
           ariaLabel={`第 ${pageNum} 页`}
         >

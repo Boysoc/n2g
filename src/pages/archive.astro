@@ -7,7 +7,7 @@ import { getCollection } from "astro:content";
 import getSortedPosts from "@utils/getSortedPosts";
 
 const posts = await getCollection("blog");
-const sortedPosts = getSortedPosts(posts);
+const sortedPosts = getSortedPosts(posts, { renderContent: false });
 ---
 
 <Layout title="时光档案 - Xio's">
