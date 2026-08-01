@@ -1,31 +1,39 @@
-import { SITE } from "@config";
-import { defineCollection } from "astro:content";
-import { glob } from "astro/loaders";
-import { z } from "astro/zod";
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
-const blog = defineCollection({
+const posts = defineCollection({
   loader: glob({
-    base: "./src/content/blog",
-    pattern: "**/*.{md,mdx}",
+    pattern: '**/*.{md,mdx}',
+    base: './src/content/posts',
+    generateId: ({ entry, data }) => {
+      const slug = typeof data.slug === 'string' ? data.slug.trim() : '';
+      return slug || entry.replace(/\.(md|mdx)$/i, '');
+    },
   }),
   schema: ({ image }) =>
     z.object({
-      author: z.string().default(SITE.author),
-      pubDatetime: z.coerce.date(),
-      modDatetime: z.coerce.date().optional().nullable(),
-      title: z.string(),
-      featured: z.boolean().optional(),
-      draft: z.boolean().optional(),
-      tags: z.array(z.string()).default(["others"]),
-      ogImage: image()
-        .refine((img) => img.width >= 1200 && img.height >= 630, {
-          message: "OpenGraph image must be at least 1200 X 630 pixels!",
-        })
-        .or(z.string())
-        .optional(),
-      description: z.string(),
-      canonicalURL: z.string().optional(),
+      title: z.string().min(1),
+      description: z.string().default(''),
+      pubDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
+      slug: z.string().trim().min(1).optional(),
+      author: z.string().optional(),
+      excerpt: z.string().optional(),
+      cardImage: z.union([image(), z.string().trim().min(1)]).optional(),
+      cardImageAlt: z.string().default(''),
+      cardImageWidth: z.number().int().positive().optional(),
+      cardImageHeight: z.number().int().positive().optional(),
+      heroImage: z.union([image(), z.string().trim().min(1)]).optional(),
+      heroImageAlt: z.string().default(''),
+      heroImageWidth: z.number().int().positive().optional(),
+      heroImageHeight: z.number().int().positive().optional(),
+      ogImage: z.string().optional(),
+      categories: z.array(z.string()).default([]),
+      tags: z.array(z.string()).default([]),
+      featured: z.boolean().default(false),
+      draft: z.boolean().default(false),
     }),
 });
 
-export const collections = { blog };
+export const collections = { posts };

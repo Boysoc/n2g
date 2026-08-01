@@ -1,0 +1,305 @@
+---
+import { SITE } from '../data/site';
+import { cleanExcerpt } from '../utils/posts';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  pageType?: 'home' | 'post' | 'archive' | 'about' | 'friends' | 'search' | 'page2' | 'not-found' | 'other';
+  publishedTime?: string;
+  heroImage?: string;
+  heroImageAlt?: string;
+}
+
+const {
+  title,
+  description = SITE.description,
+  pageType = 'other',
+  publishedTime,
+  heroImage,
+  heroImageAlt,
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL(SITE.url);
+const canonical = new URL(Astro.url.pathname, siteUrl);
+const socialImage = heroImage ? new URL(heroImage, siteUrl) : undefined;
+const metaDescription = cleanExcerpt(description || SITE.description, 160);
+const isContentSection = pageType === 'home' || pageType === 'post' || pageType === 'page2';
+const homeNavLabel = pageType === 'post' || pageType === 'page2' ? '内容' : '首页';
+const isWidePage = ['home', 'archive', 'page2', 'search'].includes(pageType);
+const currentYear = new Date().getUTCFullYear();
+---
+
+<!doctype html>
+<html lang="zh-CN" class:list={{ 'scroll-smooth': pageType === 'post' }} data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f3f4f6" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.title} RSS`} href="/rss.xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={metaDescription} />
+    <meta name="author" content={SITE.author} />
+    <meta property="og:type" content={pageType === 'post' ? 'article' : 'website'} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonical} />
+    {socialImage && <meta property="og:image" content={socialImage} />}
+    {socialImage && heroImageAlt && <meta property="og:image:alt" content={heroImageAlt} />}
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    <meta name="twitter:card" content={socialImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={metaDescription} />
+    {socialImage && <meta name="twitter:image" content={socialImage} />}
+    {socialImage && heroImageAlt && <meta name="twitter:image:alt" content={heroImageAlt} />}
+
+    <script is:inline>
+      (() => {
+        let storedTheme = null;
+        try {
+          storedTheme = localStorage.getItem('theme');
+        } catch {
+          // Storage may be unavailable in privacy-restricted contexts.
+        }
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = storedTheme === 'dark' || storedTheme === 'light'
+          ? storedTheme
+          : prefersDark ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]')?.setAttribute(
+          'content',
+          theme === 'dark' ? '#0b0f17' : '#f3f4f6',
+        );
+      })();
+    </script>
+
+    <script is:inline>
+      (() => {
+        const setTheme = (theme) => {
+          document.documentElement.dataset.theme = theme;
+          document.querySelector('meta[name="theme-color"]')?.setAttribute(
+            'content',
+            theme === 'dark' ? '#0b0f17' : '#f3f4f6',
+          );
+          document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+            const dark = theme === 'dark';
+            button.setAttribute('aria-pressed', String(dark));
+            button.setAttribute('aria-label', dark ? '切换到浅色主题' : '切换到深色主题');
+            button.setAttribute('title', dark ? '切换到浅色主题' : '切换到深色主题');
+          });
+        };
+
+        const getPreferredTheme = () => {
+          try {
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme === 'dark' || storedTheme === 'light') return storedTheme;
+          } catch {
+            // Fall back to the theme already applied to the document.
+          }
+          return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+        };
+
+        const setMenuState = (open, returnFocus = false) => {
+          const button = document.querySelector('.hamburger-menu');
+          const menu = document.querySelector('#site-header-menu');
+          if (!button || !menu) return;
+          button.setAttribute('aria-expanded', String(open));
+          button.setAttribute('aria-label', open ? '关闭导航菜单' : '打开导航菜单');
+          button.classList.toggle('is-active', open);
+          menu.classList.toggle('is-open', open);
+          if (returnFocus) button.focus();
+        };
+
+        const updateScrollProgress = () => {
+          const progressBar = document.querySelector('#scroll-progress');
+          if (!progressBar) return;
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+          progressBar.style.transform = `scaleX(${Math.min(1, Math.max(0, progress))})`;
+        };
+
+        const updateFixedHeader = () => {
+          const header = document.querySelector('.site-header');
+          if (!header) return;
+          header.classList.toggle('is-fixed', window.scrollY > window.innerHeight);
+        };
+
+        const initializePage = () => {
+          setTheme(getPreferredTheme());
+          setMenuState(false);
+          updateScrollProgress();
+          updateFixedHeader();
+        };
+
+        if (!window.__n2gControlsBound) {
+          window.__n2gControlsBound = true;
+
+          document.addEventListener('click', (event) => {
+            if (!(event.target instanceof Element)) return;
+
+            const themeButton = event.target.closest('[data-theme-toggle]');
+            if (themeButton) {
+              const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+              setTheme(nextTheme);
+              try {
+                localStorage.setItem('theme', nextTheme);
+              } catch {
+                // The visual toggle still works when storage is unavailable.
+              }
+              return;
+            }
+
+            const menuButton = event.target.closest('.hamburger-menu');
+            if (menuButton) {
+              setMenuState(menuButton.getAttribute('aria-expanded') !== 'true');
+              return;
+            }
+
+            if (event.target.closest('#site-header-menu a')) {
+              setMenuState(false);
+              return;
+            }
+
+            const openButton = document.querySelector('.hamburger-menu[aria-expanded="true"]');
+            if (openButton && !event.target.closest('.site-header')) setMenuState(false);
+          });
+
+          document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') setMenuState(false, true);
+          });
+
+          document.addEventListener('astro:before-swap', (event) => {
+            const theme = getPreferredTheme();
+            event.newDocument.documentElement.dataset.theme = theme;
+            event.newDocument.querySelector('meta[name="theme-color"]')?.setAttribute(
+              'content',
+              theme === 'dark' ? '#0b0f17' : '#f3f4f6',
+            );
+          });
+
+          let scrollFrame = 0;
+          document.addEventListener('scroll', () => {
+            if (scrollFrame) return;
+            scrollFrame = requestAnimationFrame(() => {
+              updateScrollProgress();
+              updateFixedHeader();
+              scrollFrame = 0;
+            });
+          }, { passive: true });
+
+          window.addEventListener('resize', updateFixedHeader, { passive: true });
+
+          document.addEventListener('astro:page-load', initializePage);
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initializePage, { once: true });
+        } else {
+          initializePage();
+        }
+      })();
+    </script>
+  </head>
+  <body id="top" class:list={[`page-${pageType}`, { 'has-hero': Boolean(heroImage) }]}>
+    <a class="skip-link" href="#main-content">跳到正文</a>
+    <div class="layout">
+      <slot name="before-header" />
+
+      <header class="site-header">
+        <div class="site-header-inner">
+          <div class="site-header-brand">
+            <a href="/" class="logo" aria-label={`${SITE.title} 首页`}>
+              <span class="logo-word">Xi<span class="logo-accent"><span class="logo-accent-letter">o</span></span>'s</span>
+            </a>
+            <button
+              class="theme-switch theme-switch-mobile focus-outline"
+              type="button"
+              data-theme-toggle
+              aria-label="切换到深色主题"
+              aria-pressed="false"
+              title="切换到深色主题"
+            >
+              <span class="theme-switch-thumb" aria-hidden="true">
+                <svg class="theme-switch-icon theme-switch-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+                <svg class="theme-switch-icon theme-switch-moon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 6.5 6.5 0 0 1-9-9Z"></path></svg>
+              </span>
+            </button>
+            <button
+              class="hamburger-menu focus-outline"
+              aria-label="打开导航菜单"
+              aria-expanded="false"
+              aria-controls="site-header-menu"
+              type="button"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="menu-icon">
+                <path class="menu-lines" d="M4 7h16M4 12h16M4 17h16"></path>
+                <path class="menu-close" d="m6 6 12 12M18 6 6 18"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div id="site-header-menu" class="site-header-menu">
+            <nav class="site-header-nav" aria-label="主导航">
+              <ul>
+                <li><a href="/" class:list={{ active: isContentSection }} aria-current={isContentSection ? 'page' : undefined}>{homeNavLabel}</a></li>
+                <li><a href="/archives/" class:list={{ active: pageType === 'archive' }} aria-current={pageType === 'archive' ? 'page' : undefined}>归档</a></li>
+                <li><a href="/links/" class:list={{ active: pageType === 'friends' }} aria-current={pageType === 'friends' ? 'page' : undefined}>友链</a></li>
+                <li><a href="/about/" class:list={{ active: pageType === 'about' }} aria-current={pageType === 'about' ? 'page' : undefined}>关于</a></li>
+              </ul>
+            </nav>
+
+            <form class="site-header-search" action="/search/" method="get" role="search">
+              <label class="sr-only" for="site-header-search-input">搜索文章</label>
+              <input id="site-header-search-input" class="site-header-search-input" type="search" name="q" placeholder="Search" autocomplete="off" />
+            </form>
+
+            <div class="site-header-tools">
+              <a href="/rss.xml" class="rss-link footer-icon-btn" aria-label="订阅 RSS" title="订阅 RSS">
+                <svg class="rss-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+              </a>
+              <button
+                class="theme-switch theme-switch-desktop focus-outline"
+                type="button"
+                data-theme-toggle
+                aria-label="切换到深色主题"
+                aria-pressed="false"
+                title="切换到深色主题"
+              >
+                <span class="theme-switch-thumb" aria-hidden="true">
+                  <svg class="theme-switch-icon theme-switch-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+                  <svg class="theme-switch-icon theme-switch-moon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 6.5 6.5 0 0 1-9-9Z"></path></svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <slot name="after-header" />
+
+      <div class="layout-main">
+        <main id="main-content" class:list={['content', { 'container-wide': isWidePage }]} tabindex="-1">
+          <slot />
+        </main>
+        <slot name="after-main" />
+
+        <footer>
+          <div class="content container-wide">
+            <div class="footer-wrapper">
+              <div class="copyright-wrapper"><span>© {currentYear} {SITE.title}</span></div>
+              <a href="#top" class="page-top-link" aria-label="回到页面顶部">回到顶部 <span aria-hidden="true">↑</span></a>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

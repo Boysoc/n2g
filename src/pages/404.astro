@@ -1,61 +1,16 @@
 ---
-import { SITE } from "@config";
-import Layout from "@layouts/Layout.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import LinkButton from "@components/LinkButton.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../data/site';
 ---
 
-<Layout title={`404 Not Found | ${SITE.title}`}>
-  <Header />
-
-  <main id="main-content" class="content">
-    <div class="not-found-wrapper">
-      <h1 aria-label="404 Not Found">404</h1>
-      <span aria-hidden="true">¯\_(ツ)_/¯</span>
-      <p>这里没有你要找的页面</p>
-      <LinkButton
-        href="/"
-        className="my-6 text-lg underline decoration-dashed underline-offset-8"
-      >
-        返回首页
-      </LinkButton>
+<BaseLayout title={`页面未找到 | ${SITE.title}`} description="你访问的页面不存在或已经移动。" pageType="not-found">
+  <section class="not-found-page" aria-labelledby="not-found-title">
+    <p class="page-kicker">404</p>
+    <h1 id="not-found-title" class="post-title">这页没有留下来</h1>
+    <p>链接可能已经失效，也可能只是地址里多了一个字符。</p>
+    <div class="not-found-actions">
+      <a class="primary-link" href="/">返回首页</a>
+      <a href="/archives/">浏览归档</a>
     </div>
-  </main>
-
-  <Footer />
-</Layout>
-
-<style>
-  #main-content {
-    display: flex;
-    min-height: calc(100vh - 180px);
-    align-items: center;
-    justify-content: center;
-  }
-  .not-found-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-  }
-  .not-found-wrapper h1 {
-    margin: 0;
-    color: var(--color-primary-500);
-    font-family: var(--font-mono);
-    font-size: clamp(6rem, 20vw, 10rem);
-    letter-spacing: -0.08em;
-    line-height: 1;
-  }
-  .not-found-wrapper > span {
-    margin-top: 8px;
-    color: var(--color-text-tertiary);
-    font-family: var(--font-mono);
-  }
-  .not-found-wrapper p {
-    margin: 20px 0;
-    color: var(--color-text-secondary);
-    font-size: 1.2rem;
-  }
-</style>
+  </section>
+</BaseLayout>

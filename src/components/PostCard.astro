@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import type { PostEntry } from '../utils/posts';
+import { formatPostDate, getPostCardPresentation, getPostPath } from '../utils/posts';
+
+interface Props {
+  post: PostEntry;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { post, headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
+const postPath = getPostPath(post);
+const { excerpt, cardImage, cardImageAlt } = getPostCardPresentation(post);
+---
+
+<li class="card-list-li" data-post-card={post.id}>
+  <article class="post-card">
+    {cardImage && (
+      <a href={postPath} class="post-card-media" aria-label={`阅读《${post.data.title}》`}>
+        {typeof cardImage === 'string' ? (
+          <img
+            src={cardImage}
+            alt={cardImageAlt}
+            width={post.data.cardImageWidth}
+            height={post.data.cardImageHeight}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <Image
+            src={cardImage}
+            alt={cardImageAlt}
+            widths={[360, 720]}
+            sizes="(max-width: 767px) calc(100vw - 60px), (max-width: 1199px) calc(50vw - 56px), 360px"
+            quality={80}
+            loading="lazy"
+            decoding="async"
+          />
+        )}
+      </a>
+    )}
+    <div class="post-card-body">
+      <div class="post-card-copy">
+        <time class="post-card-date" datetime={post.data.pubDate.toISOString()}>
+          {formatPostDate(post.data.pubDate)}
+        </time>
+        <a href={postPath} class="card-title">
+          <Heading transition:name={`post-title-${post.id}`} class="post-card-title">
+            {post.data.title}
+          </Heading>
+        </a>
+        {excerpt && !cardImage && (
+          <a href={postPath} class="post-card-excerpt" aria-label={`阅读《${post.data.title}》`}>
+            {excerpt}
+          </a>
+        )}
+      </div>
+    </div>
+  </article>
+</li>

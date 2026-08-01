@@ -1,53 +1,44 @@
 ---
-import { getCollection } from "astro:content";
-import Layout from "@layouts/Layout.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import LinkButton from "@components/LinkButton.astro";
-import Card from "@components/Card";
-import PostPreviewController from "@components/PostPreviewController.astro";
-import getSortedPosts from "@utils/getSortedPosts";
-import getPostPreview from "@utils/getPostPreview";
-import { SITE } from "@config";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { SITE } from '../data/site';
+import { getPublishedPosts, POSTS_PER_PAGE } from '../utils/posts';
 
-const posts = await getCollection("blog");
-const sortedPosts = getSortedPosts(posts, { renderContent: false });
-const recentPosts = sortedPosts.slice(0, SITE.postPerPage).map((post) => ({
-  ...post,
-  preview: getPostPreview(post.body ?? ""),
-}));
+const allPosts = await getPublishedPosts();
+
+// 统计正文纯文字数（去除 HTML 标签和 Markdown 语法符号）
+function countWords(body: string): number {
+  return body
+    .replace(/<[^>]+>/g, '')    // 去 HTML 标签
+    .replace(/[#*>\-\[\]()!`]/g, '')  // 去 Markdown 语法符号
+    .replace(/\s+/g, '')        // 去空白
+    .length;
+}
+
+const totalChars = allPosts.reduce((sum, p) => sum + countWords(p.body || ''), 0);
+const totalWords = totalChars.toLocaleString();
+
+const displayPosts = allPosts.slice(0, POSTS_PER_PAGE);
+const hasMorePosts = allPosts.length > POSTS_PER_PAGE;
 ---
 
-<Layout>
-  <Header activeNav="home" />
-  <main id="main-content" class="content">
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts">
-          <ul class="card-ul">
-            {recentPosts.map(({ data, id, preview }) => (
-              <Card
-                slug={id}
-                href={`/posts/${id}/`}
-                frontmatter={data}
-                secHeading={false}
-                variant="preview"
-                previewMedia={preview.media}
-                previewContent={preview.content}
-              />
-            ))}
-          </ul>
-        </section>
-      )
-    }
-    {
-      sortedPosts.length > SITE.postPerPage && (
-        <div class="all-posts-btn-wrapper">
-          <LinkButton href="/posts/2/">更多文章 &gt;</LinkButton>
-        </div>
-      )
-    }
-  </main>
-  <PostPreviewController />
-  <Footer />
-</Layout>
+<BaseLayout title={SITE.title} description={SITE.description} pageType="home">
+  <section slot="after-header" class="home-intro" aria-labelledby="home-intro-title">
+    <div class="home-intro-inner">
+      <h1 id="home-intro-title">{SITE.slogan}</h1>
+      <p>已写下 <span>{totalWords}</span> 字</p>
+    </div>
+  </section>
+
+  <section id="recent-posts">
+    <ul class="card-ul post-grid featured-post-grid">
+      {displayPosts.map((post) => <PostCard post={post} />)}
+    </ul>
+  </section>
+
+  {hasMorePosts && (
+    <nav slot="after-main" class="content all-posts-btn-wrapper" aria-label="更多文章">
+      <a href="/posts/2/">更多文章 <span class="tri-right" aria-hidden="true"></span></a>
+    </nav>
+  )}
+</BaseLayout>

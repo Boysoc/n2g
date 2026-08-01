@@ -1,30 +1,147 @@
 ---
-import { getCollection } from "astro:content";
-import { SITE } from "@config";
-import Layout from "@layouts/Layout.astro";
-import Main from "@layouts/Main.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import SearchBar from "@components/Search";
-import getSortedPosts from "@utils/getSortedPosts";
-
-// Retrieve all published articles
-const posts = await getCollection("blog", ({ data }) => !data.draft);
-const sortedPosts = getSortedPosts(posts, { renderContent: false });
-
-// List of items to search in
-const searchList = sortedPosts.map(({ data, id }) => ({
-  title: data.title,
-  description: data.description,
-  data,
-  id,
-}));
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../data/site';
 ---
 
-<Layout title={`搜索 | ${SITE.title}`}>
-  <Header activeNav="search" />
-  <Main pageTitle="搜索" pageDesc="">
-    <SearchBar client:load searchList={searchList} />
-  </Main>
-  <Footer />
-</Layout>
+<BaseLayout title={`搜索 | ${SITE.title}`} description={`搜索 ${SITE.title} 已发布的文章。`} pageType="search">
+  <section class="page search-page">
+    <header class="search-header">
+      <p class="page-kicker">Search</p>
+      <h1 class="post-title">搜索</h1>
+    </header>
+
+    <div class="search-shell">
+      <form class="search-page-form" action="/search/" method="get" role="search">
+        <label class="sr-only" for="search-page-input">搜索文章</label>
+        <input
+          id="search-page-input"
+          class="search-page-input"
+          type="search"
+          name="q"
+          placeholder="输入关键词"
+          autocomplete="off"
+          enterkeyhint="search"
+        />
+      </form>
+      <div class="search-bar-result" id="search-result" role="status" aria-live="polite">
+        输入关键词开始搜索
+      </div>
+      <ul class="search-results" id="search-results"></ul>
+      <noscript><p class="search-noscript">搜索需要启用 JavaScript；你也可以前往<a href="/archives/">归档页</a>浏览全部文章。</p></noscript>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  (() => {
+    const input = document.querySelector('#search-page-input');
+    const resultsElement = document.querySelector('#search-results');
+    const statusElement = document.querySelector('#search-result');
+    const form = document.querySelector('.search-page-form');
+
+    if (!(input instanceof HTMLInputElement) || !(resultsElement instanceof HTMLUListElement) || !statusElement || !form) return;
+    if (input.dataset.searchBound === 'true') return;
+    input.dataset.searchBound = 'true';
+
+    let searchList = null;
+    let searchPromise = null;
+
+    const loadSearchIndex = async () => {
+      if (searchList) return searchList;
+      if (!searchPromise) {
+        searchPromise = fetch('/search-index.json', {
+          headers: { Accept: 'application/json' },
+        })
+          .then((response) => {
+            if (!response.ok) throw new Error(`Search index request failed: ${response.status}`);
+            return response.json();
+          })
+          .then((items) => {
+            if (!Array.isArray(items)) throw new Error('Search index response is invalid');
+            searchList = items;
+            return items;
+          })
+          .catch((error) => {
+            searchPromise = null;
+            throw error;
+          });
+      }
+      return searchPromise;
+    };
+
+    const renderResults = async (rawQuery) => {
+      const query = rawQuery.trim();
+      resultsElement.replaceChildren();
+
+      if (!query) {
+        statusElement.textContent = '输入关键词开始搜索';
+        return;
+      }
+
+      statusElement.textContent = '正在搜索…';
+
+      let items;
+      try {
+        items = await loadSearchIndex();
+      } catch (error) {
+        console.error('搜索索引加载失败', error);
+        statusElement.textContent = '搜索暂时不可用，请稍后重试';
+        return;
+      }
+
+      if (input.value.trim() !== query) return;
+
+      const normalizedQuery = query.toLocaleLowerCase('zh-CN');
+      const matches = items.filter((item) => item.searchText.includes(normalizedQuery));
+
+      if (matches.length === 0) {
+        statusElement.textContent = `没有找到与“${query}”相关的文章`;
+        return;
+      }
+
+      statusElement.textContent = `找到 ${matches.length} 篇相关文章`;
+      const fragment = document.createDocumentFragment();
+
+      for (const item of matches) {
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        const title = document.createElement('span');
+        const date = document.createElement('span');
+
+        listItem.className = 'search-result-item';
+        link.href = item.url;
+        title.className = 'search-result-title';
+        title.textContent = item.title;
+        date.className = 'search-result-date';
+        date.textContent = item.pubDate;
+
+        link.append(title, date);
+        listItem.append(link);
+        fragment.append(listItem);
+      }
+
+      resultsElement.append(fragment);
+    };
+
+    const updateUrl = () => {
+      const url = new URL(window.location.href);
+      if (input.value.trim()) url.searchParams.set('q', input.value.trim());
+      else url.searchParams.delete('q');
+      history.replaceState({}, '', url);
+    };
+
+    input.addEventListener('input', () => {
+      updateUrl();
+      void renderResults(input.value);
+    });
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      updateUrl();
+      void renderResults(input.value);
+    });
+
+    const initialQuery = new URLSearchParams(window.location.search).get('q') ?? '';
+    input.value = initialQuery;
+    void renderResults(initialQuery);
+  })();
+</script>

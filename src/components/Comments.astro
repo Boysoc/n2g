@@ -1,0 +1,202 @@
+---
+import '@waline/client/waline.css';
+---
+
+<section class="comment waline-section" aria-labelledby="comments-title">
+  <header class="waline-heading">
+    <p class="page-kicker">Discussion</p>
+    <h2 id="comments-title">评论</h2>
+  </header>
+  <div class="waline-container" data-waline-root data-state="idle" aria-busy="false">
+    <div class="waline-status" data-waline-status>评论将在接近这里时加载</div>
+    <div data-waline-mount></div>
+  </div>
+</section>
+
+<script>
+  import type { WalineInstance } from '@waline/client';
+
+  let walineInstance: WalineInstance | null = null;
+  let clientPromise: Promise<typeof import('@waline/client')> | null = null;
+  let commentsObserver: IntersectionObserver | null = null;
+  let walineMetaObserver: MutationObserver | null = null;
+  let navigationVersion = 0;
+
+  function placeAddressAfterTime(scope: ParentNode) {
+    scope.querySelectorAll<HTMLElement>('.wl-card').forEach((card) => {
+      const head = card.querySelector<HTMLElement>(':scope > .wl-head');
+      const meta = card.querySelector<HTMLElement>(':scope > .wl-meta');
+      const time = head?.querySelector<HTMLElement>(':scope > .wl-time');
+      const address = meta?.querySelector<HTMLElement>(':scope > .wl-addr');
+
+      if (!head || !meta || !time || !address) return;
+      time.insertAdjacentElement('afterend', address);
+      meta.classList.add('is-empty-meta');
+    });
+  }
+
+  function observeCommentMeta(mount: HTMLElement) {
+    walineMetaObserver?.disconnect();
+    placeAddressAfterTime(mount);
+    walineMetaObserver = new MutationObserver(() => placeAddressAfterTime(mount));
+    walineMetaObserver.observe(mount, { childList: true, subtree: true });
+  }
+
+  function normalizedPath() {
+    const pathname = window.location.pathname;
+    return pathname.endsWith('/') ? pathname : `${pathname}/`;
+  }
+
+  function loadWalineClient() {
+    if (!clientPromise) {
+      clientPromise = import('@waline/client').catch((error) => {
+        clientPromise = null;
+        throw error;
+      });
+    }
+    return clientPromise;
+  }
+
+  function setStatus(root: HTMLElement, state: 'idle' | 'loading' | 'error' | 'ready') {
+    const status = root.querySelector<HTMLElement>('[data-waline-status]');
+    if (!status) return;
+
+    root.dataset.state = state;
+    root.setAttribute('aria-busy', state === 'loading' ? 'true' : 'false');
+    status.hidden = state === 'ready';
+
+    if (state === 'idle') status.textContent = '评论将在接近这里时加载';
+    if (state === 'loading') status.textContent = '正在加载评论…';
+    if (state === 'error') {
+      status.innerHTML = '评论加载失败，请检查网络后 <button type="button" data-waline-retry>重试</button>';
+    }
+  }
+
+  function addServerHint() {
+    if (document.querySelector('link[data-waline-preconnect]')) return;
+    const link = document.createElement('link');
+    link.rel = 'preconnect';
+    link.href = 'https://tencent.n2g.cn';
+    link.crossOrigin = 'anonymous';
+    link.dataset.walinePreconnect = 'true';
+    document.head.appendChild(link);
+  }
+
+  async function mountWaline(root: HTMLElement, version: number) {
+    if (root.dataset.state === 'loading' || root.dataset.state === 'ready') return;
+    const mount = root.querySelector<HTMLElement>('[data-waline-mount]');
+    if (!mount) return;
+
+    setStatus(root, 'loading');
+    addServerHint();
+
+    try {
+      const { init } = await loadWalineClient();
+      if (version !== navigationVersion || !root.isConnected) return;
+
+      walineMetaObserver?.disconnect();
+      walineMetaObserver = null;
+      walineInstance?.destroy();
+      walineInstance = null;
+      mount.replaceChildren();
+      walineInstance = init({
+        el: mount,
+        serverURL: 'https://tencent.n2g.cn/',
+        path: normalizedPath(),
+        lang: 'zh-CN',
+        locale: {
+          nick: '昵称',
+          mail: '邮箱',
+          link: '网址',
+          optional: '选填',
+          placeholder: '写下你的评论',
+          sofa: '还没有评论。',
+          submit: '提交',
+          reply: '回复',
+          cancelReply: '取消回复',
+          comment: '评论',
+          refresh: '刷新',
+          more: '加载更多',
+          preview: '预览',
+        },
+        dark: 'html[data-theme="dark"]',
+        meta: ['nick', 'mail', 'link'],
+        requiredMeta: ['nick'],
+        pageSize: 10,
+        wordLimit: [0, 1000],
+        emoji: false,
+        imageUploader: false,
+        highlighter: false,
+        texRenderer: false,
+        commentSorting: 'latest',
+        search: false,
+        reaction: false,
+        login: 'disable',
+        noRss: true,
+        noCopyright: true,
+      });
+
+      if (!walineInstance) throw new Error('Waline did not return an instance');
+      observeCommentMeta(mount);
+      setStatus(root, 'ready');
+    } catch (error) {
+      if (version !== navigationVersion || !root.isConnected) return;
+      console.error('Waline 初始化失败:', error);
+      mount.replaceChildren();
+      setStatus(root, 'error');
+    }
+  }
+
+  function initWaline() {
+    navigationVersion += 1;
+    const version = navigationVersion;
+    commentsObserver?.disconnect();
+    commentsObserver = null;
+    walineMetaObserver?.disconnect();
+    walineMetaObserver = null;
+    walineInstance?.destroy();
+    walineInstance = null;
+
+    const root = document.querySelector<HTMLElement>('[data-waline-root]');
+    if (!root) return;
+    setStatus(root, 'idle');
+
+    if (root.dataset.retryReady !== 'true') {
+      root.dataset.retryReady = 'true';
+      root.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        if (!target.closest('[data-waline-retry]')) return;
+        root.dataset.state = 'idle';
+        void mountWaline(root, navigationVersion);
+      });
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      void mountWaline(root, version);
+      return;
+    }
+
+    commentsObserver = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        commentsObserver?.disconnect();
+        commentsObserver = null;
+        void mountWaline(root, version);
+      },
+      { rootMargin: '200px 0px', threshold: 0.01 },
+    );
+    commentsObserver.observe(root);
+  }
+
+  initWaline();
+  document.addEventListener('astro:page-load', initWaline);
+  document.addEventListener('astro:before-swap', () => {
+    navigationVersion += 1;
+    commentsObserver?.disconnect();
+    commentsObserver = null;
+    walineMetaObserver?.disconnect();
+    walineMetaObserver = null;
+    walineInstance?.destroy();
+    walineInstance = null;
+  });
+</script>

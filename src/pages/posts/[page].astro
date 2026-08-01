@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Pagination from '../../components/Pagination.astro';
+import PostCard from '../../components/PostCard.astro';
+import { SITE } from '../../data/site';
+import { getPublishedPosts, POSTS_PER_PAGE } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const allPosts = await getPublishedPosts();
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  const pages = [];
+  for (let p = 2; p <= totalPages; p++) {
+    pages.push({
+      params: { page: String(p) },
+      props: {
+        posts: allPosts.slice((p - 1) * POSTS_PER_PAGE, p * POSTS_PER_PAGE),
+        currentPage: p,
+        totalPages,
+      },
+    });
+  }
+  return pages;
+}
+
+const { posts, currentPage, totalPages } = Astro.props;
+---
+
+<BaseLayout title={`内容 · 第 ${currentPage} 页 | ${SITE.title}`} description={`浏览 ${SITE.title} 的第 ${currentPage} 页文章。`} pageType="page2">
+  <section aria-label={`文章列表，第 ${currentPage} 页`}>
+    <ul class="card-ul post-grid featured-post-grid">
+      {posts.map((post) => <PostCard post={post} />)}
+    </ul>
+    <Pagination currentPage={currentPage} totalPages={totalPages} />
+  </section>
+</BaseLayout>

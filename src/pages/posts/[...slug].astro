@@ -1,0 +1,170 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Comments from '../../components/Comments.astro';
+import { SITE } from '../../data/site';
+import {
+  formatPostDate,
+  getPostPath,
+  getPostPresentation,
+  getPublishedPosts,
+  type PostEntry,
+} from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      olderPost: posts[index + 1] ?? null,
+      newerPost: posts[index - 1] ?? null,
+    },
+  }));
+}
+
+interface Props {
+  post: PostEntry;
+  olderPost: PostEntry | null;
+  newerPost: PostEntry | null;
+}
+
+const { post, olderPost, newerPost } = Astro.props;
+const { Content } = await render(post);
+const publishedTime = post.data.pubDate.toISOString();
+const { description, heroImage, heroImageAlt } = getPostPresentation(post);
+const heroImageUrl = typeof heroImage === 'string' ? heroImage : heroImage?.src;
+---
+
+<BaseLayout
+  title={`${post.data.title} | ${SITE.title}`}
+  description={description}
+  pageType="post"
+  publishedTime={publishedTime}
+  heroImage={heroImageUrl}
+  heroImageAlt={heroImageAlt}
+>
+  <div slot="before-header" class="progress-container" aria-hidden="true">
+    <div class="progress-bar" id="scroll-progress"></div>
+  </div>
+
+  {heroImage && (
+    <figure class="post-hero">
+      {typeof heroImage === 'string' ? (
+        <img
+          src={heroImage}
+          alt={heroImageAlt}
+          width={post.data.heroImageWidth}
+          height={post.data.heroImageHeight}
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      ) : (
+        <Image
+          src={heroImage}
+          alt={heroImageAlt}
+          widths={[640, 960, 1280]}
+          sizes="100vw"
+          layout="full-width"
+          quality={82}
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      )}
+    </figure>
+  )}
+
+  <div class:list={['post-surface', { 'has-hero': Boolean(heroImage) }]}>
+    <header class="post-header">
+      <time class="post-date" datetime={publishedTime}>{formatPostDate(post.data.pubDate)}</time>
+      <h1 class="post-title" transition:name={`post-title-${post.id}`}>{post.data.title}</h1>
+    </header>
+
+    <article id="article" class="post-content">
+      <Content />
+    </article>
+
+    <Comments />
+
+    {(olderPost || newerPost) && (
+      <nav class="related-post" aria-label="相邻文章">
+        <div class="prev-post">
+          {olderPost && (
+            <a href={getPostPath(olderPost)} class="related-link" rel="prev">
+              <span class="related-label">上一篇</span>
+              <span class="related-title">{olderPost.data.title}</span>
+            </a>
+          )}
+        </div>
+        <div class="next-post">
+          {newerPost && (
+            <a href={getPostPath(newerPost)} class="related-link" rel="next">
+              <span class="related-label">下一篇</span>
+              <span class="related-title">{newerPost.data.title}</span>
+            </a>
+          )}
+        </div>
+      </nav>
+    )}
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (() => {
+    const enhanceArticle = () => {
+      const article = document.querySelector('#article');
+      if (!article) return;
+
+      article.querySelectorAll('h2, h3, h4, h5, h6').forEach((heading) => {
+        if (!heading.id || heading.closest('[data-footnotes]') || heading.querySelector(':scope > .heading-link')) return;
+        const link = document.createElement('a');
+        link.textContent = '¶';
+        link.className = 'heading-link';
+        link.href = `#${heading.id}`;
+        link.setAttribute('aria-label', `链接到“${heading.textContent?.trim() || '此章节'}”`);
+        heading.append(link);
+      });
+
+      article.querySelectorAll('img').forEach((image) => {
+        if (!image.hasAttribute('loading')) image.loading = 'lazy';
+        if (!image.hasAttribute('decoding')) image.decoding = 'async';
+      });
+
+      article.querySelectorAll('pre').forEach((codeBlock) => {
+        if (codeBlock.parentElement?.classList.contains('code-block-wrapper')) return;
+
+        const wrapper = document.createElement('div');
+        const button = document.createElement('button');
+        wrapper.className = 'code-block-wrapper';
+        button.className = 'copy-code';
+        button.type = 'button';
+        button.textContent = 'Copy';
+        button.setAttribute('aria-label', '复制代码');
+
+        codeBlock.parentNode?.insertBefore(wrapper, codeBlock);
+        wrapper.append(codeBlock, button);
+
+        button.addEventListener('click', async () => {
+          const code = codeBlock.querySelector('code')?.textContent ?? '';
+          try {
+            await navigator.clipboard.writeText(code);
+            button.textContent = 'Copied';
+          } catch {
+            button.textContent = 'Failed';
+          }
+          window.setTimeout(() => { button.textContent = 'Copy'; }, 700);
+        });
+      });
+    };
+
+    if (!window.__n2gArticleBound) {
+      window.__n2gArticleBound = true;
+      document.addEventListener('astro:page-load', enhanceArticle);
+    }
+    enhanceArticle();
+  })();
+</script>

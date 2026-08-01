@@ -1,1000 +1,224 @@
-﻿---
-import Layout from "@layouts/Layout.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import Component from "@components/Comment.astro";
-import { links } from "../links";
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Comments from '../components/Comments.astro';
+import { friendLinks } from '../data/friends';
+import { SITE } from '../data/site';
 
-// 分类邻居
-const friends = links.filter(
-  (l) => !l.organization && !l.inactive && l.verified,
-); // 已认证邻居
-const unverified = links.filter(
-  (l) => !l.organization && !l.inactive && !l.verified,
-); // 未认证邻居
-const orgs = links.filter((l) => l.organization);
-const inactives = links.filter((l) => l.inactive && !l.organization); // 已失效邻居
+const links = friendLinks.map((friend) => {
+  const url = new URL(friend.url);
+
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    throw new Error(`友情链接“${friend.name}”必须使用 http 或 https 地址。`);
+  }
+
+  return {
+    ...friend,
+    host: url.hostname.replace(/^www\./, ''),
+    mark: friend.name.trim().charAt(0),
+    badge: friend.organization ? '组织' : friend.inactive ? '旧址' : friend.verified ? '互链' : undefined,
+  };
+});
+
+const verifiedLinks = links.filter((link) => link.verified && !link.inactive && !link.organization);
+const otherLinks = links.filter((link) => !link.verified && !link.inactive && !link.organization);
+const organizationLinks = links.filter((link) => link.organization);
+const inactiveLinks = links.filter((link) => link.inactive && !link.organization);
+const activeLinkCount = links.filter((link) => !link.inactive).length;
+const moreGroups = [
+  { id: 'more-neighbors', title: '更多邻居', kicker: 'Neighbors', links: otherLinks },
+  { id: 'blog-organizations', title: '博客组织', kicker: 'Communities', links: organizationLinks },
+  { id: 'old-links', title: '旧日链接', kicker: 'Archive', links: inactiveLinks },
+].filter((group) => group.links.length > 0);
+const moreLinkCount = moreGroups.reduce((count, group) => count + group.links.length, 0);
+const siteLogoUrl = new URL('/logo.webp', SITE.url).href;
+const siteRssUrl = new URL('/rss.xml', SITE.url).href;
 ---
 
-<Layout>
-  <Header activeNav="links" />
-  <main id="main-content" class="content">
-    <section id="links-section">
-      <!-- 标题区 -->
-      <header class="links-header">
-        <h1 class="links-title">
-          <span class="title-icon">🏠</span>
-          邻居们
-        </h1>
-        <p class="links-subtitle">互联网上的有趣灵魂，与他们为邻</p>
-        <div class="header-actions">
-          <div class="search-wrap">
-            <span class="search-icon">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="M21 21l-4.35-4.35"></path>
-              </svg>
-            </span>
-            <input
-              type="text"
-              id="link-search"
-              placeholder="搜索邻居..."
-              class="search-input"
-            />
-          </div>
-          <button
-            id="random-visit-btn"
-            class="random-btn"
-            title="随机访问一位邻居"
-          >
-            <span class="btn-icon">🎲</span>
-            <span class="btn-text">随机访问</span>
-          </button>
-        </div>
-      </header>
+<BaseLayout
+  title={`友情链接 | ${SITE.title}`}
+  description={`${SITE.title} 的友情链接与独立博客邻居。`}
+  pageType="friends"
+>
+  <section class="page friends-page">
+    <header class="friends-header">
+      <p class="page-kicker">Blogroll</p>
+      <h1 class="post-title">友情链接</h1>
+      <p class="friends-intro">互联网上的有趣灵魂，与他们为邻。</p>
+      <p class="friends-total">当前收录 <span>{activeLinkCount}</span> 个有效站点</p>
+    </header>
 
-      <!-- 已认证邻居网格 -->
-      {
-        friends.length > 0 && (
-          <div class="neighbors-grid" id="neighbors-grid">
-            {friends.map((link, index) => (
-              <div class="neighbor-card-wrapper" data-index={index}>
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class={`neighbor-card ${link.verified ? "verified" : ""}`}
-                  data-name={link.name.toLowerCase()}
-                  data-description={link.description?.toLowerCase() || ""}
-                  data-category="friends"
-                  title={link.tooltip || link.description || link.name}
-                >
-                  <div class="card-inner">
-                    <div class="avatar-wrap">
-                      <img
-                        src={link.logo}
-                        alt={link.name}
-                        class="avatar"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div class="card-info">
-                      <h3 class="card-name">{link.name}</h3>
-                      <p class="card-desc">{link.description || "暂无简介"}</p>
-                    </div>
-                    <span class="card-arrow">
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path d="M7 17L17 7" />
-                        <path d="M7 7h10v10" />
-                      </svg>
-                    </span>
-                  </div>
-                </a>
-              </div>
-            ))}
-          </div>
-        )
-      }
-
-      <!-- 更多链接按钮 -->
-      {
-        (unverified.length > 0 || inactives.length > 0 || orgs.length > 0) && (
-          <div class="more-toggle-section">
-            <button id="more-toggle-btn" class="more-toggle-btn">
-              <span class="toggle-text">更多链接</span>
-              <span class="toggle-count">
-                ({unverified.length + inactives.length + orgs.length})
-              </span>
-              <span class="toggle-arrow">▾</span>
-            </button>
-          </div>
-        )
-      }
-
-      <!-- 折叠内容 -->
-      <div id="more-content" class="more-content" style="display: none;">
-        <!-- 博客组织 -->
-        {
-          orgs.length > 0 && (
-            <div class="orgs-section">
-              <h3 class="section-title">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="2" y1="12" x2="22" y2="12" />
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                </svg>
-                博客组织
-              </h3>
-              <div class="orgs-grid">
-                {orgs.map((link) => (
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="org-card"
-                    data-name={link.name.toLowerCase()}
-                    data-description={link.description?.toLowerCase() || ""}
-                    data-category="orgs"
-                    title={link.description || link.name}
-                  >
-                    <div class="org-card-inner">
-                      <img
-                        src={link.logo}
-                        alt={link.name}
-                        class="org-logo"
-                        loading="lazy"
-                      />
-                      <div class="org-info">
-                        <span class="org-name">{link.name}</span>
-                        {link.description && (
-                          <span class="org-desc">{link.description}</span>
-                        )}
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          )
-        }
-
-        <!-- 其他链接（简洁文字链接样式） -->
-        {
-          (unverified.length > 0 || inactives.length > 0) && (
-            <div class="text-links-section">
-              <h3 class="section-title">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                </svg>
-                其他链接
-              </h3>
-              <div class="text-links-list">
-                {/* 未认证的正常链接 */}
-                {unverified.map((link) => (
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-link-item"
-                    data-name={link.name.toLowerCase()}
-                    data-description={link.description?.toLowerCase() || ""}
-                    title={link.tooltip || link.description || link.name}
-                  >
-                    <span class="link-name">{link.name}</span>
-                  </a>
-                ))}
-                {/* 已失效的链接 */}
-                {inactives.map((link) => (
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-link-item inactive"
-                    data-name={link.name.toLowerCase()}
-                    data-description={link.description?.toLowerCase() || ""}
-                    title={`已失效 - ${link.tooltip || link.description || link.name}`}
-                  >
-                    <span class="link-name">{link.name}</span>
-                    <span class="offline-badge">已失效</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          )
-        }
+    <section class="friends-list-section" aria-labelledby="friends-list-title">
+      <div class="friends-section-heading">
+        <h2 id="friends-list-title">互链邻居</h2>
+        <span>{verifiedLinks.length.toString().padStart(2, '0')}</span>
       </div>
 
-      <!-- 评论区 -->
-      <Component />
+      <ul class="friends-grid">
+        {verifiedLinks.map((friend) => (
+          <li>
+            <a
+              class="friend-card"
+              href={friend.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={friend.tooltip || friend.description || friend.name}
+            >
+              <span class:list={['friend-mark', { 'has-logo': friend.logo }]} aria-hidden="true">
+                {friend.logo && (
+                  <img
+                    src={friend.logo}
+                    alt=""
+                    width="44"
+                    height="44"
+                    loading="lazy"
+                    decoding="async"
+                    referrerpolicy="no-referrer"
+                    data-friend-logo
+                  />
+                )}
+                <span class="friend-mark-fallback">{friend.mark}</span>
+              </span>
+              <span class="friend-copy">
+                <span class="friend-name-row">
+                  <span class="friend-name">{friend.name}</span>
+                  {friend.badge && <span class="friend-badge">{friend.badge}</span>}
+                </span>
+                <span class="friend-description">{friend.description || '暂无简介'}</span>
+                <span class="friend-host">{friend.host}</span>
+              </span>
+              <svg class="friend-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 17 17 7M9 7h8v8"></path>
+              </svg>
+            </a>
+          </li>
+        ))}
+      </ul>
     </section>
-  </main>
-  <Footer />
-</Layout>
 
-<style>
-  .links-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    padding-top: 0;
-  }
-
-  .links-title {
-    font-size: var(--font-size-page-title);
-    font-family: var(--font-sans);
-    font-weight: 700;
-    color: var(--color-primary-500);
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    letter-spacing: 0.05em;
-    line-height: 1.2;
-  }
-
-  .title-icon {
-    font-size: 0.88em;
-    line-height: 1;
-  }
-
-  .links-subtitle {
-    color: var(--color-text-tertiary);
-    font-size: 1rem;
-    margin: 0 0 1.2rem;
-  }
-
-  .header-actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .search-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  .search-icon {
-    position: absolute;
-    left: 14px;
-    color: var(--color-text-tertiary);
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-  }
-
-  .search-input {
-    width: 220px;
-    padding: 0.6rem 1rem 0.6rem 2.5rem;
-    border: 1px solid var(--color-border-default);
-    border-radius: 24px;
-    font-size: 0.9rem;
-    outline: none;
-    transition: all 0.2s ease;
-    background: var(--color-bg-page);
-    color: var(--color-text-primary);
-  }
-
-  .search-input::placeholder {
-    color: var(--color-text-tertiary);
-  }
-
-  .search-input:focus {
-    border-color: var(--color-primary-500);
-    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
-    width: 280px;
-  }
-
-  .random-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.6rem 1.2rem;
-    background: linear-gradient(
-      135deg,
-      var(--color-primary-500) 0%,
-      var(--color-primary-400) 100%
-    );
-    color: var(--color-text-on-primary);
-    border: none;
-    border-radius: 24px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 10px rgba(39, 174, 96, 0.25);
-  }
-
-  .random-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.35);
-  }
-
-  .btn-icon {
-    font-size: 1rem;
-  }
-
-  .random-btn.rolling {
-    animation: dice-roll 0.6s ease-in-out;
-  }
-
-  @keyframes dice-roll {
-    0% {
-      transform: rotate(0deg) scale(1);
-    }
-    25% {
-      transform: rotate(15deg) scale(1.1);
-    }
-    50% {
-      transform: rotate(-15deg) scale(1.1);
-    }
-    75% {
-      transform: rotate(10deg) scale(1.05);
-    }
-    100% {
-      transform: rotate(0deg) scale(1);
-    }
-  }
-
-  /* 跑马灯高亮 */
-  .neighbor-card.highlight .card-inner {
-    background: var(--color-primary-50) !important;
-    border-color: var(--color-primary-500) !important;
-    box-shadow: var(--shadow-lg) !important;
-  }
-
-  .neighbor-card.highlight .card-inner .card-name {
-    color: var(--color-primary-500) !important;
-  }
-
-  .neighbor-card.highlight .card-inner .card-desc {
-    color: var(--color-text-tertiary) !important;
-  }
-
-  /* 最终选中 */
-  .neighbor-card.selected .card-inner {
-    background: linear-gradient(
-      135deg,
-      var(--color-primary-500) 0%,
-      var(--color-primary-400) 100%
-    ) !important;
-    border-color: var(--color-primary-500) !important;
-    box-shadow: 0 8px 30px rgba(39, 174, 96, 0.35) !important;
-  }
-
-  .neighbor-card.selected .card-inner .card-name,
-  .neighbor-card.selected .card-inner .card-desc {
-    color: #fff !important;
-  }
-
-  .neighbor-card.selected .card-inner .avatar {
-    border-color: #fff !important;
-  }
-
-  .neighbor-card.selected .card-inner .card-arrow {
-    color: rgba(255, 255, 255, 0.7) !important;
-  }
-
-  /* 邻居网格 */
-  .neighbors-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .neighbor-card-wrapper {
-    display: flex;
-    min-width: 0;
-  }
-
-  .neighbor-card {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    width: 100%;
-    min-width: 0;
-  }
-
-  .neighbor-card:hover {
-    transform: translateY(-5px);
-  }
-
-  .neighbor-card.hidden {
-    display: none;
-  }
-
-  .card-inner {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    padding: 1.1rem 1.2rem;
-    background: var(--color-bg-page);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-    position: relative;
-    height: 100%;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .neighbor-card:hover .card-inner {
-    box-shadow: var(--shadow-lg);
-    border-color: var(--color-border-primary);
-  }
-
-  .neighbor-card:focus-visible,
-  .org-card:focus-visible {
-    outline: 3px solid var(--color-focus-ring);
-    outline-offset: 3px;
-  }
-
-  .avatar-wrap {
-    flex-shrink: 0;
-  }
-
-  .avatar {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    object-fit: cover;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
-    flex-shrink: 0;
-  }
-
-  .neighbor-card:hover .avatar {
-    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.25);
-    transform: scale(1.05);
-  }
-
-  .card-info {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-    gap: 0.3rem;
-  }
-
-  .card-name {
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    letter-spacing: 0.03em;
-    transition: color 0.2s ease;
-    line-height: 1.4;
-  }
-
-  .neighbor-card:hover .card-name {
-    color: var(--color-primary-500);
-  }
-
-  .card-desc {
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    color: var(--color-text-tertiary);
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    line-height: 1.4;
-  }
-
-  .card-arrow {
-    flex-shrink: 0;
-    color: var(--color-border-default);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-  }
-
-  .neighbor-card:hover .card-arrow {
-    color: var(--color-primary-500);
-    transform: translate(2px, -2px);
-  }
-
-  .neighbor-card-wrapper.hidden {
-    display: none;
-  }
-
-  /* 更多链接按钮 */
-  .more-toggle-section {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-  }
-
-  .more-toggle-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.6rem 1.5rem;
-    background: transparent;
-    border: 1px solid var(--color-border-default);
-    border-radius: 24px;
-    font-size: 0.95rem;
-    color: var(--color-text-tertiary);
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .more-toggle-btn:hover {
-    border-color: var(--color-primary-500);
-    color: var(--color-primary-500);
-  }
-
-  .more-toggle-btn.active {
-    background: var(--color-bg-surface);
-    border-color: var(--color-primary-500);
-    color: var(--color-primary-500);
-  }
-
-  .toggle-arrow {
-    transition: transform 0.2s ease;
-  }
-
-  .toggle-text,
-  .toggle-count {
-    transition: opacity 0.2s ease;
-  }
-
-  .more-toggle-btn.active .toggle-arrow {
-    transform: rotate(180deg);
-  }
-
-  .more-toggle-btn.active .toggle-text,
-  .more-toggle-btn.active .toggle-count {
-    display: none;
-  }
-
-  /* 折叠内容 */
-  .more-content {
-    margin-bottom: 2.5rem;
-  }
-
-  .section-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-text-secondary);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .section-title.hidden {
-    display: none;
-  }
-
-  .section-title svg {
-    color: var(--color-primary-500);
-  }
-
-  /* 博客组织 */
-  .orgs-section {
-    margin-bottom: 1.5rem;
-    padding: 1.2rem;
-    background: var(--color-bg-surface);
-    border-radius: 12px;
-  }
-
-  .orgs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 0.8rem;
-  }
-
-  .org-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    border-radius: 12px;
-    transition: all 0.2s ease;
-  }
-
-  .org-card:hover {
-    transform: translateY(-2px);
-  }
-
-  .org-card.hidden {
-    display: none;
-  }
-
-  .org-card-inner {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 0.7rem;
-    background: var(--color-bg-page);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: 12px;
-    transition: all 0.2s ease;
-  }
-
-  .org-card:hover .org-card-inner {
-    border-color: var(--color-primary-500);
-    box-shadow: var(--shadow-md);
-  }
-
-  .org-logo {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    object-fit: cover;
-    flex-shrink: 0;
-  }
-
-  .org-info {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  .org-name {
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .org-desc {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    color: var(--color-text-tertiary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  /* 文字链接 */
-  .text-links-section {
-    margin-top: 1rem;
-    padding: 1.2rem;
-    background: var(--color-bg-surface);
-    border-radius: 12px;
-  }
-
-  .text-links-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .text-link-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: var(--color-bg-page);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: 20px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .text-link-item:hover {
-    border-color: var(--color-primary-500);
-    background: var(--color-primary-50);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-  }
-
-  :global([data-theme="dark"]) .neighbor-card.highlight .card-inner,
-  :global([data-theme="dark"]) .text-link-item:hover {
-    background: rgb(39 174 96 / 10%) !important;
-  }
-
-  :global([data-theme="dark"]) .neighbor-card .card-inner,
-  :global([data-theme="dark"]) .org-card .org-card-inner {
-    background: var(--color-bg-surface);
-    border-color: var(--color-border-default);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 4%),
-      var(--shadow-sm);
-  }
-
-  :global([data-theme="dark"]) .neighbor-card:hover .card-inner,
-  :global([data-theme="dark"]) .org-card:hover .org-card-inner {
-    background: var(--color-bg-surface-elevated);
-    border-color: var(--color-border-primary);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 5%),
-      var(--shadow-md);
-  }
-
-  .text-link-item.hidden {
-    display: none;
-  }
-
-  .text-link-item .link-name {
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    color: var(--color-text-primary);
-    white-space: nowrap;
-  }
-
-  /* 失效链接 */
-  .text-link-item.inactive {
-    opacity: 0.45;
-    background: var(--color-bg-surface);
-    border-color: var(--color-border-subtle);
-  }
-
-  .text-link-item.inactive:hover {
-    opacity: 0.6;
-    transform: none;
-    border-color: var(--color-border-default);
-    box-shadow: none;
-  }
-
-  .text-link-item.inactive .link-name {
-    color: var(--color-text-tertiary);
-    text-decoration: line-through;
-  }
-
-  .offline-badge {
-    font-size: 0.7rem;
-    padding: 0.15rem 0.5rem;
-    background: var(--color-bg-surface-elevated);
-    color: var(--color-text-tertiary);
-    border-radius: 10px;
-  }
-
-  /* 响应式 */
-  @media (max-width: 900px) {
-    .neighbors-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 640px) {
-    .header-actions {
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .search-input {
-      width: 200px;
-    }
-
-    .search-input:focus {
-      width: 200px;
-    }
-
-    .neighbors-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .orgs-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
+    {moreGroups.length > 0 && (
+      <details class="friends-more">
+        <summary>
+          <span>更多链接</span>
+          <span class="friends-more-count">{moreLinkCount.toString().padStart(2, '0')}</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"></path></svg>
+        </summary>
+
+        <div class="friends-more-content">
+          {moreGroups.map((group) => (
+            <section class="friends-subsection" aria-labelledby={group.id}>
+              <div class="friends-section-heading">
+                <div>
+                  <p class="page-kicker">{group.kicker}</p>
+                  <h2 id={group.id}>{group.title}</h2>
+                </div>
+                <span>{group.links.length.toString().padStart(2, '0')}</span>
+              </div>
+
+              <ul class="friends-grid">
+                {group.links.map((friend) => (
+                  <li>
+                    <a
+                      class:list={['friend-card', 'is-compact', { 'is-inactive': friend.inactive }]}
+                      href={friend.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={friend.tooltip || friend.description || friend.name}
+                    >
+                      <span class="friend-copy">
+                        <span class="friend-name-row">
+                          <span class="friend-name">{friend.name}</span>
+                          {friend.badge && <span class="friend-badge">{friend.badge}</span>}
+                        </span>
+                        <span class="friend-description">{friend.description || '暂无简介'}</span>
+                        <span class="friend-host">{friend.host}</span>
+                      </span>
+                      <svg class="friend-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 17 17 7M9 7h8v8"></path>
+                      </svg>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </details>
+    )}
+
+    <section class="friend-exchange" aria-labelledby="friend-exchange-title">
+      <div class="friend-exchange-heading">
+        <p class="page-kicker">Exchange</p>
+        <h2 id="friend-exchange-title">交换友链</h2>
+      </div>
+      <p class="friend-exchange-copy">如果你也在持续维护自己的博客，欢迎友链。无需客套，附上站点名称、地址和一句简短介绍即可。</p>
+
+      <div class="exchange-card" id="exchange-card">
+        <div class="exchange-card-info">
+          <div class="exchange-row">
+            <span class="exchange-label">名称</span>
+            <span class="exchange-value">{SITE.title}</span>
+          </div>
+          <div class="exchange-row">
+            <span class="exchange-label">网址</span>
+            <span class="exchange-value exchange-link">{SITE.url}</span>
+          </div>
+          <div class="exchange-row">
+            <span class="exchange-label">描述</span>
+            <span class="exchange-value">{SITE.slogan}</span>
+          </div>
+          <div class="exchange-row">
+            <span class="exchange-label">Logo</span>
+            <span class="exchange-value exchange-link">{siteLogoUrl}</span>
+          </div>
+          <div class="exchange-row">
+            <span class="exchange-label">RSS</span>
+            <span class="exchange-value exchange-link">{siteRssUrl}</span>
+          </div>
+        </div>
+        <button class="exchange-copy-btn" id="exchange-copy-btn" type="button">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>复制</span>
+        </button>
+      </div>
+    </section>
+
+    <Comments />
+  </section>
+</BaseLayout>
 
 <script>
-  function initLinksPage() {
-    // 更多链接展开/收起
-    const moreToggleBtn = document.getElementById("more-toggle-btn");
-    const moreContent = document.getElementById("more-content");
+  const initFriendLogos = () => {
+    document.querySelectorAll<HTMLImageElement>('[data-friend-logo]').forEach((logo) => {
+      if (logo.dataset.fallbackReady === 'true') return;
+      logo.dataset.fallbackReady = 'true';
 
-    if (moreToggleBtn && moreContent) {
-      // 避免重复绑定
-      moreToggleBtn.replaceWith(moreToggleBtn.cloneNode(true));
-      const freshBtn = document.getElementById("more-toggle-btn")!;
+      const showFallback = () => logo.closest('.friend-mark')?.classList.add('is-missing');
+      logo.addEventListener('error', showFallback, { once: true });
+      if (logo.complete && logo.naturalWidth === 0) showFallback();
+    });
+  };
 
-      freshBtn.addEventListener("click", () => {
-        const isHidden = moreContent.style.display === "none";
+  initFriendLogos();
+  document.addEventListener('astro:page-load', initFriendLogos);
 
-        if (isHidden) {
-          moreContent.style.display = "block";
-          freshBtn.classList.add("active");
-        } else {
-          moreContent.style.display = "none";
-          freshBtn.classList.remove("active");
-        }
-      });
-    }
-
-    // 搜索功能
-    const searchInput = document.getElementById(
-      "link-search",
-    ) as HTMLInputElement | null;
-    const cards = document.querySelectorAll(".neighbor-card");
-    const textLinks = document.querySelectorAll(".text-link-item");
-    const orgCards = document.querySelectorAll(".org-card");
-
-    function filterCards() {
-      const query = searchInput?.value.toLowerCase() || "";
-
-      // 搜索时自动展开折叠内容
-      if (moreContent && moreToggleBtn) {
-        if (query && moreContent.style.display === "none") {
-          moreContent.style.display = "block";
-          moreToggleBtn.classList.add("active");
-        } else if (!query && moreToggleBtn.classList.contains("active")) {
-          moreContent.style.display = "none";
-          moreToggleBtn.classList.remove("active");
-        }
+  const copyBtn = document.getElementById('exchange-copy-btn');
+  copyBtn?.addEventListener('click', async () => {
+    const card = document.getElementById('exchange-card');
+    if (!card) return;
+    const rows = card.querySelectorAll('.exchange-row');
+    const text = Array.from(rows).map((row) => {
+      const label = row.querySelector('.exchange-label')?.textContent || '';
+      const value = row.querySelector('.exchange-value')?.textContent || '';
+      return `${label}：${value}`;
+    }).join('\n');
+    try {
+      await navigator.clipboard.writeText(text);
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const orig = span.textContent;
+        span.textContent = '已复制';
+        setTimeout(() => { span.textContent = orig; }, 2000);
       }
-
-      // 处理邻居卡片
-      cards.forEach((card) => {
-        const el = card as HTMLElement;
-        const name = el.dataset.name || "";
-        const desc = el.dataset.description || "";
-        const show = !query || name.includes(query) || desc.includes(query);
-        el.classList.toggle("hidden", !show);
-      });
-
-      // 处理文字链接
-      textLinks.forEach((link) => {
-        const el = link as HTMLElement;
-        const name = el.dataset.name || "";
-        const desc = el.dataset.description || "";
-        const show = !query || name.includes(query) || desc.includes(query);
-        el.classList.toggle("hidden", !show);
-      });
-
-      // 处理博客组织卡片
-      orgCards.forEach((card) => {
-        const el = card as HTMLElement;
-        const name = el.dataset.name || "";
-        const desc = el.dataset.description || "";
-        const show = !query || name.includes(query) || desc.includes(query);
-        el.classList.toggle("hidden", !show);
-      });
-
-      // 隐藏没有可见子项的分组标题
-      if (query) {
-        document
-          .querySelectorAll(".orgs-section, .text-links-section")
-          .forEach((section) => {
-            const visibleItems = section.querySelectorAll(
-              ".org-card:not(.hidden), .text-link-item:not(.hidden)",
-            );
-            if (visibleItems.length === 0) {
-              (section as HTMLElement).style.display = "none";
-            } else {
-              (section as HTMLElement).style.display = "";
-              // 搜索时隐藏分组标题（如"博客组织""其他链接"）
-              const title = section.querySelector(
-                ".section-title",
-              ) as HTMLElement;
-              if (title) title.style.display = "none";
-            }
-          });
-      } else {
-        document
-          .querySelectorAll(".orgs-section, .text-links-section")
-          .forEach((section) => {
-            (section as HTMLElement).style.display = "";
-            const title = section.querySelector(
-              ".section-title",
-            ) as HTMLElement;
-            if (title) title.style.display = "";
-          });
-      }
-    }
-
-    if (searchInput) {
-      searchInput.addEventListener("input", filterCards);
-    }
-
-    // 随机访问功能
-    const randomBtn = document.getElementById("random-visit-btn");
-
-    if (randomBtn) {
-      randomBtn.addEventListener("click", async () => {
-        const verifiedCards = Array.from(cards);
-
-        if (verifiedCards.length === 0) return;
-
-        randomBtn.classList.add("rolling");
-
-        const highlightCount = 15;
-        let lastHighlighted: Element | null = null;
-
-        for (let i = 0; i < highlightCount; i++) {
-          const progress = i / highlightCount;
-          const delay =
-            progress < 0.6
-              ? 40 + progress * 30
-              : 80 + Math.pow(progress - 0.6, 2) * 400;
-
-          await new Promise((resolve) => setTimeout(resolve, delay));
-
-          if (lastHighlighted) {
-            lastHighlighted.classList.remove("highlight");
-          }
-
-          const cardIdx = i % verifiedCards.length;
-          const card = verifiedCards[cardIdx];
-          card.classList.add("highlight");
-          lastHighlighted = card;
-        }
-
-        const finalIndex = Math.floor(Math.random() * verifiedCards.length);
-        const finalCard = verifiedCards[finalIndex] as HTMLAnchorElement;
-
-        if (lastHighlighted) {
-          lastHighlighted.classList.remove("highlight");
-        }
-        finalCard.classList.add("selected");
-        finalCard.scrollIntoView({ behavior: "smooth", block: "center" });
-
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        if (finalCard.href) {
-          window.open(finalCard.href, "_blank", "noopener,noreferrer");
-        }
-
-        randomBtn.classList.remove("rolling");
-        setTimeout(() => {
-          finalCard.classList.remove("selected");
-        }, 300);
-      });
-    }
-  }
-
-  // 首次加载
-  initLinksPage();
-
-  // View Transitions 页面切换后重新初始化
-  document.addEventListener("astro:after-swap", initLinksPage);
+    } catch (e) {}
+  });
 </script>
