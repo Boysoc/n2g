@@ -1185,6 +1185,19 @@ a:hover {
   text-align: left;
 }
 
+.post-content :not(pre) > code {
+  padding: 0.08em 0.28em;
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 9%, transparent);
+  border-radius: 0.18rem;
+  box-decoration-break: clone;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.88em;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+}
+
 .code-block-wrapper {
   position: relative;
   margin: 2rem 0;
@@ -1258,15 +1271,24 @@ a:hover {
   font-family: var(--font-ui);
 }
 
-.post-content .footnotes-title {
+.post-content .footnotes-title,
+.post-content .footnotes > .sr-only {
+  position: static;
+  width: auto;
+  height: auto;
   margin: 0 0 1rem;
   padding: 0;
+  overflow: visible;
   color: var(--color-muted);
+  border: 0;
+  clip: auto;
+  clip-path: none;
   font-family: var(--font-ui);
   font-size: 0.75rem;
   font-weight: 650;
   line-height: 1.4;
   letter-spacing: 0.08em;
+  white-space: normal;
 }
 
 .post-content .footnotes ol {
@@ -1327,6 +1349,11 @@ a:hover {
 
 .post-content .footnotes li:target {
   color: var(--color-heading);
+}
+
+.post-content [data-footnote-ref],
+.post-content .footnotes li {
+  scroll-margin-top: calc(var(--site-header-height) + 1rem);
 }
 
 .comment {

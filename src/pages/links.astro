@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Comments from '../components/Comments.astro';
-import { friendLinks } from '../data/friends';
+import { links as friendLinks } from '../data/friends';
 import { SITE } from '../data/site';
 
 const links = friendLinks.map((friend) => {
-  const url = new URL(friend.url);
+  const url = new URL(friend.href);
 
   if (url.protocol !== 'http:' && url.protocol !== 'https:') {
     throw new Error(`友情链接“${friend.name}”必须使用 http 或 https 地址。`);
@@ -13,6 +13,7 @@ const links = friendLinks.map((friend) => {
 
   return {
     ...friend,
+    displayLogo: friend.cachedLogo || friend.logo,
     host: url.hostname.replace(/^www\./, ''),
     mark: friend.name.trim().charAt(0),
     badge: friend.organization ? '组织' : friend.inactive ? '旧址' : friend.verified ? '互链' : undefined,
@@ -58,15 +59,15 @@ const siteRssUrl = new URL('/rss.xml', SITE.url).href;
           <li>
             <a
               class="friend-card"
-              href={friend.url}
+              href={friend.href}
               target="_blank"
               rel="noopener noreferrer"
               title={friend.tooltip || friend.description || friend.name}
             >
-              <span class:list={['friend-mark', { 'has-logo': friend.logo }]} aria-hidden="true">
-                {friend.logo && (
+              <span class:list={['friend-mark', { 'has-logo': friend.displayLogo }]} aria-hidden="true">
+                {friend.displayLogo && (
                   <img
-                    src={friend.logo}
+                    src={friend.displayLogo}
                     alt=""
                     width="44"
                     height="44"
@@ -119,7 +120,7 @@ const siteRssUrl = new URL('/rss.xml', SITE.url).href;
                   <li>
                     <a
                       class:list={['friend-card', 'is-compact', { 'is-inactive': friend.inactive }]}
-                      href={friend.url}
+                      href={friend.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       title={friend.tooltip || friend.description || friend.name}

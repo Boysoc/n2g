@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { satteri } from '@astrojs/markdown-satteri';
 import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
@@ -21,6 +22,17 @@ export default defineConfig({
     }),
   ],
   markdown: {
+    processor: satteri({
+      features: {
+        gfm: {
+          footnotes: {
+            label: '脚注',
+            backContent: '#',
+            backLabel: '返回正文 {reference}',
+          },
+        },
+      },
+    }),
     shikiConfig: {
       theme: 'github-dark',
       wrap: false,

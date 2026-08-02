@@ -1,6 +1,7 @@
 ---
 import { SITE } from '../data/site';
 import { cleanExcerpt } from '../utils/posts';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
@@ -60,6 +61,8 @@ const currentYear = new Date().getUTCFullYear();
     <meta name="twitter:description" content={metaDescription} />
     {socialImage && <meta name="twitter:image" content={socialImage} />}
     {socialImage && heroImageAlt && <meta name="twitter:image:alt" content={heroImageAlt} />}
+
+    <ClientRouter />
 
     <script is:inline>
       (() => {
