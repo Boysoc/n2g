@@ -134,6 +134,28 @@ const heroImageUrl = typeof heroImage === 'string' ? heroImage : heroImage?.src;
         if (!image.hasAttribute('decoding')) image.decoding = 'async';
       });
 
+      article.querySelectorAll('[data-douyin-embed]').forEach((embed) => {
+        if (!(embed instanceof HTMLElement) || embed.dataset.douyinReady === 'true') return;
+
+        const frame = embed.querySelector('[data-douyin-frame]');
+        const button = embed.querySelector('[data-douyin-load]');
+        const videoId = embed.dataset.videoId ?? '';
+        if (!(frame instanceof HTMLElement) || !(button instanceof HTMLButtonElement) || !/^\d{10,24}$/.test(videoId)) return;
+
+        embed.dataset.douyinReady = 'true';
+        button.addEventListener('click', () => {
+          const iframe = document.createElement('iframe');
+          iframe.src = `https://open.douyin.com/player/video?vid=${videoId}&autoplay=1`;
+          iframe.title = embed.dataset.videoTitle || '抖音视频播放器';
+          iframe.loading = 'eager';
+          iframe.allow = 'autoplay; fullscreen; encrypted-media; picture-in-picture';
+          iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+          iframe.allowFullscreen = true;
+          iframe.setAttribute('scrolling', 'no');
+          frame.replaceChildren(iframe);
+        }, { once: true });
+      });
+
       article.querySelectorAll('pre').forEach((codeBlock) => {
         if (codeBlock.parentElement?.classList.contains('code-block-wrapper')) return;
 

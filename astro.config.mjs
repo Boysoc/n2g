@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import { satteri } from '@astrojs/markdown-satteri';
 import sitemap from '@astrojs/sitemap';
+import { createDouyinEmbedPlugin } from './src/markdown/douyin-embed.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,6 +24,7 @@ export default defineConfig({
   ],
   markdown: {
     processor: satteri({
+      mdastPlugins: [createDouyinEmbedPlugin()],
       features: {
         gfm: {
           footnotes: {
