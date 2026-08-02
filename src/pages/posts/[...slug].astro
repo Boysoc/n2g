@@ -152,7 +152,38 @@ const heroImageUrl = typeof heroImage === 'string' ? heroImage : heroImage?.src;
           iframe.referrerPolicy = 'strict-origin-when-cross-origin';
           iframe.allowFullscreen = true;
           iframe.setAttribute('scrolling', 'no');
+          embed.classList.add('douyin-embed--loaded');
           frame.replaceChildren(iframe);
+
+          const mobilePlayerWidth = 324;
+          const mobilePlayerHeight = 720;
+          const resizeMobilePlayer = () => {
+            if (!window.matchMedia('(max-width: 719px)').matches) {
+              embed.style.removeProperty('--douyin-mobile-player-height');
+              iframe.style.removeProperty('width');
+              iframe.style.removeProperty('height');
+              iframe.style.removeProperty('transform');
+              iframe.style.removeProperty('transform-origin');
+              return;
+            }
+
+            const scale = Math.min(1, frame.clientWidth / mobilePlayerWidth);
+            embed.style.setProperty('--douyin-mobile-player-height', `${Math.ceil(mobilePlayerHeight * scale) + 2}px`);
+            iframe.style.height = `${mobilePlayerHeight}px`;
+
+            if (scale < 1) {
+              iframe.style.width = `${mobilePlayerWidth}px`;
+              iframe.style.transform = `scale(${scale})`;
+              iframe.style.transformOrigin = 'top left';
+            } else {
+              iframe.style.removeProperty('width');
+              iframe.style.removeProperty('transform');
+              iframe.style.removeProperty('transform-origin');
+            }
+          };
+
+          resizeMobilePlayer();
+          new ResizeObserver(resizeMobilePlayer).observe(frame);
         }, { once: true });
       });
 

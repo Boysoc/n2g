@@ -2820,6 +2820,22 @@ footer {
     text-align: left;
   }
 
+  .douyin-embed {
+    --douyin-mobile-width: calc(100vw - 2rem);
+
+    width: var(--douyin-mobile-width);
+    margin-inline: calc((100% - var(--douyin-mobile-width)) / 2);
+  }
+
+  .douyin-embed--portrait {
+    --douyin-mobile-width: min(calc(100vw - 2rem), 26rem);
+  }
+
+  .douyin-embed--loaded .douyin-embed__frame {
+    height: var(--douyin-mobile-player-height, calc(45rem + 2px));
+    aspect-ratio: auto;
+  }
+
   .photo-gallery {
     grid-template-columns: 1fr;
   }
