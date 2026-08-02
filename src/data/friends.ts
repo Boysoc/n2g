@@ -192,13 +192,13 @@ export const links: Link[] = [
     feed: "https://acevs.com/feed/"
   },
   {
-    name: "李的日志",
-    href: "https://lilog.cn",
-    logo: "https://lilog.cn/Image/avatar.webp",
+    name: "LiMhy'Blog",
+    href: "https://i.lilog.cn",
+    logo: "https://omg.46vip.top/2026/06/omg0611lt.webp",
     cachedLogo: "/images/friends/lilog.webp",
-    description: "在阅读中沉淀，于随笔中抒怀",
+    description: "记录小生活小美好",
     verified: true,
-    feed: "https://lilog.cn/feed"
+    feed: "https://i.lilog.cn/feed"
   },
   {
     name: "旺东自留地",
