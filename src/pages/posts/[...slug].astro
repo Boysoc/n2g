@@ -134,6 +134,264 @@ const heroImageUrl = typeof heroImage === 'string' ? heroImage : heroImage?.src;
         if (!image.hasAttribute('decoding')) image.decoding = 'async';
       });
 
+      if (article.dataset.photoLightboxReady !== 'true') {
+        const galleryImages = Array.from(article.querySelectorAll('.photo-gallery img'));
+
+        if (galleryImages.length > 0) {
+          article.dataset.photoLightboxReady = 'true';
+
+          const controller = new AbortController();
+          const { signal } = controller;
+          const items = galleryImages.map((image) => {
+            let trigger = image.closest('a');
+
+            if (!trigger) {
+              const button = document.createElement('button');
+              const visual = image.parentElement?.tagName === 'PICTURE' ? image.parentElement : image;
+              button.type = 'button';
+              button.className = 'photo-gallery__trigger';
+              visual.parentNode?.insertBefore(button, visual);
+              button.append(visual);
+              trigger = button;
+            }
+
+            trigger.classList.add('photo-gallery__trigger');
+            trigger.setAttribute('aria-label', image.alt ? `查看大图“${image.alt}”` : '查看大图');
+
+            return {
+              image,
+              trigger,
+              src: trigger instanceof HTMLAnchorElement ? trigger.href : image.src,
+              alt: image.alt || '图片',
+            };
+          });
+
+          const overlay = document.createElement('div');
+          const backdrop = document.createElement('div');
+          const stage = document.createElement('div');
+          const viewer = document.createElement('img');
+          const status = document.createElement('p');
+          const makeControl = (className, label, text) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = `image-lightbox__control ${className}`;
+            button.setAttribute('aria-label', label);
+            button.textContent = text;
+            return button;
+          };
+          const previous = makeControl('image-lightbox__previous', '上一张', '‹');
+          const next = makeControl('image-lightbox__next', '下一张', '›');
+          const close = makeControl('image-lightbox__close', '关闭图片', '×');
+
+          overlay.className = 'image-lightbox';
+          overlay.hidden = true;
+          overlay.setAttribute('role', 'dialog');
+          overlay.setAttribute('aria-modal', 'true');
+          overlay.setAttribute('aria-label', '图片查看器');
+          backdrop.className = 'image-lightbox__backdrop';
+          backdrop.setAttribute('aria-hidden', 'true');
+          stage.className = 'image-lightbox__stage';
+          viewer.className = 'image-lightbox__image';
+          viewer.decoding = 'async';
+          status.className = 'image-lightbox__status';
+          status.setAttribute('aria-live', 'polite');
+          stage.append(viewer);
+          overlay.append(backdrop, stage, previous, next, close, status);
+          document.body.append(overlay);
+
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const motionDuration = reducedMotion ? 0 : 160;
+          const switchDuration = reducedMotion ? 0 : 130;
+          let activeIndex = 0;
+          let isOpen = false;
+          let isBusy = false;
+          let returnFocus = null;
+
+          const waitForImage = async (item) => {
+            viewer.src = item.src;
+            viewer.alt = item.alt;
+            try {
+              await viewer.decode();
+            } catch {
+              // The browser still displays the fallback image if decoding cannot be awaited.
+            }
+          };
+
+          const layoutViewer = (item) => {
+            const bounds = stage.getBoundingClientRect();
+            const naturalWidth = viewer.naturalWidth || item.image.naturalWidth || bounds.width;
+            const naturalHeight = viewer.naturalHeight || item.image.naturalHeight || bounds.height;
+            const scale = Math.min(bounds.width / naturalWidth, bounds.height / naturalHeight, 1);
+            const width = Math.max(1, naturalWidth * scale);
+            const height = Math.max(1, naturalHeight * scale);
+            const left = bounds.left + ((bounds.width - width) / 2);
+            const top = bounds.top + ((bounds.height - height) / 2);
+
+            viewer.style.left = `${left}px`;
+            viewer.style.top = `${top}px`;
+            viewer.style.width = `${width}px`;
+            viewer.style.height = `${height}px`;
+
+            return { left, top, width, height };
+          };
+
+          const runAnimation = async (keyframes, duration) => {
+            if (duration === 0) return;
+            const animation = viewer.animate(keyframes, {
+              duration,
+              easing: 'ease-out',
+              fill: 'both',
+            });
+            try {
+              await animation.finished;
+            } catch {
+              // An interrupted animation can safely snap to its final CSS state.
+            }
+            animation.cancel();
+          };
+
+          const updateStatus = () => {
+            const item = items[activeIndex];
+            status.textContent = `${activeIndex + 1} / ${items.length} · ${item.alt}`;
+          };
+
+          const openAt = async (index) => {
+            if (isOpen || isBusy) return;
+            isBusy = true;
+            isOpen = true;
+            activeIndex = index;
+            returnFocus = document.activeElement;
+
+            const item = items[activeIndex];
+            const sourceRect = item.image.getBoundingClientRect();
+            overlay.hidden = false;
+            await waitForImage(item);
+            const targetRect = layoutViewer(item);
+            item.image.classList.add('is-lightbox-source');
+            updateStatus();
+            previous.hidden = items.length < 2;
+            next.hidden = items.length < 2;
+            viewer.classList.add('is-ready');
+            document.documentElement.classList.add('lightbox-open');
+            overlay.classList.add('is-open');
+
+            const translateX = sourceRect.left - targetRect.left;
+            const translateY = sourceRect.top - targetRect.top;
+            const scaleX = sourceRect.width / targetRect.width;
+            const scaleY = sourceRect.height / targetRect.height;
+            await runAnimation([
+              {
+                opacity: 0.45,
+                transform: `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`,
+              },
+              { opacity: 1, transform: 'translate(0, 0) scale(1, 1)' },
+            ], motionDuration);
+
+            isBusy = false;
+            close.focus({ preventScroll: true });
+          };
+
+          const closeLightbox = async () => {
+            if (!isOpen || isBusy) return;
+            isBusy = true;
+            const item = items[activeIndex];
+            const viewerRect = viewer.getBoundingClientRect();
+            const sourceRect = item.image.getBoundingClientRect();
+            const translateX = sourceRect.left - viewerRect.left;
+            const translateY = sourceRect.top - viewerRect.top;
+            const scaleX = sourceRect.width / viewerRect.width;
+            const scaleY = sourceRect.height / viewerRect.height;
+
+            overlay.classList.remove('is-open');
+            document.documentElement.classList.remove('lightbox-open');
+            await runAnimation([
+              { opacity: 1, transform: 'translate(0, 0) scale(1, 1)' },
+              {
+                opacity: 0.35,
+                transform: `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`,
+              },
+            ], motionDuration);
+
+            viewer.classList.remove('is-ready');
+            item.image.classList.remove('is-lightbox-source');
+            overlay.hidden = true;
+            isOpen = false;
+            isBusy = false;
+            if (returnFocus instanceof HTMLElement && returnFocus.isConnected) {
+              returnFocus.focus({ preventScroll: true });
+            }
+          };
+
+          const switchTo = async (direction) => {
+            if (!isOpen || isBusy || items.length < 2) return;
+            isBusy = true;
+            const oldItem = items[activeIndex];
+
+            await runAnimation([
+              { opacity: 1, transform: 'translateX(0)' },
+              { opacity: 0, transform: `translateX(${-direction * 1.25}rem)` },
+            ], switchDuration);
+            viewer.classList.remove('is-ready');
+            oldItem.image.classList.remove('is-lightbox-source');
+
+            activeIndex = (activeIndex + direction + items.length) % items.length;
+            const newItem = items[activeIndex];
+            newItem.image.classList.add('is-lightbox-source');
+            await waitForImage(newItem);
+            layoutViewer(newItem);
+            updateStatus();
+            viewer.classList.add('is-ready');
+            await runAnimation([
+              { opacity: 0, transform: `translateX(${direction * 1.25}rem)` },
+              { opacity: 1, transform: 'translateX(0)' },
+            ], switchDuration);
+            isBusy = false;
+          };
+
+          items.forEach((item, index) => {
+            item.trigger.addEventListener('click', (event) => {
+              event.preventDefault();
+              openAt(index);
+            }, { signal });
+          });
+
+          previous.addEventListener('click', () => switchTo(-1), { signal });
+          next.addEventListener('click', () => switchTo(1), { signal });
+          close.addEventListener('click', closeLightbox, { signal });
+          backdrop.addEventListener('click', closeLightbox, { signal });
+          overlay.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+              event.preventDefault();
+              closeLightbox();
+            } else if (event.key === 'ArrowLeft') {
+              event.preventDefault();
+              switchTo(-1);
+            } else if (event.key === 'ArrowRight') {
+              event.preventDefault();
+              switchTo(1);
+            } else if (event.key === 'Tab') {
+              const controls = [previous, next, close].filter((control) => !control.hidden);
+              const current = controls.indexOf(document.activeElement);
+              if (event.shiftKey && current <= 0) {
+                event.preventDefault();
+                controls.at(-1)?.focus();
+              } else if (!event.shiftKey && current === controls.length - 1) {
+                event.preventDefault();
+                controls[0]?.focus();
+              }
+            }
+          }, { signal });
+          window.addEventListener('resize', () => {
+            if (isOpen && !isBusy) layoutViewer(items[activeIndex]);
+          }, { signal });
+          document.addEventListener('astro:before-swap', () => {
+            controller.abort();
+            document.documentElement.classList.remove('lightbox-open');
+            overlay.remove();
+          }, { once: true });
+        }
+      }
+
       article.querySelectorAll('[data-douyin-embed]').forEach((embed) => {
         if (!(embed instanceof HTMLElement) || embed.dataset.douyinReady === 'true') return;
 
